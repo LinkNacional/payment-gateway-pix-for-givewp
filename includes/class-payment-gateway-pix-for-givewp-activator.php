@@ -20,17 +20,14 @@
  * @subpackage Payment_Gateway_Pix_For_Givewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-class Payment_Gateway_Pix_For_Givewp_Activator {
-
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function activate() {
-
-	}
-
+final class Payment_Gateway_Pix_For_Givewp_Activator {
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    1.0.0
+     */
+    public static function activate(): void {
+    }
 }
