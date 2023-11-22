@@ -148,6 +148,55 @@ final class Payment_Gateway_Pix_For_Givewp {
     }
 
     /**
+     * Add setting to new section 'Custom Settings' of 'General' Tab.
+     *
+     * @param mixed $settings
+     *
+     * @return array
+     */
+    public function add_setting_into_new_section($settings) {
+        echo 'Teste de configuracao ' . give_get_option('lkn_payment_pix_setting_field');
+        switch (give_get_current_setting_section()) {
+            // Separar nome composto com travessão na área de configurações
+            case 'lkn-payment-pix':
+                $settings[] = array(
+                    'type' => 'title',
+                    'id' => 'lkn-payment-pix',
+                );
+
+                $settings[] = array(
+                    'name' => 'Example',
+                    'id' => 'lkn_payment_pix_setting_field',
+                    'desc' => 'Example descriptions',
+                    'type' => 'text',
+                );
+
+                $settings[] = array(
+                    'id' => 'lkn-payment-pix',
+                    'type' => 'sectionend',
+                );
+
+                break;
+        }// // End switch()
+
+        return $settings;
+    }
+
+    /**
+     * Add new section to "General" setting tab.
+     *
+     * @param mixed $sections
+     *
+     * @return array
+     */
+    public function add_new_setting_section($sections) {
+        // Separar palavras com travessão no atributo $sections
+        $sections['lkn-payment-pix'] = 'Pix QR Code';
+
+        return $sections;
+    }
+
+    /**
      * Register all of the hooks related to the admin area functionality
      * of the plugin.
      *
@@ -162,6 +211,9 @@ final class Payment_Gateway_Pix_For_Givewp {
 
         // Register the gateways
         $this->loader->add_action( 'givewp_register_payment_gateway', $this, 'load_payment_gateway' );
+
+        $this->loader->add_action( 'give_get_settings_gateways', $this, 'add_setting_into_new_section' );
+        $this->loader->add_action( 'give_get_sections_gateways', $this, 'add_new_setting_section' );
     }
 
     /**
