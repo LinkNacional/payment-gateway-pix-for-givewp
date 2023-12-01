@@ -26,12 +26,16 @@ const gateway = {
   },
   // Função onde os campos HTML são criados
   Fields() {
-    return /* #__PURE__ */React.createElement('fieldset', {
-      className: 'no-fields'
-    }, /* #__PURE__ */React.createElement('h1', null, 'Hello World!'), /* #__PURE__ */React.createElement('input', {
-      type: 'text',
-      name: 'my-gateway-field-name'
-    }))
+    return /* #__PURE__ */React.createElement('span', {
+      style: {
+        textAlign: 'center'
+      }
+    }, /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('img', {
+      src: 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey),
+      alt: 'QR Code for ' + lknAttr.pixKey
+    })), /* #__PURE__ */React.createElement('h3', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', null, lknAttr.pixKey), /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('button', {
+      onclick: 'navigator.clipboard.writeText(' + lknAttr.pixKey + ')'
+    }, 'Copy Pix Code')), /* #__PURE__ */React.createElement('p', null, 'Payment Gateway Pix for GiveWP'))
   }
 }
 window.givewp.gateways.register(gateway)

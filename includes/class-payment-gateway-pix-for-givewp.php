@@ -27,7 +27,8 @@
  * @subpackage Payment_Gateway_Pix_For_Givewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class Payment_Gateway_Pix_For_Givewp {
+final class Payment_Gateway_Pix_For_Givewp
+{
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
      * the plugin.
@@ -65,8 +66,9 @@ final class Payment_Gateway_Pix_For_Givewp {
      *
      * @since    1.0.0
      */
-    public function __construct() {
-        if ( defined( 'PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION' ) ) {
+    public function __construct()
+    {
+        if (defined('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION')) {
             $this->version = PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION;
         } else {
             $this->version = '1.0.0';
@@ -95,36 +97,37 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since    1.0.0
      * @access   private
      */
-    private function load_dependencies(): void {
+    private function load_dependencies(): void
+    {
         /**
          * The class responsible for orchestrating the actions and filters of the
          * core plugin.
          */
-        require_once plugin_dir_path( __DIR__ ) . 'includes/class-payment-gateway-pix-for-givewp-loader.php';
+        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-loader.php';
 
         /**
          * The class responsible for defining internationalization functionality
          * of the plugin.
          */
-        require_once plugin_dir_path( __DIR__ ) . 'includes/class-payment-gateway-pix-for-givewp-i18n.php';
+        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-i18n.php';
 
         /**
          * The class responsible for defining all actions that occur in the admin area.
          */
-        require_once plugin_dir_path( __DIR__ ) . 'admin/class-payment-gateway-pix-for-givewp-admin.php';
+        require_once plugin_dir_path(__DIR__) . 'admin/class-payment-gateway-pix-for-givewp-admin.php';
 
         /**
          * The class responsible for defining all actions that occur in the public-facing
          * side of the site.
          */
-        require_once plugin_dir_path( __DIR__ ) . 'public/class-payment-gateway-pix-for-givewp-public.php';
+        require_once plugin_dir_path(__DIR__) . 'public/class-payment-gateway-pix-for-givewp-public.php';
 
         /**
          * The class responsible for defining the gateways
          * of the plugin.
          */
-        require_once plugin_dir_path( __DIR__ ) . 'includes/class-payment-gateway-pix-for-givewp-gateway.php';
-		
+        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-gateway.php';
+
         $this->loader = new Payment_Gateway_Pix_For_Givewp_Loader();
     }
 
@@ -137,63 +140,16 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since    1.0.0
      * @access   private
      */
-    private function set_locale(): void {
+    private function set_locale(): void
+    {
         $plugin_i18n = new Payment_Gateway_Pix_For_Givewp_i18n();
 
-        $this->loader->add_action( 'plugins_loaded', $plugin_i18n, 'load_plugin_textdomain' );
+        $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
-    public function load_payment_gateway($paymentGatewayRegister): void {
+    public function load_payment_gateway($paymentGatewayRegister): void
+    {
         $paymentGatewayRegister->registerGateway('PixGatewayClass');
-    }
-
-    /**
-     * Add setting to new section 'Custom Settings' of 'General' Tab.
-     *
-     * @param mixed $settings
-     *
-     * @return array
-     */
-    public function add_setting_into_new_section($settings) {
-        echo 'Teste de configuracao ' . give_get_option('lkn_payment_pix_setting_field');
-        switch (give_get_current_setting_section()) {
-            // Separar nome composto com travessão na área de configurações
-            case 'lkn-payment-pix':
-                $settings[] = array(
-                    'type' => 'title',
-                    'id' => 'lkn-payment-pix',
-                );
-
-                $settings[] = array(
-                    'name' => 'Example',
-                    'id' => 'lkn_payment_pix_setting_field',
-                    'desc' => 'Example descriptions',
-                    'type' => 'text',
-                );
-
-                $settings[] = array(
-                    'id' => 'lkn-payment-pix',
-                    'type' => 'sectionend',
-                );
-
-                break;
-        }// // End switch()
-
-        return $settings;
-    }
-
-    /**
-     * Add new section to "General" setting tab.
-     *
-     * @param mixed $sections
-     *
-     * @return array
-     */
-    public function add_new_setting_section($sections) {
-        // Separar palavras com travessão no atributo $sections
-        $sections['lkn-payment-pix'] = 'Pix QR Code';
-
-        return $sections;
     }
 
     /**
@@ -203,17 +159,18 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since    1.0.0
      * @access   private
      */
-    private function define_admin_hooks(): void {
-        $plugin_admin = new Payment_Gateway_Pix_For_Givewp_Admin( $this->get_plugin_name(), $this->get_version() );
+    private function define_admin_hooks(): void
+    {
+        $plugin_admin = new Payment_Gateway_Pix_For_Givewp_Admin($this->get_plugin_name(), $this->get_version());
 
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_styles' );
-        $this->loader->add_action( 'admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts' );
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
+        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
         // Register the gateways
-        $this->loader->add_action( 'givewp_register_payment_gateway', $this, 'load_payment_gateway' );
+        $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_payment_gateway');
 
-        $this->loader->add_action( 'give_get_settings_gateways', $this, 'add_setting_into_new_section' );
-        $this->loader->add_action( 'give_get_sections_gateways', $this, 'add_new_setting_section' );
+        $this->loader->add_action('give_get_settings_gateways', $plugin_admin, 'add_setting_into_new_section');
+        $this->loader->add_action('give_get_sections_gateways', $plugin_admin, 'add_new_setting_section');
     }
 
     /**
@@ -223,11 +180,12 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since    1.0.0
      * @access   private
      */
-    private function define_public_hooks(): void {
-        $plugin_public = new Payment_Gateway_Pix_For_Givewp_Public( $this->get_plugin_name(), $this->get_version() );
+    private function define_public_hooks(): void
+    {
+        $plugin_public = new Payment_Gateway_Pix_For_Givewp_Public($this->get_plugin_name(), $this->get_version());
 
-        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
-        $this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
+        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
     }
 
     /**
@@ -235,7 +193,8 @@ final class Payment_Gateway_Pix_For_Givewp {
      *
      * @since    1.0.0
      */
-    public function run(): void {
+    public function run(): void
+    {
         $this->loader->run();
     }
 
@@ -246,7 +205,8 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since     1.0.0
      * @return    string    The name of the plugin.
      */
-    public function get_plugin_name() {
+    public function get_plugin_name()
+    {
         return $this->plugin_name;
     }
 
@@ -256,7 +216,8 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since     1.0.0
      * @return    Payment_Gateway_Pix_For_Givewp_Loader    Orchestrates the hooks of the plugin.
      */
-    public function get_loader() {
+    public function get_loader()
+    {
         return $this->loader;
     }
 
@@ -266,7 +227,8 @@ final class Payment_Gateway_Pix_For_Givewp {
      * @since     1.0.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version() {
+    public function get_version()
+    {
         return $this->version;
     }
 }

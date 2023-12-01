@@ -2,6 +2,7 @@ const gateway = {
     id: 'pix-payment-gateway',
     async initialize() {
         // Aqui vai todas as funções necessárias ao carregar a página de pagamento
+
     },
     async beforeCreatePayment(values) {
         // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
@@ -27,12 +28,17 @@ const gateway = {
     // Função onde os campos HTML são criados
     Fields() {
         return (
-            <fieldset className="no-fields">
-                <h1>Hello World!</h1>
-                <input type="text" name="my-gateway-field-name" />
-            </fieldset>
+            <div style={{ textAlign: 'center' }}>
+                <p><img src={'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey)} alt={'QR Code for ' + lknAttr.pixKey} /></p>
+                <h3>Chave Pix:</h3>
+                <p>{lknAttr.pixKey}</p>
+                <p>
+                    <button onclick={"navigator.clipboard.writeText(" + lknAttr.pixKey + ")"}>Copy Pix Code</button>
+                </p>
+                <p>Payment Gateway Pix for GiveWP</p>
+            </div>
         )
-    },
+    }
 };
 
 window.givewp.gateways.register(gateway);
