@@ -26,7 +26,7 @@ const gateway = {
   },
   // Função onde os campos HTML são criados
   Fields() {
-    return /* #__PURE__ */React.createElement('span', {
+    return /* #__PURE__ */React.createElement('div', {
       style: {
         textAlign: 'center'
       }
@@ -34,8 +34,10 @@ const gateway = {
       src: 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey),
       alt: 'QR Code for ' + lknAttr.pixKey
     })), /* #__PURE__ */React.createElement('h3', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', null, lknAttr.pixKey), /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('button', {
-      onclick: 'navigator.clipboard.writeText(' + lknAttr.pixKey + ')'
-    }, 'Copy Pix Code')), /* #__PURE__ */React.createElement('p', null, 'Payment Gateway Pix for GiveWP'))
+      onClick: () => {
+        navigator.clipboard.writeText(lknAttr.pixKey)
+      }
+    }, 'Copy Pix Code')))
   }
 }
 window.givewp.gateways.register(gateway)

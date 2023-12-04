@@ -29,13 +29,14 @@ const gateway = {
     Fields() {
         return (
             <div style={{ textAlign: 'center' }}>
-                <p><img src={'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey)} alt={'QR Code for ' + lknAttr.pixKey} /></p>
+                <p>
+                    <img src={'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey)} alt={'QR Code for ' + lknAttr.pixKey} />
+                </p>
                 <h3>Chave Pix:</h3>
                 <p>{lknAttr.pixKey}</p>
                 <p>
-                    <button onclick={"navigator.clipboard.writeText(" + lknAttr.pixKey + ")"}>Copy Pix Code</button>
+                    <button onClick={() => { navigator.clipboard.writeText(lknAttr.pixKey) }}>Copy Pix Code</button>
                 </p>
-                <p>Payment Gateway Pix for GiveWP</p>
             </div>
         )
     }

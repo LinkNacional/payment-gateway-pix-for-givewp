@@ -73,39 +73,59 @@ class Payment_Gateway_Pix_For_Givewp_Admin
                 );
 
                 $settings[] = array(
+                    'name' => 'Tipo de Chave',
+                    'id' => 'lkn-payment-pix-type-setting',
+                    'desc' => 'Insira a o tipo da sua chave pix.',
+                    'type' => 'select',
+                    'options' => array(
+                        'Telefone',
+                        'CPF',
+                        'CNPJ',
+                        'E-mail',
+                        'Outro',
+                    ),
+                );
+
+                $settings[] = array(
                     'name' => 'Chave Pix',
-                    'id' => 'lkn_payment_pix_key',
-                    'desc' => 'Insira a chave Pix que deseja utilizar para receber as doações.',
+                    'id' => 'lkn-payment-pix-key',
+                    'desc' => 'Insira a chave pix que deseja utilizar nas doações.',
                     'type' => 'text',
                 );
 
                 $settings[] = array(
                     'name' => 'Nome do Beneficiário',
-                    'id' => 'lkn_payment_pix_key_name',
-                    'desc' => 'Insira o nome que está cadastrado em seu banco.',
+                    'id' => 'lkn-payment-pix-name-setting',
+                    'desc' => 'Insira o nome do beneficiário da chave.',
                     'type' => 'text',
                 );
 
                 $settings[] = array(
                     'name' => 'Cidade do Beneficiário',
-                    'id' => 'lkn_payment_pix_key_city',
-                    'desc' => 'Insira a cidade em que está cadastrada sua chave.',
+                    'id' => 'lkn-payment-pix-city-setting',
+                    'desc' => 'Insira a cidade do beneficiário da chave.',
                     'type' => 'text',
                 );
 
                 $settings[] = array(
-                    'name' => 'Identificador do Pagamento (opcional)',
-                    'id' => 'lkn_payment_pix_key_optid',
-                    'desc' => 'Insira o identificador caso seja exigido pelo seu banco de escolha, por padrão será utilizado o identificador \'***\'.',
+                    'name' => 'Identificador de Pagamento (opcional)',
+                    'id' => 'lkn-payment-pix-paymentid-setting',
+                    'desc' => 'Insira o identificador de pagamento do banco, não obrigatório.',
                     'type' => 'text',
-                    'default' => '***',
                 );
 
                 $settings[] = array(
                     'name' => 'Habilitar Modo de Depuração',
-                    'id' => 'lkn_payment_pix_log_toggle',
+                    'id' => 'lkn-payment-pix-log-setting',
                     'type' => 'checkbox',
                     'desc' => 'Clique para habilitar o modo de depuração',
+                );
+
+                $settings[] = array(
+                    'name' => 'Coletar Detalhes de Cobrança',
+                    'id' => 'lkn-payment-pix-details-setting',
+                    'type' => 'checkbox',
+                    'desc' => 'Clique para adicionar detalhes de endereço de cobrança aos forms.',
                 );
 
                 $settings[] = array(
