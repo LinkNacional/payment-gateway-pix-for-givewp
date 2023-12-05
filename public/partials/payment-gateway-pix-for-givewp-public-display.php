@@ -23,7 +23,7 @@
     <p style='word-wrap: break-word;'>
         <?php esc_attr_e($args['qr']); ?>
     </p>
-    <p><button class="copy-button" onclick="navigator.clipboard.writeText('<?php esc_attr_e($args['qr']); ?>')">Copiar a Chave</button></p>
+    <p><button type='button' class="copy-button" onclick="navigator.clipboard.writeText('<?php esc_attr_e($args['qr']); ?>')">Copiar a Chave</button></p>
 </div>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
