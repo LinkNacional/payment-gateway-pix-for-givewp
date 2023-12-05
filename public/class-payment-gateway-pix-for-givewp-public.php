@@ -50,7 +50,7 @@ class Payment_Gateway_Pix_For_Givewp_Public
     public function __construct($plugin_name, $version)
     {
 
-        $this->plugin_name = $plugin_name.'-public';
+        $this->plugin_name = $plugin_name . '-public';
         $this->version = $version;
 
     }

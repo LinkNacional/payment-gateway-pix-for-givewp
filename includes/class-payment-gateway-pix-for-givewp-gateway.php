@@ -103,21 +103,21 @@ final class PixGatewayClass extends PaymentGateway
 
     public function getQrCodeFromSettings(string $keyType, string $key, string $keyName, string $keyCity, string $keyId = '***', string $amount = ''): string
     {
-        $pix_key  = (($keyType === 'Telefone') || (substr($key, 0, 3) === '+55')) ? $key : '+55'.$key;
-        $pix_name = $this->cleanString((strlen($keyName)>25) ? substr($keyName, 0, 25) : $keyName);
-        $pix_city = $this->cleanString((strlen($keyCity)>15) ? substr($keyCity, 0, 15) : $keyCity);
+        $pix_key  = (($keyType === 'Telefone') || (substr($key, 0, 3) === '+55')) ? $key : '+55' . $key;
+        $pix_name = $this->cleanString((strlen($keyName) > 25) ? substr($keyName, 0, 25) : $keyName);
+        $pix_city = $this->cleanString((strlen($keyCity) > 15) ? substr($keyCity, 0, 15) : $keyCity);
 
-        $qr = '000201'.                                                                                                 // (00 Payload Format Indicator)
-        '26'.sprintf("%02d", 22 + strlen($pix_key)).                                                                    // (26 Merchant Account Information)
-        '0014BR.GOV.BCB.PIX'.                                                                                               // (00 GUI - Default br.gov.bcb.pix)
-        '01'.sprintf("%02d", strlen($pix_key)).$pix_key.                                                                    // (01 Chave Pix)
-        '52040000'.                                                                                                     // (52 Merchant Category Code)
-        '5303986'.                                                                                                      // (53 Transaction  Currency - BRL 986)
-        ((strlen($amount)===0) ? '' : ('54'.sprintf("%02d", strlen($amount)).$amount)).                                 // (54 Transaction Amount - Optional)
-        '5802BR'.                                                                                                       // (58 Country Code - BR)
-        '59'.sprintf("%02d", strlen($pix_name)).$pix_name.                                                              // (59 Merchant Name)
-        '60'.sprintf("%02d", strlen($pix_city)).$pix_city.                                                              // (60 Merchant City)
-        '62'.sprintf("%02d", 4 + strlen($keyId)).'05'.sprintf("%02d", strlen($keyId)).$keyId.'6304';                    // (62 Additional Data Field - Default ***)
+        $qr = '000201' .                                                                                                 // (00 Payload Format Indicator)
+        '26' . sprintf("%02d", 22 + strlen($pix_key)) .                                                                    // (26 Merchant Account Information)
+        '0014BR.GOV.BCB.PIX' .                                                                                               // (00 GUI - Default br.gov.bcb.pix)
+        '01' . sprintf("%02d", strlen($pix_key)) . $pix_key .                                                                    // (01 Chave Pix)
+        '52040000' .                                                                                                     // (52 Merchant Category Code)
+        '5303986' .                                                                                                      // (53 Transaction  Currency - BRL 986)
+        ((strlen($amount) === 0) ? '' : ('54' . sprintf("%02d", strlen($amount)) . $amount)) .                                 // (54 Transaction Amount - Optional)
+        '5802BR' .                                                                                                       // (58 Country Code - BR)
+        '59' . sprintf("%02d", strlen($pix_name)) . $pix_name .                                                              // (59 Merchant Name)
+        '60' . sprintf("%02d", strlen($pix_city)) . $pix_city .                                                              // (60 Merchant City)
+        '62' . sprintf("%02d", 4 + strlen($keyId)) . '05' . sprintf("%02d", strlen($keyId)) . $keyId . '6304';                    // (62 Additional Data Field - Default ***)
         $qr .= $this->crcChecksum($qr);                                                                            // (63 CRC16 Chcksum)
 
         return $qr;
@@ -130,9 +130,9 @@ final class PixGatewayClass extends PaymentGateway
     {
         $qr = $this->getQrCodeFromSettings(give_get_option('lkn-payment-pix-type-setting'), give_get_option('lkn-payment-pix-key'), give_get_option('lkn-payment-pix-name-setting'), give_get_option('lkn-payment-pix-city-setting'));
 
-        //load_template(PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'public/partials/payment-gateway-pix-for-givewp-public-display.php', true);
+        load_template(plugin_dir_path(__DIR__) . 'public/partials/payment-gateway-pix-for-givewp-public-display.php', true, array( 'qr' => $qr, ));
 
-        return "<div class='form-donation'>".$qr.get_template()."</div>";
+        return "";
     }
 
     /**

@@ -13,18 +13,17 @@
  */
 ?>
 
-<!--  TODO: Insert form import -->
 <!--  TODO: Adicionar reatividade de tela -->
-<div style='text-align: center; max-width: 500px;'>
+<link rel="stylesheet" href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css">
+<div class='form-donation'>
     <p>
-        <img src='https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=<?php esc_attr_e(urlencode($args['qr'])); ?>' alt='QR Code for <?php esc_attr_e($args['qr']); ?>'/>
+        <img src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=<?php esc_attr_e(urlencode($args['qr'])); ?>' alt='QR Code for <?php esc_attr_e($args['qr']); ?>'/>
     </p>
-    <h3>Chave Pix:</h3>
-    <p>
+    <h4>Chave Pix:</h4>
+    <p style='word-wrap: break-word;'>
         <?php esc_attr_e($args['qr']); ?>
-        <button onclick="navigator.clipboard.writeText('<?php esc_attr_e($args['qr']); ?>')">Copy Pix Code</button>
     </p>
-    <p>Payment Gateway Pix for GiveWP</p>
+    <p><button class="copy-button" onclick="navigator.clipboard.writeText('<?php esc_attr_e($args['qr']); ?>')">Copiar a Chave</button></p>
 </div>
 
 <!-- This file should primarily consist of HTML with a little bit of PHP. -->
