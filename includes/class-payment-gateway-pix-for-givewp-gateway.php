@@ -130,7 +130,14 @@ final class PixGatewayClass extends PaymentGateway
     {
         $qr = $this->getQrCodeFromSettings(give_get_option('lkn-payment-pix-type-setting'), give_get_option('lkn-payment-pix-key'), give_get_option('lkn-payment-pix-name-setting'), give_get_option('lkn-payment-pix-city-setting'));
 
-        load_template(PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'public/partials/payment-gateway-pix-for-givewp-public-display.php', true, array( 'qr' => $qr, ));
+        load_template(PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'public/partials/payment-gateway-pix-for-givewp-public-display.php', true, array(
+            'pixType' => give_get_option('lkn-payment-pix-type-setting'),
+            'pixKey' => give_get_option('lkn-payment-pix-key'),
+            'pixName' => give_get_option('lkn-payment-pix-name-setting'),
+            'pixCity' => give_get_option('lkn-payment-pix-city-setting'),
+            'formId' => $formId,
+            'isFormEnabled' => (give_get_option('lkn-payment-pix-details-setting') === 'enabled') ? true : false,
+        ));
 
         return "";
     }
@@ -148,6 +155,7 @@ final class PixGatewayClass extends PaymentGateway
             PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION,
             true
         );
+
 
         wp_localize_script(
             self::id(),

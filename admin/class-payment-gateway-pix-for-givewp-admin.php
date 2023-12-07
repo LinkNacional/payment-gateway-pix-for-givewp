@@ -50,7 +50,7 @@ class Payment_Gateway_Pix_For_Givewp_Admin
     public function __construct($plugin_name, $version)
     {
 
-        $this->plugin_name = $plugin_name.'-admin';
+        $this->plugin_name = $plugin_name . '-admin';
         $this->version = $version;
 
     }
@@ -116,16 +116,26 @@ class Payment_Gateway_Pix_For_Givewp_Admin
 
                 $settings[] = array(
                     'name' => 'Habilitar Modo de Depuração',
+                    'desc' => 'Selecione se deseja habilitar o modo de depuração.',
                     'id' => 'lkn-payment-pix-log-setting',
-                    'type' => 'checkbox',
-                    'desc' => 'Clique para habilitar o modo de depuração',
+                    'type' => 'radio_inline',
+                    'default' => 'disabled',
+                    'options' => [
+                        'enabled' => 'Habilitar',
+                        'disabled' => 'Desabilitar',
+                    ],
                 );
 
                 $settings[] = array(
-                    'name' => 'Coletar Detalhes de Cobrança',
+                    'name' => 'Habilitar Coleta de Detalhes de Cobrança',
+                    'desc' => 'Selecione se deseja adicionar detalhes de endereço de cobrança aos forms (apenas para formulários legado).',
                     'id' => 'lkn-payment-pix-details-setting',
-                    'type' => 'checkbox',
-                    'desc' => 'Clique para adicionar detalhes de endereço de cobrança aos forms.',
+                    'type' => 'radio_inline',
+                    'default' => 'disabled',
+                    'options' => [
+                        'enabled' => 'Habilitar',
+                        'disabled' => 'Desabilitar',
+                    ],
                 );
 
                 $settings[] = array(

@@ -30,12 +30,12 @@ const gateway = {
         return (
             <div style={{ textAlign: 'center' }}>
                 <p>
-                    <img src={'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey)} alt={'QR Code for ' + lknAttr.pixKey} />
+                    <img src={'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(lknAttr.pixKey)} alt={'QR Code for ' + lknAttr.pixKey} />
                 </p>
                 <h3>Chave Pix:</h3>
                 <p>{lknAttr.pixKey}</p>
                 <p>
-                    <button onClick={() => { navigator.clipboard.writeText(lknAttr.pixKey) }}>Copy Pix Code</button>
+                    <button type='button' onClick={() => { navigator.clipboard.writeText(lknAttr.pixKey) }}>Copy Pix Code</button>
                 </p>
             </div>
         )

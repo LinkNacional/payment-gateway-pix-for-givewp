@@ -6,10 +6,15 @@
 .copy-button {
     color: white;
     text-decoration: none;
-    background-color: #29c77b;
-    padding: 10px;
-    border-radius: 5px;
+    background-color: #28c77b;
+    padding: 12px;
+    border-radius: 4px;
     border: none;
+    cursor: pointer;
+}
+
+.copy-button:hover {
+    background-color: #2eee94;
 }
 
 .form-donation {

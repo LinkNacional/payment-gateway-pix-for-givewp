@@ -31,9 +31,10 @@ const gateway = {
         textAlign: 'center'
       }
     }, /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('img', {
-      src: 'https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl=' + encodeURIComponent(lknAttr.pixKey),
+      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(lknAttr.pixKey),
       alt: 'QR Code for ' + lknAttr.pixKey
     })), /* #__PURE__ */React.createElement('h3', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', null, lknAttr.pixKey), /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('button', {
+      type: 'button',
       onClick: () => {
         navigator.clipboard.writeText(lknAttr.pixKey)
       }
