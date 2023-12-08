@@ -54,10 +54,12 @@
     return hex
   }
 
-  function pixBuilder(keyType, key, keyName, keyCity, keyId = '***', amount = '') {
-    const pixKey = ((keyType !== 'Telefone') || (key.substr(0, 3) === '+55')) ? key : '+55' + key
+  function pixBuilder(keyType, key, keyName, keyCity, amount = '', keyId = '***') {
+    // TODO: Estudar necessidade de modificação de chaves cpf, cnpj ou email e implementar se necessário
+    const pixKey = ((keyType !== 'tel') || (key.substr(0, 3) === '+55')) ? key : '+55' + key
     const pixName = (keyName.length > 25) ? keyName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : keyName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     const pixCity = (keyCity.length > 15) ? keyCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : keyCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const pixAmount = amount
 
     // (00 Payload Format Indicator)
     // (26 Merchant Account Information)
@@ -76,7 +78,7 @@
     qr += '0014BR.GOV.BCB.PIX'
     qr += '01' + pixKey.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixKey
     qr += '52040000'
-    qr += '5303986' + ((amount.length === 0) ? '' : ('54' + amount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + amount))
+    qr += '5303986' + ((pixAmount.length === 0) ? '' : ('54' + pixAmount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixAmount))
     qr += '5802BR'
     qr += '59' + pixName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixName
     qr += '60' + pixCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixCity
@@ -87,18 +89,51 @@
     return qr
   }
 
-  function qrCode(pix) {
-    return "<img src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURI(pix) + "' alt='QR Code for " + pix + "'/>"
+  function changeForm(iframe) {
+    const pixType = iframe.contents().find('input[id="pix_type"]').val()
+    const pixKey = iframe.contents().find('input[id="pix_key"]').val()
+    const pixName = iframe.contents().find('input[id="pix_name"]').val()
+    const pixCity = iframe.contents().find('input[id="pix_city"]').val()
+    const isv3 = !!iframe.contents().find('div[class="givewp-elements-donationSummary__list__item__value"]').length
+    const auxAmount = isv3 ? iframe.contents().find('div[class="givewp-elements-donationSummary__list__item__value"]').html().substr(8).replace(',', '.') : iframe.contents().find('th[data-tag="total"]').text().substr(2)
+    const amount = isv3 ? auxAmount : (parseFloat(auxAmount.replace(/[\D]+/g, '')).toFixed(2) === 'NaN') ? '' : parseFloat(auxAmount.replace(/[\D]+/g, '')).toFixed(2)
+
+    const pix = pixBuilder(pixType, pixKey, pixName, pixCity, amount)
+    iframe.contents().find('p[id="qr"]').html("<img src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for " + pix + "'/>")
+    iframe.contents().find('p[id="pix"]').html(pix)
+    iframe.contents().find('p[id="copy-pix"]').html('<button type="button" class="copy-button" onclick="navigator.clipboard.writeText(\'' + pix + '\')">Copiar a Chave</button>')
   }
 
+  // TODO: fix on 3.0
   $(window).on('load', function () {
-    const iframe = $('iframe[name="give-embed-form"]')
+    const iframe = $('iframe')
     if (!iframe.length) {
       return
     }
-    const pix = pixBuilder('Telefone', '19998513603', 'João Bueno', 'São Carlos')
-    iframe.contents().find('p[id="qr"]').append(qrCode(pix))
-    iframe.contents().find('p[id="pix"]').append(pix)
-    iframe.contents().find('p[id="copy-pix"]').append('<button type="button" class="copy-button" onclick="navigator.clipboard.writeText(\'' + pix + '\')">Copiar a Chave</button>')
+
+    changeForm(iframe)
+
+    const isv3 = !!iframe.contents().find('div[class="givewp-elements-donationSummary__list__item__value"]').length
+    if (isv3) {
+      iframe.contents().find('button[class="give-btn advance-btn"]').on('click', function () {
+        changeForm(iframe)
+      })
+
+      iframe.contents().find('input[id="pix-payment-gateway"]').on('change', function () {
+        changeForm(iframe)
+      })
+    } else {
+      iframe.contents().find('button[class="give-btn advance-btn"]').on('click', function () {
+        changeForm(iframe)
+      })
+
+      iframe.contents().find('input[value="pix-payment-gateway"]').on('change', function () {
+        // TODO: change delay into waiting for component to load (which component?) (maybe keep trying until loads?)
+        setTimeout(
+          function () {
+            changeForm(iframe)
+          }, 5000)
+      })
+    }
   })
 })(jQuery)

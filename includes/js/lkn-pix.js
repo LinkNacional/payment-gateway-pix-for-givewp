@@ -28,17 +28,32 @@ const gateway = {
   Fields() {
     return /* #__PURE__ */React.createElement('div', {
       style: {
-        textAlign: 'center'
+        textAlign: 'center',
+        maxWidth: '648px'
       }
-    }, /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('img', {
-      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(lknAttr.pixKey),
-      alt: 'QR Code for ' + lknAttr.pixKey
-    })), /* #__PURE__ */React.createElement('h3', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', null, lknAttr.pixKey), /* #__PURE__ */React.createElement('p', null, /* #__PURE__ */React.createElement('button', {
-      type: 'button',
-      onClick: () => {
-        navigator.clipboard.writeText(lknAttr.pixKey)
-      }
-    }, 'Copy Pix Code')))
+    }, /* #__PURE__ */React.createElement('input', {
+      type: 'hidden',
+      id: 'pix_type',
+      value: lknAttr.pixType
+    }), /* #__PURE__ */React.createElement('input', {
+      type: 'hidden',
+      id: 'pix_key',
+      value: lknAttr.pixKey
+    }), /* #__PURE__ */React.createElement('input', {
+      type: 'hidden',
+      id: 'pix_name',
+      value: lknAttr.pixName
+    }), /* #__PURE__ */React.createElement('input', {
+      type: 'hidden',
+      id: 'pix_city',
+      value: lknAttr.pixCity
+    }), /* #__PURE__ */React.createElement('h3', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', {
+      id: 'qr'
+    }), /* #__PURE__ */React.createElement('p', {
+      id: 'pix'
+    }), /* #__PURE__ */React.createElement('p', {
+      id: 'copy-pix'
+    }))
   }
 }
 window.givewp.gateways.register(gateway)

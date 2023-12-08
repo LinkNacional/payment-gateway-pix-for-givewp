@@ -28,15 +28,31 @@ const gateway = {
     // Função onde os campos HTML são criados
     Fields() {
         return (
-            <div style={{ textAlign: 'center' }}>
-                <p>
-                    <img src={'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(lknAttr.pixKey)} alt={'QR Code for ' + lknAttr.pixKey} />
-                </p>
+            <div style={{ textAlign: 'center', maxWidth: '648px' }}>
+                <input
+                    type="hidden"
+                    id="pix_type"
+                    value={lknAttr.pixType}
+                />
+                <input
+                    type="hidden"
+                    id="pix_key"
+                    value={lknAttr.pixKey}
+                />
+                <input
+                    type="hidden"
+                    id="pix_name"
+                    value={lknAttr.pixName}
+                />
+                <input
+                    type="hidden"
+                    id="pix_city"
+                    value={lknAttr.pixCity}
+                />
                 <h3>Chave Pix:</h3>
-                <p>{lknAttr.pixKey}</p>
-                <p>
-                    <button type='button' onClick={() => { navigator.clipboard.writeText(lknAttr.pixKey) }}>Copy Pix Code</button>
-                </p>
+                <p id='qr'></p>
+                <p id='pix'></p>
+                <p id='copy-pix'></p>
             </div>
         )
     }
