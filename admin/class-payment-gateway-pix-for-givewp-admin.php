@@ -74,16 +74,17 @@ class Payment_Gateway_Pix_For_Givewp_Admin
 
                 $settings[] = array(
                     'name' => 'Tipo de Chave',
-                    'id' => 'lkn-payment-pix-type-setting',
                     'desc' => 'Insira a o tipo da sua chave pix.',
+                    'id' => 'lkn-payment-pix-type-setting',
                     'type' => 'select',
-                    'options' => array(
-                        'Telefone',
-                        'CPF',
-                        'CNPJ',
-                        'E-mail',
-                        'Outro',
-                    ),
+                    'default' => 'tel',
+                    'options' => [
+                        'tel' => 'Telefone',
+                        'cpf' => 'CPF',
+                        'cnpj' => 'CNPJ',
+                        'email' => 'E-mail',
+                        'other' => 'Outro',
+                    ],
                 );
 
                 $settings[] = array(
