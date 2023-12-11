@@ -28,7 +28,7 @@ const gateway = {
     // Função onde os campos HTML são criados
     Fields() {
         return (
-            <div style={{ textAlign: 'center', maxWidth: '648px' }}>
+            <div style={{ textAlign: 'center', maxWidth: '550px' }}>
                 <input
                     type="hidden"
                     id="pix_type"
@@ -51,7 +51,7 @@ const gateway = {
                 />
                 <h3>Chave Pix:</h3>
                 <p id='qr'></p>
-                <p id='pix'></p>
+                <p id='pix'>Carregando</p>
                 <p id='copy-pix'></p>
             </div>
         )

@@ -29,7 +29,7 @@ const gateway = {
     return /* #__PURE__ */React.createElement('div', {
       style: {
         textAlign: 'center',
-        maxWidth: '648px'
+        maxWidth: '550px'
       }
     }, /* #__PURE__ */React.createElement('input', {
       type: 'hidden',
@@ -51,7 +51,7 @@ const gateway = {
       id: 'qr'
     }), /* #__PURE__ */React.createElement('p', {
       id: 'pix'
-    }), /* #__PURE__ */React.createElement('p', {
+    }, 'Carregando'), /* #__PURE__ */React.createElement('p', {
       id: 'copy-pix'
     }))
   }

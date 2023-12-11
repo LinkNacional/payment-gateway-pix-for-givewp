@@ -49,6 +49,7 @@
         id='pix'
         style='word-wrap: break-word;'
     >
+    Carregando
     </p>
     <p id='copy-pix'></p>
 </div>
