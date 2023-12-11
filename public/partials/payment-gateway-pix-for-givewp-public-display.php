@@ -40,10 +40,9 @@
 >
 <div id="lkn-pix-form-donation" class='form-donation'>
     <?php
-        echo "<h3>Detalhes de Cobrança</h3>";
 ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) : '' ;
 ?>
-    <h3>Chave Pix:</h3>
+    <legend>Chave Pix:</legend>
     <p id='qr'></p>
     <p
         id='pix'

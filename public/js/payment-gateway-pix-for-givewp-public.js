@@ -69,6 +69,7 @@
     const isLegacy = !!iframe.contents().find('span[class="give-final-total-amount"]')
     const aux = isLegacy ? iframe.contents().find('span[class="give-final-total-amount"]').text().replace(',', '.').substr(6) : iframe.contents().find('th[data-tag="total"]').text().substr(2).replace(/[\D]+/g, '')
     const amount = parseFloat(aux).toFixed(2)
+    console.log(amount)
 
     const pix = pixBuilder(pixType, pixKey, pixName, pixCity, amount)
     iframe.contents().find('p[id="qr"]').html("<img src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for " + pix + "'/>")
@@ -76,7 +77,7 @@
     iframe.contents().find('p[id="copy-pix"]').html('<button type="button" ' + ($('iframe').length ? 'class="copy-button" ' : '') + 'onclick="navigator.clipboard.writeText(\'' + pix + '\')">Copiar a Chave</button>')
   }
 
-  // TODO: fix on 3.0
+  // TODO: test amount update on legacy
   $(window).on('load', function () {
     const iframe = $('iframe').length ? $('iframe') : $('div[id="content"]')
     if (!iframe.length) {
@@ -87,6 +88,11 @@
     changeForm(iframe)
 
     iframe.contents().find('button[class="give-btn advance-btn"]').on('click', function () {
+      changeForm(iframe)
+    })
+
+    iframe.contents().find('button[class="give-btn give-btn-modal"]').on('click', function () {
+      console.log('changed')
       changeForm(iframe)
     })
 
