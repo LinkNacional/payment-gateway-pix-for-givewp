@@ -38,7 +38,7 @@
     rel="stylesheet"
     href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css"
 >
-<div class='form-donation'>
+<div id="lkn-pix-form-donation" class='form-donation'>
     <?php
         echo "<h3>Detalhes de Cobrança</h3>";
 ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) : '' ;
@@ -49,7 +49,7 @@
         id='pix'
         style='word-wrap: break-word;'
     >
-    Carregando
+    Carregando. Caso a chave não tiver carregando, selecione outra opção de pagamento e então selecione pagamento por Pix novamente.
     </p>
     <p id='copy-pix'></p>
 </div>
