@@ -159,6 +159,7 @@ final class PixGatewayClass extends PaymentGateway
             self::id(),
             'lknAttr',
             [
+                'pluginUrl' => PAYMENT_GATEWAY_PIX_PLUGIN_URL,
                 'pixType' => give_get_option('lkn-payment-pix-type-setting'),
                 'pixKey' => give_get_option('lkn-payment-pix-key'),
                 'pixName' => give_get_option('lkn-payment-pix-name-setting'),

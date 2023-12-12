@@ -89,10 +89,9 @@
     )
   }
 
-  // TODO: Ver se posso colocar o v3 aqui novamente
   $(window).on('load', function () {
     const iframe = $('iframe').length ? $('iframe') : $('body')
-    if (!iframe.length) {
+    if (!iframe.length || iframe.contents().find('form[id="give-next-gen"]').length) {
       return
     }
 
