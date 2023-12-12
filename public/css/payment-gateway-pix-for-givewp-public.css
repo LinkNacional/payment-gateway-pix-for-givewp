@@ -4,29 +4,43 @@
  */
 
 .copy-button {
-    color: white;
-    text-decoration: none;
-    background-color: #28c77b;
-    padding: 12px;
-    border-radius: 4px;
+    background-color: transparent;
     border: none;
-    cursor: pointer;
 }
 
 .copy-button:hover {
-    background-color: #2eee94;
+    opacity: 60%;
+    cursor: pointer;
 }
 
-.form-donation {
-    text-align: center;
-    text-wrap: balance;
-    max-width: 472px;
+.copy-button:active {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+.pix-content {
+    overflow: hidden;
+    width: 32em;
+}
+
+#lkn-pix-form-donation {
+    max-width: inherit;
 }
 
 @media only screen and (max-width: 572px) {
-    .form-donation {
-        text-align: center;
-        text-wrap: balance;
+    #lkn-pix-form-donation {
         max-width: 80vw;
     }
+}
+
+.pix-container {
+    max-width: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+    text-align: center;
+    text-wrap: balance;
+    word-wrap: break-word;
 }

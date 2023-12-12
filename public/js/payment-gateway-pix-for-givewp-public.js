@@ -3,6 +3,12 @@
 (function ($) {
   'use strict'
 
+  let isLegacy
+  let pixType
+  let pixKey
+  let pixName
+  let pixCity
+
   function crcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
@@ -26,12 +32,11 @@
     return hex
   }
 
-  function pixBuilder(keyType, key, keyName, keyCity, amount = '', keyId = '***') {
+  function pixBuilder(amount = '', keyId = '***') {
     // TODO: Estudar necessidade de modificação de chaves cpf, cnpj ou email e implementar se necessário
-    const pixKey = ((keyType !== 'tel') || (key.substr(0, 3) === '+55')) ? key : '+55' + key
-    const pixName = (keyName.length > 25) ? keyName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : keyName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    const pixCity = (keyCity.length > 15) ? keyCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : keyCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    const pixAmount = amount
+    const key = ((pixType !== 'tel') || (pixKey.substr(0, 3) === '+55')) ? pixKey : '+55' + pixKey
+    const keyName = (pixName.length > 25) ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    const keyCity = (pixCity.length > 15) ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
     // (00 Payload Format Indicator)
     // (26 Merchant Account Information)
@@ -46,14 +51,14 @@
     // (62 Additional Data Field - Default ***)
     // (63 CRC16 Chcksum)
     let qr = '000201'
-    qr += '26' + (22 + pixKey.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
+    qr += '26' + (22 + key.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
     qr += '0014BR.GOV.BCB.PIX'
-    qr += '01' + pixKey.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixKey
+    qr += '01' + key.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + key
     qr += '52040000'
-    qr += '5303986' + ((pixAmount.length === 0) ? '' : ('54' + pixAmount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixAmount))
+    qr += '5303986' + ((amount.length === 0) ? '' : ('54' + amount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + amount))
     qr += '5802BR'
-    qr += '59' + pixName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixName
-    qr += '60' + pixCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixCity
+    qr += '59' + keyName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyName
+    qr += '60' + keyCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyCity
     qr += '62' + (4 + keyId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + keyId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyId
     qr += '6304'
     qr += crcChecksum(qr)
@@ -62,46 +67,83 @@
   }
 
   function changeForm(iframe) {
-    const pixType = iframe.contents().find('input[id="pix_type"]').val()
-    const pixKey = iframe.contents().find('input[id="pix_key"]').val()
-    const pixName = iframe.contents().find('input[id="pix_name"]').val()
-    const pixCity = iframe.contents().find('input[id="pix_city"]').val()
-    const isLegacy = !!iframe.contents().find('span[class="give-final-total-amount"]')
-    const aux = isLegacy ? iframe.contents().find('span[class="give-final-total-amount"]').text().replace(',', '.').substr(6) : iframe.contents().find('th[data-tag="total"]').text().substr(2).replace(/[\D]+/g, '')
+    let aux
+    if (isLegacy) {
+      const strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
+      aux = strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]
+    } else {
+      const strAux = iframe.contents().find('th[data-tag="total"]').text().split(',')
+      aux = strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]
+    }
     const amount = parseFloat(aux).toFixed(2)
-    console.log(amount)
 
-    const pix = pixBuilder(pixType, pixKey, pixName, pixCity, amount)
+    const pix = pixBuilder(amount)
     iframe.contents().find('p[id="qr"]').html("<img src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for " + pix + "'/>")
     iframe.contents().find('p[id="pix"]').html(pix)
-    iframe.contents().find('p[id="copy-pix"]').html('<button type="button" ' + ($('iframe').length ? 'class="copy-button" ' : '') + 'onclick="navigator.clipboard.writeText(\'' + pix + '\')">Copiar a Chave</button>')
+    iframe.contents().find('p[id="copy-pix"]').html(
+      '<button type="button" class="copy-button" onclick="togglePix()" >' +
+      '<span id="show" class="material-symbols-outlined">visibility_off</span>' +
+      '<span id="hide" style="display: none;" class="material-symbols-outlined">visibility</span>' +
+      '</button>' +
+      '<button type="button" class="copy-button" onclick="navigator.clipboard.writeText(\'' + pix + '\')"><span class="material-symbols-outlined">content_copy</span></button>'
+    )
   }
 
-  // TODO: test amount update on legacy
+  // TODO: Ver se posso colocar o v3 aqui novamente
   $(window).on('load', function () {
-    const iframe = $('iframe').length ? $('iframe') : $('div[id="content"]')
+    const iframe = $('iframe').length ? $('iframe') : $('body')
     if (!iframe.length) {
-      console.log('Thats no good!')
       return
     }
 
+    pixType = iframe.contents().find('input[id="pix_type"]').val()
+    pixKey = iframe.contents().find('input[id="pix_key"]').val()
+    pixName = iframe.contents().find('input[id="pix_name"]').val()
+    pixCity = iframe.contents().find('input[id="pix_city"]').val()
+
+    isLegacy = !!document.querySelector('.give-final-total-amount')
+
+    let total
+    let mainDiv
+    let extra
+
+    const observer = new MutationObserver((target) => {
+      changeForm(iframe)
+    })
+
+    if (isLegacy) {
+      total = document.querySelector('.give-final-total-amount')
+      mainDiv = document.querySelector('#give_purchase_form_wrap')
+      extra = document.querySelector('.give-form-type-multi')
+    } else {
+      total = iframe.contents().find('th[data-tag="total"]')[0]
+      mainDiv = iframe.contents().find('div[id="give-payment-mode-wrap"]')[0]
+      extra = iframe.contents().find('div[class="give-donation-summary-table-wrapper"]')[0]
+
+      iframe.contents().find('input[value="pix-payment-gateway"]').on('change', function () {
+        setTimeout(
+          function () {
+            changeForm(iframe)
+          }, 5000)
+      })
+    }
+
+    observer.observe(total, {
+      attributes: true,
+      childList: true,
+      characterData: true
+    })
+    observer.observe(mainDiv, {
+      attributes: true,
+      childList: true,
+      characterData: true
+    })
+    observer.observe(extra, {
+      attributes: true,
+      childList: true,
+      characterData: true
+    })
+
     changeForm(iframe)
-
-    iframe.contents().find('button[class="give-btn advance-btn"]').on('click', function () {
-      changeForm(iframe)
-    })
-
-    iframe.contents().find('button[class="give-btn give-btn-modal"]').on('click', function () {
-      console.log('changed')
-      changeForm(iframe)
-    })
-
-    iframe.contents().find('input[value="pix-payment-gateway"]').on('change', function () {
-      // TODO: change delay into waiting for component to load (which component?) (maybe keep trying until loads?)
-      setTimeout(
-        function () {
-          changeForm(iframe)
-        }, 5000)
-    })
   })
 })(jQuery)
