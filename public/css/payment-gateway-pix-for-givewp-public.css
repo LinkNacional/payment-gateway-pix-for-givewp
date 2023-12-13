@@ -3,24 +3,36 @@
  * included in this file.
  */
 
-.copy-button {
+#toggle-viewing,
+#copy-button {
     background-color: transparent;
     border: none;
 }
 
-.copy-button:hover {
+#toggle-viewing:hover,
+#copy-button:hover {
     opacity: 60%;
     cursor: pointer;
 }
 
-.copy-button:active {
+#toggle-viewing:active,
+#copy-button:active {
     opacity: 80%;
     cursor: pointer;
 }
 
-.pix-content {
-    overflow: hidden;
-    width: 32em;
+#pix {
+    width: 250px;
+    text-align: center;
+    text-wrap: balance;
+    word-wrap: break-word;
+    margin: 0px;
+    margin-bottom: 12px;
+}
+
+#copy-pix,
+#qr {
+    margin: 0px;
 }
 
 #lkn-pix-form-donation {
@@ -40,7 +52,4 @@
     align-items: center;
     align-content: center;
     align-self: center;
-    text-align: center;
-    text-wrap: balance;
-    word-wrap: break-word;
 }

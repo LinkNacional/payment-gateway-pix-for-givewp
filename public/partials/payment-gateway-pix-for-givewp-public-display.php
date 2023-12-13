@@ -34,37 +34,24 @@
     value="<?php esc_attr_e($args['pixCity']) ?>"
 />
 
-<script>
-function togglePix() {
-    const pix = document.getElementById('pix')
-    const hide = document.getElementById('hide')
-    const show = document.getElementById('show')
-
-    if (pix.style.display === "none") {
-        show.style.display = "none"
-        hide.style.display = "block"
-        pix.style.display = "block"
-    } else {
-        show.style.display = "block"
-        hide.style.display = "none"
-        pix.style.display = "none"
-    }
-}
-</script>
-
 <link rel="stylesheet" href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <div id="lkn-pix-form-donation">
-    <?php
-($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) : '' ;
-?>
+    <?php ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) : '' ; ?>
     <br/>
     <legend>Chave Pix:</legend>
     <div class='pix-container'>
         <p id='qr'>Carregando...</p>
-        <p id='pix' class="pix-content" style="display: none;"></p>
-        <br/>
-        <p id='copy-pix'></p>
+        <p id='pix'></p>
+        <p id='copy-pix' style="display: none;" >
+            <button id="toggle-viewing" type="button" title="Mostrar Pix">
+                <span id="show" class="material-symbols-outlined" style="display: none;">visibility_off</span>
+                <span id="hide" class="material-symbols-outlined">visibility</span>
+            </button>
+            <button id="copy-button" type="button" title="Copiar Pix">
+                <span class="material-symbols-outlined">content_copy</span>
+            </button>
+        </p>
     </div>
 </div>
 

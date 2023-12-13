@@ -3,11 +3,16 @@
 (function ($) {
   'use strict'
 
-  let isLegacy
+  // Pix contents
   let pixType
   let pixKey
   let pixName
   let pixCity
+  let pix
+
+  // Frame info
+  let isLegacy
+  let iframe
 
   function crcChecksum(string) {
     let crc = 0xFFFF
@@ -66,31 +71,61 @@
     return qr
   }
 
-  function changeForm(iframe) {
-    let aux
-    if (isLegacy) {
-      const strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
-      aux = strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]
-    } else {
-      const strAux = iframe.contents().find('th[data-tag="total"]').text().split(',')
-      aux = strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]
-    }
-    const amount = parseFloat(aux).toFixed(2)
+  let catchTimer
+  function changeForm() {
+    try {
+      let strAux
+      if (isLegacy) {
+        strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
+      } else {
+        strAux = iframe.contents().find('th[data-tag="total"]').text().split(',')
+      }
+      const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
 
-    const pix = pixBuilder(amount)
-    iframe.contents().find('p[id="qr"]').html("<img src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for " + pix + "'/>")
-    iframe.contents().find('p[id="pix"]').html(pix)
-    iframe.contents().find('p[id="copy-pix"]').html(
-      '<button type="button" class="copy-button" onclick="togglePix()" >' +
-      '<span id="show" class="material-symbols-outlined">visibility_off</span>' +
-      '<span id="hide" style="display: none;" class="material-symbols-outlined">visibility</span>' +
-      '</button>' +
-      '<button type="button" class="copy-button" onclick="navigator.clipboard.writeText(\'' + pix + '\')"><span class="material-symbols-outlined">content_copy</span></button>'
-    )
+      pix = pixBuilder(amount)
+      iframe.contents().find('p[id="qr"]').html("<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>")
+      iframe.contents().find('p[id="pix"]').html(pix)
+      iframe.contents().find('button[id="toggle-viewing"]').off('click')
+      iframe.contents().find('button[id="copy-button"]').off('click')
+      iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
+        togglePix()
+      })
+      iframe.contents().find('button[id="copy-button"]').on('click', () => {
+        navigator.clipboard.writeText(pix)
+      })
+
+      const btn = iframe.contents().find('p[id="copy-pix"]')[0]
+      btn.style.display = 'block'
+    } catch (e) {
+      console.log(e)
+
+      clearTimeout(catchTimer)
+      catchTimer = setTimeout(
+        function () {
+          changeForm()
+        }, 2000
+      )
+    }
+  }
+
+  function togglePix() {
+    const pixElement = iframe.contents().find('p[id="pix"]')[0]
+    const hideElement = iframe.contents().find('span[id="hide"]')[0]
+    const showElement = iframe.contents().find('span[id="show"]')[0]
+
+    if (pixElement.style.display === 'none') {
+      showElement.style.display = 'none'
+      hideElement.style.display = 'block'
+      pixElement.style.display = 'block'
+    } else {
+      showElement.style.display = 'block'
+      hideElement.style.display = 'none'
+      pixElement.style.display = 'none'
+    }
   }
 
   $(window).on('load', function () {
-    const iframe = $('iframe').length ? $('iframe') : $('body')
+    iframe = $('iframe').length ? $('iframe') : $('body')
     if (!iframe.length || iframe.contents().find('form[id="give-next-gen"]').length) {
       return
     }
@@ -102,47 +137,67 @@
 
     isLegacy = !!document.querySelector('.give-final-total-amount')
 
+    iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
+      togglePix()
+    })
+    iframe.contents().find('button[id="copy-button"]').on('click', () => {
+      navigator.clipboard.writeText(pix)
+    })
+
     let total
     let mainDiv
     let extra
-
-    const observer = new MutationObserver((target) => {
-      changeForm(iframe)
-    })
-
+    // TODO: change into single const once v3 is implemented
     if (isLegacy) {
       total = document.querySelector('.give-final-total-amount')
       mainDiv = document.querySelector('#give_purchase_form_wrap')
       extra = document.querySelector('.give-form-type-multi')
     } else {
       total = iframe.contents().find('th[data-tag="total"]')[0]
-      mainDiv = iframe.contents().find('div[id="give-payment-mode-wrap"]')[0]
-      extra = iframe.contents().find('div[class="give-donation-summary-table-wrapper"]')[0]
+      mainDiv = iframe.contents().find('div[class="give-gateway-details"]')[0]
+      extra = iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0] // extra = iframe.contents().find('div[class="give-donation-summary-table-wrapper"]')[0]
 
-      iframe.contents().find('input[value="pix-payment-gateway"]').on('change', function () {
+      iframe.contents().find('input[id="give-amount"]').on('change', function () {
+        console.log('writing..')
+        console.log(total)
+        console.log(mainDiv)
+        console.log(extra)
         setTimeout(
           function () {
-            changeForm(iframe)
+            changeForm()
           }, 5000)
       })
     }
 
-    observer.observe(total, {
+    const totalObserver = new MutationObserver((target) => {
+      console.log(target)
+      changeForm()
+    })
+    const mainObserver = new MutationObserver((target) => {
+      console.log(target)
+      changeForm()
+    })
+    const extraObserver = new MutationObserver((target) => {
+      console.log(total)
+      changeForm()
+    })
+
+    totalObserver.observe(total, {
       attributes: true,
       childList: true,
       characterData: true
     })
-    observer.observe(mainDiv, {
+    mainObserver.observe(mainDiv, {
       attributes: true,
       childList: true,
       characterData: true
     })
-    observer.observe(extra, {
+    extraObserver.observe(extra, {
       attributes: true,
       childList: true,
       characterData: true
     })
 
-    changeForm(iframe)
+    changeForm()
   })
 })(jQuery)

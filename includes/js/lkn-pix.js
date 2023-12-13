@@ -78,6 +78,10 @@ function writeToClipboard() {
   navigator.clipboard.writeText(pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount))
 }
 const amount = ''
+let showCode = false
+function togglePix() {
+  showCode = !showCode
+}
 const gateway = {
   id: 'pix-payment-gateway',
   async initialize() {
@@ -106,25 +110,41 @@ const gateway = {
   },
   // Função onde os campos HTML são criados
   Fields() {
-    return /* #__PURE__ */React.createElement('div', {
-      style: {
-        textAlign: 'center',
-        maxWidth: '400px'
-      }
-    }, /* #__PURE__ */React.createElement('h3', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', {
+    return /* #__PURE__ */React.createElement('div', null, /* #__PURE__ */React.createElement('link', {
+      rel: 'stylesheet',
+      href: lknAttr.pluginUrl + 'public/css/payment-gateway-pix-for-givewp-public.css'
+    }), /* #__PURE__ */React.createElement('link', {
+      rel: 'stylesheet',
+      href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'
+    }), /* #__PURE__ */React.createElement('div', {
+      id: 'lkn-pix-form-donation'
+    }, /* #__PURE__ */React.createElement('legend', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', {
       id: 'qr'
     }, /* #__PURE__ */React.createElement('img', {
       src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)),
       alt: 'QR Code for ' + pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)
-    })), /* #__PURE__ */React.createElement('p', {
-      id: 'pix'
-    }, pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)), /* #__PURE__ */React.createElement('p', {
+    })), showCode ? /* #__PURE__ */React.createElement('p', {
+      id: 'pix',
+      class: 'pix-content'
+    }, pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)) : null, /* #__PURE__ */React.createElement('br', null), /* #__PURE__ */React.createElement('p', {
       id: 'copy-pix'
-    }, /* #__PURE__ */React.createElement('button', {
+    }, showCode, /* #__PURE__ */React.createElement('button', {
+      type: 'button',
+      class: 'copy-button',
+      onClick: togglePix
+    }, showCode ? /* #__PURE__ */React.createElement('span', {
+      id: 'show',
+      class: 'material-symbols-outlined'
+    }, 'visibility_off') : /* #__PURE__ */React.createElement('span', {
+      id: 'hide',
+      class: 'material-symbols-outlined'
+    }, 'visibility')), /* #__PURE__ */React.createElement('button', {
       type: 'button',
       class: 'copy-button',
       onClick: writeToClipboard
-    }, 'Copiar a Chave')))
+    }, /* #__PURE__ */React.createElement('span', {
+      class: 'material-symbols-outlined'
+    }, 'content_copy')))))
   }
 }
 window.givewp.gateways.register(gateway)
