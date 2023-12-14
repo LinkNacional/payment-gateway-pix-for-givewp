@@ -1,3 +1,9 @@
+// Pix content
+let pixType
+let pixKey
+let pixName
+let pixCity
+let pix
 function crcChecksum(string) {
   let crc = 0xFFFF
   const strlen = string.length
@@ -18,12 +24,16 @@ function crcChecksum(string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
-function pixBuilder(keyType, key, keyName, keyCity, amount = '', keyId = '***') {
+function pixBuilder(amount = '', keyId = '***') {
+  const pixType = lknAttr.pixType
+  const pixKey = lknAttr.pixKey
+  const pixName = lknAttr.pixName
+  const pixCity = lknAttr.pixCity
+
   // TODO: Estudar necessidade de modificação de chaves cpf, cnpj ou email e implementar se necessário
-  const pixKey = keyType !== 'tel' || key.substr(0, 3) === '+55' ? key : '+55' + key
-  const pixName = keyName.length > 25 ? keyName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : keyName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  const pixCity = keyCity.length > 15 ? keyCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : keyCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-  const pixAmount = amount
+  const key = pixType !== 'tel' || pixKey.substr(0, 3) === '+55' ? pixKey : '+55' + pixKey
+  const keyName = pixName.length > 25 ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  const keyCity = pixCity.length > 15 ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
 
   // (00 Payload Format Indicator)
   // (26 Merchant Account Information)
@@ -38,31 +48,31 @@ function pixBuilder(keyType, key, keyName, keyCity, amount = '', keyId = '***') 
   // (62 Additional Data Field - Default ***)
   // (63 CRC16 Chcksum)
   let qr = '000201'
-  qr += '26' + (22 + pixKey.length).toLocaleString('en-US', {
+  qr += '26' + (22 + key.length).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
   })
   qr += '0014BR.GOV.BCB.PIX'
-  qr += '01' + pixKey.length.toLocaleString('en-US', {
+  qr += '01' + key.length.toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
-  }) + pixKey
+  }) + key
   qr += '52040000'
-  qr += '5303986' + (pixAmount.length === 0
+  qr += '5303986' + (amount.length === 0
     ? ''
-    : '54' + pixAmount.length.toLocaleString('en-US', {
+    : '54' + amount.length.toLocaleString('en-US', {
       minimumIntegerDigits: 2,
       useGrouping: false
-    }) + pixAmount)
+    }) + amount)
   qr += '5802BR'
-  qr += '59' + pixName.length.toLocaleString('en-US', {
+  qr += '59' + keyName.length.toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
-  }) + pixName
-  qr += '60' + pixCity.length.toLocaleString('en-US', {
+  }) + keyName
+  qr += '60' + keyCity.length.toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
-  }) + pixCity
+  }) + keyCity
   qr += '62' + (4 + keyId.length).toLocaleString('en-US', {
     minimumIntegerDigits: 2,
     useGrouping: false
@@ -72,20 +82,80 @@ function pixBuilder(keyType, key, keyName, keyCity, amount = '', keyId = '***') 
   }) + keyId
   qr += '6304'
   qr += crcChecksum(qr)
+  console.log(qr)
   return qr
 }
-function writeToClipboard() {
-  navigator.clipboard.writeText(pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount))
+let catchTimer
+function changeForm() {
+  try {
+    let strAux
+    const btn = document.getElementById('copy-pix')
+    if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) throw ['Pix form not loaded']
+    btn.style.display = 'flex'
+    strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value')?.innerHTML.split(',')
+    const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+    pix = pixBuilder(amount)
+    document.getElementById('toggle-viewing')?.addEventListener('onClick', () => {
+      togglePix()
+    })
+    document.getElementById('copy-button')?.addEventListener('onClick', () => {
+      navigator.clipboard.writeText(pix)
+    })
+  } catch (e) {
+    console.debug(e)
+    observe()
+    clearTimeout(catchTimer)
+    catchTimer = setTimeout(function () {
+      changeForm()
+    }, 2000)
+  }
 }
-const amount = ''
-let showCode = false
+function observe() {
+  let observeTimer
+  try {
+    // TODO: change into single const once v3 is implemented
+    const total = document.querySelector('.givewp-elements-donationSummary__list__item__value')
+    if (total === null) {
+      throw TypeError('Total not yet set', total)
+    }
+
+    // TODO: Classic (one screen) stops observing on change, fix this
+    const observer = new MutationObserver(target => {
+      console.log('changed')
+      changeForm()
+    })
+    observer.observe(total, {
+      attributes: true,
+      childList: true,
+      characterData: true
+    })
+  } catch (e) {
+    console.debug(e)
+    clearTimeout(observeTimer)
+    observeTimer = setTimeout(function () {
+      observe()
+    }, 1000)
+  }
+}
 function togglePix() {
-  showCode = !showCode
+  const pixElement = document.getElementById('pix')
+  const hideElement = document.getElementById('hide')
+  const showElement = document.getElementById('show')
+  if (pixElement.style.display === 'none') {
+    showElement.style.display = 'none'
+    hideElement.style.display = 'block'
+    pixElement.style.display = 'block'
+  } else {
+    showElement.style.display = 'block'
+    hideElement.style.display = 'none'
+    pixElement.style.display = 'none'
+  }
 }
 const gateway = {
   id: 'pix-payment-gateway',
   async initialize() {
     // Aqui vai todas as funções necessárias ao carregar a página de pagamento
+    observe()
   },
   async beforeCreatePayment(values) {
     // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
@@ -116,35 +186,43 @@ const gateway = {
     }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'
+    }), /* #__PURE__ */React.createElement('input', {
+      type: 'hidden',
+      id: 'react-pix-form'
     }), /* #__PURE__ */React.createElement('div', {
       id: 'lkn-pix-form-donation'
-    }, /* #__PURE__ */React.createElement('legend', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('p', {
+    }, /* #__PURE__ */React.createElement('legend', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('div', {
+      className: 'pix-container'
+    }, /* #__PURE__ */React.createElement('p', {
       id: 'qr'
     }, /* #__PURE__ */React.createElement('img', {
-      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)),
-      alt: 'QR Code for ' + pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)
-    })), showCode ? /* #__PURE__ */React.createElement('p', {
-      id: 'pix',
-      class: 'pix-content'
-    }, pixBuilder(lknAttr.pixType, lknAttr.pixKey, lknAttr.pixName, lknAttr.pixCity, amount)) : null, /* #__PURE__ */React.createElement('br', null), /* #__PURE__ */React.createElement('p', {
+      id: 'qr-img',
+      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl="' + encodeURIComponent(pix) + '"',
+      alt: 'QR Code for payment via Pix'
+    })), /* #__PURE__ */React.createElement('p', {
+      id: 'pix'
+    }, pix), /* #__PURE__ */React.createElement('p', {
       id: 'copy-pix'
-    }, showCode, /* #__PURE__ */React.createElement('button', {
+    }, /* #__PURE__ */React.createElement('button', {
+      id: 'toggle-viewing',
       type: 'button',
-      class: 'copy-button',
-      onClick: togglePix
-    }, showCode ? /* #__PURE__ */React.createElement('span', {
-      id: 'show',
-      class: 'material-symbols-outlined'
-    }, 'visibility_off') : /* #__PURE__ */React.createElement('span', {
-      id: 'hide',
-      class: 'material-symbols-outlined'
-    }, 'visibility')), /* #__PURE__ */React.createElement('button', {
-      type: 'button',
-      class: 'copy-button',
-      onClick: writeToClipboard
+      title: 'Mostrar Pix'
     }, /* #__PURE__ */React.createElement('span', {
-      class: 'material-symbols-outlined'
-    }, 'content_copy')))))
+      id: 'show',
+      className: 'material-symbols-outlined',
+      style: {
+        display: 'none'
+      }
+    }, 'visibility_off'), /* #__PURE__ */React.createElement('span', {
+      id: 'hide',
+      className: 'material-symbols-outlined'
+    }, ' visibility')), /* #__PURE__ */React.createElement('button', {
+      id: 'copy-button',
+      type: 'button',
+      title: 'Copiar Pix'
+    }, /* #__PURE__ */React.createElement('span', {
+      className: 'material-symbols-outlined'
+    }, 'content_copy'))))))
   }
 }
 window.givewp.gateways.register(gateway)

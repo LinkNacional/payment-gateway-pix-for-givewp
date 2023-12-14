@@ -3,7 +3,7 @@
 (function ($) {
   'use strict'
 
-  // Pix contents
+  // Pix content
   let pixType
   let pixKey
   let pixName
@@ -11,7 +11,7 @@
   let pix
 
   // Frame info
-  let isLegacy
+  let formType
   let iframe
 
   function crcChecksum(string) {
@@ -74,12 +74,27 @@
   let catchTimer
   function changeForm() {
     try {
+      pixType = iframe.contents().find('input[id="pix_type"]').val()
+      pixKey = iframe.contents().find('input[id="pix_key"]').val()
+      pixName = iframe.contents().find('input[id="pix_name"]').val()
+      pixCity = iframe.contents().find('input[id="pix_city"]').val()
+
       let strAux
-      if (isLegacy) {
-        strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
-      } else {
-        strAux = iframe.contents().find('th[data-tag="total"]').text().split(',')
+      const btn = iframe.contents().find('p[id="copy-pix"]')[0]
+      if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) throw ['Pix form not loaded']
+      btn.style.display = 'block'
+
+      switch (formType) {
+        case 'legacy':
+          strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
+          break
+        case 'classic':
+          strAux = iframe.contents().find('th[data-tag="total"]').text().split(',')
+          break
+        default:
+          break
       }
+
       const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
 
       pix = pixBuilder(amount)
@@ -93,17 +108,92 @@
       iframe.contents().find('button[id="copy-button"]').on('click', () => {
         navigator.clipboard.writeText(pix)
       })
-
-      const btn = iframe.contents().find('p[id="copy-pix"]')[0]
-      btn.style.display = 'block'
     } catch (e) {
-      console.log(e)
+      console.debug(e)
+
+      observe()
 
       clearTimeout(catchTimer)
       catchTimer = setTimeout(
         function () {
           changeForm()
         }, 2000
+      )
+    }
+  }
+
+  let total
+  let mainDiv
+  let extra
+  let observeTimer
+  function observe() {
+    let totalObserver
+    let mainObserver
+    let extraObserver
+    try {
+      // TODO: change into single const once v3 is implemented
+      switch (formType) {
+        case 'legacy':
+          total = document.querySelector('.give-final-total-amount')
+          mainDiv = document.querySelector('#give_purchase_form_wrap')
+          extra = document.querySelector('.give-form-type-multi')
+          break
+        case 'classic':
+          total = iframe.contents().find('th[data-tag="total"]')[0]
+          mainDiv = iframe.contents().find('fieldset[id="give-payment-mode-select"]')[0]
+          extra = iframe.contents().find('body[class="give-form-templates"]')[0] ?? iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0]
+
+          iframe.contents().find('input[id="give-amount"]').on('change', function () {
+            setTimeout(
+              function () {
+                changeForm()
+              }, 5000)
+          })
+          break
+        default:
+          break
+      }
+      if (total === undefined || mainDiv === undefined || extra === undefined) {
+        throw ['Divs not yet set', total, mainDiv, extra, formType, iframe]
+      }
+      console.log(total)
+
+      // TODO: Classic (one screen) stops observing on change, fix this
+      totalObserver = new MutationObserver((target) => {
+        console.log(total)
+        changeForm()
+      })
+      mainObserver = new MutationObserver((target) => {
+        changeForm()
+      })
+      extraObserver = new MutationObserver((target) => {
+        observe()
+        changeForm()
+      })
+
+      totalObserver.observe(total, {
+        attributes: true,
+        childList: true,
+        characterData: true
+      })
+      mainObserver.observe(mainDiv, {
+        attributes: true,
+        childList: true,
+        characterData: true
+      })
+      extraObserver.observe(extra, {
+        attributes: true,
+        childList: true,
+        characterData: true
+      })
+    } catch (e) {
+      console.debug(e)
+
+      clearTimeout(observeTimer)
+      observeTimer = setTimeout(
+        function () {
+          observe()
+        }, 5000
       )
     }
   }
@@ -126,16 +216,12 @@
 
   $(window).on('load', function () {
     iframe = $('iframe').length ? $('iframe') : $('body')
-    if (!iframe.length || iframe.contents().find('form[id="give-next-gen"]').length) {
+    if (!iframe.length || iframe.contents().find('input[id="react-pix-form"]').length) {
       return
     }
 
-    pixType = iframe.contents().find('input[id="pix_type"]').val()
-    pixKey = iframe.contents().find('input[id="pix_key"]').val()
-    pixName = iframe.contents().find('input[id="pix_name"]').val()
-    pixCity = iframe.contents().find('input[id="pix_city"]').val()
-
-    isLegacy = !!document.querySelector('.give-final-total-amount')
+    console.log(iframe[0])
+    formType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
 
     iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
       togglePix()
@@ -144,60 +230,7 @@
       navigator.clipboard.writeText(pix)
     })
 
-    let total
-    let mainDiv
-    let extra
-    // TODO: change into single const once v3 is implemented
-    if (isLegacy) {
-      total = document.querySelector('.give-final-total-amount')
-      mainDiv = document.querySelector('#give_purchase_form_wrap')
-      extra = document.querySelector('.give-form-type-multi')
-    } else {
-      total = iframe.contents().find('th[data-tag="total"]')[0]
-      mainDiv = iframe.contents().find('div[class="give-gateway-details"]')[0]
-      extra = iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0] // extra = iframe.contents().find('div[class="give-donation-summary-table-wrapper"]')[0]
-
-      iframe.contents().find('input[id="give-amount"]').on('change', function () {
-        console.log('writing..')
-        console.log(total)
-        console.log(mainDiv)
-        console.log(extra)
-        setTimeout(
-          function () {
-            changeForm()
-          }, 5000)
-      })
-    }
-
-    const totalObserver = new MutationObserver((target) => {
-      console.log(target)
-      changeForm()
-    })
-    const mainObserver = new MutationObserver((target) => {
-      console.log(target)
-      changeForm()
-    })
-    const extraObserver = new MutationObserver((target) => {
-      console.log(total)
-      changeForm()
-    })
-
-    totalObserver.observe(total, {
-      attributes: true,
-      childList: true,
-      characterData: true
-    })
-    mainObserver.observe(mainDiv, {
-      attributes: true,
-      childList: true,
-      characterData: true
-    })
-    extraObserver.observe(extra, {
-      attributes: true,
-      childList: true,
-      characterData: true
-    })
-
+    observe()
     changeForm()
   })
 })(jQuery)

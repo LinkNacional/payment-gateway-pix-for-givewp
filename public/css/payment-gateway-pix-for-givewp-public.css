@@ -5,6 +5,7 @@
 
 #toggle-viewing,
 #copy-button {
+    color: black;
     background-color: transparent;
     border: none;
 }
@@ -30,9 +31,14 @@
     margin-bottom: 12px;
 }
 
-#copy-pix,
 #qr {
     margin: 0px;
+}
+
+#copy-pix {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
 }
 
 #lkn-pix-form-donation {
