@@ -14,6 +14,8 @@
   let formType
   let iframe
 
+  let observer
+
   function crcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
@@ -42,6 +44,7 @@
     const key = ((pixType !== 'tel') || (pixKey.substr(0, 3) === '+55')) ? pixKey : '+55' + pixKey
     const keyName = (pixName.length > 25) ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
     const keyCity = (pixCity.length > 15) ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    amount = amount === 'NaN' ? '' : amount
 
     // (00 Payload Format Indicator)
     // (26 Merchant Account Information)
@@ -71,7 +74,7 @@
     return qr
   }
 
-  let catchTimer
+  let changeDebouncer
   function changeForm() {
     try {
       pixType = iframe.contents().find('input[id="pix_type"]').val()
@@ -79,17 +82,22 @@
       pixName = iframe.contents().find('input[id="pix_name"]').val()
       pixCity = iframe.contents().find('input[id="pix_city"]').val()
 
-      let strAux
       const btn = iframe.contents().find('p[id="copy-pix"]')[0]
-      if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) throw ['Pix form not loaded']
+      if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) {
+        observer = undefined
+        observe()
+
+        throw Error(['Pix form not loaded'])
+      }
       btn.style.display = 'block'
 
+      let strAux
       switch (formType) {
         case 'legacy':
           strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
           break
         case 'classic':
-          strAux = iframe.contents().find('th[data-tag="total"]').text().split(',')
+          strAux = iframe.contents().find('[data-tag="total"]').text().split(',')
           break
         default:
           break
@@ -103,7 +111,19 @@
       iframe.contents().find('button[id="toggle-viewing"]').off('click')
       iframe.contents().find('button[id="copy-button"]').off('click')
       iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
-        togglePix()
+        const pixElement = iframe.contents().find('p[id="pix"]')[0]
+        const hideElement = iframe.contents().find('span[id="hide"]')[0]
+        const showElement = iframe.contents().find('span[id="show"]')[0]
+
+        if (pixElement.style.display === 'none') {
+          showElement.style.display = 'none'
+          hideElement.style.display = 'block'
+          pixElement.style.display = 'block'
+        } else {
+          showElement.style.display = 'block'
+          hideElement.style.display = 'none'
+          pixElement.style.display = 'none'
+        }
       })
       iframe.contents().find('button[id="copy-button"]').on('click', () => {
         navigator.clipboard.writeText(pix)
@@ -111,10 +131,11 @@
     } catch (e) {
       console.debug(e)
 
+      observer = null
       observe()
 
-      clearTimeout(catchTimer)
-      catchTimer = setTimeout(
+      clearTimeout(changeDebouncer)
+      changeDebouncer = setTimeout(
         function () {
           changeForm()
         }, 2000
@@ -122,16 +143,16 @@
     }
   }
 
-  let total
-  let mainDiv
-  let extra
-  let observeTimer
+  let observeDeboncer
   function observe() {
-    let totalObserver
-    let mainObserver
-    let extraObserver
     try {
-      // TODO: change into single const once v3 is implemented
+      if (observer === undefined || observer === null) {
+        throw Error('observer not defined')
+      }
+
+      let total
+      let mainDiv
+      let extra
       switch (formType) {
         case 'legacy':
           total = document.querySelector('.give-final-total-amount')
@@ -139,7 +160,7 @@
           extra = document.querySelector('.give-form-type-multi')
           break
         case 'classic':
-          total = iframe.contents().find('th[data-tag="total"]')[0]
+          total = iframe.contents().find('[data-tag="total"]')[0]
           mainDiv = iframe.contents().find('fieldset[id="give-payment-mode-select"]')[0]
           extra = iframe.contents().find('body[class="give-form-templates"]')[0] ?? iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0]
 
@@ -153,44 +174,38 @@
         default:
           break
       }
-      if (total === undefined || mainDiv === undefined || extra === undefined) {
-        throw ['Divs not yet set', total, mainDiv, extra, formType, iframe]
+
+      if (total === undefined || total === null ||
+        mainDiv === undefined || mainDiv === null ||
+        extra === undefined || extra === null) {
+        throw Error(['Observed are not set', total, mainDiv, extra, ['Form is of type', formType], iframe])
       }
-      console.log(total)
 
-      // TODO: Classic (one screen) stops observing on change, fix this
-      totalObserver = new MutationObserver((target) => {
-        console.log(total)
-        changeForm()
-      })
-      mainObserver = new MutationObserver((target) => {
-        changeForm()
-      })
-      extraObserver = new MutationObserver((target) => {
-        observe()
-        changeForm()
-      })
-
-      totalObserver.observe(total, {
+      observer.observe(total, {
         attributes: true,
         childList: true,
         characterData: true
       })
-      mainObserver.observe(mainDiv, {
+      observer.observe(mainDiv, {
         attributes: true,
         childList: true,
         characterData: true
       })
-      extraObserver.observe(extra, {
+      observer.observe(extra, {
         attributes: true,
         childList: true,
         characterData: true
       })
     } catch (e) {
-      console.debug(e)
+      if (e.message === 'observer not defined') {
+        observer = new MutationObserver((target) => {
+          changeForm()
+        })
+      }
 
-      clearTimeout(observeTimer)
-      observeTimer = setTimeout(
+      console.debug(e)
+      clearTimeout(observeDeboncer)
+      observeDeboncer = setTimeout(
         function () {
           observe()
         }, 5000
@@ -198,29 +213,12 @@
     }
   }
 
-  function togglePix() {
-    const pixElement = iframe.contents().find('p[id="pix"]')[0]
-    const hideElement = iframe.contents().find('span[id="hide"]')[0]
-    const showElement = iframe.contents().find('span[id="show"]')[0]
-
-    if (pixElement.style.display === 'none') {
-      showElement.style.display = 'none'
-      hideElement.style.display = 'block'
-      pixElement.style.display = 'block'
-    } else {
-      showElement.style.display = 'block'
-      hideElement.style.display = 'none'
-      pixElement.style.display = 'none'
-    }
-  }
-
   $(window).on('load', function () {
     iframe = $('iframe').length ? $('iframe') : $('body')
-    if (!iframe.length || iframe.contents().find('input[id="react-pix-form"]').length) {
+    if (!iframe.length || iframe.contents().find('div[id="react-pix-form"]').length) {
       return
     }
 
-    console.log(iframe[0])
     formType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
 
     iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
@@ -231,6 +229,7 @@
     })
 
     observe()
+
     changeForm()
   })
 })(jQuery)
