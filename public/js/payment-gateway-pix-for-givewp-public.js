@@ -77,6 +77,8 @@
   let changeDebouncer
   function changeForm() {
     try {
+      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
+
       pixType = iframe.contents().find('input[id="pix_type"]').val()
       pixKey = iframe.contents().find('input[id="pix_key"]').val()
       pixName = iframe.contents().find('input[id="pix_name"]').val()
@@ -84,9 +86,6 @@
 
       const btn = iframe.contents().find('p[id="copy-pix"]')[0]
       if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) {
-        observer = undefined
-        observe()
-
         throw Error(['Pix form not loaded'])
       }
       btn.style.display = 'block'
@@ -131,7 +130,7 @@
     } catch (e) {
       console.debug(e)
 
-      observer = null
+      observer = undefined
       observe()
 
       clearTimeout(changeDebouncer)
@@ -146,23 +145,22 @@
   let observeDeboncer
   function observe() {
     try {
+      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
       if (observer === undefined || observer === null) {
         throw Error('observer not defined')
       }
 
-      let total
-      let mainDiv
-      let extra
+      let observed
       switch (formType) {
         case 'legacy':
-          total = document.querySelector('.give-final-total-amount')
-          mainDiv = document.querySelector('#give_purchase_form_wrap')
-          extra = document.querySelector('.give-form-type-multi')
+          observed = [document.querySelector('.give-final-total-amount')]
+          observed.push(document.querySelector('#give_purchase_form_wrap'))
+          observed.push(document.querySelector('.give-form-type-multi'))
           break
         case 'classic':
-          total = iframe.contents().find('[data-tag="total"]')[0]
-          mainDiv = iframe.contents().find('fieldset[id="give-payment-mode-select"]')[0]
-          extra = iframe.contents().find('body[class="give-form-templates"]')[0] ?? iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0]
+          observed = [iframe.contents().find('[data-tag="total"]')[0]]
+          observed.push(iframe.contents().find('fieldset[id="give-payment-mode-select"]')[0])
+          observed.push(iframe.contents().find('body[class="give-form-templates"]')[0] ?? iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0])
 
           iframe.contents().find('input[id="give-amount"]').on('change', function () {
             setTimeout(
@@ -172,29 +170,21 @@
           })
           break
         default:
+          observed = [null]
           break
       }
 
-      if (total === undefined || total === null ||
-        mainDiv === undefined || mainDiv === null ||
-        extra === undefined || extra === null) {
-        throw Error(['Observed are not set', total, mainDiv, extra, ['Form is of type', formType], iframe])
-      }
+      observed.forEach((item) => {
+        if (observed === undefined || observed === null ||
+          item === undefined || item === null) {
+          throw Error(['Observed is not set', item, observed, ['Form is of type', formType], iframe])
+        }
 
-      observer.observe(total, {
-        attributes: true,
-        childList: true,
-        characterData: true
-      })
-      observer.observe(mainDiv, {
-        attributes: true,
-        childList: true,
-        characterData: true
-      })
-      observer.observe(extra, {
-        attributes: true,
-        childList: true,
-        characterData: true
+        observer.observe(item, {
+          attributes: true,
+          childList: true,
+          characterData: true
+        })
       })
     } catch (e) {
       if (e.message === 'observer not defined') {
@@ -215,16 +205,18 @@
 
   $(window).on('load', function () {
     iframe = $('iframe').length ? $('iframe') : $('body')
-    if (!iframe.length || iframe.contents().find('div[id="react-pix-form"]').length) {
+    if (!iframe.length || iframe.contents().find('div[id="lkn-react-pix-form"]').length) {
       return
     }
 
     formType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
 
     iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
+      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
       togglePix()
     })
     iframe.contents().find('button[id="copy-button"]').on('click', () => {
+      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
       navigator.clipboard.writeText(pix)
     })
 
