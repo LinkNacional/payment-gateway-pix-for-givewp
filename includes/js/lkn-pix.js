@@ -96,32 +96,10 @@ const changeForm = () => {
     const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
     const qrElement = document.getElementById('qr')
     const pixElement = document.getElementById('pix')
-    const toggleElement = document.getElementById('toggle-viewing')
-    const copyElement = document.getElementById('copy-button')
-    const hideElement = document.getElementById('hide')
-    const showElement = document.getElementById('show')
-    console.debug([qrElement, pixElement, toggleElement, copyElement, hideElement, showElement])
+    console.debug([qrElement, pixElement])
     pix = pixBuilder(amount)
     qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
     pixElement.innerHTML = pix
-    function toggle() {
-      if (pixElement.style.display === 'none') {
-        showElement.style.display = 'none'
-        hideElement.style.display = 'block'
-        pixElement.style.display = 'block'
-      } else {
-        showElement.style.display = 'block'
-        hideElement.style.display = 'none'
-        pixElement.style.display = 'none'
-      }
-    }
-    function write() {
-      navigator.clipboard.writeText(pix)
-    }
-    toggleElement.removeEventListener('click', toggle)
-    copyElement.removeEventListener('click', write)
-    toggleElement.addEventListener('click', toggle)
-    copyElement.addEventListener('click', write)
     console.debug('changing form content')
   } catch (e) {
     console.debug(e)
@@ -177,6 +155,23 @@ function observe() {
       observe()
     }, 5000)
   }
+}
+const toggle = () => {
+  const pixElement = document.getElementById('pix')
+  const hideElement = document.getElementById('hide')
+  const showElement = document.getElementById('show')
+  if (pixElement.style.display === 'none') {
+    showElement.style.display = 'none'
+    hideElement.style.display = 'block'
+    pixElement.style.display = 'block'
+  } else {
+    showElement.style.display = 'block'
+    hideElement.style.display = 'none'
+    pixElement.style.display = 'none'
+  }
+}
+const write = () => {
+  navigator.clipboard.writeText(pix)
 }
 const gateway = {
   id: 'pix-payment-gateway',
@@ -234,7 +229,8 @@ const gateway = {
     }, /* #__PURE__ */React.createElement('button', {
       id: 'toggle-viewing',
       type: 'button',
-      title: 'Mostrar Pix'
+      title: 'Mostrar Pix',
+      onClick: toggle
     }, /* #__PURE__ */React.createElement('span', {
       id: 'show',
       className: 'material-symbols-outlined',
@@ -247,7 +243,8 @@ const gateway = {
     }, ' visibility')), /* #__PURE__ */React.createElement('button', {
       id: 'copy-button',
       type: 'button',
-      title: 'Copiar Pix'
+      title: 'Copiar Pix',
+      onClick: write
     }, /* #__PURE__ */React.createElement('span', {
       className: 'material-symbols-outlined'
     }, 'content_copy'))))))

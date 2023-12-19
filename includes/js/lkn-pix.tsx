@@ -83,32 +83,13 @@ const changeForm = () => {
 
         const qrElement = document.getElementById('qr')!
         const pixElement = document.getElementById('pix')!
-        const hideElement = document.getElementById("hide")!
-        const showElement = document.getElementById("show")!
 
-        console.debug([qrElement, pixElement, hideElement, showElement])
+        console.debug([qrElement, pixElement])
 
         pix = pixBuilder(amount)
 
         qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
         pixElement.innerHTML = pix
-
-        const toggleElement = document.getElementById("toggle-viewing")!
-        const copyElement = document.getElementById("copy-button")!
-        toggleElement.removeEventListener('click', () => {
-            if (pixElement.style.display === 'none') {
-                showElement.style.display = 'none'
-                hideElement.style.display = 'block'
-                pixElement.style.display = 'block'
-            } else {
-                showElement.style.display = 'block'
-                hideElement.style.display = 'none'
-                pixElement.style.display = 'none'
-            }
-        })
-        copyElement.removeEventListener('click', () => {
-            navigator.clipboard.writeText(pix)
-        })
 
         console.debug('changing form content')
     } catch (e) {
@@ -178,14 +159,32 @@ function observe() {
     }
 }
 
+const toggle = () => {
+    const pixElement = document.getElementById('pix')!
+    const hideElement = document.getElementById("hide")!
+    const showElement = document.getElementById("show")!
+
+    if (pixElement.style.display === 'none') {
+        showElement.style.display = 'none'
+        hideElement.style.display = 'block'
+        pixElement.style.display = 'block'
+    } else {
+        showElement.style.display = 'block'
+        hideElement.style.display = 'none'
+        pixElement.style.display = 'none'
+    }
+}
+
+const write = () => {
+    navigator.clipboard.writeText(pix)
+}
+
 const gateway = {
     id: 'pix-payment-gateway',
     async initialize() {
         // Aqui vai todas as funções necessárias ao carregar a página de pagamento
         window.onload = () => {
             changeForm()
-            toggleElement.addEventListener('click', toggle)
-            copyElement.addEventListener('click', write)
         }
     },
     async beforeCreatePayment(values) {
@@ -221,11 +220,11 @@ const gateway = {
                         <p id='qr'><img id='qr-img' src={'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(pix) + '\''} alt='QR Code for payment via Pix' /></p>
                         <p id='pix'>{pix}</p>
                         <p id='copy-pix' >
-                            <button id="toggle-viewing" type="button" title="Mostrar Pix">
+                            <button id="toggle-viewing" type="button" title="Mostrar Pix" onClick={toggle}>
                                 <span id="show" className="material-symbols-outlined" style={{ display: "none" }}>visibility_off</span>
                                 <span id="hide" className="material-symbols-outlined" > visibility</span>
                             </button>
-                            <button id="copy-button" type="button" title="Copiar Pix">
+                            <button id="copy-button" type="button" title="Copiar Pix" onClick={write}>
                                 <span className="material-symbols-outlined">content_copy</span>
                             </button>
                         </p>
