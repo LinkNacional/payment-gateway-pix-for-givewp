@@ -1,9 +1,3 @@
-// Pix content
-let pixType
-let pixKey
-let pixName
-let pixCity
-let pix
 function crcChecksum(string) {
   let crc = 0xFFFF
   const strlen = string.length
@@ -82,80 +76,115 @@ function pixBuilder(amount = '', keyId = '***') {
   }) + keyId
   qr += '6304'
   qr += crcChecksum(qr)
-  console.log(qr)
   return qr
 }
-let catchTimer
-function changeForm() {
+let pix
+let observer
+let catchDebouncer
+let observeDeboncer
+const changeForm = () => {
   try {
-    let strAux
+    if (observer === undefined || observer === null) {
+      throw Error('observer not defined')
+    }
     const btn = document.getElementById('copy-pix')
-    if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) throw ['Pix form not loaded']
+    if (btn === undefined || btn === null) {
+      throw Error('Pix form not loaded')
+    }
     btn.style.display = 'flex'
-    strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value')?.innerHTML.split(',')
+    const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
     const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+    const qrElement = document.getElementById('qr')
+    const pixElement = document.getElementById('pix')
+    const toggleElement = document.getElementById('toggle-viewing')
+    const copyElement = document.getElementById('copy-button')
+    const hideElement = document.getElementById('hide')
+    const showElement = document.getElementById('show')
+    console.debug([qrElement, pixElement, toggleElement, copyElement, hideElement, showElement])
     pix = pixBuilder(amount)
-    document.getElementById('toggle-viewing')?.addEventListener('onClick', () => {
-      togglePix()
-    })
-    document.getElementById('copy-button')?.addEventListener('onClick', () => {
+    qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
+    pixElement.innerHTML = pix
+    function toggle() {
+      if (pixElement.style.display === 'none') {
+        showElement.style.display = 'none'
+        hideElement.style.display = 'block'
+        pixElement.style.display = 'block'
+      } else {
+        showElement.style.display = 'block'
+        hideElement.style.display = 'none'
+        pixElement.style.display = 'none'
+      }
+    }
+    function write() {
       navigator.clipboard.writeText(pix)
-    })
+    }
+    toggleElement.removeEventListener('click', toggle)
+    copyElement.removeEventListener('click', write)
+    toggleElement.addEventListener('click', toggle)
+    copyElement.addEventListener('click', write)
+    console.debug('changing form content')
   } catch (e) {
     console.debug(e)
+    observer = undefined
     observe()
-    clearTimeout(catchTimer)
-    catchTimer = setTimeout(function () {
+    clearTimeout(catchDebouncer)
+    catchDebouncer = setTimeout(async function () {
       changeForm()
     }, 2000)
   }
 }
 function observe() {
-  let observeTimer
   try {
-    // TODO: change into single const once v3 is implemented
-    const total = document.querySelector('.givewp-elements-donationSummary__list__item__value')
-    if (total === null) {
-      throw TypeError('Total not yet set', total)
+    if (observer === undefined || observer === null) {
+      throw Error('observer not defined')
     }
-
-    // TODO: Classic (one screen) stops observing on change, fix this
-    const observer = new MutationObserver(target => {
-      console.log('changed')
+    const observed = Array(document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0])
+    observed.push(document.querySelector('input[id="pix-payment-gateway"]'))
+    observed.push(document.getElementById('total'))
+    observed.push(document.querySelector('div[class="givewp-fields-amount__levels-container"]'))
+    document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0].addEventListener('DOMSubtreeModified', () => {
+      console.debug('Using old DOM observing technique')
       changeForm()
     })
-    observer.observe(total, {
-      attributes: true,
-      childList: true,
-      characterData: true
+    observed.forEach(item => {
+      if (item === null || item === undefined) {
+        console.debug(['Observed is not set', observed, item])
+        return
+      }
+
+      // item.addEventListener('DOMSubtreeModified', () => {
+      //     console.debug('Using old DOM observing technique')
+      //     changeForm()
+      // })
+
+      observer.observe(item, {
+        attributes: true,
+        childList: true,
+        characterData: true
+      })
     })
   } catch (e) {
-    console.debug(e)
-    clearTimeout(observeTimer)
-    observeTimer = setTimeout(function () {
+    if (e.message === 'observer not defined') {
+      observer = new MutationObserver(target => {
+        console.debug('Using current DOM observing technique')
+        changeForm()
+      })
+    }
+    clearTimeout(observeDeboncer)
+    observeDeboncer = setTimeout(function () {
+      console.log('debounce')
+      console.log(e)
       observe()
-    }, 1000)
-  }
-}
-function togglePix() {
-  const pixElement = document.getElementById('pix')
-  const hideElement = document.getElementById('hide')
-  const showElement = document.getElementById('show')
-  if (pixElement.style.display === 'none') {
-    showElement.style.display = 'none'
-    hideElement.style.display = 'block'
-    pixElement.style.display = 'block'
-  } else {
-    showElement.style.display = 'block'
-    hideElement.style.display = 'none'
-    pixElement.style.display = 'none'
+    }, 5000)
   }
 }
 const gateway = {
   id: 'pix-payment-gateway',
   async initialize() {
     // Aqui vai todas as funções necessárias ao carregar a página de pagamento
-    observe()
+    window.onload = () => {
+      changeForm()
+    }
   },
   async beforeCreatePayment(values) {
     // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
@@ -180,15 +209,14 @@ const gateway = {
   },
   // Função onde os campos HTML são criados
   Fields() {
-    return /* #__PURE__ */React.createElement('div', null, /* #__PURE__ */React.createElement('link', {
+    return /* #__PURE__ */React.createElement('div', {
+      id: 'lkn-react-pix-form'
+    }, /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
       href: lknAttr.pluginUrl + 'public/css/payment-gateway-pix-for-givewp-public.css'
     }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'
-    }), /* #__PURE__ */React.createElement('input', {
-      type: 'hidden',
-      id: 'react-pix-form'
     }), /* #__PURE__ */React.createElement('div', {
       id: 'lkn-pix-form-donation'
     }, /* #__PURE__ */React.createElement('legend', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('div', {
@@ -197,7 +225,7 @@ const gateway = {
       id: 'qr'
     }, /* #__PURE__ */React.createElement('img', {
       id: 'qr-img',
-      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl="' + encodeURIComponent(pix) + '"',
+      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(pix) + '\'',
       alt: 'QR Code for payment via Pix'
     })), /* #__PURE__ */React.createElement('p', {
       id: 'pix'
