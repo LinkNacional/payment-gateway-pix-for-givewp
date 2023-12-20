@@ -128,8 +128,6 @@
         navigator.clipboard.writeText(pix)
       })
     } catch (e) {
-      console.debug(e)
-
       observer = undefined
       observe()
 
@@ -193,7 +191,6 @@
         })
       }
 
-      console.debug(e)
       clearTimeout(observeDeboncer)
       observeDeboncer = setTimeout(
         function () {

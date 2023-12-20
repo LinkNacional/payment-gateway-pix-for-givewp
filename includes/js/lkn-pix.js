@@ -96,13 +96,10 @@ const changeForm = () => {
     const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
     const qrElement = document.getElementById('qr')
     const pixElement = document.getElementById('pix')
-    console.debug([qrElement, pixElement])
     pix = pixBuilder(amount)
     qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
     pixElement.innerHTML = pix
-    console.debug('changing form content')
   } catch (e) {
-    console.debug(e)
     observer = undefined
     observe()
     clearTimeout(catchDebouncer)
@@ -111,7 +108,7 @@ const changeForm = () => {
     }, 2000)
   }
 }
-function observe() {
+const observe = () => {
   try {
     if (observer === undefined || observer === null) {
       throw Error('observer not defined')
@@ -119,22 +116,19 @@ function observe() {
     const observed = Array(document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0])
     observed.push(document.querySelector('input[id="pix-payment-gateway"]'))
     observed.push(document.getElementById('total'))
-    observed.push(document.querySelector('div[class="givewp-fields-amount__levels-container"]'))
+    observed.push(document.getElementById('givewp-donation-form-step-2'))
+    observed.push(document.getElementById('givewp-donation-form-step-3'))
+
+    // Fallback as item is not updated correctly with MutationObserver
     document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0].addEventListener('DOMSubtreeModified', () => {
       console.debug('Using old DOM observing technique')
       changeForm()
     })
     observed.forEach(item => {
       if (item === null || item === undefined) {
-        console.debug(['Observed is not set', observed, item])
+        console.debug(['Item not in scope', observed, item])
         return
       }
-
-      // item.addEventListener('DOMSubtreeModified', () => {
-      //     console.debug('Using old DOM observing technique')
-      //     changeForm()
-      // })
-
       observer.observe(item, {
         attributes: true,
         childList: true,
@@ -148,31 +142,14 @@ function observe() {
         changeForm()
       })
     }
+
     clearTimeout(observeDeboncer)
     observeDeboncer = setTimeout(function () {
-      console.log('debounce')
-      console.log(e)
       observe()
     }, 5000)
   }
 }
-const toggle = () => {
-  const pixElement = document.getElementById('pix')
-  const hideElement = document.getElementById('hide')
-  const showElement = document.getElementById('show')
-  if (pixElement.style.display === 'none') {
-    showElement.style.display = 'none'
-    hideElement.style.display = 'block'
-    pixElement.style.display = 'block'
-  } else {
-    showElement.style.display = 'block'
-    hideElement.style.display = 'none'
-    pixElement.style.display = 'none'
-  }
-}
-const write = () => {
-  navigator.clipboard.writeText(pix)
-}
+changeForm()
 const gateway = {
   id: 'pix-payment-gateway',
   async initialize() {
@@ -218,11 +195,7 @@ const gateway = {
       className: 'pix-container'
     }, /* #__PURE__ */React.createElement('p', {
       id: 'qr'
-    }, /* #__PURE__ */React.createElement('img', {
-      id: 'qr-img',
-      src: 'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(pix) + '\'',
-      alt: 'QR Code for payment via Pix'
-    })), /* #__PURE__ */React.createElement('p', {
+    }, 'Carregando...'), /* #__PURE__ */React.createElement('p', {
       id: 'pix'
     }, pix), /* #__PURE__ */React.createElement('p', {
       id: 'copy-pix'
@@ -230,21 +203,36 @@ const gateway = {
       id: 'toggle-viewing',
       type: 'button',
       title: 'Mostrar Pix',
-      onClick: toggle
+      onClick: () => {
+        const pixElement = document.getElementById('pix')
+        const hideElement = document.getElementById('hide')
+        const showElement = document.getElementById('show')
+        if (pixElement.style.display === 'none') {
+          showElement.style.display = 'none'
+          hideElement.style.display = 'block'
+          pixElement.style.display = 'block'
+        } else {
+          showElement.style.display = 'block'
+          hideElement.style.display = 'none'
+          pixElement.style.display = 'none'
+        }
+      }
     }, /* #__PURE__ */React.createElement('span', {
       id: 'show',
+      className: 'material-symbols-outlined'
+    }, 'visibility_off'), /* #__PURE__ */React.createElement('span', {
+      id: 'hide',
       className: 'material-symbols-outlined',
       style: {
         display: 'none'
       }
-    }, 'visibility_off'), /* #__PURE__ */React.createElement('span', {
-      id: 'hide',
-      className: 'material-symbols-outlined'
-    }, ' visibility')), /* #__PURE__ */React.createElement('button', {
+    }, 'visibility')), /* #__PURE__ */React.createElement('button', {
       id: 'copy-button',
       type: 'button',
       title: 'Copiar Pix',
-      onClick: write
+      onClick: () => {
+        navigator.clipboard.writeText(pix)
+      }
     }, /* #__PURE__ */React.createElement('span', {
       className: 'material-symbols-outlined'
     }, 'content_copy'))))))

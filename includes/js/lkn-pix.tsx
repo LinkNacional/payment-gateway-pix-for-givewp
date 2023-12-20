@@ -84,17 +84,11 @@ const changeForm = () => {
         const qrElement = document.getElementById('qr')!
         const pixElement = document.getElementById('pix')!
 
-        console.debug([qrElement, pixElement])
-
         pix = pixBuilder(amount)
 
         qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
         pixElement.innerHTML = pix
-
-        console.debug('changing form content')
     } catch (e) {
-        console.debug(e)
-
         observer = undefined
         observe()
 
@@ -107,7 +101,7 @@ const changeForm = () => {
     }
 }
 
-function observe() {
+const observe = () => {
     try {
         if (observer === undefined || observer === null) {
             throw Error('observer not defined')
@@ -116,8 +110,10 @@ function observe() {
         let observed = Array(document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0])
         observed.push(document.querySelector('input[id="pix-payment-gateway"]')!)
         observed.push(document.getElementById('total')!)
-        observed.push(document.querySelector('div[class="givewp-fields-amount__levels-container"]')!)
+        observed.push(document.getElementById("givewp-donation-form-step-2")!)
+        observed.push(document.getElementById("givewp-donation-form-step-3")!)
 
+        // Fallback as item is not updated correctly with MutationObserver
         document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0].addEventListener('DOMSubtreeModified', () => {
             console.debug('Using old DOM observing technique')
             changeForm()
@@ -125,14 +121,9 @@ function observe() {
 
         observed.forEach((item) => {
             if (item === null || item === undefined) {
-                console.debug(['Observed is not set', observed, item])
+                console.debug(['Item not in scope', observed, item])
                 return
             }
-
-            // item.addEventListener('DOMSubtreeModified', () => {
-            //     console.debug('Using old DOM observing technique')
-            //     changeForm()
-            // })
 
             observer.observe(item, {
                 attributes: true,
@@ -151,33 +142,12 @@ function observe() {
         clearTimeout(observeDeboncer)
         observeDeboncer = setTimeout(
             function () {
-                console.log('debounce')
-                console.log(e)
                 observe()
             }, 5000
         )
     }
 }
-
-const toggle = () => {
-    const pixElement = document.getElementById('pix')!
-    const hideElement = document.getElementById("hide")!
-    const showElement = document.getElementById("show")!
-
-    if (pixElement.style.display === 'none') {
-        showElement.style.display = 'none'
-        hideElement.style.display = 'block'
-        pixElement.style.display = 'block'
-    } else {
-        showElement.style.display = 'block'
-        hideElement.style.display = 'none'
-        pixElement.style.display = 'none'
-    }
-}
-
-const write = () => {
-    navigator.clipboard.writeText(pix)
-}
+changeForm()
 
 const gateway = {
     id: 'pix-payment-gateway',
@@ -217,14 +187,28 @@ const gateway = {
                 <div id="lkn-pix-form-donation" >
                     <legend>Chave Pix:</legend>
                     <div className='pix-container'>
-                        <p id='qr'><img id='qr-img' src={'https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=' + encodeURIComponent(pix) + '\''} alt='QR Code for payment via Pix' /></p>
+                        <p id='qr'>Carregando...</p>
                         <p id='pix'>{pix}</p>
                         <p id='copy-pix' >
-                            <button id="toggle-viewing" type="button" title="Mostrar Pix" onClick={toggle}>
-                                <span id="show" className="material-symbols-outlined" style={{ display: "none" }}>visibility_off</span>
-                                <span id="hide" className="material-symbols-outlined" > visibility</span>
+                            <button id="toggle-viewing" type="button" title="Mostrar Pix" onClick={() => {
+                                const pixElement = document.getElementById('pix')
+                                const hideElement = document.getElementById('hide')
+                                const showElement = document.getElementById('show')
+
+                                if (pixElement!.style.display === 'none') {
+                                    showElement!.style.display = 'none'
+                                    hideElement!.style.display = 'block'
+                                    pixElement!.style.display = 'block'
+                                } else {
+                                    showElement!.style.display = 'block'
+                                    hideElement!.style.display = 'none'
+                                    pixElement!.style.display = 'none'
+                                }
+                            }}>
+                                <span id="show" className="material-symbols-outlined">visibility_off</span>
+                                <span id="hide" className="material-symbols-outlined" style={{ display: 'none' }}>visibility</span>
                             </button>
-                            <button id="copy-button" type="button" title="Copiar Pix" onClick={write}>
+                            <button id="copy-button" type="button" title="Copiar Pix" onClick={() => { navigator.clipboard.writeText(pix) }}>
                                 <span className="material-symbols-outlined">content_copy</span>
                             </button>
                         </p>
