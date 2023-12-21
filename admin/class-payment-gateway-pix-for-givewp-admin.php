@@ -140,13 +140,6 @@ class Payment_Gateway_Pix_For_Givewp_Admin
                 );
 
                 $settings[] = array(
-                    'name' => 'Deseja ter mais opções?',
-                    'desc' => 'Adquira nossos plugins premium para pagemento Pix e Cielo https://cliente.linknacional.com.br/solicitar/v1/#/cadastro?pl=105#cadastro',
-                    'id' => 'lkn-payment-pix-buy-blurb',
-                    'type' => 'text',
-                );
-
-                $settings[] = array(
                     'id' => 'lkn-payment-pix',
                     'type' => 'sectionend',
                 );

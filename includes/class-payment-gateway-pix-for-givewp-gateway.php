@@ -133,6 +133,7 @@ final class PixGatewayClass extends PaymentGateway
             'pixKey' => give_get_option('lkn-payment-pix-key'),
             'pixName' => give_get_option('lkn-payment-pix-name-setting'),
             'pixCity' => give_get_option('lkn-payment-pix-city-setting'),
+            'pixId' => give_get_option('lkn-payment-pix-paymentid-setting'),
             'formId' => $formId,
             'isFormEnabled' => (give_get_option('lkn-payment-pix-details-setting') === 'enabled') ? true : false,
         ));
@@ -164,6 +165,7 @@ final class PixGatewayClass extends PaymentGateway
                 'pixKey' => give_get_option('lkn-payment-pix-key'),
                 'pixName' => give_get_option('lkn-payment-pix-name-setting'),
                 'pixCity' => give_get_option('lkn-payment-pix-city-setting'),
+                'pixId' => give_get_option('lkn-payment-pix-paymentid-setting'),
             ]
         );
     }

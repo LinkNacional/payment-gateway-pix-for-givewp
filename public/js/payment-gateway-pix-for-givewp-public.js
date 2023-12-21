@@ -9,6 +9,8 @@
   let pixName
   let pixCity
   let pix
+  let key
+  let pixId
 
   // Frame info
   let formType
@@ -39,11 +41,7 @@
     return hex
   }
 
-  function pixBuilder(amount = '', keyId = '***') {
-    // TODO: Estudar necessidade de modificação de chaves cpf, cnpj ou email e implementar se necessário
-    const key = ((pixType !== 'tel') || (pixKey.substr(0, 3) === '+55')) ? pixKey : '+55' + pixKey
-    const keyName = (pixName.length > 25) ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-    const keyCity = (pixCity.length > 15) ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  function pixBuilder(amount = '') {
     amount = amount === 'NaN' ? '' : amount
 
     // (00 Payload Format Indicator)
@@ -65,9 +63,9 @@
     qr += '52040000'
     qr += '5303986' + ((amount.length === 0) ? '' : ('54' + amount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + amount))
     qr += '5802BR'
-    qr += '59' + keyName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyName
-    qr += '60' + keyCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyCity
-    qr += '62' + (4 + keyId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + keyId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyId
+    qr += '59' + pixName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixName
+    qr += '60' + pixCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixCity
+    qr += '62' + (4 + pixId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + pixId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixId
     qr += '6304'
     qr += crcChecksum(qr)
 
@@ -83,6 +81,25 @@
       pixKey = iframe.contents().find('input[id="pix_key"]').val()
       pixName = iframe.contents().find('input[id="pix_name"]').val()
       pixCity = iframe.contents().find('input[id="pix_city"]').val()
+      pixId = iframe.contents().find('input[id="pix_id"]').val()
+
+      switch (pixType) {
+        case 'tel':
+          key = (pixKey.substr(0, 3) === '+55') ? pixKey : '+55' + pixKey
+          break
+        case 'cpf':
+          key = pixKey.replace(/[\u0300-\u036f]/g, '')
+          break
+        case 'cnpj':
+          key = pixKey.replace(/[\u0300-\u036f]/g, '')
+          break
+        default:
+          key = pixKey
+          break
+      }
+      pixName = (pixName.length > 25) ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      pixCity = (pixCity.length > 15) ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      pixId = (pixId === '') ? '***' : pixId
 
       const btn = iframe.contents().find('p[id="copy-pix"]')[0]
       if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) {

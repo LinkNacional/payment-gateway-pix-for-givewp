@@ -33,12 +33,16 @@
     id="pix_city"
     value="<?php esc_attr_e($args['pixCity']) ?>"
 />
+<input
+    type="hidden"
+    id="pix_id"
+    value="<?php esc_attr_e($args['pixId']) ?>"
+/>
 
 <link rel="stylesheet" href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <div id="lkn-pix-form-donation">
-    <?php ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) : '' ; ?>
-    <br/>
+    <?php ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) . '<br/>' : '' ; ?>
     <legend>Chave Pix:</legend>
     <div class='pix-container'>
         <p id='qr'>Carregando...</p>

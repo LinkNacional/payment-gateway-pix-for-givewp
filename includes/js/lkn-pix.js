@@ -18,16 +18,29 @@ function crcChecksum(string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
-function pixBuilder(amount = '', keyId = '***') {
+function pixBuilder(amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
   const pixName = lknAttr.pixName
   const pixCity = lknAttr.pixCity
-
-  // TODO: Estudar necessidade de modificação de chaves cpf, cnpj ou email e implementar se necessário
-  const key = pixType !== 'tel' || pixKey.substr(0, 3) === '+55' ? pixKey : '+55' + pixKey
+  let key
+  switch (pixType) {
+    case 'tel':
+      key = pixKey.substr(0, 3) === '+55' ? pixKey : '+55' + pixKey
+      break
+    case 'cpf':
+      key = pixKey.replace(/[\u0300-\u036f]/g, '')
+      break
+    case 'cnpj':
+      key = pixKey.replace(/[\u0300-\u036f]/g, '')
+      break
+    default:
+      key = pixKey
+      break
+  }
   const keyName = pixName.length > 25 ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
   const keyCity = pixCity.length > 15 ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  const keyId = lknAttr.pixId === '' ? '***' : lknAttr.pixId
 
   // (00 Payload Format Indicator)
   // (26 Merchant Account Information)
@@ -142,7 +155,6 @@ const observe = () => {
         changeForm()
       })
     }
-
     clearTimeout(observeDeboncer)
     observeDeboncer = setTimeout(function () {
       observe()
