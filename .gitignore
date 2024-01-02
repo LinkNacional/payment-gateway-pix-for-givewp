@@ -1,4 +1,6 @@
-node_modules
-.vscode/settings.json
 .devcontainer/devcontainer.json
-vendor/
+.vscode/settings.json
+.phan/stubs
+node_modules
+vendor
+logs
