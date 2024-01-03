@@ -10,6 +10,7 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
+use PixHelperClass;
 
 /**
  * @inheritDoc
@@ -107,6 +108,7 @@ final class PixGatewayClass extends PaymentGateway
                 throw new PaymentGatewayException(__('Payment ID is required.', 'pix-give'));
             }
 
+            PixHelperClass::log('Donation success: ' . $gatewayData['pix-payment-gateway-id']);
             return new PaymentPending();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -119,6 +121,7 @@ final class PixGatewayClass extends PaymentGateway
                 'content' => sprintf(esc_html__('Donation failed. Reason: %s', 'pix-give'), $errorMessage)
             ]);
 
+            PixHelperClass::log('Donation failed: ' . $errorMessage . PHP_EOL . 'Gateway Data: ' . var_export($gatewayData, true));
             throw new PaymentGatewayException($errorMessage);
         }
     }

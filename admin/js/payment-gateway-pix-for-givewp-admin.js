@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const { __ } = wp.i18n;
 
 (function ($) {
@@ -51,9 +52,22 @@ const { __ } = wp.i18n;
       noticeDiv.innerHTML += '<a style="margin: 18px; padding-right: 0px; margin-top: 20px;" href="https://www.linknacional.com.br/wordpress/givewp/" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
 
       giveForm.after(noticeDiv)
+      const checkLogs = $('#check-logs')
+      checkLogs.on('click', (ev) => {
+        if (lknAttr.logContents === null) {
+          ev.preventDefault()
+          ev.stopPropagation()
+          return
+        }
+
+        const dataStr = 'data:text/log;charset=utf-8,' + encodeURIComponent(JSON.stringify({ data: lknAttr.logContents }))
+
+        checkLogs.attr('href', dataStr)
+        checkLogs.attr('download', 'pix_payment.log')
+      })
     }
 
-    function lknFindGetParameter(parameterName) {
+    function lknFindGetParameter (parameterName) {
       let result = null
       let tmp = []
       location.search

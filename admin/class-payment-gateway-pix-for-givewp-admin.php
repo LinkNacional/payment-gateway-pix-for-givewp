@@ -20,7 +20,8 @@
  * @subpackage Payment_Gateway_Pix_For_Givewp/admin
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class Payment_Gateway_Pix_For_Givewp_Admin {
+final class Payment_Gateway_Pix_For_Givewp_Admin
+{
     /**
      * The ID of this plugin.
      *
@@ -46,7 +47,8 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
      * @param      string    $plugin_name       The name of this plugin.
      * @param      string    $version    The version of this plugin.
      */
-    public function __construct($plugin_name, $version) {
+    public function __construct($plugin_name, $version)
+    {
         $this->plugin_name = $plugin_name . '-admin';
         $this->version = $version;
     }
@@ -58,7 +60,8 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
      *
      * @return array
      */
-    public function add_setting_into_new_section($settings) {
+    public function add_setting_into_new_section($settings)
+    {
         switch (give_get_current_setting_section()) {
             // Separar nome composto com travessão na área de configurações
             case 'lkn-payment-pix':
@@ -88,7 +91,7 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
                     'desc' => __('Insert the pix key that will be used on the donations.', 'payment-gateway-pix-for-givewp'),
                     'type' => 'text',
                 );
-                
+
                 $settings[] = array(
                     'name' => __('Recipient Name', 'payment-gateway-pix-for-givewp'),
                     'id' => 'lkn-payment-pix-name-setting',
@@ -112,7 +115,7 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
 
                 $settings[] = array(
                     'name' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
-                    'desc' => __('Select if debug mode should be enabled.', 'payment-gateway-pix-for-givewp'),
+                    'desc' => __('Select if logs should be created for debug purposes.', 'payment-gateway-pix-for-givewp') . ' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)',
                     'id' => 'lkn-payment-pix-log-setting',
                     'type' => 'radio_inline',
                     'default' => 'disabled',
@@ -152,7 +155,8 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
      *
      * @return array
      */
-    public function add_new_setting_section($sections) {
+    public function add_new_setting_section($sections)
+    {
         // Separar palavras com travessão no atributo $sections
         $sections['lkn-payment-pix'] = __('Pix QR Code', 'payment-gateway-pix-for-givewp');
 
@@ -164,7 +168,8 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
      *
      * @since    1.0.0
      */
-    public function enqueue_styles(): void {
+    public function enqueue_styles(): void
+    {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -184,7 +189,8 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
      *
      * @since    1.0.0
      */
-    public function enqueue_scripts(): void {
+    public function enqueue_scripts(): void
+    {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -198,5 +204,21 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
          */
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-admin.js', array('jquery', 'wp-i18n'), $this->version, false);
         wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PAYMENT_GATEWAY_PIX_LANGUAGE_DIR);
+
+        $logPath = give_get_option('payment_gateway_pix_for_givewp_last_log');
+
+        if ($logPath !== false) {
+            $logContents = file_get_contents($logPath);
+            $logContents = base64_encode($logContents);
+        }
+
+        wp_localize_script(
+            $this->plugin_name,
+            'lknAttr',
+            [
+                'logPath' => $logPath,
+                'logContents' => $logContents
+            ]
+        );
     }
 }

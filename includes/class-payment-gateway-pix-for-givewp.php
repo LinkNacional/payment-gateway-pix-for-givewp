@@ -128,6 +128,12 @@ final class Payment_Gateway_Pix_For_Givewp
          */
         require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-gateway.php';
 
+        /**
+         * Helper class
+         */
+        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-helper.php';
+
+
         $this->loader = new Payment_Gateway_Pix_For_Givewp_Loader();
     }
 

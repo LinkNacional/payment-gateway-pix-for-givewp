@@ -56,7 +56,7 @@ msgstr ""
 msgid "Enable Debug Mode"
 msgstr ""
 
-msgid "Select if debug mode should be enabled."
+msgid "Select if logs should be created for debug purposes."
 msgstr ""
 
 msgid "Enable"
@@ -72,4 +72,7 @@ msgid "Select if billing details should be added do the donation forms (classic 
 msgstr ""
 
 msgid "Pix QR Code"
+msgstr ""
+
+msgid "Check Last Log"
 msgstr ""

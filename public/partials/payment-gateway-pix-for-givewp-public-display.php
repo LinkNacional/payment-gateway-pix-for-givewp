@@ -38,6 +38,11 @@
     id="pix_id"
     value="<?php esc_attr_e($args['pixId']) ?>"
 />
+<input
+    type="hidden"
+    name="gatewayData[pix-payment-gateway-id]"
+    value="1"
+/>
 
 <link rel="stylesheet" href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css"/>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />

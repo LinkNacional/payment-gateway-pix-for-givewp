@@ -56,8 +56,8 @@ msgstr "Insira o identificador de pagamento, não obrigatório."
 msgid "Enable Debug Mode"
 msgstr "Habilitar Modo de Depuração"
 
-msgid "Select if debug mode should be enabled."
-msgstr "Selecione se o modo depuração deve ser habilitado."
+msgid "Select if logs should be created for debug purposes."
+msgstr "Selecione se devem ser criados logs para depuração."
 
 msgid "Enable"
 msgstr "Habilitar"
@@ -73,3 +73,6 @@ msgstr "Selecione se detalhes de cobrança devem ser adicionados aos formulário
 
 msgid "Pix QR Code"
 msgstr "Pix QR Code"
+
+msgid "Check Last Log"
+msgstr "Checar Último Log"
