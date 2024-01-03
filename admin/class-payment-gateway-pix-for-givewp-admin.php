@@ -115,7 +115,7 @@ final class Payment_Gateway_Pix_For_Givewp_Admin
 
                 $settings[] = array(
                     'name' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
-                    'desc' => __('Select if logs should be created for debug purposes.', 'payment-gateway-pix-for-givewp') . ' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)',
+                    'desc' => __('Select if logs should be created for debug purposes.', 'payment-gateway-pix-for-givewp') . ((filesize(give_get_option('payment_gateway_pix_for_givewp_last_log'))) ? (' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)') : ''),
                     'id' => 'lkn-payment-pix-log-setting',
                     'type' => 'radio_inline',
                     'default' => 'disabled',

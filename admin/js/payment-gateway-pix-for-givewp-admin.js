@@ -54,12 +54,6 @@ const { __ } = wp.i18n;
       giveForm.after(noticeDiv)
       const checkLogs = $('#check-logs')
       checkLogs.on('click', (ev) => {
-        if (lknAttr.logContents === null) {
-          ev.preventDefault()
-          ev.stopPropagation()
-          return
-        }
-
         const dataStr = 'data:text/log;charset=utf-8,' + encodeURIComponent(JSON.stringify({ data: lknAttr.logContents }))
 
         checkLogs.attr('href', dataStr)
