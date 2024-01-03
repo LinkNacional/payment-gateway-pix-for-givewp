@@ -1,3 +1,6 @@
+const {
+  __
+} = wp.i18n
 function crcChecksum(string) {
   let crc = 0xFFFF
   const strlen = string.length
@@ -110,7 +113,7 @@ const changeForm = () => {
     const qrElement = document.getElementById('qr')
     const pixElement = document.getElementById('pix')
     pix = pixBuilder(amount)
-    qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
+    qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt=" + __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp') + "'/>"
     pixElement.innerHTML = pix
   } catch (e) {
     observer = undefined
@@ -203,18 +206,18 @@ const gateway = {
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'
     }), /* #__PURE__ */React.createElement('div', {
       id: 'lkn-pix-form-donation'
-    }, /* #__PURE__ */React.createElement('legend', null, 'Chave Pix:'), /* #__PURE__ */React.createElement('div', {
+    }, /* #__PURE__ */React.createElement('legend', null, __('Pix Key:', 'payment-gateway-pix-for-givewp')), /* #__PURE__ */React.createElement('div', {
       className: 'pix-container'
     }, /* #__PURE__ */React.createElement('p', {
       id: 'qr'
-    }, 'Carregando...'), /* #__PURE__ */React.createElement('p', {
+    }, __('Loading...', 'payment-gateway-pix-for-givewp')), /* #__PURE__ */React.createElement('p', {
       id: 'pix'
     }, pix), /* #__PURE__ */React.createElement('p', {
       id: 'copy-pix'
     }, /* #__PURE__ */React.createElement('button', {
       id: 'toggle-viewing',
       type: 'button',
-      title: 'Mostrar Pix',
+      title: __('Show Pix', 'payment-gateway-pix-for-givewp'),
       onClick: () => {
         const pixElement = document.getElementById('pix')
         const hideElement = document.getElementById('hide')
@@ -241,7 +244,7 @@ const gateway = {
     }, 'visibility')), /* #__PURE__ */React.createElement('button', {
       id: 'copy-button',
       type: 'button',
-      title: 'Copiar Pix',
+      title: __('Copy Pix', 'payment-gateway-pix-for-givewp'),
       onClick: () => {
         navigator.clipboard.writeText(pix)
       }

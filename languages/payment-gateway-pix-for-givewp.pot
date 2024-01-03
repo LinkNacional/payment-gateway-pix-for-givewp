@@ -68,7 +68,7 @@ msgstr ""
 msgid "Collect Billing Details"
 msgstr ""
 
-msgid "Select if billing details should be added do the donation forms (classic or legacy forms)."
+msgid "Select if billing details should be added do the donation forms (classic and legacy forms)."
 msgstr ""
 
 msgid "Pix QR Code"

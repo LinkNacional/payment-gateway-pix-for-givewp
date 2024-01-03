@@ -26,7 +26,7 @@
  */
 
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
+if ( ! defined('WPINC')) {
     die;
 }
 
@@ -38,13 +38,13 @@ if (!defined('WPINC')) {
 define('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION', '1.0.0');
 define('PAYMENT_GATEWAY_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PAYMENT_GATEWAY_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languages');
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function activate_payment_gateway_pix_for_givewp(): void
-{
+function activate_payment_gateway_pix_for_givewp(): void {
     require_once plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp-activator.php';
     Payment_Gateway_Pix_For_Givewp_Activator::activate();
 }
@@ -53,8 +53,7 @@ function activate_payment_gateway_pix_for_givewp(): void
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function deactivate_payment_gateway_pix_for_givewp(): void
-{
+function deactivate_payment_gateway_pix_for_givewp(): void {
     require_once plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp-deactivator.php';
     Payment_Gateway_Pix_For_Givewp_Deactivator::deactivate();
 }
@@ -77,8 +76,7 @@ require plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-give
  *
  * @since    1.0.0
  */
-function run_payment_gateway_pix_for_givewp(): void
-{
+function run_payment_gateway_pix_for_givewp(): void {
     $plugin = new Payment_Gateway_Pix_For_Givewp();
     $plugin->run();
 }

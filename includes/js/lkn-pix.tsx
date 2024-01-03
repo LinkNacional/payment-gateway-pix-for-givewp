@@ -1,3 +1,5 @@
+const { __ } = wp.i18n;
+
 function crcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
@@ -100,7 +102,7 @@ const changeForm = () => {
 
         pix = pixBuilder(amount)
 
-        qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>"
+        qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt=" + __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp') + "'/>"
         pixElement.innerHTML = pix
     } catch (e) {
         observer = undefined
@@ -199,12 +201,12 @@ const gateway = {
                 <link rel="stylesheet" href={lknAttr.pluginUrl + "public/css/payment-gateway-pix-for-givewp-public.css"} />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
                 <div id="lkn-pix-form-donation" >
-                    <legend>Chave Pix:</legend>
+                    <legend>{__('Pix Key:', 'payment-gateway-pix-for-givewp')}</legend>
                     <div className='pix-container'>
-                        <p id='qr'>Carregando...</p>
+                        <p id='qr'>{__('Loading...', 'payment-gateway-pix-for-givewp')}</p>
                         <p id='pix'>{pix}</p>
                         <p id='copy-pix' >
-                            <button id="toggle-viewing" type="button" title="Mostrar Pix" onClick={() => {
+                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {
                                 const pixElement = document.getElementById('pix')
                                 const hideElement = document.getElementById('hide')
                                 const showElement = document.getElementById('show')
@@ -222,7 +224,7 @@ const gateway = {
                                 <span id="show" className="material-symbols-outlined">visibility_off</span>
                                 <span id="hide" className="material-symbols-outlined" style={{ display: 'none' }}>visibility</span>
                             </button>
-                            <button id="copy-button" type="button" title="Copiar Pix" onClick={() => { navigator.clipboard.writeText(pix) }}>
+                            <button id="copy-button" type="button" title={__('Copy Pix', 'payment-gateway-pix-for-givewp')} onClick={() => { navigator.clipboard.writeText(pix) }}>
                                 <span className="material-symbols-outlined">content_copy</span>
                             </button>
                         </p>

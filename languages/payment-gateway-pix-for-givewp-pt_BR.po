@@ -68,7 +68,7 @@ msgstr "Desabilitar"
 msgid "Collect Billing Details"
 msgstr "Coletar Detalhes de Cobrança"
 
-msgid "Select if billing details should be added do the donation forms (classic or legacy forms)."
+msgid "Select if billing details should be added do the donation forms (classic and legacy forms)."
 msgstr "Selecione se detalhes de cobrança devem ser adicionados aos formulários de doação (para formulários classic ou legacy)."
 
 msgid "Pix QR Code"

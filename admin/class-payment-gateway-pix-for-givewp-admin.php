@@ -124,7 +124,7 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
 
                 $settings[] = array(
                     'name' => __('Collect Billing Details', 'payment-gateway-pix-for-givewp'),
-                    'desc' => __('Select if billing details should be added do the donation forms (classic or legacy forms).', 'payment-gateway-pix-for-givewp'),
+                    'desc' => __('Select if billing details should be added do the donation forms (classic and legacy forms).', 'payment-gateway-pix-for-givewp'),
                     'id' => 'lkn-payment-pix-details-setting',
                     'type' => 'radio_inline',
                     'default' => 'disabled',
@@ -196,6 +196,7 @@ final class Payment_Gateway_Pix_For_Givewp_Admin {
          * between the defined hooks and the functions defined in this
          * class.
          */
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-admin.js', array('jquery'), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-admin.js', array('jquery', 'wp-i18n'), $this->version, false);
+        wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PAYMENT_GATEWAY_PIX_LANGUAGE_DIR);
     }
 }
