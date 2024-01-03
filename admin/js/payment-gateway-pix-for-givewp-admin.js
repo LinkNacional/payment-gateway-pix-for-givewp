@@ -37,9 +37,9 @@ const { __ } = wp.i18n;
     if (adminPage && (adminPage === 'lkn-payment-pix')) {
       const giveForm = $('.form-table')
       const noticeDiv = document.createElement('div')
-      noticeDiv.setAttribute('style', 'padding: 10px 5px;background-color: #fcf9e8;color: #646970;border: solid 1px lightgrey;border-left-color: #dba617;border-left-width: 4px;font-size: 14px;min-width: 625px;margin-top: 10px;')
+      noticeDiv.setAttribute('style', 'padding: 10px; padding-top:15px;padding-bottom:15px;background-color: #fcf9e8;color: #646970;border: solid 1px lightgrey;border-left-color: #dba617;border-left-width: 4px;font-size: 14px;min-width: 625px;margin-top: 10px;')
 
-      noticeDiv.innerHTML = '<div style="font-size: 21px;padding-top: 6px">' + __('Enjoying the plugin?', 'payment-gateway-pix-for-givewp') + '</div>'
+      noticeDiv.innerHTML = '<div style="font-size: 21px;">' + __('Enjoying the plugin?', 'payment-gateway-pix-for-givewp') + '</div>'
       noticeDiv.innerHTML += '<p style="font-size: 14px;">' + __('Try out our other GiveWP plugins', 'payment-gateway-pix-for-givewp') + '</p'
       noticeDiv.innerHTML += '<ul style="margin: 10px; list-style: disclosure-closed;">'
       noticeDiv.innerHTML += '<li>' + __('Cielo API Credit Card Payment', 'payment-gateway-pix-for-givewp') + '</li>'
@@ -48,7 +48,7 @@ const { __ } = wp.i18n;
       noticeDiv.innerHTML += '<li>' + __('International Donations using foreign currencies such as Euro or Yen', 'payment-gateway-pix-for-givewp') + '</li>'
       noticeDiv.innerHTML += '<li>' + __('And more!', 'payment-gateway-pix-for-givewp') + '</li>'
       noticeDiv.innerHTML += '</ul>'
-      noticeDiv.innerHTML += '<a style="padding: 14px; padding-right: 0px; margin-top: 20px;" href="https://www.linknacional.com.br/wordpress/givewp/" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
+      noticeDiv.innerHTML += '<a style="margin: 18px; padding-right: 0px; margin-top: 20px;" href="https://www.linknacional.com.br/wordpress/givewp/" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
 
       giveForm.after(noticeDiv)
     }
