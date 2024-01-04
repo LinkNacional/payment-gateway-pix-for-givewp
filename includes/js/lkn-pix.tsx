@@ -77,16 +77,10 @@ function pixBuilder(amount = '') {
 }
 
 let pix
-let observer
 let catchDebouncer
-let observeDeboncer
 
 const changeForm = () => {
     try {
-        if (observer === undefined || observer === null) {
-            throw Error('observer not defined')
-        }
-
         const btn = document.getElementById("copy-pix")
 
         if (btn === undefined || btn === null) {
@@ -105,9 +99,6 @@ const changeForm = () => {
         qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt=" + __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp') + "'/>"
         pixElement.innerHTML = pix
     } catch (e) {
-        observer = undefined
-        observe()
-
         clearTimeout(catchDebouncer)
         catchDebouncer = setTimeout(
             async function () {
@@ -117,61 +108,10 @@ const changeForm = () => {
     }
 }
 
-const observe = () => {
-    try {
-        if (observer === undefined || observer === null) {
-            throw Error('observer not defined')
-        }
-
-        let observed = Array(document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0])
-        observed.push(document.querySelector('input[id="pix-payment-gateway"]')!)
-        observed.push(document.getElementById('total')!)
-        observed.push(document.getElementById("givewp-donation-form-step-2")!)
-        observed.push(document.getElementById("givewp-donation-form-step-3")!)
-
-        // Fallback as item is not updated correctly with MutationObserver
-        document.getElementsByClassName('givewp-elements-donationSummary__list__item__value')[0].addEventListener('DOMSubtreeModified', () => {
-            console.debug('Using old DOM observing technique')
-            changeForm()
-        })
-
-        observed.forEach((item) => {
-            if (item === null || item === undefined) {
-                console.debug(['Item not in scope', observed, item])
-                return
-            }
-
-            observer.observe(item, {
-                attributes: true,
-                childList: true,
-                characterData: true
-            })
-        })
-    } catch (e) {
-        if (e.message === 'observer not defined') {
-            observer = new MutationObserver((target) => {
-                console.debug('Using current DOM observing technique')
-                changeForm()
-            })
-        }
-
-        clearTimeout(observeDeboncer)
-        observeDeboncer = setTimeout(
-            function () {
-                observe()
-            }, 5000
-        )
-    }
-}
-changeForm()
-
 const gateway = {
     id: 'pix-payment-gateway',
     async initialize() {
         // Aqui vai todas as funções necessárias ao carregar a página de pagamento
-        window.onload = () => {
-            changeForm()
-        }
     },
     async beforeCreatePayment(values) {
         // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
@@ -186,8 +126,8 @@ const gateway = {
         // Retorna os atributos usados pelo back-end
         // Atributos do objeto value já são passados por padrão
         return {
-            pluginIntent: 'lkn-plugin-intent',
-            custom: 'anything'
+            "pix-payment-gateway-id": '1',
+            pluginIntent: 'lkn-plugin-intent'
         };
     },
     async afterCreatePayment(response) {
@@ -196,6 +136,15 @@ const gateway = {
     },
     // Função onde os campos HTML são criados
     Fields() {
+        const { useEffect } = wp.element
+        const { useWatch } = window.givewp.form.hooks
+
+        const pix = useWatch({ name: 'pix' })
+
+        useEffect(() => {
+            changeForm()
+        })
+
         return (
             <div id="lkn-react-pix-form">
                 <link rel="stylesheet" href={lknAttr.pluginUrl + "public/css/payment-gateway-pix-for-givewp-public.css"} />
@@ -204,7 +153,7 @@ const gateway = {
                     <legend>{__('Pix Key:', 'payment-gateway-pix-for-givewp')}</legend>
                     <div className='pix-container'>
                         <p id='qr'>{__('Loading...', 'payment-gateway-pix-for-givewp')}</p>
-                        <p id='pix'>{pix}</p>
+                        <p id='pix' name='pix'>{pix}</p>
                         <p id='copy-pix' >
                             <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {
                                 const pixElement = document.getElementById('pix')
