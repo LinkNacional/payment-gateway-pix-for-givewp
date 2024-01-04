@@ -205,10 +205,22 @@ final class Payment_Gateway_Pix_For_Givewp_Admin
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-admin.js', array('jquery', 'wp-i18n'), $this->version, false);
         wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PAYMENT_GATEWAY_PIX_LANGUAGE_DIR);
 
-        $logPath = give_get_option('payment_gateway_for_givewp_last_log');
+        $logPath = give_get_option('payment_gateway_for_givewp_last_log_url');
 
         if ($logPath !== false) {
-            $logContents = file_get_contents($logPath);
+            $remote = wp_remote_get($logPath, array('sslverify' => false));
+
+            if(gettype($remote) !== gettype(new WP_Error())) {
+                return;
+            }
+
+            PixHelperClass::log(wp_json_encode(array(
+                'Remote Response' => $remote,
+                'log url' => $logPath,
+                'log path' => give_get_option('payment_gateway_for_givewp_last_log')
+            ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
+            $logContents = wp_remote_retrieve_body($remote);
         }
 
         wp_localize_script(
