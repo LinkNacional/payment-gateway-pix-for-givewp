@@ -115,7 +115,7 @@ final class Payment_Gateway_Pix_For_Givewp_Admin
 
                 $settings[] = array(
                     'name' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
-                    'desc' => __('Select if logs should be created for debug purposes.', 'payment-gateway-pix-for-givewp') . ((filesize(give_get_option('payment_gateway_pix_for_givewp_last_log'))) ? (' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)') : ''),
+                    'desc' => __('Select if logs should be created for debug purposes.', 'payment-gateway-pix-for-givewp') . ((give_get_option('lkn-payment-pix-log-setting') === 'enabled' && filesize(give_get_option('payment_gateway_for_givewp_last_log'))) ? (' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)') : ''),
                     'id' => 'lkn-payment-pix-log-setting',
                     'type' => 'radio_inline',
                     'default' => 'disabled',
@@ -205,18 +205,16 @@ final class Payment_Gateway_Pix_For_Givewp_Admin
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-admin.js', array('jquery', 'wp-i18n'), $this->version, false);
         wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PAYMENT_GATEWAY_PIX_LANGUAGE_DIR);
 
-        $logPath = give_get_option('payment_gateway_pix_for_givewp_last_log');
+        $logPath = give_get_option('payment_gateway_for_givewp_last_log');
 
         if ($logPath !== false) {
             $logContents = file_get_contents($logPath);
-            $logContents = base64_encode($logContents);
         }
 
         wp_localize_script(
             $this->plugin_name,
             'lknAttr',
             [
-                'logPath' => $logPath,
                 'logContents' => $logContents
             ]
         );

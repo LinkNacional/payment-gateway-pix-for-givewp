@@ -158,6 +158,31 @@ final class Payment_Gateway_Pix_For_Givewp
         $paymentGatewayRegister->registerGateway('PixGatewayClass');
     }
 
+    public function add_new_cron_recurrencies()
+    {
+        $schedules = array(
+            'biweekly' => array(
+                'interval' => 15 * DAY_IN_SECONDS,
+                'display' => 'Quinzenal'
+            )
+        );
+
+        return $schedules;
+    }
+
+    public function define_cron_hook(): void
+    {
+        add_action('lkn_delete_old_logs_cron_hook', array('PixHelperClass', 'delete_old_logs'));
+    }
+
+    public function define_event_delete_old_logs(): void
+    {
+        if (!wp_next_scheduled('lkn_delete_old_logs_cron_hook')) {
+            $time = time() + (15 * DAY_IN_SECONDS);
+            wp_schedule_event($time, 'biweekly', 'lkn_delete_old_logs_cron_hook');
+        }
+    }
+
     /**
      * Register all of the hooks related to the admin area functionality
      * of the plugin.
@@ -171,6 +196,11 @@ final class Payment_Gateway_Pix_For_Givewp
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+
+        // Set the cron jobs
+        $this->loader->add_filter('cron_schedules', $this, 'add_new_cron_recurrencies');
+        $this->loader->add_action('init', $this, 'define_event_delete_old_logs');
+        $this->loader->add_action('init', $this, 'define_cron_hook');
 
         // Register the gateways
         $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_payment_gateway');

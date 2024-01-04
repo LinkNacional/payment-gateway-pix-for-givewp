@@ -108,7 +108,9 @@ final class PixGatewayClass extends PaymentGateway
                 throw new PaymentGatewayException(__('Payment ID is required.', 'pix-give'));
             }
 
-            PixHelperClass::log('Donation success: ' . $gatewayData['pix-payment-gateway-id']);
+            PixHelperClass::log(wp_json_encode(array(
+                'Donation success' => $gatewayData['pix-payment-gateway-id']
+            ), JSON_PRETTY_PRINT));
             return new PaymentPending();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -121,7 +123,11 @@ final class PixGatewayClass extends PaymentGateway
                 'content' => sprintf(esc_html__('Donation failed. Reason: %s', 'pix-give'), $errorMessage)
             ]);
 
-            PixHelperClass::log('Donation failed: ' . $errorMessage . PHP_EOL . 'Gateway Data: ' . var_export($gatewayData, true));
+            PixHelperClass::log(wp_json_encode(array(
+                'Donation failed' => $errorMessage,
+                'Gateway Data' => $gatewayData,
+                'Stack Trace' => $e->getTrace()
+            ), JSON_PRETTY_PRINT));
             throw new PaymentGatewayException($errorMessage);
         }
     }

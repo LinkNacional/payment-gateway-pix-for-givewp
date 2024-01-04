@@ -54,7 +54,7 @@ const { __ } = wp.i18n;
       giveForm.after(noticeDiv)
       const checkLogs = $('#check-logs')
       checkLogs.on('click', (ev) => {
-        const dataStr = 'data:text/log;charset=utf-8,' + encodeURIComponent(JSON.stringify({ data: lknAttr.logContents }))
+        const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(lknAttr.logContents)
 
         checkLogs.attr('href', dataStr)
         checkLogs.attr('download', 'pix_payment.log')
