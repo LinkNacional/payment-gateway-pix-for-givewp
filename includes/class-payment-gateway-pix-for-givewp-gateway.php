@@ -127,7 +127,7 @@ final class PixGatewayClass extends PaymentGateway
                 'Donation failed' => $errorMessage,
                 'Gateway Data' => $gatewayData,
                 'Stack Trace' => $e->getTrace()
-            ), JSON_PRETTY_PRINT));
+            ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
             throw new PaymentGatewayException($errorMessage);
         }
     }
