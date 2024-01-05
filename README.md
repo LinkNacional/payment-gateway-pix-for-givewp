@@ -1,13 +1,13 @@
-# payment-gateway-pix-for-givewp
+# Payment Gateway Pix For GiveWP
 
-Contributors: linknacional
-Donate link: https://www.linknacional.com.br/
-Tags: comments, spam
-Requires at least: 3.0.1
-Tested up to: 3.4
-Stable tag: 1.0.0
-License: GPLv2 or later
-License URI: http://www.gnu.org/licenses/gpl-2.0.html
+* Contributors: linknacional
+* Donate link: https://www.linknacional.com.br/
+* Tags: gateway, payments, givewp
+* Requires at least: 3.0.1
+* Tested up to: 3.4
+* Stable tag: 1.0.0
+* License: GPLv3
+* License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
 Add a Pix Payment Gateway on GiveWP
 
@@ -29,6 +29,10 @@ Streamline your donation process and expand your reach to Brazilian donors by in
  2. Form view (donate to us)
 
 ## Installation
+
+[GiveWP](https://wordpress.org/plugins/give/) is needed for the plugin to work.
+
+### Instructions
 
  1. Upload `payment-gateway-pix-for-givewp.php` to the `/wp-content/plugins/` directory
  2. Activate the plugin through the 'Plugins' menu in WordPress
@@ -53,18 +57,3 @@ It's a plugin that lets you add PIX as a payment option for your GiveWP donation
  3. A QR code will appear on the screen. Donors can scan it with their mobile banking app.
  4. Alternatively, they can enter the payment key manually.
  5. Once the payment is confirmed, the donation is processed instantly.
-
-## Changelog
-
-### 1.0.0
-
- * Added options to set the recipient's key using provided information.
- * Added option to add the recipient's key to GiveWP donation forms.
- * Added option to add billing details to donation forms.
- * Added debug mode for advanced users.
-
-## Upgrade Notice
-
-### 1.0.0
-
- * Initial version.
