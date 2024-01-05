@@ -29,6 +29,7 @@ final class PixHelperClass
         }
 
         $logPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log';
+
         error_log($message, 3, $logPath);
 
         give_update_option('payment_gateway_for_givewp_last_log', $logPath);

@@ -41,7 +41,7 @@
 <input
     type="hidden"
     name="gatewayData[pix-payment-gateway-id]"
-    value="1"
+    value="pix"
 />
 
 <link rel="stylesheet" href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css"/>

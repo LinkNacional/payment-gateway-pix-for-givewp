@@ -135,7 +135,7 @@ const gateway = {
     // Retorna os atributos usados pelo back-end
     // Atributos do objeto value já são passados por padrão
     return {
-      'pix-payment-gateway-id': '1',
+      'pix-payment-gateway-id': 'pix',
       pluginIntent: 'lkn-plugin-intent',
       custom: 'anything'
     }

@@ -111,6 +111,7 @@ final class PixGatewayClass extends PaymentGateway
             PixHelperClass::log(wp_json_encode(array(
                 'Donation success' => $gatewayData['pix-payment-gateway-id']
             ), JSON_PRETTY_PRINT));
+
             return new PaymentPending();
         } catch (Exception $e) {
             $errorMessage = $e->getMessage();
@@ -128,6 +129,7 @@ final class PixGatewayClass extends PaymentGateway
                 'Gateway Data' => $gatewayData,
                 'Stack Trace' => $e->getTrace()
             ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
             throw new PaymentGatewayException($errorMessage);
         }
     }

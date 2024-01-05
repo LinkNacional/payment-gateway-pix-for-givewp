@@ -75,4 +75,4 @@ msgid "Pix QR Code"
 msgstr "Pix QR Code"
 
 msgid "Check Last Log"
-msgstr "Checar Último Log"
+msgstr "Checa Último Log"
