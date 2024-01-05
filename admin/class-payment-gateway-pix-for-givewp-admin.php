@@ -206,19 +206,20 @@ final class Payment_Gateway_Pix_For_Givewp_Admin
         wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PAYMENT_GATEWAY_PIX_LANGUAGE_DIR);
 
         $logPath = give_get_option('payment_gateway_for_givewp_last_log_url');
+        $wp_error = false;
 
         if ($logPath !== false) {
-            $remote = wp_remote_get($logPath, array('sslverify' => false));
+            $remote = wp_remote_get($logPath);
 
-            if(gettype($remote) !== gettype(new WP_Error())) {
-                return;
+            if(gettype($remote) === gettype(new WP_Error())) {
+                PixHelperClass::log(wp_json_encode(array(
+                    'Remote Response' => $remote,
+                    'log url' => $logPath,
+                    'log path' => give_get_option('payment_gateway_for_givewp_last_log')
+                ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+
+                $wp_error = $remote;
             }
-
-            PixHelperClass::log(wp_json_encode(array(
-                'Remote Response' => $remote,
-                'log url' => $logPath,
-                'log path' => give_get_option('payment_gateway_for_givewp_last_log')
-            ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
             $logContents = wp_remote_retrieve_body($remote);
         }
@@ -227,7 +228,9 @@ final class Payment_Gateway_Pix_For_Givewp_Admin
             $this->plugin_name,
             'lknAttr',
             [
-                'logContents' => $logContents
+                'logContents' => ($wp_error ? wp_json_encode(array(
+                    'Error' => 'Error retrieving log'
+                ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) : $logContents)
             ]
         );
     }
