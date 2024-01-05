@@ -5,7 +5,7 @@
             "": {
                 "domain": "payment-gateway-pix-for-givewp",
                 "plural_forms": "nplurals=2; plural=(n != 1);",
-                "lang": "pt_BR"
+                "lang": "pt_PT"
             },
             "Enjoying the plugin?": [
                 "Gostou do plugin?"
@@ -32,7 +32,7 @@
                 "Conheça nossos plugins agora"
             ],
             "https://www.linknacional.com.br/wordpress/givewp/": [
-                "https://www.linknacional.com.br/wordpress/givewp/"
+                "https://www.linknacional.pt/wordpress/givewp/"
             ]
         }
     }
