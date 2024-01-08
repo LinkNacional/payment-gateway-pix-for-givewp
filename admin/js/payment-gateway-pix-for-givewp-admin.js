@@ -49,7 +49,7 @@ const { __ } = wp.i18n;
       noticeDiv.innerHTML += '<li>' + __('International Donations using foreign currencies such as Euro or Yen', 'payment-gateway-pix-for-givewp') + '</li>'
       noticeDiv.innerHTML += '<li>' + __('And more!', 'payment-gateway-pix-for-givewp') + '</li>'
       noticeDiv.innerHTML += '</ul>'
-      noticeDiv.innerHTML += '<a style="margin: 18px; padding-right: 0px; margin-top: 20px;" href="' + __('https://www.linknacional.com.br/wordpress/givewp/', 'payment-gateway-pix-for-givewp') + '" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
+      noticeDiv.innerHTML += '<a style="margin: 18px; padding-right: 0px; margin-top: 20px;" href="https://www.linknacional.com.br/wordpress/givewp/" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
 
       giveForm.after(noticeDiv)
       const checkLogs = $('#check-logs')
