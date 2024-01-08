@@ -2,21 +2,21 @@
   'use strict'
 
   // Pix content
-  let pixType
-  let pixKey
-  let pixName
-  let pixCity
-  let pix
-  let key
-  let pixId
+  let lknPixType
+  let lknPixKey
+  let lknPixName
+  let lknPixCity
+  let lknPix
+  let lknPixHTMLKey
+  let lknPixId
 
   // Frame info
-  let formType
-  let iframe
+  let lknPixFormType
+  let lknPixIframe
 
-  let observer
+  let lknObserver
 
-  function crcChecksum(string) {
+  function lknCrcChecksum (string) {
     let crc = 0xFFFF
     const strlen = string.length
 
@@ -39,7 +39,7 @@
     return hex
   }
 
-  function pixBuilder(amount = '') {
+  function lknPixBuilder (amount = '') {
     amount = amount === 'NaN' ? '' : amount
 
     // (00 Payload Format Indicator)
@@ -55,63 +55,63 @@
     // (62 Additional Data Field - Default ***)
     // (63 CRC16 Chcksum)
     let qr = '000201'
-    qr += '26' + (22 + key.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
+    qr += '26' + (22 + lknPixKey.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
     qr += '0014BR.GOV.BCB.PIX'
-    qr += '01' + key.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + key
+    qr += '01' + lknPixKey.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixKey
     qr += '52040000'
     qr += '5303986' + ((amount.length === 0) ? '' : ('54' + amount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + amount))
     qr += '5802BR'
-    qr += '59' + pixName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixName
-    qr += '60' + pixCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixCity
-    qr += '62' + (4 + pixId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + pixId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + pixId
+    qr += '59' + lknPixName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixName
+    qr += '60' + lknPixCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixCity
+    qr += '62' + (4 + lknPixId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + lknPixId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixId
     qr += '6304'
-    qr += crcChecksum(qr)
+    qr += lknCrcChecksum(qr)
 
     return qr
   }
 
-  let changeDebouncer
-  function changeForm() {
+  let lknChangeDebouncer
+  function lknChangeForm () {
     try {
-      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
+      if (lknPixIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
 
-      pixType = iframe.contents().find('input[id="pix_type"]').val()
-      pixKey = iframe.contents().find('input[id="pix_key"]').val()
-      pixName = iframe.contents().find('input[id="pix_name"]').val()
-      pixCity = iframe.contents().find('input[id="pix_city"]').val()
-      pixId = iframe.contents().find('input[id="pix_id"]').val()
+      lknPixType = lknPixIframe.contents().find('input[id="pix_type"]').val()
+      lknPixHTMLKey = lknPixIframe.contents().find('input[id="pix_key"]').val()
+      lknPixName = lknPixIframe.contents().find('input[id="pix_name"]').val()
+      lknPixCity = lknPixIframe.contents().find('input[id="pix_city"]').val()
+      lknPixId = lknPixIframe.contents().find('input[id="pix_id"]').val()
 
-      switch (pixType) {
+      switch (lknPixType) {
         case 'tel':
-          key = (pixKey.substr(0, 3) === '+55') ? pixKey : '+55' + pixKey
+          lknPixKey = (lknPixHTMLKey.substr(0, 3) === '+55') ? lknPixHTMLKey : '+55' + lknPixHTMLKey
           break
         case 'cpf':
-          key = pixKey.replace(/[\u0300-\u036f]/g, '')
+          lknPixKey = lknPixHTMLKey.replace(/[\u0300-\u036f]/g, '')
           break
         case 'cnpj':
-          key = pixKey.replace(/[\u0300-\u036f]/g, '')
+          lknPixKey = lknPixHTMLKey.replace(/[\u0300-\u036f]/g, '')
           break
         default:
-          key = pixKey
+          lknPixKey = lknPixHTMLKey
           break
       }
-      pixName = (pixName.length > 25) ? pixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      pixCity = (pixCity.length > 15) ? pixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : pixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      pixId = (pixId === '') ? '***' : pixId
+      lknPixName = (lknPixName.length > 25) ? lknPixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : lknPixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      lknPixCity = (lknPixCity.length > 15) ? lknPixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : lknPixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      lknPixId = (lknPixId === '') ? '***' : lknPixId
 
-      const btn = iframe.contents().find('p[id="copy-pix"]')[0]
-      if (btn === undefined || pixType === undefined || pixKey === undefined || pixName === undefined || pixCity === undefined) {
+      const btn = lknPixIframe.contents().find('p[id="copy-pix"]')[0]
+      if (btn === undefined || lknPixType === undefined || lknPixHTMLKey === undefined || lknPixName === undefined || lknPixCity === undefined) {
         throw Error(['Pix form not loaded'])
       }
       btn.style.display = 'block'
 
       let strAux
-      switch (formType) {
+      switch (lknPixFormType) {
         case 'legacy':
           strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
           break
         case 'classic':
-          strAux = iframe.contents().find('[data-tag="total"]').text().split(',')
+          strAux = lknPixIframe.contents().find('[data-tag="total"]').text().split(',')
           break
         default:
           break
@@ -119,15 +119,15 @@
 
       const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
 
-      pix = pixBuilder(amount)
-      iframe.contents().find('p[id="qr"]').html("<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt='QR Code for payment via Pix'/>")
-      iframe.contents().find('p[id="pix"]').html(pix)
-      iframe.contents().find('button[id="toggle-viewing"]').off('click')
-      iframe.contents().find('button[id="copy-button"]').off('click')
-      iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
-        const pixElement = iframe.contents().find('p[id="pix"]')[0]
-        const hideElement = iframe.contents().find('span[id="hide"]')[0]
-        const showElement = iframe.contents().find('span[id="show"]')[0]
+      lknPix = lknPixBuilder(amount)
+      lknPixIframe.contents().find('p[id="qr"]').html("<img id='qr-img' src='https://quickchart.io/qr?text=" + encodeURIComponent(lknPix) + "&size=150' alt='QR Code for payment via Pix'/>")
+      lknPixIframe.contents().find('p[id="pix"]').html(lknPix)
+      lknPixIframe.contents().find('button[id="toggle-viewing"]').off('click')
+      lknPixIframe.contents().find('button[id="copy-button"]').off('click')
+      lknPixIframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
+        const pixElement = lknPixIframe.contents().find('p[id="pix"]')[0]
+        const hideElement = lknPixIframe.contents().find('span[id="hide"]')[0]
+        const showElement = lknPixIframe.contents().find('span[id="show"]')[0]
 
         if (pixElement.style.display === 'none') {
           showElement.style.display = 'none'
@@ -139,61 +139,61 @@
           pixElement.style.display = 'none'
         }
       })
-      iframe.contents().find('button[id="copy-button"]').on('click', () => {
-        navigator.clipboard.writeText(pix)
+      lknPixIframe.contents().find('button[id="copy-button"]').on('click', () => {
+        navigator.clipboard.writeText(lknPix)
       })
     } catch (e) {
-      observer = undefined
-      observe()
+      lknObserver = undefined
+      lknObserve()
 
-      clearTimeout(changeDebouncer)
-      changeDebouncer = setTimeout(
+      clearTimeout(lknChangeDebouncer)
+      lknChangeDebouncer = setTimeout(
         function () {
-          changeForm()
+          lknChangeForm()
         }, 2000
       )
     }
   }
 
-  let observeDeboncer
-  function observe() {
+  let lknObserveDeboncer
+  function lknObserve () {
     try {
-      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
-      if (observer === undefined || observer === null) {
+      if (lknPixIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
+      if (lknObserver === undefined || lknObserver === null) {
         throw Error('observer not defined')
       }
 
-      let observed
-      switch (formType) {
+      let lknObserved
+      switch (lknPixFormType) {
         case 'legacy':
-          observed = [document.querySelector('.give-final-total-amount')]
-          observed.push(document.querySelector('#give_purchase_form_wrap'))
-          observed.push(document.querySelector('.give-form-type-multi'))
+          lknObserved = [document.querySelector('.give-final-total-amount')]
+          lknObserved.push(document.querySelector('#give_purchase_form_wrap'))
+          lknObserved.push(document.querySelector('.give-form-type-multi'))
           break
         case 'classic':
-          observed = [iframe.contents().find('[data-tag="total"]')[0]]
-          observed.push(iframe.contents().find('fieldset[id="give-payment-mode-select"]')[0])
-          observed.push(iframe.contents().find('body[class="give-form-templates"]')[0] ?? iframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0])
+          lknObserved = [lknPixIframe.contents().find('[data-tag="total"]')[0]]
+          lknObserved.push(lknPixIframe.contents().find('fieldset[id="give-payment-mode-select"]')[0])
+          lknObserved.push(lknPixIframe.contents().find('body[class="give-form-templates"]')[0] ?? lknPixIframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0])
 
-          iframe.contents().find('input[id="give-amount"]').on('change', function () {
+          lknPixIframe.contents().find('input[id="give-amount"]').on('change', function () {
             setTimeout(
               function () {
-                changeForm()
+                lknChangeForm()
               }, 5000)
           })
           break
         default:
-          observed = [null]
+          lknObserved = [null]
           break
       }
 
-      observed.forEach((item) => {
-        if (observed === undefined || observed === null ||
+      lknObserved.forEach((item) => {
+        if (lknObserved === undefined || lknObserved === null ||
           item === undefined || item === null) {
-          throw Error(['Observed is not set', item, observed, ['Form is of type', formType], iframe])
+          throw Error(['Observed is not set', item, lknObserved, ['Form is of type', lknPixFormType], lknPixIframe])
         }
 
-        observer.observe(item, {
+        lknObserver.lknObserve(item, {
           attributes: true,
           childList: true,
           characterData: true
@@ -201,39 +201,30 @@
       })
     } catch (e) {
       if (e.message === 'observer not defined') {
-        observer = new MutationObserver((target) => {
-          changeForm()
+        lknObserver = new MutationObserver((target) => {
+          lknChangeForm()
         })
       }
 
-      clearTimeout(observeDeboncer)
-      observeDeboncer = setTimeout(
+      clearTimeout(lknObserveDeboncer)
+      lknObserveDeboncer = setTimeout(
         function () {
-          observe()
+          lknObserve()
         }, 5000
       )
     }
   }
 
   $(window).on('load', function () {
-    iframe = $('iframe').length ? $('iframe') : $('body')
-    if (!iframe.length || iframe.contents().find('div[id="lkn-react-pix-form"]').length) {
+    lknPixIframe = $('iframe').length ? $('iframe') : $('body')
+    if (!lknPixIframe.length || lknPixIframe.contents().find('div[id="lkn-react-pix-form"]').length) {
       return
     }
 
-    formType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
+    lknPixFormType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
 
-    iframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
-      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
-      togglePix()
-    })
-    iframe.contents().find('button[id="copy-button"]').on('click', () => {
-      if (iframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
-      navigator.clipboard.writeText(pix)
-    })
+    lknObserve()
 
-    observe()
-
-    changeForm()
+    lknChangeForm()
   })
 })(jQuery)

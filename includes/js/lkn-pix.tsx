@@ -1,6 +1,6 @@
 const { __ } = wp.i18n;
 
-function crcChecksum(string) {
+function lknCrcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
 
@@ -23,7 +23,7 @@ function crcChecksum(string) {
     return hex
 }
 
-function pixBuilder(amount = '') {
+function lknPixBuilder(amount = '') {
     const pixType = lknAttr.pixType
     const pixKey = lknAttr.pixKey
     const pixName = lknAttr.pixName
@@ -71,41 +71,9 @@ function pixBuilder(amount = '') {
     qr += '60' + keyCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyCity
     qr += '62' + (4 + keyId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + keyId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyId
     qr += '6304'
-    qr += crcChecksum(qr)
+    qr += lknCrcChecksum(qr)
 
     return qr
-}
-
-let pix
-let catchDebouncer
-
-const changeForm = () => {
-    try {
-        const btn = document.getElementById("copy-pix")
-
-        if (btn === undefined || btn === null) {
-            throw Error('Pix form not loaded')
-        }
-        btn.style.display = 'flex'
-
-        const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value')!.innerHTML.split(',')
-        const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-
-        const qrElement = document.getElementById('qr')!
-        const pixElement = document.getElementById('pix')!
-
-        pix = pixBuilder(amount)
-
-        qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt=" + __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp') + "'/>"
-        pixElement.innerHTML = pix
-    } catch (e) {
-        clearTimeout(catchDebouncer)
-        catchDebouncer = setTimeout(
-            async function () {
-                changeForm()
-            }, 2000
-        )
-    }
 }
 
 const gateway = {
@@ -136,23 +104,27 @@ const gateway = {
     },
     // Função onde os campos HTML são criados
     Fields() {
-        const { useEffect } = wp.element
         const { useWatch } = window.givewp.form.hooks
+        const { useEffect } = wp.element
 
-        const pix = useWatch({ name: 'pix' })
+        const [pix, setPix] = React.useState(lknPixBuilder())
+        const donationAmount = useWatch({ name: 'amount' })
 
         useEffect(() => {
-            changeForm()
+            const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value')!.innerHTML.split(',')
+            const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+            setPix(lknPixBuilder(amount))
         })
 
         return (
             <div id="lkn-react-pix-form">
+                <input type="hidden" id="donation-value" value={donationAmount}></input>
                 <link rel="stylesheet" href={lknAttr.pluginUrl + "public/css/payment-gateway-pix-for-givewp-public.css"} />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
                 <div id="lkn-pix-form-donation" >
                     <legend>{__('Pix Key:', 'payment-gateway-pix-for-givewp')}</legend>
                     <div className='pix-container'>
-                        <p id='qr'>{__('Loading...', 'payment-gateway-pix-for-givewp')}</p>
+                        <p id='qr'><img id='qr-img' src={'https://quickchart.io/qr?text="' + encodeURIComponent(pix) + '"&size=150'} alt={__('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp')} /></p>
                         <p id='pix' name='pix'>{pix}</p>
                         <p id='copy-pix' >
                             <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {

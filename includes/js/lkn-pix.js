@@ -1,7 +1,7 @@
 const {
   __
 } = wp.i18n
-function crcChecksum (string) {
+function lknCrcChecksum (string) {
   let crc = 0xFFFF
   const strlen = string.length
   for (let c = 0; c < strlen; c++) {
@@ -21,7 +21,7 @@ function crcChecksum (string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
-function pixBuilder (amount = '') {
+function lknPixBuilder (amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
   const pixName = lknAttr.pixName
@@ -91,31 +91,8 @@ function pixBuilder (amount = '') {
     useGrouping: false
   }) + keyId
   qr += '6304'
-  qr += crcChecksum(qr)
+  qr += lknCrcChecksum(qr)
   return qr
-}
-let pix
-let catchDebouncer
-const changeForm = () => {
-  try {
-    const btn = document.getElementById('copy-pix')
-    if (btn === undefined || btn === null) {
-      throw Error('Pix form not loaded')
-    }
-    btn.style.display = 'flex'
-    const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
-    const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-    const qrElement = document.getElementById('qr')
-    const pixElement = document.getElementById('pix')
-    pix = pixBuilder(amount)
-    qrElement.innerHTML = "<img id='qr-img' src='https://chart.googleapis.com/chart?cht=qr&chs=150x150&chl=" + encodeURIComponent(pix) + "' alt=" + __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp') + "'/>"
-    pixElement.innerHTML = pix
-  } catch (e) {
-    clearTimeout(catchDebouncer)
-    catchDebouncer = setTimeout(async function () {
-      changeForm()
-    }, 2000)
-  }
 }
 const gateway = {
   id: 'pix-payment-gateway',
@@ -136,8 +113,7 @@ const gateway = {
     // Atributos do objeto value já são passados por padrão
     return {
       'pix-payment-gateway-id': 'pix',
-      pluginIntent: 'lkn-plugin-intent',
-      custom: 'anything'
+      pluginIntent: 'lkn-plugin-intent'
     }
   },
   async afterCreatePayment (response) {
@@ -147,20 +123,27 @@ const gateway = {
   // Função onde os campos HTML são criados
   Fields () {
     const {
-      useEffect
-    } = wp.element
-    const {
       useWatch
     } = window.givewp.form.hooks
-    const pix = useWatch({
-      name: 'pix'
+    const {
+      useEffect
+    } = wp.element
+    const [pix, setPix] = React.useState(lknPixBuilder())
+    const donationAmount = useWatch({
+      name: 'amount'
     })
     useEffect(() => {
-      changeForm()
+      const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
+      const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+      setPix(lknPixBuilder(amount))
     })
     return /* #__PURE__ */React.createElement('div', {
       id: 'lkn-react-pix-form'
-    }, /* #__PURE__ */React.createElement('link', {
+    }, /* #__PURE__ */React.createElement('input', {
+      type: 'hidden',
+      id: 'donation-value',
+      value: donationAmount
+    }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
       href: lknAttr.pluginUrl + 'public/css/payment-gateway-pix-for-givewp-public.css'
     }), /* #__PURE__ */React.createElement('link', {
@@ -172,7 +155,11 @@ const gateway = {
       className: 'pix-container'
     }, /* #__PURE__ */React.createElement('p', {
       id: 'qr'
-    }, __('Loading...', 'payment-gateway-pix-for-givewp')), /* #__PURE__ */React.createElement('p', {
+    }, /* #__PURE__ */React.createElement('img', {
+      id: 'qr-img',
+      src: 'https://quickchart.io/qr?text="' + encodeURIComponent(pix) + '"&size=150',
+      alt: __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp')
+    })), /* #__PURE__ */React.createElement('p', {
       id: 'pix',
       name: 'pix'
     }, pix), /* #__PURE__ */React.createElement('p', {
