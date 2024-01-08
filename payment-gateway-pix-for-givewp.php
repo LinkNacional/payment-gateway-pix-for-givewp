@@ -19,14 +19,14 @@
  * Version:           1.0.0
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
- * License:           GPL-2.0+
- * License URI:       http://www.gnu.org/licenses/gpl-2.0.txt
+ * License:           GPL-3.0+
+ * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       payment-gateway-pix-for-givewp
  * Domain Path:       /languages
  */
 
 // If this file is called directly, abort.
-if ( ! defined('WPINC')) {
+if (!defined('WPINC')) {
     die;
 }
 
@@ -44,7 +44,8 @@ define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languag
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function activate_payment_gateway_pix_for_givewp(): void {
+function activate_payment_gateway_pix_for_givewp(): void
+{
     require_once plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp-activator.php';
     Payment_Gateway_Pix_For_Givewp_Activator::activate();
 }
@@ -53,7 +54,8 @@ function activate_payment_gateway_pix_for_givewp(): void {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function deactivate_payment_gateway_pix_for_givewp(): void {
+function deactivate_payment_gateway_pix_for_givewp(): void
+{
     require_once plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp-deactivator.php';
     Payment_Gateway_Pix_For_Givewp_Deactivator::deactivate();
 }
@@ -76,7 +78,8 @@ require plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-give
  *
  * @since    1.0.0
  */
-function run_payment_gateway_pix_for_givewp(): void {
+function run_payment_gateway_pix_for_givewp(): void
+{
     $plugin = new Payment_Gateway_Pix_For_Givewp();
     $plugin->run();
 }
