@@ -2,21 +2,21 @@
   'use strict'
 
   // Pix content
-  let lknPixType
-  let lknPixKey
-  let lknPixName
-  let lknPixCity
-  let lknPix
-  let lknPixHTMLKey
-  let lknPixId
+  let lknPixGiveWPType
+  let lknPixGiveWPKey
+  let lknPixGiveWPName
+  let lknPixGiveWPCity
+  let lknPixGiveWPResult
+  let lknPixGiveWPHTMLKey
+  let lknPixGiveWPId
 
   // Frame info
-  let lknPixFormType
-  let lknPixIframe
+  let lknPixGiveWPFormType
+  let lknPixGiveWPIframe
 
-  let lknObserver
+  let lknPixGiveWPObserver
 
-  function lknCrcChecksum (string) {
+  function lknPixGiveWPCrcChecksum (string) {
     let crc = 0xFFFF
     const strlen = string.length
 
@@ -39,7 +39,7 @@
     return hex
   }
 
-  function lknPixBuilder (amount = '') {
+  function lknPixGiveWPPixBuilder (amount = '') {
     amount = amount === 'NaN' ? '' : amount
 
     // (00 Payload Format Indicator)
@@ -55,63 +55,63 @@
     // (62 Additional Data Field - Default ***)
     // (63 CRC16 Chcksum)
     let qr = '000201'
-    qr += '26' + (22 + lknPixKey.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
+    qr += '26' + (22 + lknPixGiveWPKey.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false })
     qr += '0014BR.GOV.BCB.PIX'
-    qr += '01' + lknPixKey.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixKey
+    qr += '01' + lknPixGiveWPKey.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixGiveWPKey
     qr += '52040000'
     qr += '5303986' + ((amount.length === 0) ? '' : ('54' + amount.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + amount))
     qr += '5802BR'
-    qr += '59' + lknPixName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixName
-    qr += '60' + lknPixCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixCity
-    qr += '62' + (4 + lknPixId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + lknPixId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixId
+    qr += '59' + lknPixGiveWPName.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixGiveWPName
+    qr += '60' + lknPixGiveWPCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixGiveWPCity
+    qr += '62' + (4 + lknPixGiveWPId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + lknPixGiveWPId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + lknPixGiveWPId
     qr += '6304'
-    qr += lknCrcChecksum(qr)
+    qr += lknPixGiveWPCrcChecksum(qr)
 
     return qr
   }
 
-  let lknChangeDebouncer
-  function lknChangeForm () {
+  let lknPixGiveWPChangeDebouncer
+  function lknPixGiveWPChangeForm () {
     try {
-      if (lknPixIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
+      if (lknPixGiveWPIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
 
-      lknPixType = lknPixIframe.contents().find('input[id="pix_type"]').val()
-      lknPixHTMLKey = lknPixIframe.contents().find('input[id="pix_key"]').val()
-      lknPixName = lknPixIframe.contents().find('input[id="pix_name"]').val()
-      lknPixCity = lknPixIframe.contents().find('input[id="pix_city"]').val()
-      lknPixId = lknPixIframe.contents().find('input[id="pix_id"]').val()
+      lknPixGiveWPType = lknPixGiveWPIframe.contents().find('input[id="pix_type"]').val()
+      lknPixGiveWPHTMLKey = lknPixGiveWPIframe.contents().find('input[id="pix_key"]').val()
+      lknPixGiveWPName = lknPixGiveWPIframe.contents().find('input[id="pix_name"]').val()
+      lknPixGiveWPCity = lknPixGiveWPIframe.contents().find('input[id="pix_city"]').val()
+      lknPixGiveWPId = lknPixGiveWPIframe.contents().find('input[id="pix_id"]').val()
 
-      switch (lknPixType) {
+      switch (lknPixGiveWPType) {
         case 'tel':
-          lknPixKey = (lknPixHTMLKey.substr(0, 3) === '+55') ? lknPixHTMLKey : '+55' + lknPixHTMLKey
+          lknPixGiveWPKey = (lknPixGiveWPHTMLKey.substr(0, 3) === '+55') ? lknPixGiveWPHTMLKey : '+55' + lknPixGiveWPHTMLKey
           break
         case 'cpf':
-          lknPixKey = lknPixHTMLKey.replace(/[\u0300-\u036f]/g, '')
+          lknPixGiveWPKey = lknPixGiveWPHTMLKey.replace(/[\u0300-\u036f]/g, '')
           break
         case 'cnpj':
-          lknPixKey = lknPixHTMLKey.replace(/[\u0300-\u036f]/g, '')
+          lknPixGiveWPKey = lknPixGiveWPHTMLKey.replace(/[\u0300-\u036f]/g, '')
           break
         default:
-          lknPixKey = lknPixHTMLKey
+          lknPixGiveWPKey = lknPixGiveWPHTMLKey
           break
       }
-      lknPixName = (lknPixName.length > 25) ? lknPixName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : lknPixName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      lknPixCity = (lknPixCity.length > 15) ? lknPixCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : lknPixCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
-      lknPixId = (lknPixId === '') ? '***' : lknPixId
+      lknPixGiveWPName = (lknPixGiveWPName.length > 25) ? lknPixGiveWPName.substr(0, 25).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : lknPixGiveWPName.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      lknPixGiveWPCity = (lknPixGiveWPCity.length > 15) ? lknPixGiveWPCity.substr(0, 15).normalize('NFD').replace(/[\u0300-\u036f]/g, '') : lknPixGiveWPCity.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+      lknPixGiveWPId = (lknPixGiveWPId === '') ? '***' : lknPixGiveWPId
 
-      const btn = lknPixIframe.contents().find('p[id="copy-pix"]')[0]
-      if (btn === undefined || lknPixType === undefined || lknPixHTMLKey === undefined || lknPixName === undefined || lknPixCity === undefined) {
+      const btn = lknPixGiveWPIframe.contents().find('p[id="copy-pix"]')[0]
+      if (btn === undefined || lknPixGiveWPType === undefined || lknPixGiveWPHTMLKey === undefined || lknPixGiveWPName === undefined || lknPixGiveWPCity === undefined) {
         throw Error(['Pix form not loaded'])
       }
       btn.style.display = 'block'
 
       let strAux
-      switch (lknPixFormType) {
+      switch (lknPixGiveWPFormType) {
         case 'legacy':
           strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
           break
         case 'classic':
-          strAux = lknPixIframe.contents().find('[data-tag="total"]').text().split(',')
+          strAux = lknPixGiveWPIframe.contents().find('[data-tag="total"]').text().split(',')
           break
         default:
           break
@@ -119,15 +119,15 @@
 
       const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
 
-      lknPix = lknPixBuilder(amount)
-      lknPixIframe.contents().find('p[id="qr"]').html("<img id='qr-img' src='https://quickchart.io/qr?text=" + encodeURIComponent(lknPix) + "&size=150' alt='QR Code for payment via Pix'/>")
-      lknPixIframe.contents().find('p[id="pix"]').html(lknPix)
-      lknPixIframe.contents().find('button[id="toggle-viewing"]').off('click')
-      lknPixIframe.contents().find('button[id="copy-button"]').off('click')
-      lknPixIframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
-        const pixElement = lknPixIframe.contents().find('p[id="pix"]')[0]
-        const hideElement = lknPixIframe.contents().find('span[id="hide"]')[0]
-        const showElement = lknPixIframe.contents().find('span[id="show"]')[0]
+      lknPixGiveWPResult = lknPixGiveWPPixBuilder(amount)
+      lknPixGiveWPIframe.contents().find('p[id="qr"]').html("<img id='qr-img' src='https://quickchart.io/qr?text=" + encodeURIComponent(lknPixGiveWPResult) + "&size=150' alt='QR Code for payment via Pix'/>")
+      lknPixGiveWPIframe.contents().find('p[id="pix"]').html(lknPixGiveWPResult)
+      lknPixGiveWPIframe.contents().find('button[id="toggle-viewing"]').off('click')
+      lknPixGiveWPIframe.contents().find('button[id="copy-button"]').off('click')
+      lknPixGiveWPIframe.contents().find('button[id="toggle-viewing"]').on('click', () => {
+        const pixElement = lknPixGiveWPIframe.contents().find('p[id="pix"]')[0]
+        const hideElement = lknPixGiveWPIframe.contents().find('span[id="hide"]')[0]
+        const showElement = lknPixGiveWPIframe.contents().find('span[id="show"]')[0]
 
         if (pixElement.style.display === 'none') {
           showElement.style.display = 'none'
@@ -139,46 +139,46 @@
           pixElement.style.display = 'none'
         }
       })
-      lknPixIframe.contents().find('button[id="copy-button"]').on('click', () => {
-        navigator.clipboard.writeText(lknPix)
+      lknPixGiveWPIframe.contents().find('button[id="copy-button"]').on('click', () => {
+        navigator.clipboard.writeText(lknPixGiveWPResult)
       })
     } catch (e) {
-      lknObserver = undefined
-      lknObserve()
+      lknPixGiveWPObserver = undefined
+      lknPixGiveWPObserve()
 
-      clearTimeout(lknChangeDebouncer)
-      lknChangeDebouncer = setTimeout(
+      clearTimeout(lknPixGiveWPChangeDebouncer)
+      lknPixGiveWPChangeDebouncer = setTimeout(
         function () {
-          lknChangeForm()
+          lknPixGiveWPChangeForm()
         }, 2000
       )
     }
   }
 
-  let lknObserveDeboncer
-  function lknObserve () {
+  let lknPixGiveWPObserveDeboncer
+  function lknPixGiveWPObserve () {
     try {
-      if (lknPixIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
-      if (lknObserver === undefined || lknObserver === null) {
+      if (lknPixGiveWPIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
+      if (lknPixGiveWPObserver === undefined || lknPixGiveWPObserver === null) {
         throw Error('observer not defined')
       }
 
       let lknObserved
-      switch (lknPixFormType) {
+      switch (lknPixGiveWPFormType) {
         case 'legacy':
           lknObserved = [document.querySelector('.give-final-total-amount')]
           lknObserved.push(document.querySelector('#give_purchase_form_wrap'))
           lknObserved.push(document.querySelector('.give-form-type-multi'))
           break
         case 'classic':
-          lknObserved = [lknPixIframe.contents().find('[data-tag="total"]')[0]]
-          lknObserved.push(lknPixIframe.contents().find('fieldset[id="give-payment-mode-select"]')[0])
-          lknObserved.push(lknPixIframe.contents().find('body[class="give-form-templates"]')[0] ?? lknPixIframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0])
+          lknObserved = [lknPixGiveWPIframe.contents().find('[data-tag="total"]')[0]]
+          lknObserved.push(lknPixGiveWPIframe.contents().find('fieldset[id="give-payment-mode-select"]')[0])
+          lknObserved.push(lknPixGiveWPIframe.contents().find('body[class="give-form-templates"]')[0] ?? lknPixGiveWPIframe.contents().find('body[class="give-form-templates give-container-boxed"]')[0])
 
-          lknPixIframe.contents().find('input[id="give-amount"]').on('change', function () {
+          lknPixGiveWPIframe.contents().find('input[id="give-amount"]').on('change', function () {
             setTimeout(
               function () {
-                lknChangeForm()
+                lknPixGiveWPChangeForm()
               }, 5000)
           })
           break
@@ -190,10 +190,10 @@
       lknObserved.forEach((item) => {
         if (lknObserved === undefined || lknObserved === null ||
           item === undefined || item === null) {
-          throw Error(['Observed is not set', item, lknObserved, ['Form is of type', lknPixFormType], lknPixIframe])
+          throw Error(['Observed is not set', item, lknObserved, ['Form is of type', lknPixGiveWPFormType], lknPixGiveWPIframe])
         }
 
-        lknObserver.lknObserve(item, {
+        lknPixGiveWPObserver.lknPixGiveWPObserve(item, {
           attributes: true,
           childList: true,
           characterData: true
@@ -201,30 +201,30 @@
       })
     } catch (e) {
       if (e.message === 'observer not defined') {
-        lknObserver = new MutationObserver((target) => {
-          lknChangeForm()
+        lknPixGiveWPObserver = new MutationObserver((target) => {
+          lknPixGiveWPChangeForm()
         })
       }
 
-      clearTimeout(lknObserveDeboncer)
-      lknObserveDeboncer = setTimeout(
+      clearTimeout(lknPixGiveWPObserveDeboncer)
+      lknPixGiveWPObserveDeboncer = setTimeout(
         function () {
-          lknObserve()
+          lknPixGiveWPObserve()
         }, 5000
       )
     }
   }
 
   $(window).on('load', function () {
-    lknPixIframe = $('iframe').length ? $('iframe') : $('body')
-    if (!lknPixIframe.length || lknPixIframe.contents().find('div[id="lkn-react-pix-form"]').length) {
+    lknPixGiveWPIframe = $('iframe').length ? $('iframe') : $('body')
+    if (!lknPixGiveWPIframe.length || lknPixGiveWPIframe.contents().find('div[id="lkn-react-pix-form"]').length) {
       return
     }
 
-    lknPixFormType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
+    lknPixGiveWPFormType = document.querySelector('.give-final-total-amount') ? 'legacy' : 'classic'
 
-    lknObserve()
+    lknPixGiveWPObserve()
 
-    lknChangeForm()
+    lknPixGiveWPChangeForm()
   })
 })(jQuery)

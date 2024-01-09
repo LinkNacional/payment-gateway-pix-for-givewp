@@ -1,7 +1,7 @@
 const {
   __
 } = wp.i18n
-function lknCrcChecksum (string) {
+function lknPaymentGatewayPixGiveWPCrcChecksum (string) {
   let crc = 0xFFFF
   const strlen = string.length
   for (let c = 0; c < strlen; c++) {
@@ -21,7 +21,7 @@ function lknCrcChecksum (string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
-function lknPixBuilder (amount = '') {
+function lknPaymentGatewayPixGiveWPPixBuilder (amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
   const pixName = lknAttr.pixName
@@ -91,7 +91,7 @@ function lknPixBuilder (amount = '') {
     useGrouping: false
   }) + keyId
   qr += '6304'
-  qr += lknCrcChecksum(qr)
+  qr += lknPaymentGatewayPixGiveWPCrcChecksum(qr)
   return qr
 }
 const gateway = {
@@ -128,14 +128,22 @@ const gateway = {
     const {
       useEffect
     } = wp.element
-    const [pix, setPix] = React.useState(lknPixBuilder())
+    const [pix, setPix] = React.useState(lknPaymentGatewayPixGiveWPPixBuilder())
     const donationAmount = useWatch({
       name: 'amount'
     })
     useEffect(() => {
       const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
       const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-      setPix(lknPixBuilder(amount))
+      setPix(lknPaymentGatewayPixGiveWPPixBuilder(amount))
+      if (document.getElementById('qr') !== undefined) {
+        document.getElementById('qr').innerHTML = ''
+        const qrCode = new QRCode(document.getElementById('qr'), {
+          text: pix,
+          width: 150,
+          height: 150
+        })
+      }
     })
     return /* #__PURE__ */React.createElement('div', {
       id: 'lkn-react-pix-form'
@@ -155,11 +163,7 @@ const gateway = {
       className: 'pix-container'
     }, /* #__PURE__ */React.createElement('p', {
       id: 'qr'
-    }, /* #__PURE__ */React.createElement('img', {
-      id: 'qr-img',
-      src: 'https://quickchart.io/qr?text="' + encodeURIComponent(pix) + '"&size=150',
-      alt: __('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp')
-    })), /* #__PURE__ */React.createElement('p', {
+    }), /* #__PURE__ */React.createElement('br', null), /* #__PURE__ */React.createElement('p', {
       id: 'pix',
       name: 'pix'
     }, pix), /* #__PURE__ */React.createElement('p', {

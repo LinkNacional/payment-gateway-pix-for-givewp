@@ -51,6 +51,7 @@
     <legend><?php _e('Pix Key:', 'payment-gateway-pix-for-givewp')?></legend>
     <div class='pix-container'>
         <p id='qr'><?php _e('Loading...', 'payment-gateway-pix-for-givewp') ?></p>
+        <br/>
         <p id='pix'></p>
         <p id='copy-pix' style="display: none;" >
             <button id="toggle-viewing" type="button" title="Mostrar Pix">

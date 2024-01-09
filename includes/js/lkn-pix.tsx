@@ -1,6 +1,8 @@
+import qrcodeJs from "qrcode.js";
+
 const { __ } = wp.i18n;
 
-function lknCrcChecksum(string) {
+function lknPaymentGatewayPixGiveWPCrcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
 
@@ -23,7 +25,7 @@ function lknCrcChecksum(string) {
     return hex
 }
 
-function lknPixBuilder(amount = '') {
+function lknPaymentGatewayPixGiveWPPixBuilder(amount = '') {
     const pixType = lknAttr.pixType
     const pixKey = lknAttr.pixKey
     const pixName = lknAttr.pixName
@@ -71,7 +73,7 @@ function lknPixBuilder(amount = '') {
     qr += '60' + keyCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyCity
     qr += '62' + (4 + keyId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + keyId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyId
     qr += '6304'
-    qr += lknCrcChecksum(qr)
+    qr += lknPaymentGatewayPixGiveWPCrcChecksum(qr)
 
     return qr
 }
@@ -107,13 +109,22 @@ const gateway = {
         const { useWatch } = window.givewp.form.hooks
         const { useEffect } = wp.element
 
-        const [pix, setPix] = React.useState(lknPixBuilder())
+        const [pix, setPix] = React.useState(lknPaymentGatewayPixGiveWPPixBuilder())
         const donationAmount = useWatch({ name: 'amount' })
 
         useEffect(() => {
-            const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value')!.innerHTML.split(',')
+            const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
             const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-            setPix(lknPixBuilder(amount))
+            setPix(lknPaymentGatewayPixGiveWPPixBuilder(amount))
+
+            if (document.getElementById('qr') !== undefined) {
+                document.getElementById('qr')!.innerHTML = ''
+                const qrCode = new QRCode(document.getElementById('qr'), {
+                    text: pix,
+                    width: 150,
+                    height: 150
+                })
+            }
         })
 
         return (
@@ -124,7 +135,8 @@ const gateway = {
                 <div id="lkn-pix-form-donation" >
                     <legend>{__('Pix Key:', 'payment-gateway-pix-for-givewp')}</legend>
                     <div className='pix-container'>
-                        <p id='qr'><img id='qr-img' src={'https://quickchart.io/qr?text="' + encodeURIComponent(pix) + '"&size=150'} alt={__('QR Code for payment via Pix', 'payment-gateway-pix-for-givewp')} /></p>
+                        <p id='qr'></p>
+                        <br />
                         <p id='pix' name='pix'>{pix}</p>
                         <p id='copy-pix' >
                             <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {
