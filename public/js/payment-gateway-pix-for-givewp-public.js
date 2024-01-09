@@ -120,7 +120,6 @@
       const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
 
       lknPixGiveWPResult = lknPixGiveWPPixBuilder(amount)
-      lknPixGiveWPIframe.contents().find('p[id="qr"]').html("<img id='qr-img' src='https://quickchart.io/qr?text=" + encodeURIComponent(lknPixGiveWPResult) + "&size=150' alt='QR Code for payment via Pix'/>")
       lknPixGiveWPIframe.contents().find('p[id="pix"]').html(lknPixGiveWPResult)
       lknPixGiveWPIframe.contents().find('button[id="toggle-viewing"]').off('click')
       lknPixGiveWPIframe.contents().find('button[id="copy-button"]').off('click')
@@ -142,6 +141,16 @@
       lknPixGiveWPIframe.contents().find('button[id="copy-button"]').on('click', () => {
         navigator.clipboard.writeText(lknPixGiveWPResult)
       })
+
+      const qrContainer = lknPixGiveWPIframe.contents().find('p[id="qr"]')[0]
+      if (qrContainer !== null || qrContainer !== undefined) {
+        qrContainer.innerHTML = ''
+        new QRCode(qrContainer, {
+          text: lknPixGiveWPResult,
+          width: 150,
+          height: 150
+        })
+      }
     } catch (e) {
       lknPixGiveWPObserver = undefined
       lknPixGiveWPObserve()
@@ -193,7 +202,7 @@
           throw Error(['Observed is not set', item, lknObserved, ['Form is of type', lknPixGiveWPFormType], lknPixGiveWPIframe])
         }
 
-        lknPixGiveWPObserver.lknPixGiveWPObserve(item, {
+        lknPixGiveWPObserver.observe(item, {
           attributes: true,
           childList: true,
           characterData: true
