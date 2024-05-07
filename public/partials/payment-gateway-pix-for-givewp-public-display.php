@@ -48,9 +48,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <div id="lkn-pix-form-donation">
     <?php ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) . '<br/>' : '' ; ?>
-    <legend><?php _e('Pix Key:', 'payment-gateway-pix-for-givewp')?></legend>
+    <legend><?php esc_html_e('Pix Key:', 'payment-gateway-pix-for-givewp')?></legend>
     <div class='pix-container'>
-        <p id='qr'><?php _e('Loading...', 'payment-gateway-pix-for-givewp') ?></p>
+        <p id='qr'><?php esc_html_e('Loading...', 'payment-gateway-pix-for-givewp') ?></p>
         <br/>
         <p id='pix'></p>
         <p id='copy-pix' style="display: none;" >

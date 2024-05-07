@@ -28,7 +28,7 @@ final class PixHelperClass
             return;
         }
 
-        $logPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log';
+        $logPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'includes/logs/' . gmdate('d.m.Y-H.i.s') . '.log';
 
         error_log($message, 3, $logPath);
 
@@ -41,7 +41,7 @@ final class PixHelperClass
      */
     public static function delete_old_logs(): void
     {
-        $logsPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'logs';
+        $logsPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'includes/logs';
         foreach (scandir($logsPath) as $logFilename) {
             if ('.' !== $logFilename && '..' !== $logFilename && 'index.php' !== $logFilename) {
                 $logDate = explode('-', $logFilename)[0];
@@ -55,7 +55,7 @@ final class PixHelperClass
                 $interval = $logDate->diff($now);
                 $logAge = $interval->format('%a');
                 if ($logAge >= 15) {
-                    unlink($logsPath . '/' . $logFilename);
+                    wp_delete_file($logsPath . '/' . $logFilename);
                 }
             }
         }

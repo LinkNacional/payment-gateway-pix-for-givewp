@@ -122,7 +122,7 @@ final class PixGatewayClass extends PaymentGateway
 
             DonationNote::create([
                 'donationId' => $donation->id,
-                'content' => sprintf(esc_html__('Donation failed. Reason: %s', 'pix-give'), $errorMessage)
+                'content' => sprintf('Donation failed. Reason: %1$s', esc_html($errorMessage))
             ]);
 
             PixHelperClass::log(wp_json_encode(array(
@@ -131,7 +131,7 @@ final class PixGatewayClass extends PaymentGateway
                 'Stack Trace' => $e->getTrace()
             ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
 
-            throw new PaymentGatewayException($errorMessage);
+            throw new PaymentGatewayException(esc_html($errorMessage));
         }
     }
 
