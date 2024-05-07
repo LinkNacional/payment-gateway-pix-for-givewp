@@ -17,19 +17,19 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    # Run composer install
-    - name: Run composer install
-      uses: php-actions/composer@v6
-      with:
-        php_version: ${{ env.PHP_VERSION }}
-        working_dir: "."
-        args: "--no-dev --optimize-autoloader"
-        command: install
+    # Run composer install // TODO Only run composer after autoload config
+    #- name: Run composer install
+    #  uses: php-actions/composer@v6
+    #  with:
+    #    php_version: ${{ env.PHP_VERSION }}
+    #    working_dir: "."
+    #    dev: no
+    #    command: install
 
     - name: Make plugin root directory
       run: |
         mkdir ${{env.PLUGIN_NAME}} && 
-        cp -r ./admin ./includes ./languages ./public ./vendor *.php *.txt composer.json composer.lock ./${{env.PLUGIN_NAME}}/ && 
+        cp -r ./admin ./includes ./languages ./public *.php *.txt composer.json composer.lock ./${{env.PLUGIN_NAME}}/ && 
         find ./${{env.PLUGIN_NAME}} -type f -exec chmod 0644 {} + && 
         find ./${{env.PLUGIN_NAME}} -type d -exec chmod 0755 {} + && 
         ls -lah
