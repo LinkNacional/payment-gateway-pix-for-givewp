@@ -1,0 +1,27 @@
+{
+    "domain": "payment-gateway-pix-for-givewp",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "payment-gateway-pix-for-givewp",
+                "plural_forms": "nplurals=2; plural=(n != 1);",
+                "lang": "pt_BR"
+            },
+            "QR Code for payment via Pix": [
+                "QR Code para pagamento via Pix"
+            ],
+            "Pix Key:": [
+                "Chave Pix:"
+            ],
+            "Loading...": [
+                "Carregando..."
+            ],
+            "Show Pix": [
+                "Mostrar Pix"
+            ],
+            "Copy Pix": [
+                "Copiar Pix"
+            ]
+        }
+    }
+}

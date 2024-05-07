@@ -1,0 +1,36 @@
+{
+    "domain": "payment-gateway-pix-for-givewp",
+    "locale_data": {
+        "messages": {
+            "": {
+                "domain": "payment-gateway-pix-for-givewp",
+                "plural_forms": "nplurals=2; plural=(n != 1);",
+                "lang": "pt_PT"
+            },
+            "Enjoying the plugin?": [
+                "Gostou do plugin?"
+            ],
+            "Try out our other GiveWP plugins": [
+                "Experimente os outros plugins para GiveWP da Link Nacional"
+            ],
+            "Cielo API Credit Card Payment": [
+                "Pagamento por Cartão de crédito via Cielo API"
+            ],
+            "Google Pay Payment": [
+                "Pagamento por Google Pay"
+            ],
+            "Bitcoin and Ethereum Payment": [
+                "Pagamento por Bitcoin e Ethereum"
+            ],
+            "International Donations using foreign currencies such as Euro or Yen": [
+                "Doações internacionais em diversas moedas como Euro e Dólar"
+            ],
+            "And more!": [
+                "E mais!"
+            ],
+            "Learn more now": [
+                "Conheça nossos plugins agora"
+            ]
+        }
+    }
+}

@@ -1,0 +1,78 @@
+# Payment Gateway for Pix on GiveWP en_US translation
+msgid "Payment Gateway for Pix on GiveWP"
+msgstr ""
+
+msgid "Loading..."
+msgstr ""
+
+msgid "Pix Key:"
+msgstr ""
+
+msgid "Type of Key"
+msgstr ""
+
+msgid "Insert the type of the pix key."
+msgstr ""
+
+msgid "Phone"
+msgstr ""
+
+msgid "CPF"
+msgstr ""
+
+msgid "CNPJ"
+msgstr ""
+
+msgid "Email"
+msgstr ""
+
+msgid "Other"
+msgstr ""
+
+msgid "Insert the pix key that will be used on the donations."
+msgstr ""
+
+msgid "Pix Key"
+msgstr ""
+
+msgid "Recipient Name"
+msgstr ""
+
+msgid "Insert the name of the key's recipient."
+msgstr ""
+
+msgid "Recipient City"
+msgstr ""
+
+msgid "Insert the key recipient's city."
+msgstr ""
+
+msgid "Payment Identificator (optional)"
+msgstr ""
+
+msgid "Insert the payment identificator, not required."
+msgstr ""
+
+msgid "Enable Debug Mode"
+msgstr ""
+
+msgid "Select if logs should be created for debug purposes."
+msgstr ""
+
+msgid "Enable"
+msgstr ""
+
+msgid "Disable"
+msgstr ""
+
+msgid "Collect Billing Details"
+msgstr ""
+
+msgid "Select if billing details should be added do the donation forms (classic and legacy forms)."
+msgstr ""
+
+msgid "Pix QR Code"
+msgstr ""
+
+msgid "Check Last Log"
+msgstr ""

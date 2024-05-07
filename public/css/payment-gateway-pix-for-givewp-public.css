@@ -1,0 +1,61 @@
+/**
+ * All of the CSS for your public-facing functionality should be
+ * included in this file.
+ */
+
+#toggle-viewing,
+#copy-button {
+    color: black;
+    background-color: transparent;
+    border: none;
+}
+
+#toggle-viewing:hover,
+#copy-button:hover {
+    opacity: 60%;
+    cursor: pointer;
+}
+
+#toggle-viewing:active,
+#copy-button:active {
+    opacity: 80%;
+    cursor: pointer;
+}
+
+#pix {
+    width: 250px;
+    text-align: center;
+    text-wrap: balance;
+    word-wrap: break-word;
+    margin: 0px;
+    margin-bottom: 12px;
+}
+
+#qr {
+    margin: 0px;
+}
+
+#copy-pix {
+    margin: 0px;
+    display: flex;
+    flex-direction: row;
+}
+
+#lkn-pix-form-donation {
+    max-width: inherit;
+}
+
+@media only screen and (max-width: 572px) {
+    #lkn-pix-form-donation {
+        max-width: 80vw;
+    }
+}
+
+.pix-container {
+    max-width: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    align-content: center;
+    align-self: center;
+}

@@ -1,0 +1,78 @@
+# Payment Gateway for Pix on GiveWP tradução pt_PT
+msgid "Payment Gateway for Pix on GiveWP"
+msgstr "Gateway de Pagamento por Pix para GiveWP"
+
+msgid "Loading..."
+msgstr "Carregando..."
+
+msgid "Pix Key:"
+msgstr "Chave Pix:"
+
+msgid "Type of Key"
+msgstr "Tipo de Chave"
+
+msgid "Insert the type of the pix key."
+msgstr "Insira o tipo de chave pix"
+
+msgid "Phone"
+msgstr "Telefone"
+
+msgid "CPF"
+msgstr "CPF"
+
+msgid "CNPJ"
+msgstr "CNPJ"
+
+msgid "Email"
+msgstr "Email"
+
+msgid "Other"
+msgstr "Outro"
+
+msgid "Insert the pix key that will be used on the donations."
+msgstr "Insira a chave pix a ser utilizada nas doações."
+
+msgid "Pix Key"
+msgstr "Chave Pix"
+
+msgid "Recipient Name"
+msgstr "Nome do Beneficiário"
+
+msgid "Insert the name of the key's recipient."
+msgstr "Insira o nome do beneficiário da chave."
+
+msgid "Recipient City"
+msgstr "Cidade do Beneficiário"
+
+msgid "Insert the key recipient's city."
+msgstr "Insira a cidade do beneficiário da chave"
+
+msgid "Payment Identificator (optional)"
+msgstr "Identificador de Pagamento (opcional)"
+
+msgid "Insert the payment identificator, not required."
+msgstr "Insira o identificador de pagamento, não obrigatório."
+
+msgid "Enable Debug Mode"
+msgstr "Habilitar Modo de Depuração"
+
+msgid "Select if logs should be created for debug purposes."
+msgstr "Selecione se devem ser criados logs para depuração."
+
+msgid "Enable"
+msgstr "Habilitar"
+
+msgid "Disable"
+msgstr "Desabilitar"
+
+msgid "Collect Billing Details"
+msgstr "Coletar Detalhes de Cobrança"
+
+msgid "Select if billing details should be added do the donation forms (classic and legacy forms)."
+msgstr "Selecione se detalhes de cobrança devem ser adicionados aos formulários de doação (para formulários classic ou legacy)."
+
+msgid "Pix QR Code"
+msgstr "Pix QR Code"
+
+msgid "Check Last Log"
+msgstr "Checa Último Log"
