@@ -1,5 +1,9 @@
 <?php
 
+namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+
+use Lkn\PaymentGatewayPixForGivewp\Public\Payment_Gateway_Pix_For_Givewp_Public;
+
 /**
  * The file that defines the core plugin class
  *
@@ -99,41 +103,6 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     private function load_dependencies(): void
     {
-        /**
-         * The class responsible for orchestrating the actions and filters of the
-         * core plugin.
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-loader.php';
-
-        /**
-         * The class responsible for defining internationalization functionality
-         * of the plugin.
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-i18n.php';
-
-        /**
-         * The class responsible for defining all actions that occur in the admin area.
-         */
-        require_once plugin_dir_path(__DIR__) . 'admin/class-payment-gateway-pix-for-givewp-admin.php';
-
-        /**
-         * The class responsible for defining all actions that occur in the public-facing
-         * side of the site.
-         */
-        require_once plugin_dir_path(__DIR__) . 'public/class-payment-gateway-pix-for-givewp-public.php';
-
-        /**
-         * The class responsible for defining the gateways
-         * of the plugin.
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-gateway.php';
-
-        /**
-         * Helper class
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-helper.php';
-
-
         $this->loader = new Payment_Gateway_Pix_For_Givewp_Loader();
     }
 
@@ -155,7 +124,7 @@ final class Payment_Gateway_Pix_For_Givewp
 
     public function load_payment_gateway($paymentGatewayRegister): void
     {
-        $paymentGatewayRegister->registerGateway('PixGatewayClass');
+        $paymentGatewayRegister->registerGateway(PixGatewayClass::class);
     }
 
     public function add_new_cron_recurrencies()
@@ -192,21 +161,21 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     private function define_admin_hooks(): void
     {
-        $plugin_admin = new Payment_Gateway_Pix_For_Givewp_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new Payment_Gateway_Pix_For_Givewp($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
-        $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
+        // $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
 
         // Set the cron jobs
-        $this->loader->add_filter('cron_schedules', $this, 'add_new_cron_recurrencies');
-        $this->loader->add_action('init', $this, 'define_event_delete_old_logs');
-        $this->loader->add_action('init', $this, 'define_cron_hook');
+        // $this->loader->add_filter('cron_schedules', $this, 'add_new_cron_recurrencies');
+        // $this->loader->add_action('init', $this, 'define_event_delete_old_logs');
+        // $this->loader->add_action('init', $this, 'define_cron_hook');
 
         // Register the gateways
-        $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_payment_gateway');
+        // $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_payment_gateway');
 
-        $this->loader->add_action('give_get_settings_gateways', $plugin_admin, 'add_setting_into_new_section');
-        $this->loader->add_action('give_get_sections_gateways', $plugin_admin, 'add_new_setting_section');
+        // $this->loader->add_action('give_get_settings_gateways', $plugin_admin, 'add_setting_into_new_section');
+        // $this->loader->add_action('give_get_sections_gateways', $plugin_admin, 'add_new_setting_section');
     }
 
     /**
@@ -218,10 +187,9 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     private function define_public_hooks(): void
     {
-        $plugin_public = new Payment_Gateway_Pix_For_Givewp_Public($this->get_plugin_name(), $this->get_version());
 
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
-        $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+        $this->loader->add_action('wp_enqueue_scripts', Payment_Gateway_Pix_For_Givewp_Public::class, 'enqueue_styles');
+        $this->loader->add_action('wp_enqueue_scripts', Payment_Gateway_Pix_For_Givewp_Public::class, 'enqueue_scripts');
     }
 
     /**

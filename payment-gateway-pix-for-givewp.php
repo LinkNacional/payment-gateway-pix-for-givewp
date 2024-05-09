@@ -25,11 +25,15 @@
  * Domain Path:       /languages
  */
 
+require_once(__DIR__. "/vendor/autoload.php");
+use Lkn\PaymentGatewayPixForGivewp\Includes\Payment_Gateway_Pix_For_Givewp;
+use Lkn\PaymentGatewayPixForGivewp\Includes\Payment_Gateway_Pix_For_Givewp_Activator;
+use Lkn\PaymentGatewayPixForGivewp\Includes\Payment_Gateway_Pix_For_Givewp_Deactivator;
+
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
     die;
 }
-
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -46,7 +50,6 @@ define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languag
  */
 function activate_payment_gateway_pix_for_givewp(): void
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp-activator.php';
     Payment_Gateway_Pix_For_Givewp_Activator::activate();
 }
 
@@ -56,7 +59,6 @@ function activate_payment_gateway_pix_for_givewp(): void
  */
 function deactivate_payment_gateway_pix_for_givewp(): void
 {
-    require_once plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp-deactivator.php';
     Payment_Gateway_Pix_For_Givewp_Deactivator::deactivate();
 }
 
@@ -67,7 +69,6 @@ register_deactivation_hook(__FILE__, 'deactivate_payment_gateway_pix_for_givewp'
  * The core plugin class that is used to define internationalization,
  * admin-specific hooks, and public-facing site hooks.
  */
-require plugin_dir_path(__FILE__) . 'includes/class-payment-gateway-pix-for-givewp.php';
 
 /**
  * Begins execution of the plugin.

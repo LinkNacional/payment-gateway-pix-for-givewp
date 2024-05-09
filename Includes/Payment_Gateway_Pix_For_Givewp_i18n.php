@@ -1,5 +1,7 @@
 <?php
 
+namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+
 /**
  * Define the internationalization functionality
  *
@@ -24,23 +26,23 @@
  * @subpackage Payment_Gateway_Pix_For_Givewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-class Payment_Gateway_Pix_For_Givewp_i18n {
+class Payment_Gateway_Pix_For_Givewp_i18n
+{
+    /**
+     * Load the plugin text domain for translation.
+     *
+     * @since    1.0.0
+     */
+    public function load_plugin_textdomain()
+    {
 
+        load_plugin_textdomain(
+            'payment-gateway-pix-for-givewp',
+            false,
+            dirname(dirname(plugin_basename(__FILE__))) . '/languages/'
+        );
 
-	/**
-	 * Load the plugin text domain for translation.
-	 *
-	 * @since    1.0.0
-	 */
-	public function load_plugin_textdomain() {
-
-		load_plugin_textdomain(
-			'payment-gateway-pix-for-givewp',
-			false,
-			dirname( dirname( plugin_basename( __FILE__ ) ) ) . '/languages/'
-		);
-
-	}
+    }
 
 
 

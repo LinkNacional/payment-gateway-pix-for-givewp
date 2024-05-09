@@ -1,5 +1,7 @@
 <?php
 
+namespace Lkn\PaymentGatewayPixForGivewp\Public;
+
 /**
  * The public-facing functionality of the plugin.
  *

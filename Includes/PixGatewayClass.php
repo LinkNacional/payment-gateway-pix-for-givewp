@@ -1,5 +1,7 @@
 <?php
 
+namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+
 use Give\Donations\Models\Donation;
 use Give\Donations\Models\DonationNote;
 use Give\Donations\ValueObjects\DonationStatus;
@@ -10,7 +12,7 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
-use PixHelperClass;
+use Lkn\PaymentGatewayPixForGivewp\Includes\PixHelperClass ;
 
 /**
  * @inheritDoc

@@ -1,5 +1,7 @@
 <?php
 
+namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+
 /**
  * Fired during plugin deactivation
  *
@@ -20,17 +22,18 @@
  * @subpackage Payment_Gateway_Pix_For_Givewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-class Payment_Gateway_Pix_For_Givewp_Deactivator {
+class Payment_Gateway_Pix_For_Givewp_Deactivator
+{
+    /**
+     * Short Description. (use period)
+     *
+     * Long Description.
+     *
+     * @since    1.0.0
+     */
+    public static function deactivate()
+    {
 
-	/**
-	 * Short Description. (use period)
-	 *
-	 * Long Description.
-	 *
-	 * @since    1.0.0
-	 */
-	public static function deactivate() {
-
-	}
+    }
 
 }

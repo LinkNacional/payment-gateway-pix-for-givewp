@@ -1,5 +1,7 @@
 <?php
 
+namespace Lkn\PaymentGatewayPixForGivewp\Admin;
+
 /**
  * The admin-specific functionality of the plugin.
  *
