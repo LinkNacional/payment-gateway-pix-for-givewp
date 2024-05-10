@@ -31,7 +31,7 @@ final class PixHelperClass
             return;
         }
 
-        $logPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'includes/logs/' . gmdate('d.m.Y-H.i.s') . '.log';
+        $logPath = __DIR__ . '/logs/' . gmdate('d.m.Y-H.i.s') . '.log';
 
         error_log($message, 3, $logPath);
 
@@ -44,7 +44,7 @@ final class PixHelperClass
      */
     public static function delete_old_logs(): void
     {
-        $logsPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'includes/logs';
+        $logsPath = __DIR__ . '/logs';
         foreach (scandir($logsPath) as $logFilename) {
             if ('.' !== $logFilename && '..' !== $logFilename && 'index.php' !== $logFilename) {
                 $logDate = explode('-', $logFilename)[0];

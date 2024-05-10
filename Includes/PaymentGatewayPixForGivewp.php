@@ -74,8 +74,8 @@ final class PaymentGatewayPixForGivewp
      */
     public function __construct()
     {
-        if (defined('PaymentGatewayPixForGivewp_VERSION')) {
-            $this->version = PaymentGatewayPixForGivewp_VERSION;
+        if (defined('PAYMENT_GATEWAY_PIX_PLUGIN_VERSION')) {
+            $this->version = PAYMENT_GATEWAY_PIX_PLUGIN_VERSION;
         } else {
             $this->version = '1.0.0';
         }
@@ -143,14 +143,14 @@ final class PaymentGatewayPixForGivewp
 
     public function define_cron_hook(): void
     {
-        add_action('lkn_delete_old_logs_cron_hook', array('PixHelperClass', 'delete_old_logs'));
+        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array(PixHelperClass::class, 'delete_old_logs'));
     }
 
     public function define_event_delete_old_logs(): void
     {
-        if (!wp_next_scheduled('lkn_delete_old_logs_cron_hook')) {
+        if (!wp_next_scheduled('lkn_payment_pix_delete_old_logs_cron_hook')) {
             $time = time() + (15 * DAY_IN_SECONDS);
-            wp_schedule_event($time, 'biweekly', 'lkn_delete_old_logs_cron_hook');
+            wp_schedule_event($time, 'biweekly', 'lkn_payment_pix_delete_old_logs_cron_hook');
         }
     }
 
