@@ -1,5 +1,6 @@
 import qrcodeJs from "qrcode.js";
 
+
 const { __ } = wp.i18n;
 
 function lknPaymentGatewayPixGiveWPCrcChecksum(string) {
@@ -84,14 +85,7 @@ const lknGatewayPix = {
         // Aqui vai todas as funções necessárias ao carregar a página de pagamento
     },
     async beforeCreatePayment(values) {
-        // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
-        // Ponha validações e adicione atributos que você vai precisar no back-end aqui
 
-        // Caso detecte algum erro de validação você pode adicionar uma exceção
-        // A mensagem de erro aparecerá para o cliente já formatada
-        if (values.firstname === 'error') {
-            throw new Error('Gateway failed');
-        }
 
         // Retorna os atributos usados pelo back-end
         // Atributos do objeto value já são passados por padrão
@@ -119,23 +113,25 @@ const lknGatewayPix = {
 
             if (document.getElementById('qr') !== undefined) {
                 document.getElementById('qr')!.innerHTML = ''
+                document.getElementById('qr')!.style.textAlign = 'center';
                 const qrCode = new QRCode(document.getElementById('qr'), {
                     text: pix,
                     width: 150,
-                    height: 150
+                    height: 150,
+
                 })
             }
         })
 
         return (
-            <div id="lkn-react-pix-form">
+            <div id="lkn-react-pix-form" style={{ textAlign: "center" }}>
                 <input type="hidden" id="donation-value" value={donationAmount}></input>
-                <link rel="stylesheet" href={lknAttr.pluginUrl + "public/css/payment-gateway-pix-for-givewp-public.css"} />
+                <link rel="stylesheet" href={lknAttr.pluginUrl + "Public/css/payment-gateway-pix-for-givewp-public.css"} />
                 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-                <div id="lkn-pix-form-donation" >
+                <div id="lkn-pix-form-donation"  >
                     <legend>{__('Pix Key:', 'payment-gateway-pix-for-givewp')}</legend>
                     <div className='pix-container'>
-                        <p id='qr'></p>
+                        <p id='qr' ></p>
                         <br />
                         <p id='pix' name='pix'>{pix}</p>
                         <p id='copy-pix' >

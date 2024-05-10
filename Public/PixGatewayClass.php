@@ -164,6 +164,7 @@ final class PixGatewayClass extends PaymentGateway
      */
     public function createPayment(Donation $donation, $gatewayData): GatewayCommand
     {
+
         try {
             if (empty($gatewayData['pix-payment-gateway-id'])) {
                 throw new PaymentGatewayException(__('Payment ID is required.', 'pix-give'));

@@ -98,18 +98,8 @@ const lknGatewayPix = {
   id: 'pix-payment-gateway',
   async initialize() {
     // Aqui vai todas as funções necessárias ao carregar a página de pagamento
-    console.log('teste')
   },
   async beforeCreatePayment(values) {
-    // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
-    // Ponha validações e adicione atributos que você vai precisar no back-end aqui
-
-    // Caso detecte algum erro de validação você pode adicionar uma exceção
-    // A mensagem de erro aparecerá para o cliente já formatada
-    if (values.firstname === 'error') {
-      throw new Error('Gateway failed')
-    }
-
     // Retorna os atributos usados pelo back-end
     // Atributos do objeto value já são passados por padrão
     return {
@@ -147,14 +137,17 @@ const lknGatewayPix = {
       }
     })
     return /* #__PURE__ */React.createElement('div', {
-      id: 'lkn-react-pix-form'
+      id: 'lkn-react-pix-form',
+      style: {
+        textAlign: 'center'
+      }
     }, /* #__PURE__ */React.createElement('input', {
       type: 'hidden',
       id: 'donation-value',
       value: donationAmount
     }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
-      href: lknAttr.pluginUrl + 'public/css/payment-gateway-pix-for-givewp-public.css'
+      href: lknAttr.pluginUrl + 'Public/css/payment-gateway-pix-for-givewp-public.css'
     }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'
