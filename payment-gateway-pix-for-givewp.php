@@ -10,7 +10,7 @@
  *
  * @link              https://www.linknacional.com.br
  * @since             1.0.0
- * @package           Payment_Gateway_Pix_For_Givewp
+ * @package           PaymentGatewayPixForGivewp
  *
  * @wordpress-plugin
  * Plugin Name:       Payment Gateway Pix for GiveWP
@@ -26,9 +26,9 @@
  */
 
 require_once(__DIR__. "/vendor/autoload.php");
-use Lkn\PaymentGatewayPixForGivewp\Includes\Payment_Gateway_Pix_For_Givewp;
-use Lkn\PaymentGatewayPixForGivewp\Includes\Payment_Gateway_Pix_For_Givewp_Activator;
-use Lkn\PaymentGatewayPixForGivewp\Includes\Payment_Gateway_Pix_For_Givewp_Deactivator;
+use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixForGivewp;
+use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixForGivewpActivator;
+use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixForGivewpDeactivator;
 
 // If this file is called directly, abort.
 if (!defined('WPINC')) {
@@ -39,7 +39,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION', '1.0.0');
+define('PAYMENT_GATEWAY_PIX_PLUGIN_VERSION', '1.0.0');
 define('PAYMENT_GATEWAY_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PAYMENT_GATEWAY_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languages');
@@ -48,22 +48,22 @@ define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languag
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function activate_payment_gateway_pix_for_givewp(): void
+function activate_PaymentGatewayPixForGivewp(): void
 {
-    Payment_Gateway_Pix_For_Givewp_Activator::activate();
+    PaymentGatewayPixForGivewpActivator::activate();
 }
 
 /**
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function deactivate_payment_gateway_pix_for_givewp(): void
+function deactivate_PaymentGatewayPixForGivewp(): void
 {
-    Payment_Gateway_Pix_For_Givewp_Deactivator::deactivate();
+    PaymentGatewayPixForGivewpDeactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_payment_gateway_pix_for_givewp');
-register_deactivation_hook(__FILE__, 'deactivate_payment_gateway_pix_for_givewp');
+register_activation_hook(__FILE__, 'activate_PaymentGatewayPixForGivewp');
+register_deactivation_hook(__FILE__, 'deactivate_PaymentGatewayPixForGivewp');
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -79,9 +79,9 @@ register_deactivation_hook(__FILE__, 'deactivate_payment_gateway_pix_for_givewp'
  *
  * @since    1.0.0
  */
-function run_payment_gateway_pix_for_givewp(): void
+function run_PaymentGatewayPixForGivewp(): void
 {
-    $plugin = new Payment_Gateway_Pix_For_Givewp();
+    $plugin = new PaymentGatewayPixForGivewp();
     $plugin->run();
 }
-run_payment_gateway_pix_for_givewp();
+run_PaymentGatewayPixForGivewp();

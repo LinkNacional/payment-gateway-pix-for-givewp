@@ -8,8 +8,8 @@
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    Payment_Gateway_Pix_For_Givewp
- * @subpackage Payment_Gateway_Pix_For_Givewp/public/partials
+ * @package    PaymentGatewayPixForGivewp
+ * @subpackage PaymentGatewayPixForGivewp/public/partials
  */
 ?>
 
