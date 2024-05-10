@@ -81,7 +81,7 @@ register_deactivation_hook(__FILE__, 'deactivate_PaymentGatewayPixForGivewp');
  */
 function run_PaymentGatewayPixForGivewp(): void
 {
-    $plugin = new PaymentGatewayPixForGivewp();
+    $plugin = new PaymentGatewayPixForGivewp(); 
     $plugin->run();
 }
 run_PaymentGatewayPixForGivewp();

@@ -56,7 +56,9 @@ final class PixGatewayClass extends PaymentGateway
      */
     public function getLegacyFormFieldMarkup(int $formId, array $args): string
     {
-        load_template(PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'public/partials/payment-gateway-pix-for-givewp-public-display.php', true, array(
+
+        // Array de argumentos
+        $template_args = array(
             'pixType' => give_get_option('lkn-payment-pix-type-setting'),
             'pixKey' => give_get_option('lkn-payment-pix-key'),
             'pixName' => give_get_option('lkn-payment-pix-name-setting'),
@@ -64,10 +66,65 @@ final class PixGatewayClass extends PaymentGateway
             'pixId' => give_get_option('lkn-payment-pix-paymentid-setting'),
             'formId' => $formId,
             'isFormEnabled' => (give_get_option('lkn-payment-pix-details-setting') === 'enabled') ? true : false,
-        ));
+        );
 
-        return "";
+        // Construindo a string HTML
+        $html = '<input
+        type="hidden"
+        id="pix_type"
+        value="' . esc_attr($template_args['pixType']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_key"
+        value="' . esc_attr($template_args['pixKey']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_name"
+        value="' . esc_attr($template_args['pixName']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_city"
+        value="' . esc_attr($template_args['pixCity']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_id"
+        value="' . esc_attr($template_args['pixId']) . '"
+    />
+    <input
+        type="hidden"
+        name="gatewayData[pix-payment-gateway-id]"
+        value="pix"
+    />
+
+    <link rel="stylesheet" href="' . esc_attr(PAYMENT_GATEWAY_PIX_PLUGIN_URL) . 'Public/css/payment-gateway-pix-for-givewp-public.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <div id="lkn-pix-form-donation">
+        ' . ($template_args['isFormEnabled'] ? give_default_cc_address_fields($template_args['formId']) . '<br/>' : '') . '
+        <legend>' . esc_html__('Pix Key:', 'payment-gateway-pix-for-givewp') . '</legend>
+        <div class="pix-container">
+            <p id="qr">' . esc_html__('Loading...', 'payment-gateway-pix-for-givewp') . '</p>
+            <br/>
+            <p id="pix"></p>
+            <p id="copy-pix" style="display: none;">
+                <button id="toggle-viewing" type="button" title="' . esc_attr__('Mostrar Pix') . '">
+                    <span id="show" class="material-symbols-outlined" style="display: none;">visibility_off</span>
+                    <span id="hide" class="material-symbols-outlined">visibility</span>
+                </button>
+                <button id="copy-button" type="button" title="' . esc_attr__('Copiar Pix') . '">
+                    <span class="material-symbols-outlined">content_copy</span>
+                </button>
+            </p>
+        </div>
+    </div>';
+
+        return $html;
     }
+
+
 
     /**
      * // TODO needs this function to appear in v3 forms
@@ -75,7 +132,7 @@ final class PixGatewayClass extends PaymentGateway
      */
     public function enqueueScript(int $formId): void
     {
-        echo PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'Public/js/lkn-pix.js';
+
         wp_enqueue_script('qrcode', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'Public/js/qrcode.min.js', array( ), PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, false);
         wp_enqueue_script(
             self::id(),

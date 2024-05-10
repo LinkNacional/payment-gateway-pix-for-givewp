@@ -212,7 +212,7 @@ final class PaymentGatewayPixForGivewpAdmin
 
         $logPath = give_get_option('payment_gateway_for_givewp_last_log_url');
         $wp_error = false;
-
+        $remote = null;
         if ($logPath !== false) {
             $remote = wp_remote_get($logPath);
 
@@ -226,8 +226,8 @@ final class PaymentGatewayPixForGivewpAdmin
                 $wp_error = $remote;
             }
 
-            $logContents = wp_remote_retrieve_body($remote);
         }
+        $logContents = wp_remote_retrieve_body($remote);
 
         wp_localize_script(
             $this->plugin_name,
