@@ -40,15 +40,17 @@ if (!defined('WPINC')) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define('PAYMENT_GATEWAY_PIX_PLUGIN_VERSION', '1.0.0');
+define("PAYMENT_GATEWAY_PIX_PLUGIN_FILE", __DIR__. "/payment-gateway-pix-for-givewp.php");
 define('PAYMENT_GATEWAY_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PAYMENT_GATEWAY_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languages');
+define('PAYMENT_GATEWAY_PIX_PLUGIN_BASENAME', plugin_basename(PAYMENT_GATEWAY_PIX_PLUGIN_FILE));
 
 /**
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function activate_PaymentGatewayPixForGivewp(): void
+function activate_payment_gateway_pix_for_givewp(): void
 {
     PaymentGatewayPixForGivewpActivator::activate();
 }
@@ -57,13 +59,13 @@ function activate_PaymentGatewayPixForGivewp(): void
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function deactivate_PaymentGatewayPixForGivewp(): void
+function deactivate_payment_gateway_pix_for_givewp(): void
 {
     PaymentGatewayPixForGivewpDeactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_PaymentGatewayPixForGivewp');
-register_deactivation_hook(__FILE__, 'deactivate_PaymentGatewayPixForGivewp');
+register_activation_hook(__FILE__, 'activate_payment_gateway_pix_for_givewp');
+register_deactivation_hook(__FILE__, 'deactivate_payment_gateway_pix_for_givewp');
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -81,7 +83,7 @@ register_deactivation_hook(__FILE__, 'deactivate_PaymentGatewayPixForGivewp');
  */
 function run_PaymentGatewayPixForGivewp(): void
 {
-    $plugin = new PaymentGatewayPixForGivewp(); 
+    $plugin = new PaymentGatewayPixForGivewp();
     $plugin->run();
 }
 run_PaymentGatewayPixForGivewp();

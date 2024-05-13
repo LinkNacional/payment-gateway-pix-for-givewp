@@ -80,11 +80,7 @@ final class PaymentGatewayPixForGivewp
             $this->version = '1.0.0';
         }
         $this->plugin_name = 'payment-gateway-pix-for-givewp';
-
-        $this->load_dependencies();
-        $this->set_locale();
-        $this->define_admin_hooks();
-        $this->define_public_hooks();
+        $this->run();
     }
 
     /**
@@ -153,6 +149,93 @@ final class PaymentGatewayPixForGivewp
             wp_schedule_event($time, 'biweekly', 'lkn_payment_pix_delete_old_logs_cron_hook');
         }
     }
+    public function check_environment()
+    {
+        // Load plugin helper functions.
+        if (!function_exists('deactivate_plugins') || !function_exists('is_plugin_active')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        // Flag to check whether deactivate plugin or not.
+        $is_deactivate_plugin = null;
+
+        // Verify minimum Give plugin version.
+        if (
+            defined('GIVE_VERSION')
+            && version_compare(GIVE_VERSION, PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, '<')
+        ) {
+            // Show admin notice.
+            $this->dependency_notice();
+
+            $is_deactivate_plugin = true;
+        }
+
+        $is_give_active = is_plugin_active('give/give.php');
+
+        // Verify if Free plugin is actived.
+        if (!$is_give_active) {
+            // Show admin notice.
+            $this->inactive_notice();
+
+            $is_deactivate_plugin = true;
+        }
+
+        // Deactivate plugin.
+        if ($is_deactivate_plugin) {
+            deactivate_plugins(PAYMENT_GATEWAY_PIX_PLUGIN_BASENAME);
+
+            if (isset($_GET['activate'])) {
+                unset($_GET['activate']);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function dependency_notice(): void
+    {
+        // Admin notice.
+        $message = sprintf(
+            '<strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a>  %5$s %6$s+ %7$s.',
+            'Erro de Ativação:',
+            'Você deve ter',
+            'https://givewp.com',
+            'Give',
+            'versão',
+            PAYMENT_GATEWAY_PIX_PLUGIN_VERSION,
+            'para o complemento Payment Gateway Pix For GiveWp ativar'
+        );
+
+        Give()->notices->register_notice(array(
+            'id' => 'give-activation-error',
+            'type' => 'error',
+            'description' => $message,
+            'show' => true
+        ));
+    }
+
+    /**
+     * Notice for No Core Activation
+     *
+     * @since 1.0.0
+     */
+    public function inactive_notice(): void
+    {
+        // Admin notice.
+        $message = sprintf(
+            '<div class="notice notice-error"><p><strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a> %5$s.</p></div>',
+            'Erro de Ativação:',
+            'Você deve ter',
+            'https://givewp.com',
+            'Give',
+            'plugin instalado e ativado para o complemento Payment Gateway Pix For GiveWP ativar'
+        );
+
+        echo esc_html($message);
+    }
 
     /**
      * Register all of the hooks related to the admin area functionality
@@ -161,7 +244,8 @@ final class PaymentGatewayPixForGivewp
      * @since    1.0.0
      * @access   private
      */
-    private function define_admin_hooks(): void
+
+    private function define_admin_hooks()
     {
         $plugin_admin = new PaymentGatewayPixForGivewpAdmin($this->get_plugin_name(), $this->get_version());
 
@@ -201,7 +285,15 @@ final class PaymentGatewayPixForGivewp
      */
     public function run(): void
     {
-        $this->loader->run();
+        $is_give_active = $this->check_environment();
+        if ($is_give_active) {
+            $this->load_dependencies();
+            $this->set_locale();
+            $this->define_admin_hooks();
+            $this->define_public_hooks();
+            $this->loader->run();
+
+        }
     }
 
     /**
