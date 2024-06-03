@@ -133,7 +133,7 @@ final class PixGatewayClass extends PaymentGateway
     public function enqueueScript(int $formId): void
     {
 
-        wp_enqueue_script('qrcode', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'Public/js/qrcode.min.js', array( ), PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, false);
+        wp_enqueue_script('qrcode', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'Public/js/qrcode.js', array( ), PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, false);
         wp_enqueue_script(
             self::id(),
             PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'Public/js/lkn-pix.js',

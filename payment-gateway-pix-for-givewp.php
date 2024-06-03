@@ -25,7 +25,7 @@
  * Domain Path:       /languages
  */
 
-require_once(__DIR__. "/vendor/autoload.php");
+require_once(__DIR__. '/vendor/autoload.php');
 use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixForGivewp;
 use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixForGivewpActivator;
 use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixForGivewpDeactivator;
@@ -40,7 +40,7 @@ if (!defined('WPINC')) {
  * Rename this for your plugin and update it as you release new versions.
  */
 define('PAYMENT_GATEWAY_PIX_PLUGIN_VERSION', '1.0.0');
-define("PAYMENT_GATEWAY_PIX_PLUGIN_FILE", __DIR__. "/payment-gateway-pix-for-givewp.php");
+define('PAYMENT_GATEWAY_PIX_PLUGIN_FILE', __DIR__. '/payment-gateway-pix-for-givewp.php');
 define('PAYMENT_GATEWAY_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PAYMENT_GATEWAY_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PAYMENT_GATEWAY_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languages');

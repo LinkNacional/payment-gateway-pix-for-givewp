@@ -101,7 +101,7 @@ class PaymentGatewayPixForGivewpPublic
          * class.
          */
 
-        wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.min.js', array( ), $this->version, false);
+        wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.js', array( ), $this->version, false);
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-public.js', array( 'jquery', 'qrcode' ), $this->version, false);
 
     }

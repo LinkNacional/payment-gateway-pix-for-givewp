@@ -66,7 +66,7 @@ final class PixGatewayClass extends PaymentGateway
             'isFormEnabled' => (give_get_option('lkn-payment-pix-details-setting') === 'enabled') ? true : false,
         ));
 
-        return "";
+        return '';
     }
 
     /**
@@ -75,12 +75,12 @@ final class PixGatewayClass extends PaymentGateway
      */
     public function enqueueScript(int $formId): void
     {
-        wp_enqueue_script('qrcode', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'public/js/qrcode.min.js', array( ), PaymentGatewayPixForGivewpVERSION, false);
+        wp_enqueue_script('qrcode', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'public/js/qrcode.js', array( ), PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, false);
         wp_enqueue_script(
             self::id(),
             PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'includes/js/lkn-pix.js',
             array('wp-element', 'wp-i18n', 'qrcode'),
-            PaymentGatewayPixForGivewpVERSION,
+            PAYMENT_GATEWAY_PIX_PLUGIN_VERSION,
             true
         );
 
