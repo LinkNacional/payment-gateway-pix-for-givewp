@@ -12,12 +12,12 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
-use Lkn\PaymentGatewayPixForGivewp\Includes\PixHelperClass ;
+use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixHelperClass ;
 
 /**
  * @inheritDoc
  */
-final class PixGatewayClass extends PaymentGateway
+final class PaymentGatewayPixGatewayClass extends PaymentGateway
 {
     /**
      * @inheritDoc
@@ -40,7 +40,7 @@ final class PixGatewayClass extends PaymentGateway
      */
     public function getName(): string
     {
-        return __('Pix QR Code', 'pix-give');
+        return __('Pix QR Code', 'payment-gateway-pix-for-givewp');
     }
 
     /**
@@ -48,7 +48,7 @@ final class PixGatewayClass extends PaymentGateway
      */
     public function getPaymentMethodLabel(): string
     {
-        return __('Pix', 'pix-give');
+        return __('Pix', 'payment-gateway-pix-for-givewp');
     }
 
     /**
@@ -167,10 +167,10 @@ final class PixGatewayClass extends PaymentGateway
 
         try {
             if (empty($gatewayData['pix-payment-gateway-id'])) {
-                throw new PaymentGatewayException(__('Payment ID is required.', 'pix-give'));
+                throw new PaymentGatewayException(__('Payment ID is required.', 'payment-gateway-pix-for-givewp'));
             }
 
-            PixHelperClass::log(wp_json_encode(array(
+            PaymentGatewayPixHelperClass::log(wp_json_encode(array(
                 'Donation success' => $gatewayData['pix-payment-gateway-id']
             ), JSON_PRETTY_PRINT));
 
@@ -186,7 +186,7 @@ final class PixGatewayClass extends PaymentGateway
                 'content' => sprintf('Donation failed. Reason: %1$s', esc_html($errorMessage))
             ]);
 
-            PixHelperClass::log(wp_json_encode(array(
+            PaymentGatewayPixHelperClass::log(wp_json_encode(array(
                 'Donation failed' => $errorMessage,
                 'Gateway Data' => $gatewayData,
                 'Stack Trace' => $e->getTrace()

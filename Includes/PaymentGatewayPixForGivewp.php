@@ -4,7 +4,7 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
 
 use Lkn\PaymentGatewayPixForGivewp\Admin\PaymentGatewayPixForGivewpAdmin;
 use Lkn\PaymentGatewayPixForGivewp\PublicView\PaymentGatewayPixForGivewpPublic;
-use Lkn\PaymentGatewayPixForGivewp\PublicView\PixGatewayClass;
+use Lkn\PaymentGatewayPixForGivewp\PublicView\PaymentGatewayPixGatewayClass;
 
 /**
  * The file that defines the core plugin class
@@ -122,7 +122,7 @@ final class PaymentGatewayPixForGivewp
 
     public function load_payment_gateway($paymentGatewayRegister): void
     {
-        $paymentGatewayRegister->registerGateway(PixGatewayClass::class);
+        $paymentGatewayRegister->registerGateway(PaymentGatewayPixGatewayClass::class);
     }
 
     public function add_new_cron_recurrencies()
@@ -139,7 +139,7 @@ final class PaymentGatewayPixForGivewp
 
     public function define_cron_hook(): void
     {
-        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array(PixHelperClass::class, 'delete_old_logs'));
+        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array(PaymentGatewayPixHelperClass::class, 'delete_old_logs'));
     }
 
     public function define_event_delete_old_logs(): void
@@ -171,6 +171,7 @@ final class PaymentGatewayPixForGivewp
         }
 
         $is_give_active = is_plugin_active('give/give.php');
+
 
         // Verify if Free plugin is actived.
         if (!$is_give_active) {
