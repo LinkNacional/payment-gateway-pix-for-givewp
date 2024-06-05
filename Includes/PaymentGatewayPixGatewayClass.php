@@ -108,7 +108,7 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
     {
         try {
             if (empty($gatewayData['pix-payment-gateway-id'])) {
-                throw new PaymentGatewayException(__('Payment ID is required.', 'pix-give'));
+                throw new PaymentGatewayException(__('Payment ID is required.', 'payment-gateway-pix-for-givewp'));
             }
 
             PaymentGatewayPixHelperClass::log(wp_json_encode(array(
