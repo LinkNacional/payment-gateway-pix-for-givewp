@@ -50,7 +50,7 @@ define('PAYMENT_GATEWAY_PIX_PLUGIN_BASENAME', plugin_basename(PAYMENT_GATEWAY_PI
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function activate_payment_gateway_pix_for_givewp(): void
+function payment_gateway_pix_activate_plugin(): void
 {
     PaymentGatewayPixForGivewpActivator::activate();
 }
@@ -59,13 +59,13 @@ function activate_payment_gateway_pix_for_givewp(): void
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function deactivate_payment_gateway_pix_for_givewp(): void
+function payment_gateway_pix_deactivate_plugin(): void
 {
     PaymentGatewayPixForGivewpDeactivator::deactivate();
 }
 
-register_activation_hook(__FILE__, 'activate_payment_gateway_pix_for_givewp');
-register_deactivation_hook(__FILE__, 'deactivate_payment_gateway_pix_for_givewp');
+register_activation_hook(__FILE__, 'payment_gateway_pix_activate_plugin');
+register_deactivation_hook(__FILE__, 'payment_gateway_pix_deactivate_plugin');
 
 /**
  * The core plugin class that is used to define internationalization,
@@ -81,9 +81,9 @@ register_deactivation_hook(__FILE__, 'deactivate_payment_gateway_pix_for_givewp'
  *
  * @since    1.0.0
  */
-function run_PaymentGatewayPixForGivewp(): void
+function payment_gateway_pix_run_plugin(): void
 {
     $plugin = new PaymentGatewayPixForGivewp();
     $plugin->run();
 }
-run_PaymentGatewayPixForGivewp();
+payment_gateway_pix_run_plugin();
