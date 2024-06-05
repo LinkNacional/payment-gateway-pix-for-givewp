@@ -79,6 +79,7 @@ class PaymentGatewayPixForGivewpPublic
 
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/payment-gateway-pix-for-givewp-public.css', array(), $this->version, 'all');
 
+        wp_enqueue_style('google-fonts-material-symbols-outlined', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0', array(), null);
     }
 
     /**

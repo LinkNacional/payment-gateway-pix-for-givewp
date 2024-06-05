@@ -1,5 +1,9 @@
 <?php
 
+if (! defined('ABSPATH')) {
+    exit;
+} // Exit if accessed directly
+
 /**
  * Provide a public-facing view for the plugin
  *
@@ -16,27 +20,27 @@
 <input
     type="hidden"
     id="pix_type"
-    value="<?php esc_attr_e($args['pixType']) ?>"
+    value="<?php echo esc_attr($args['pixType']) ?>"
 />
 <input
     type="hidden"
     id="pix_key"
-    value="<?php esc_attr_e($args['pixKey']) ?>"
+    value="<?php echo esc_attr($args['pixKey']) ?>"
 />
 <input
     type="hidden"
     id="pix_name"
-    value="<?php esc_attr_e($args['pixName']) ?>"
+    value="<?php echo esc_attr($args['pixName']) ?>"
 />
 <input
     type="hidden"
     id="pix_city"
-    value="<?php esc_attr_e($args['pixCity']) ?>"
+    value="<?php echo esc_attr($args['pixCity']) ?>"
 />
 <input
     type="hidden"
     id="pix_id"
-    value="<?php esc_attr_e($args['pixId']) ?>"
+    value="<?php echo esc_attr($args['pixId']) ?>"
 />
 <input
     type="hidden"
@@ -44,21 +48,41 @@
     value="pix"
 />
 
-<link rel="stylesheet" href="<?php esc_attr_e(PAYMENT_GATEWAY_PIX_PLUGIN_URL) ?>public/css/payment-gateway-pix-for-givewp-public.css"/>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <div id="lkn-pix-form-donation">
     <?php ($args['isFormEnabled']) ? give_default_cc_address_fields($args['formId']) . '<br/>' : '' ; ?>
-    <legend><?php esc_html_e('Pix Key:', 'payment-gateway-pix-for-givewp')?></legend>
+    <legend>
+        <?php esc_html_e('Pix Key:', 'payment-gateway-pix-for-givewp')?>
+    </legend>
     <div class='pix-container'>
-        <p id='qr'><?php esc_html_e('Loading...', 'payment-gateway-pix-for-givewp') ?></p>
-        <br/>
+        <p id='qr'>
+            <?php esc_html_e('Loading...', 'payment-gateway-pix-for-givewp') ?>
+        </p>
+        <br />
         <p id='pix'></p>
-        <p id='copy-pix' style="display: none;" >
-            <button id="toggle-viewing" type="button" title="Mostrar Pix">
-                <span id="show" class="material-symbols-outlined" style="display: none;">visibility_off</span>
-                <span id="hide" class="material-symbols-outlined">visibility</span>
+        <p
+            id='copy-pix'
+            style="display: none;"
+        >
+            <button
+                id="toggle-viewing"
+                type="button"
+                title="Mostrar Pix"
+            >
+                <span
+                    id="show"
+                    class="material-symbols-outlined"
+                    style="display: none;"
+                >visibility_off</span>
+                <span
+                    id="hide"
+                    class="material-symbols-outlined"
+                >visibility</span>
             </button>
-            <button id="copy-button" type="button" title="Copiar Pix">
+            <button
+                id="copy-button"
+                type="button"
+                title="Copiar Pix"
+            >
                 <span class="material-symbols-outlined">content_copy</span>
             </button>
         </p>
