@@ -17,7 +17,7 @@ use Give\Framework\PaymentGateways\PaymentGateway;
 /**
  * @inheritDoc
  */
-final class PixHelperClass
+final class PaymentGatewayPixHelperClass
 {
     /**
      * Makes a .log file for each donation.

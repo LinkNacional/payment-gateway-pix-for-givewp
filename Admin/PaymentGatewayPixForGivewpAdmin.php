@@ -2,7 +2,7 @@
 
 namespace Lkn\PaymentGatewayPixForGivewp\Admin;
 
-use Lkn\PaymentGatewayPixForGivewp\Includes\PixHelperClass;
+use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixHelperClass;
 use WP_Error;
 
 /**
@@ -217,7 +217,7 @@ final class PaymentGatewayPixForGivewpAdmin
             $remote = wp_remote_get($logPath);
 
             if(gettype($remote) === gettype(new WP_Error())) {
-                PixHelperClass::log(wp_json_encode(array(
+                PaymentGatewayPixHelperClass::log(wp_json_encode(array(
                     'Remote Response' => $remote,
                     'log url' => $logPath,
                     'log path' => give_get_option('payment_gateway_for_givewp_last_log')
