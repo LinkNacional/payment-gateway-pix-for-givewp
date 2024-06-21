@@ -66,6 +66,15 @@ The Payment Gateway Pix for GiveWP is now activated.
  2. Form view (donate to us)
 
 == Changelog ==
+=  2.0.0 =
+**24/06/2024**
+* Migration to object-oriented programming;
+* Implementation of autoloader;
+* Addition of compatibility with GiveWP template 3.0.0;
+* Addition of automatic logs cleanup using WP-CRON;
+* Code optimization and removal of redundancies;
+* Update with new WordPress guidelines.
+
 = 1.0.0 =
 **05/01/2024**
 * Added options to set the recipient's key using provided information.

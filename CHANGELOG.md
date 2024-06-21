@@ -1,11 +1,13 @@
-#  2.0.0 - 10/05/2024
-* Migration to object-oriented programming;
-* Implementation of autoloader;
-* Addition of compatibility with GiveWP template 3.0.0;
-* Addition of automatic logs cleanup using WP-CRON;
-* Code optimization and removal of redundancies.
+# 2.0.0 - 24/06/2024
+* Migração para programação orientada a objetos;
+* Implementação de autoloader;
+* Adição de compatibilidade com o template GiveWP 3.0.0;
+* Adição de limpeza automática de logs usando WP-CRON;
+* Otimização do código e remoção de redundâncias;
+* Atualização com as novas diretrizes do WordPress.
+
 # 1.0.0 - 05/01/2024
-* Added options to set recipient's key using provided information.
-* Added option to include recipient's key in GiveWP donation forms.
-* Added option to include billing details in donation forms.
-* Added debug mode for advanced users.
+* Adicionadas opções para definir a chave do destinatário usando as informações fornecidas;
+* Adicionada opção para incluir a chave do destinatário nos formulários de doação GiveWP;
+* Adicionada opção para incluir detalhes de faturamento nos formulários de doação;
+* Adicionado modo de depuração para usuários avançados.
