@@ -4,9 +4,9 @@
     "license": "Proprietary",
     "autoload": {
         "psr-4": {
-            "Lkn\\PaymentGatewayPixForGivewp\\Includes\\": "Includes/",
-            "Lkn\\PaymentGatewayPixForGivewp\\Admin\\": "Admin/",
-            "Lkn\\PaymentGatewayPixForGivewp\\PublicView\\": "Public/"
+            "Lkn\\PGPFGForGivewp\\Includes\\": "Includes/",
+            "Lkn\\PGPFGForGivewp\\Admin\\": "Admin/",
+            "Lkn\\PGPFGForGivewp\\PublicView\\": "Public/"
         }
     },
     "authors": [

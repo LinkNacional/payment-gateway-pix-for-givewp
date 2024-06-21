@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+namespace Lkn\PGPFGForGivewp\Includes;
 
 use DateTime;
 use Give\Donations\Models\Donation;
@@ -17,7 +17,7 @@ use Give\Framework\PaymentGateways\PaymentGateway;
 /**
  * @inheritDoc
  */
-final class PaymentGatewayPixHelperClass
+final class PGPFGHelperClass
 {
     /**
      * Makes a .log file for each donation.
@@ -35,8 +35,8 @@ final class PaymentGatewayPixHelperClass
 
         error_log($message, 3, $logPath);
 
-        give_update_option('payment_gateway_for_givewp_last_log', $logPath);
-        give_update_option('payment_gateway_for_givewp_last_log_url', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log');
+        give_update_option('pgpfg_for_givewp_last_log', $logPath);
+        give_update_option('pgpfg_for_givewp_last_log_url', PGPFG_PIX_PLUGIN_URL . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log');
     }
 
     /*

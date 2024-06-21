@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+namespace Lkn\PGPFGForGivewp\PublicView;
 
 use Give\Donations\Models\Donation;
 use Give\Donations\Models\DonationNote;
@@ -12,12 +12,12 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
-use Lkn\PaymentGatewayPixForGivewp\Includes\PaymentGatewayPixHelperClass;
+use Lkn\PGPFGForGivewp\Includes\PGPFGHelperClass ;
 
 /**
  * @inheritDoc
  */
-final class PaymentGatewayPixGatewayClass extends PaymentGateway
+final class PGPFGGatewayClass extends PaymentGateway
 {
     /**
      * @inheritDoc
@@ -56,7 +56,9 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
      */
     public function getLegacyFormFieldMarkup(int $formId, array $args): string
     {
-        load_template(PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'public/partials/payment-gateway-pix-for-givewp-public-display.php', true, array(
+
+        // Array de argumentos
+        $template_args = array(
             'pixType' => give_get_option('lkn-payment-pix-type-setting'),
             'pixKey' => give_get_option('lkn-payment-pix-key'),
             'pixName' => give_get_option('lkn-payment-pix-name-setting'),
@@ -64,10 +66,63 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
             'pixId' => give_get_option('lkn-payment-pix-paymentid-setting'),
             'formId' => $formId,
             'isFormEnabled' => (give_get_option('lkn-payment-pix-details-setting') === 'enabled') ? true : false,
-        ));
+        );
 
-        return '';
+        // Construindo a string HTML
+        $html = '<input
+        type="hidden"
+        id="pix_type"
+        value="' . esc_attr($template_args['pixType']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_key"
+        value="' . esc_attr($template_args['pixKey']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_name"
+        value="' . esc_attr($template_args['pixName']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_city"
+        value="' . esc_attr($template_args['pixCity']) . '"
+    />
+    <input
+        type="hidden"
+        id="pix_id"
+        value="' . esc_attr($template_args['pixId']) . '"
+    />
+    <input
+        type="hidden"
+        name="gatewayData[pix-payment-gateway-id]"
+        value="pix"
+    />
+
+    <div id="lkn-pix-form-donation">
+        ' . ($template_args['isFormEnabled'] ? give_default_cc_address_fields($template_args['formId']) . '<br/>' : '') . '
+        <legend>' . esc_html__('Pix Key:', 'payment-gateway-pix-for-givewp') . '</legend>
+        <div class="pix-container">
+            <p id="qr">' . esc_html__('Loading...', 'payment-gateway-pix-for-givewp') . '</p>
+            <br/>
+            <p id="pix"></p>
+            <p id="copy-pix" style="display: none;">
+                <button id="toggle-viewing" type="button" title="' . esc_attr__('Show Pix', 'payment-gateway-pix-for-givewp') . '">
+                    <span id="show" class="material-symbols-outlined" style="display: none;">visibility_off</span>
+                    <span id="hide" class="material-symbols-outlined">visibility</span>
+                </button>
+                <button id="copy-button" type="button" title="' . esc_attr__('Copy Pix', 'payment-gateway-pix-for-givewp') . '">
+                    <span class="material-symbols-outlined">content_copy</span>
+                </button>
+            </p>
+        </div>
+    </div>';
+
+        return $html;
     }
+
+
 
     /**
      * // TODO needs this function to appear in v3 forms
@@ -75,12 +130,13 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
      */
     public function enqueueScript(int $formId): void
     {
-        wp_enqueue_script('qrcode', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'public/js/qrcode.js', array( ), PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, false);
+
+        wp_enqueue_script('qrcode', PGPFG_PIX_PLUGIN_URL . 'Public/js/qrcode.js', array( ), PGPFG_PIX_PLUGIN_VERSION, false);
         wp_enqueue_script(
             self::id(),
-            PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'includes/js/lkn-pix.js',
+            PGPFG_PIX_PLUGIN_URL . 'Public/js/lkn-pix.js',
             array('wp-element', 'wp-i18n', 'qrcode'),
-            PAYMENT_GATEWAY_PIX_PLUGIN_VERSION,
+            PGPFG_PIX_PLUGIN_VERSION,
             true
         );
 
@@ -89,7 +145,7 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
             self::id(),
             'lknAttr',
             [
-                'pluginUrl' => PAYMENT_GATEWAY_PIX_PLUGIN_URL,
+                'pluginUrl' => PGPFG_PIX_PLUGIN_URL,
                 'pixType' => give_get_option('lkn-payment-pix-type-setting'),
                 'pixKey' => give_get_option('lkn-payment-pix-key'),
                 'pixName' => give_get_option('lkn-payment-pix-name-setting'),
@@ -98,7 +154,7 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
             ]
         );
 
-        wp_set_script_translations(self::id(), 'payment-gateway-pix-for-givewp', PAYMENT_GATEWAY_PIX_LANGUAGE_DIR);
+        wp_set_script_translations(self::id(), 'payment-gateway-pix-for-givewp', PGPFG_PIX_LANGUAGE_DIR);
     }
 
     /**
@@ -106,12 +162,13 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
      */
     public function createPayment(Donation $donation, $gatewayData): GatewayCommand
     {
+
         try {
             if (empty($gatewayData['pix-payment-gateway-id'])) {
                 throw new PaymentGatewayException(__('Payment ID is required.', 'payment-gateway-pix-for-givewp'));
             }
 
-            PaymentGatewayPixHelperClass::log(wp_json_encode(array(
+            PGPFGHelperClass::log(wp_json_encode(array(
                 'Donation success' => $gatewayData['pix-payment-gateway-id']
             ), JSON_PRETTY_PRINT));
 
@@ -127,7 +184,7 @@ final class PaymentGatewayPixGatewayClass extends PaymentGateway
                 'content' => sprintf('Donation failed. Reason: %1$s', esc_html($errorMessage))
             ]);
 
-            PaymentGatewayPixHelperClass::log(wp_json_encode(array(
+            PGPFGHelperClass::log(wp_json_encode(array(
                 'Donation failed' => $errorMessage,
                 'Gateway Data' => $gatewayData,
                 'Stack Trace' => $e->getTrace()

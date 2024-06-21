@@ -3,7 +3,7 @@ import qrcodeJs from "qrcode.js";
 
 const { __ } = wp.i18n;
 
-function lknPaymentGatewayPixGiveWPCrcChecksum(string) {
+function lknPGPFGGiveWPCrcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
 
@@ -26,7 +26,7 @@ function lknPaymentGatewayPixGiveWPCrcChecksum(string) {
     return hex
 }
 
-function lknPaymentGatewayPixGiveWPPixBuilder(amount = '') {
+function lknPGPFGGiveWPPixBuilder(amount = '') {
     const pixType = lknAttr.pixType
     const pixKey = lknAttr.pixKey
     const pixName = lknAttr.pixName
@@ -74,7 +74,7 @@ function lknPaymentGatewayPixGiveWPPixBuilder(amount = '') {
     qr += '60' + keyCity.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyCity
     qr += '62' + (4 + keyId.length).toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + '05' + keyId.length.toLocaleString('en-US', { minimumIntegerDigits: 2, useGrouping: false }) + keyId
     qr += '6304'
-    qr += lknPaymentGatewayPixGiveWPCrcChecksum(qr)
+    qr += lknPGPFGGiveWPCrcChecksum(qr)
 
     return qr
 }
@@ -103,13 +103,13 @@ const lknGatewayPix = {
         const { useWatch } = window.givewp.form.hooks
         const { useEffect } = wp.element
 
-        const [pix, setPix] = React.useState(lknPaymentGatewayPixGiveWPPixBuilder())
+        const [pix, setPix] = React.useState(lknPGPFGGiveWPPixBuilder())
         const donationAmount = useWatch({ name: 'amount' })
 
         useEffect(() => {
             const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
             const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-            setPix(lknPaymentGatewayPixGiveWPPixBuilder(amount))
+            setPix(lknPGPFGGiveWPPixBuilder(amount))
 
             if (document.getElementById('qr') !== undefined) {
                 document.getElementById('qr')!.innerHTML = ''
@@ -126,8 +126,6 @@ const lknGatewayPix = {
         return (
             <div id="lkn-react-pix-form" style={{ textAlign: "center" }}>
                 <input type="hidden" id="donation-value" value={donationAmount}></input>
-                <link rel="stylesheet" href={lknAttr.pluginUrl + "Public/css/payment-gateway-pix-for-givewp-public.css"} />
-                <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
                 <div id="lkn-pix-form-donation"  >
                     <legend>{__('Pix Key:', 'payment-gateway-pix-for-givewp')}</legend>
                     <div className='pix-container'>

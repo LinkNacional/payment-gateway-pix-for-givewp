@@ -1,7 +1,7 @@
 const {
   __
 } = wp.i18n
-function lknPaymentGatewayPixGiveWPCrcChecksum(string) {
+function lknPGPFGGiveWPCrcChecksum(string) {
   let crc = 0xFFFF
   const strlen = string.length
   for (let c = 0; c < strlen; c++) {
@@ -21,7 +21,7 @@ function lknPaymentGatewayPixGiveWPCrcChecksum(string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
-function lknPaymentGatewayPixGiveWPPixBuilder(amount = '') {
+function lknPGPFGGiveWPPixBuilder(amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
   const pixName = lknAttr.pixName
@@ -91,7 +91,7 @@ function lknPaymentGatewayPixGiveWPPixBuilder(amount = '') {
     useGrouping: false
   }) + keyId
   qr += '6304'
-  qr += lknPaymentGatewayPixGiveWPCrcChecksum(qr)
+  qr += lknPGPFGGiveWPCrcChecksum(qr)
   return qr
 }
 const lknGatewayPix = {
@@ -119,14 +119,14 @@ const lknGatewayPix = {
     const {
       useEffect
     } = wp.element
-    const [pix, setPix] = React.useState(lknPaymentGatewayPixGiveWPPixBuilder())
+    const [pix, setPix] = React.useState(lknPGPFGGiveWPPixBuilder())
     const donationAmount = useWatch({
       name: 'amount'
     })
     useEffect(() => {
       const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
       const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-      setPix(lknPaymentGatewayPixGiveWPPixBuilder(amount))
+      setPix(lknPGPFGGiveWPPixBuilder(amount))
       if (document.getElementById('qr') !== undefined) {
         document.getElementById('qr').innerHTML = ''
         const qrCode = new QRCode(document.getElementById('qr'), {
@@ -147,7 +147,7 @@ const lknGatewayPix = {
       value: donationAmount
     }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
-      href: lknAttr.pluginUrl + 'Public/css/payment-gateway-pix-for-givewp-public.css'
+      href: lknAttr.pluginUrl + 'Public/css/pgpfg-public.css'
     }), /* #__PURE__ */React.createElement('link', {
       rel: 'stylesheet',
       href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'

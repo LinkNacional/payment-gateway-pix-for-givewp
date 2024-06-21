@@ -1,10 +1,10 @@
 <?php
 
-namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+namespace Lkn\PGPFGForGivewp\Includes;
 
-use Lkn\PaymentGatewayPixForGivewp\Admin\PaymentGatewayPixForGivewpAdmin;
-use Lkn\PaymentGatewayPixForGivewp\PublicView\PaymentGatewayPixForGivewpPublic;
-use Lkn\PaymentGatewayPixForGivewp\PublicView\PaymentGatewayPixGatewayClass;
+use Lkn\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
+use Lkn\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
+use Lkn\PGPFGForGivewp\PublicView\PGPFGGatewayClass;
 
 /**
  * The file that defines the core plugin class
@@ -15,8 +15,8 @@ use Lkn\PaymentGatewayPixForGivewp\PublicView\PaymentGatewayPixGatewayClass;
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  */
 
 /**
@@ -29,11 +29,11 @@ use Lkn\PaymentGatewayPixForGivewp\PublicView\PaymentGatewayPixGatewayClass;
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class PaymentGatewayPixForGivewp
+final class PGPFGForGivewp
 {
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
@@ -41,7 +41,7 @@ final class PaymentGatewayPixForGivewp
      *
      * @since    1.0.0
      * @access   protected
-     * @var      PaymentGatewayPixForGivewp_Loader    $loader    Maintains and registers all hooks for the plugin.
+     * @var      PGPFGForGivewp_Loader    $loader    Maintains and registers all hooks for the plugin.
      */
     protected $loader;
 
@@ -74,8 +74,8 @@ final class PaymentGatewayPixForGivewp
      */
     public function __construct()
     {
-        if (defined('PAYMENT_GATEWAY_PIX_PLUGIN_VERSION')) {
-            $this->version = PAYMENT_GATEWAY_PIX_PLUGIN_VERSION;
+        if (defined('PGPFG_PIX_PLUGIN_VERSION')) {
+            $this->version = PGPFG_PIX_PLUGIN_VERSION;
         } else {
             $this->version = '1.0.0';
         }
@@ -88,10 +88,10 @@ final class PaymentGatewayPixForGivewp
      *
      * Include the following files that make up the plugin:
      *
-     * - PaymentGatewayPixForGivewp_Loader. Orchestrates the hooks of the plugin.
-     * - PaymentGatewayPixForGivewp_i18n. Defines internationalization functionality.
-     * - PaymentGatewayPixForGivewp_Admin. Defines all hooks for the admin area.
-     * - PaymentGatewayPixForGivewp_Public. Defines all hooks for the public side of the site.
+     * - PGPFGForGivewp_Loader. Orchestrates the hooks of the plugin.
+     * - PGPFGForGivewp_i18n. Defines internationalization functionality.
+     * - PGPFGForGivewp_Admin. Defines all hooks for the admin area.
+     * - PGPFGForGivewp_Public. Defines all hooks for the public side of the site.
      *
      * Create an instance of the loader which will be used to register the hooks
      * with WordPress.
@@ -101,13 +101,13 @@ final class PaymentGatewayPixForGivewp
      */
     private function load_dependencies(): void
     {
-        $this->loader = new PaymentGatewayPixForGivewpLoader();
+        $this->loader = new PGPFGForGivewpLoader();
     }
 
     /**
      * Define the locale for this plugin for internationalization.
      *
-     * Uses the PaymentGatewayPixForGivewp_i18n class in order to set the domain and to register the hook
+     * Uses the PGPFGForGivewp_i18n class in order to set the domain and to register the hook
      * with WordPress.
      *
      * @since    1.0.0
@@ -115,14 +115,14 @@ final class PaymentGatewayPixForGivewp
      */
     private function set_locale(): void
     {
-        $plugin_i18n = new PaymentGatewayPixForGivewpi18n();
+        $plugin_i18n = new PGPFGForGivewpi18n();
 
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
-    public function load_payment_gateway($paymentGatewayRegister): void
+    public function load_pgpfg($paymentGatewayRegister): void
     {
-        $paymentGatewayRegister->registerGateway(PaymentGatewayPixGatewayClass::class);
+        $paymentGatewayRegister->registerGateway(PGPFGGatewayClass::class);
     }
 
     public function add_new_cron_recurrencies()
@@ -139,7 +139,7 @@ final class PaymentGatewayPixForGivewp
 
     public function define_cron_hook(): void
     {
-        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array(PaymentGatewayPixHelperClass::class, 'delete_old_logs'));
+        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array(PGPFGHelperClass::class, 'delete_old_logs'));
     }
 
     public function define_event_delete_old_logs(): void
@@ -162,7 +162,7 @@ final class PaymentGatewayPixForGivewp
         // Verify minimum Give plugin version.
         if (
             defined('GIVE_VERSION')
-            && version_compare(GIVE_VERSION, PAYMENT_GATEWAY_PIX_PLUGIN_VERSION, '<')
+            && version_compare(GIVE_VERSION, PGPFG_PIX_PLUGIN_VERSION, '<')
         ) {
             // Show admin notice.
             $this->dependency_notice();
@@ -183,7 +183,7 @@ final class PaymentGatewayPixForGivewp
 
         // Deactivate plugin.
         if ($is_deactivate_plugin) {
-            deactivate_plugins(PAYMENT_GATEWAY_PIX_PLUGIN_BASENAME);
+            deactivate_plugins(PGPFG_PIX_PLUGIN_BASENAME);
 
             if (isset($_GET['activate'])) {
                 unset($_GET['activate']);
@@ -206,7 +206,7 @@ final class PaymentGatewayPixForGivewp
             'https://givewp.com',
             'Give',
             'versão',
-            PAYMENT_GATEWAY_PIX_PLUGIN_VERSION,
+            PGPFG_PIX_PLUGIN_VERSION,
             'para o complemento Payment Gateway Pix For GiveWp ativar'
         );
 
@@ -248,7 +248,7 @@ final class PaymentGatewayPixForGivewp
 
     private function define_admin_hooks()
     {
-        $plugin_admin = new PaymentGatewayPixForGivewpAdmin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new PGPFGForGivewpAdmin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
@@ -259,7 +259,7 @@ final class PaymentGatewayPixForGivewp
         $this->loader->add_action('init', $this, 'define_cron_hook');
 
         // Register the gateways
-        $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_payment_gateway');
+        $this->loader->add_action('givewp_register_pgpfg', $this, 'load_pgpfg');
 
         $this->loader->add_action('give_get_settings_gateways', $plugin_admin, 'add_setting_into_new_section');
         $this->loader->add_action('give_get_sections_gateways', $plugin_admin, 'add_new_setting_section');
@@ -274,7 +274,7 @@ final class PaymentGatewayPixForGivewp
      */
     private function define_public_hooks(): void
     {
-        $plugin_public = new PaymentGatewayPixForGivewpPublic($this->plugin_name, $this->version);
+        $plugin_public = new PGPFGForGivewpPublic($this->plugin_name, $this->version);
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
     }
@@ -313,7 +313,7 @@ final class PaymentGatewayPixForGivewp
      * The reference to the class that orchestrates the hooks with the plugin.
      *
      * @since     1.0.0
-     * @return    PaymentGatewayPixForGivewp_Loader    Orchestrates the hooks of the plugin.
+     * @return    PGPFGForGivewp_Loader    Orchestrates the hooks of the plugin.
      */
     public function get_loader()
     {

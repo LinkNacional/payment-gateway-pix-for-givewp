@@ -12,8 +12,8 @@ if (! defined('ABSPATH')) {
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/public/partials
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/public/partials
  */
 ?>
 

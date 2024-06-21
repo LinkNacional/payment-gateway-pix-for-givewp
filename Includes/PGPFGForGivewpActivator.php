@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+namespace Lkn\PGPFGForGivewp\Includes;
 
 /**
  * Fired during plugin activation
@@ -8,8 +8,8 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  */
 
 /**
@@ -18,11 +18,11 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
  * This class defines all code necessary to run during the plugin's activation.
  *
  * @since      1.0.0
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class PaymentGatewayPixForGivewpActivator
+final class PGPFGForGivewpActivator
 {
     /**
      * Short Description. (use period)

@@ -4,7 +4,7 @@ Donate link: https://www.linknacional.com.br/
 Tags: gateway, payments, givewp
 Requires at least: 6.0
 Tested up to: 6.5
-Stable tag: 1.0.0
+Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -18,6 +18,9 @@ Streamline your donation process and expand your reach to Brazilian donors by in
 **Dependencies**
 
 [GiveWP](https://wordpress.org/plugins/give/) is needed for the plugin to work.
+
+JS Libraries used:
+[QR Code JS by davidshimjs](https://github.com/davidshimjs/qrcodejs)
 
 **Features**
  * Boost Donations: Offer your Brazilian donors their preferred payment method, leading to increased contribution amounts and conversion rates.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+namespace Lkn\PGPFGForGivewp\Includes;
 
 /**
  * Define the internationalization functionality
@@ -11,8 +11,8 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  */
 
 /**
@@ -22,11 +22,11 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
  * so that it is ready for translation.
  *
  * @since      1.0.0
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-class PaymentGatewayPixForGivewpi18n
+class PGPFGForGivewpi18n
 {
     /**
      * Load the plugin text domain for translation.

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PaymentGatewayPixForGivewp\Includes;
+namespace Lkn\PGPFGForGivewp\Includes;
 
 /**
  * Register all actions and filters for the plugin
@@ -8,8 +8,8 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  */
 
 /**
@@ -19,11 +19,11 @@ namespace Lkn\PaymentGatewayPixForGivewp\Includes;
  * the plugin, and register them with the WordPress API. Call the
  * run function to execute the list of actions and filters.
  *
- * @package    PaymentGatewayPixForGivewp
- * @subpackage PaymentGatewayPixForGivewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-class PaymentGatewayPixForGivewpLoader
+class PGPFGForGivewpLoader
 {
     /**
      * The array of actions registered with WordPress.
