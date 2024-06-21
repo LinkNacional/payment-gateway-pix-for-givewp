@@ -39,7 +39,7 @@ if (!defined('WPINC')) {
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PGPFG_PIX_PLUGIN_VERSION', '1.0.0');
+define('PGPFG_PIX_PLUGIN_VERSION', '2.0.0');
 define('PGPFG_PIX_PLUGIN_FILE', __DIR__. '/payment-gateway-pix-for-givewp.php');
 define('PGPFG_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PGPFG_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
