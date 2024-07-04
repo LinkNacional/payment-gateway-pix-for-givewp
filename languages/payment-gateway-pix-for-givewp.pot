@@ -82,3 +82,6 @@ msgstr ""
 
 msgid "Copy Pix"
 msgstr ""
+
+msgid "Settings"
+msgstr ""

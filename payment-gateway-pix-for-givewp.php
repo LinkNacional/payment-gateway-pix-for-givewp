@@ -81,6 +81,33 @@ register_deactivation_hook(__FILE__, 'pgpfg_pix_deactivate_plugin');
  *
  * @since    1.0.0
  */
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'lkn_wc_cielo_plugin_row_meta',10,2);
+
+/**
+ * Plugin row meta links.
+ *
+ * @since
+ *
+ * @param array  $plugin_meta an array of the plugin's metadata
+ * @param string $plugin_file path to the plugin file, relative to the plugins directory
+ *
+ * @return array
+ */
+function lkn_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
+    $new_meta_links['setting'] = '<a href="' . esc_url( add_query_arg(
+        array(
+            'post_type' => 'give_forms',
+            'page'      => 'give-settings',
+            'tab'       => 'gateways',
+            'section'   => 'lkn-payment-pix'
+        ),
+        admin_url('edit.php')
+    ) ) . '">' . __('Settings', 'payment-gateway-pix-for-givewp') . '</a>';
+    
+
+    return array_merge($plugin_meta, $new_meta_links);
+}
+
 function pgpfg_pix_run_plugin(): void
 {
     $plugin = new PGPFGForGivewp();

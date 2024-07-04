@@ -103,6 +103,8 @@ final class PGPFGGatewayClass extends PaymentGateway
     <div id="lkn-pix-form-donation">
         ' . ($template_args['isFormEnabled'] ? give_default_cc_address_fields($template_args['formId']) . '<br/>' : '') . '
         <legend>' . esc_html__('Pix Key:', 'payment-gateway-pix-for-givewp') . '</legend>
+        <link rel="stylesheet" href="'. PGPFG_PIX_PLUGIN_URL .'/Public/css/pgpfg-public.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <div class="pix-container">
             <p id="qr">' . esc_html__('Loading...', 'payment-gateway-pix-for-givewp') . '</p>
             <br/>

@@ -259,7 +259,7 @@ final class PGPFGForGivewp
         $this->loader->add_action('init', $this, 'define_cron_hook');
 
         // Register the gateways
-        $this->loader->add_action('givewp_register_pgpfg', $this, 'load_pgpfg');
+        $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_pgpfg');
 
         $this->loader->add_action('give_get_settings_gateways', $plugin_admin, 'add_setting_into_new_section');
         $this->loader->add_action('give_get_sections_gateways', $plugin_admin, 'add_new_setting_section');
