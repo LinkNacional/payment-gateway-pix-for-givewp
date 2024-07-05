@@ -17,17 +17,15 @@ use Give\Framework\PaymentGateways\PaymentGateway;
 /**
  * @inheritDoc
  */
-final class PGPFGHelperClass
-{
+final class PGPFGHelperClass {
     /**
      * Makes a .log file for each donation.
      *
      * @param string $message
      * @param mixed $configs
      */
-    public static function log(string $message): void
-    {
-        if(give_get_option('lkn-payment-pix-log-setting') === 'disabled') {
+    public static function log(string $message): void {
+        if (give_get_option('lkn-payment-pix-log-setting') === 'disabled') {
             return;
         }
 
@@ -42,8 +40,7 @@ final class PGPFGHelperClass
     /*
      * Deletes log files older than 15 days.
      */
-    public static function delete_old_logs(): void
-    {
+    public static function delete_old_logs(): void {
         $logsPath = __DIR__ . '/logs';
         foreach (scandir($logsPath) as $logFilename) {
             if ('.' !== $logFilename && '..' !== $logFilename && 'index.php' !== $logFilename) {

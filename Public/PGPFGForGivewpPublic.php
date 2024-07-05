@@ -22,8 +22,7 @@ namespace Lkn\PGPFGForGivewp\PublicView;
  * @subpackage PGPFGForGivewp/public
  * @author     Link Nacional <contato@linknacional.com>
  */
-class PGPFGForGivewpPublic
-{
+final class PGPFGForGivewpPublic {
     /**
      * The ID of this plugin.
      *
@@ -49,12 +48,9 @@ class PGPFGForGivewpPublic
      * @param      string    $plugin_name       The name of the plugin.
      * @param      string    $version    The version of this plugin.
      */
-    public function __construct($plugin_name, $version)
-    {
-
+    public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name . '-public';
         $this->version = $version;
-
     }
 
     /**
@@ -62,9 +58,7 @@ class PGPFGForGivewpPublic
      *
      * @since    1.0.0
      */
-    public function enqueue_styles()
-    {
-
+    public function enqueue_styles(): void {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -76,7 +70,6 @@ class PGPFGForGivewpPublic
          * between the defined hooks and the functions defined in this
          * class.
          */
-
         wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/pgpfg-public.css', array(), $this->version, 'all');
     }
 
@@ -85,9 +78,7 @@ class PGPFGForGivewpPublic
      *
      * @since    1.0.0
      */
-    public function enqueue_scripts()
-    {
-
+    public function enqueue_scripts(): void {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -99,10 +90,7 @@ class PGPFGForGivewpPublic
          * between the defined hooks and the functions defined in this
          * class.
          */
-
-        wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.js', array( ), $this->version, false);
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pgpfg-public.js', array( 'jquery', 'qrcode' ), $this->version, false);
-
+        wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.js', array(), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pgpfg-public.js', array('jquery', 'qrcode'), $this->version, false);
     }
-
 }

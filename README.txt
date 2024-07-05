@@ -3,7 +3,7 @@ Contributors: linknacional
 Donate link: https://www.linknacional.com.br/
 Tags: gateway, payments, givewp
 Requires at least: 6.0
-Tested up to: 6.5
+Tested up to: 6.6
 Stable tag: 2.0.0
 Requires PHP: 7.4
 License: GPLv3
