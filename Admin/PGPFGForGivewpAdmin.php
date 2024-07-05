@@ -82,7 +82,7 @@ final class PGPFGForGivewpAdmin
                 if (!$exists) {
                     $settings[] = array(
                         'type' => 'title',
-                        'id' => 'lkn-payment-pix',
+                        'id' => 'lkn-payment-pix'
                     );
     
                     $settings[] = array(
@@ -95,8 +95,7 @@ final class PGPFGForGivewpAdmin
                             'tel' => __('Phone', 'payment-gateway-pix-for-givewp'),
                             'cpf' => __('CPF', 'payment-gateway-pix-for-givewp'),
                             'cnpj' => __('CNPJ', 'payment-gateway-pix-for-givewp'),
-                            'email' => __('Email', 'payment-gateway-pix-for-givewp'),
-                            'other' => __('Other', 'payment-gateway-pix-for-givewp'),
+                            'email' => __('Email', 'payment-gateway-pix-for-givewp')
                         ),
                     );
     
@@ -104,28 +103,28 @@ final class PGPFGForGivewpAdmin
                         'name' => __('Pix Key', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-key',
                         'desc' => __('Insert the pix key that will be used on the donations.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text',
+                        'type' => 'text'
                     );
     
                     $settings[] = array(
                         'name' => __('Recipient Name', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-name-setting',
                         'desc' => __('Insert the name of the key\'s recipient.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text',
+                        'type' => 'text'
                     );
     
                     $settings[] = array(
                         'name' => __('Recipient City', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-city-setting',
                         'desc' => __('Insert the key recipient\'s city.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text',
+                        'type' => 'text'
                     );
     
                     $settings[] = array(
                         'name' => __('Payment Identificator (optional)', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-paymentid-setting',
                         'desc' => __('Insert the payment identificator, not required.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text',
+                        'type' => 'text'
                     );
     
                     $settings[] = array(
@@ -136,8 +135,8 @@ final class PGPFGForGivewpAdmin
                         'default' => 'disabled',
                         'options' => array(
                             'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp'),
-                        ),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                        )
                     );
     
                     $settings[] = array(
@@ -148,13 +147,13 @@ final class PGPFGForGivewpAdmin
                         'default' => 'disabled',
                         'options' => array(
                             'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp'),
-                        ),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                        )
                     );
     
                     $settings[] = array(
                         'id' => 'lkn-payment-pix',
-                        'type' => 'sectionend',
+                        'type' => 'sectionend'
                     );
                 }
     
