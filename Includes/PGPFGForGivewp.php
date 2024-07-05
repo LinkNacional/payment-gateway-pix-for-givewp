@@ -1,5 +1,11 @@
 <?php
 
+namespace Lkn\PGPFGForGivewp\Includes;
+
+use Lkn\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
+use Lkn\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
+use Lkn\PGPFGForGivewp\PublicView\PGPFGGatewayClass;
+
 /**
  * The file that defines the core plugin class
  *
@@ -9,8 +15,8 @@
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    Payment_Gateway_Pix_For_Givewp
- * @subpackage Payment_Gateway_Pix_For_Givewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  */
 
 /**
@@ -23,11 +29,11 @@
  * version of the plugin.
  *
  * @since      1.0.0
- * @package    Payment_Gateway_Pix_For_Givewp
- * @subpackage Payment_Gateway_Pix_For_Givewp/includes
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class Payment_Gateway_Pix_For_Givewp
+final class PGPFGForGivewp
 {
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
@@ -35,7 +41,7 @@ final class Payment_Gateway_Pix_For_Givewp
      *
      * @since    1.0.0
      * @access   protected
-     * @var      Payment_Gateway_Pix_For_Givewp_Loader    $loader    Maintains and registers all hooks for the plugin.
+     * @var      PGPFGForGivewp_Loader    $loader    Maintains and registers all hooks for the plugin.
      */
     protected $loader;
 
@@ -68,17 +74,13 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     public function __construct()
     {
-        if (defined('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION')) {
-            $this->version = PAYMENT_GATEWAY_PIX_FOR_GIVEWP_VERSION;
+        if (defined('PGPFG_PIX_PLUGIN_VERSION')) {
+            $this->version = PGPFG_PIX_PLUGIN_VERSION;
         } else {
             $this->version = '1.0.0';
         }
         $this->plugin_name = 'payment-gateway-pix-for-givewp';
-
-        $this->load_dependencies();
-        $this->set_locale();
-        $this->define_admin_hooks();
-        $this->define_public_hooks();
+        $this->run();
     }
 
     /**
@@ -86,10 +88,10 @@ final class Payment_Gateway_Pix_For_Givewp
      *
      * Include the following files that make up the plugin:
      *
-     * - Payment_Gateway_Pix_For_Givewp_Loader. Orchestrates the hooks of the plugin.
-     * - Payment_Gateway_Pix_For_Givewp_i18n. Defines internationalization functionality.
-     * - Payment_Gateway_Pix_For_Givewp_Admin. Defines all hooks for the admin area.
-     * - Payment_Gateway_Pix_For_Givewp_Public. Defines all hooks for the public side of the site.
+     * - PGPFGForGivewp_Loader. Orchestrates the hooks of the plugin.
+     * - PGPFGForGivewp_i18n. Defines internationalization functionality.
+     * - PGPFGForGivewp_Admin. Defines all hooks for the admin area.
+     * - PGPFGForGivewp_Public. Defines all hooks for the public side of the site.
      *
      * Create an instance of the loader which will be used to register the hooks
      * with WordPress.
@@ -99,48 +101,13 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     private function load_dependencies(): void
     {
-        /**
-         * The class responsible for orchestrating the actions and filters of the
-         * core plugin.
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-loader.php';
-
-        /**
-         * The class responsible for defining internationalization functionality
-         * of the plugin.
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-i18n.php';
-
-        /**
-         * The class responsible for defining all actions that occur in the admin area.
-         */
-        require_once plugin_dir_path(__DIR__) . 'admin/class-payment-gateway-pix-for-givewp-admin.php';
-
-        /**
-         * The class responsible for defining all actions that occur in the public-facing
-         * side of the site.
-         */
-        require_once plugin_dir_path(__DIR__) . 'public/class-payment-gateway-pix-for-givewp-public.php';
-
-        /**
-         * The class responsible for defining the gateways
-         * of the plugin.
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-gateway.php';
-
-        /**
-         * Helper class
-         */
-        require_once plugin_dir_path(__DIR__) . 'includes/class-payment-gateway-pix-for-givewp-helper.php';
-
-
-        $this->loader = new Payment_Gateway_Pix_For_Givewp_Loader();
+        $this->loader = new PGPFGForGivewpLoader();
     }
 
     /**
      * Define the locale for this plugin for internationalization.
      *
-     * Uses the Payment_Gateway_Pix_For_Givewp_i18n class in order to set the domain and to register the hook
+     * Uses the PGPFGForGivewp_i18n class in order to set the domain and to register the hook
      * with WordPress.
      *
      * @since    1.0.0
@@ -148,14 +115,14 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     private function set_locale(): void
     {
-        $plugin_i18n = new Payment_Gateway_Pix_For_Givewp_i18n();
+        $plugin_i18n = new PGPFGForGivewpi18n();
 
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
-    public function load_payment_gateway($paymentGatewayRegister): void
+    public function load_pgpfg($paymentGatewayRegister): void
     {
-        $paymentGatewayRegister->registerGateway('PixGatewayClass');
+        $paymentGatewayRegister->registerGateway(PGPFGGatewayClass::class);
     }
 
     public function add_new_cron_recurrencies()
@@ -172,15 +139,103 @@ final class Payment_Gateway_Pix_For_Givewp
 
     public function define_cron_hook(): void
     {
-        add_action('lkn_delete_old_logs_cron_hook', array('PixHelperClass', 'delete_old_logs'));
+        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array(PGPFGHelperClass::class, 'delete_old_logs'));
     }
 
     public function define_event_delete_old_logs(): void
     {
-        if (!wp_next_scheduled('lkn_delete_old_logs_cron_hook')) {
+        if (!wp_next_scheduled('lkn_payment_pix_delete_old_logs_cron_hook')) {
             $time = time() + (15 * DAY_IN_SECONDS);
-            wp_schedule_event($time, 'biweekly', 'lkn_delete_old_logs_cron_hook');
+            wp_schedule_event($time, 'biweekly', 'lkn_payment_pix_delete_old_logs_cron_hook');
         }
+    }
+    public function check_environment()
+    {
+        // Load plugin helper functions.
+        if (!function_exists('deactivate_plugins') || !function_exists('is_plugin_active')) {
+            require_once ABSPATH . 'wp-admin/includes/plugin.php';
+        }
+
+        // Flag to check whether deactivate plugin or not.
+        $is_deactivate_plugin = null;
+
+        // Verify minimum Give plugin version.
+        if (
+            defined('GIVE_VERSION')
+            && version_compare(GIVE_VERSION, PGPFG_PIX_PLUGIN_VERSION, '<')
+        ) {
+            // Show admin notice.
+            $this->dependency_notice();
+
+            $is_deactivate_plugin = true;
+        }
+
+        $is_give_active = is_plugin_active('give/give.php');
+
+
+        // Verify if Free plugin is actived.
+        if (!$is_give_active) {
+            // Show admin notice.
+            $this->inactive_notice();
+
+            $is_deactivate_plugin = true;
+        }
+
+        // Deactivate plugin.
+        if ($is_deactivate_plugin) {
+            deactivate_plugins(PGPFG_PIX_PLUGIN_BASENAME);
+
+            if (isset($_GET['activate'])) {
+                unset($_GET['activate']);
+            }
+
+            return false;
+        }
+
+        return true;
+    }
+
+
+    public function dependency_notice(): void
+    {
+        // Admin notice.
+        $message = sprintf(
+            '<strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a>  %5$s %6$s+ %7$s.',
+            'Erro de Ativação:',
+            'Você deve ter',
+            'https://givewp.com',
+            'Give',
+            'versão',
+            PGPFG_PIX_PLUGIN_VERSION,
+            'para o complemento Payment Gateway Pix For GiveWp ativar'
+        );
+
+        Give()->notices->register_notice(array(
+            'id' => 'give-activation-error',
+            'type' => 'error',
+            'description' => $message,
+            'show' => true
+        ));
+    }
+
+    /**
+     * Notice for No Core Activation
+     *
+     * @since 1.0.0
+     */
+    public function inactive_notice(): void
+    {
+        // Admin notice.
+        $message = sprintf(
+            '<div class="notice notice-error"><p><strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a> %5$s.</p></div>',
+            'Erro de Ativação:',
+            'Você deve ter',
+            'https://givewp.com',
+            'Give',
+            'plugin instalado e ativado para o complemento Payment Gateway Pix For GiveWP ativar'
+        );
+
+        echo esc_html($message);
     }
 
     /**
@@ -190,9 +245,10 @@ final class Payment_Gateway_Pix_For_Givewp
      * @since    1.0.0
      * @access   private
      */
-    private function define_admin_hooks(): void
+
+    private function define_admin_hooks()
     {
-        $plugin_admin = new Payment_Gateway_Pix_For_Givewp_Admin($this->get_plugin_name(), $this->get_version());
+        $plugin_admin = new PGPFGForGivewpAdmin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');
@@ -203,7 +259,7 @@ final class Payment_Gateway_Pix_For_Givewp
         $this->loader->add_action('init', $this, 'define_cron_hook');
 
         // Register the gateways
-        $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_payment_gateway');
+        $this->loader->add_action('givewp_register_payment_gateway', $this, 'load_pgpfg');
 
         $this->loader->add_action('give_get_settings_gateways', $plugin_admin, 'add_setting_into_new_section');
         $this->loader->add_action('give_get_sections_gateways', $plugin_admin, 'add_new_setting_section');
@@ -218,8 +274,7 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     private function define_public_hooks(): void
     {
-        $plugin_public = new Payment_Gateway_Pix_For_Givewp_Public($this->get_plugin_name(), $this->get_version());
-
+        $plugin_public = new PGPFGForGivewpPublic($this->plugin_name, $this->version);
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
     }
@@ -231,7 +286,15 @@ final class Payment_Gateway_Pix_For_Givewp
      */
     public function run(): void
     {
-        $this->loader->run();
+        $is_give_active = $this->check_environment();
+        if ($is_give_active) {
+            $this->load_dependencies();
+            $this->set_locale();
+            $this->define_admin_hooks();
+            $this->define_public_hooks();
+            $this->loader->run();
+
+        }
     }
 
     /**
@@ -250,7 +313,7 @@ final class Payment_Gateway_Pix_For_Givewp
      * The reference to the class that orchestrates the hooks with the plugin.
      *
      * @since     1.0.0
-     * @return    Payment_Gateway_Pix_For_Givewp_Loader    Orchestrates the hooks of the plugin.
+     * @return    PGPFGForGivewp_Loader    Orchestrates the hooks of the plugin.
      */
     public function get_loader()
     {

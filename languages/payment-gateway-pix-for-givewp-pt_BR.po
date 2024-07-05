@@ -76,3 +76,6 @@ msgstr "Pix QR Code"
 
 msgid "Check Last Log"
 msgstr "Checar Último Log"
+
+msgid "Settings"
+msgstr "Configurações"

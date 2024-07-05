@@ -1,5 +1,8 @@
 <?php
 
+namespace Lkn\PGPFGForGivewp\Includes;
+
+use DateTime;
 use Give\Donations\Models\Donation;
 use Give\Donations\Models\DonationNote;
 use Give\Donations\ValueObjects\DonationStatus;
@@ -14,7 +17,7 @@ use Give\Framework\PaymentGateways\PaymentGateway;
 /**
  * @inheritDoc
  */
-final class PixHelperClass
+final class PGPFGHelperClass
 {
     /**
      * Makes a .log file for each donation.
@@ -28,12 +31,12 @@ final class PixHelperClass
             return;
         }
 
-        $logPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'includes/logs/' . gmdate('d.m.Y-H.i.s') . '.log';
+        $logPath = __DIR__ . '/logs/' . gmdate('d.m.Y-H.i.s') . '.log';
 
         error_log($message, 3, $logPath);
 
-        give_update_option('payment_gateway_for_givewp_last_log', $logPath);
-        give_update_option('payment_gateway_for_givewp_last_log_url', PAYMENT_GATEWAY_PIX_PLUGIN_URL . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log');
+        give_update_option('pgpfg_for_givewp_last_log', $logPath);
+        give_update_option('pgpfg_for_givewp_last_log_url', PGPFG_PIX_PLUGIN_URL . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log');
     }
 
     /*
@@ -41,7 +44,7 @@ final class PixHelperClass
      */
     public static function delete_old_logs(): void
     {
-        $logsPath = PAYMENT_GATEWAY_PIX_PLUGIN_DIR . 'includes/logs';
+        $logsPath = __DIR__ . '/logs';
         foreach (scandir($logsPath) as $logFilename) {
             if ('.' !== $logFilename && '..' !== $logFilename && 'index.php' !== $logFilename) {
                 $logDate = explode('-', $logFilename)[0];

@@ -76,3 +76,12 @@ msgstr ""
 
 msgid "Check Last Log"
 msgstr ""
+
+msgid "Show Pix"
+msgstr ""
+
+msgid "Copy Pix"
+msgstr ""
+
+msgid "Settings"
+msgstr ""

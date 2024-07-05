@@ -1,0 +1,23 @@
+{
+    "name": "lkn/pix-payment-gateway",
+    "type": "project",
+    "license": "Proprietary",
+    "autoload": {
+        "psr-4": {
+            "Lkn\\PGPFGForGivewp\\Includes\\": "Includes/",
+            "Lkn\\PGPFGForGivewp\\Admin\\": "Admin/",
+            "Lkn\\PGPFGForGivewp\\PublicView\\": "Public/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Link Nacional",
+            "email": "ticket@linknacional.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require-dev": {
+        "phan/phan": "5.4.1"
+    },
+    "require": {}
+}

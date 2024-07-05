@@ -22,10 +22,10 @@
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    Payment_Gateway_Pix_For_Givewp
+ * @package    PGPFGForGivewp
  */
 
 // If uninstall not called from WordPress, then exit.
-if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-	exit;
+if (! defined('WP_UNINSTALL_PLUGIN')) {
+    exit;
 }

@@ -1,13 +1,15 @@
 <?php
 
+namespace Lkn\PGPFGForGivewp\PublicView;
+
 /**
  * The public-facing functionality of the plugin.
  *
  * @link       https://www.linknacional.com.br
  * @since      1.0.0
  *
- * @package    Payment_Gateway_Pix_For_Givewp
- * @subpackage Payment_Gateway_Pix_For_Givewp/public
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/public
  */
 
 /**
@@ -16,11 +18,11 @@
  * Defines the plugin name, version, and two examples hooks for how to
  * enqueue the public-facing stylesheet and JavaScript.
  *
- * @package    Payment_Gateway_Pix_For_Givewp
- * @subpackage Payment_Gateway_Pix_For_Givewp/public
+ * @package    PGPFGForGivewp
+ * @subpackage PGPFGForGivewp/public
  * @author     Link Nacional <contato@linknacional.com>
  */
-class Payment_Gateway_Pix_For_Givewp_Public
+class PGPFGForGivewpPublic
 {
     /**
      * The ID of this plugin.
@@ -67,16 +69,15 @@ class Payment_Gateway_Pix_For_Givewp_Public
          * This function is provided for demonstration purposes only.
          *
          * An instance of this class should be passed to the run() function
-         * defined in Payment_Gateway_Pix_For_Givewp_Loader as all of the hooks are defined
+         * defined in PGPFGForGivewp_Loader as all of the hooks are defined
          * in that particular class.
          *
-         * The Payment_Gateway_Pix_For_Givewp_Loader will then create the relationship
+         * The PGPFGForGivewp_Loader will then create the relationship
          * between the defined hooks and the functions defined in this
          * class.
          */
 
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/payment-gateway-pix-for-givewp-public.css', array(), $this->version, 'all');
-
+        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/pgpfg-public.css', array(), $this->version, 'all');
     }
 
     /**
@@ -91,16 +92,16 @@ class Payment_Gateway_Pix_For_Givewp_Public
          * This function is provided for demonstration purposes only.
          *
          * An instance of this class should be passed to the run() function
-         * defined in Payment_Gateway_Pix_For_Givewp_Loader as all of the hooks are defined
+         * defined in PGPFGForGivewp_Loader as all of the hooks are defined
          * in that particular class.
          *
-         * The Payment_Gateway_Pix_For_Givewp_Loader will then create the relationship
+         * The PGPFGForGivewp_Loader will then create the relationship
          * between the defined hooks and the functions defined in this
          * class.
          */
 
-        wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.min.js', array( ), $this->version, false);
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/payment-gateway-pix-for-givewp-public.js', array( 'jquery', 'qrcode' ), $this->version, false);
+        wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.js', array( ), $this->version, false);
+        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pgpfg-public.js', array( 'jquery', 'qrcode' ), $this->version, false);
 
     }
 
