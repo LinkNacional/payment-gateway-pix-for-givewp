@@ -1,3 +1,6 @@
+# 2.0.1 - 16/07/2024
+* Alteração em plugin para manter as normativas do wordpress.
+
 # 2.0.0 - 24/06/2024
 * Migração para programação orientada a objetos;
 * Implementação de autoloader;
