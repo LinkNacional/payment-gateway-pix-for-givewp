@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Includes;
+namespace Pgpfg\PGPFGForGivewp\Includes;
 
 /**
  * Fired during plugin activation

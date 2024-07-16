@@ -1,8 +1,8 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Admin;
+namespace Pgpfg\PGPFGForGivewp\Admin;
 
-use Lkn\PGPFGForGivewp\Includes\PGPFGHelperClass;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass;
 use WP_Error;
 
 /**

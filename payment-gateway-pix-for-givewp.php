@@ -25,15 +25,15 @@
  * Domain Path:       /languages
  */
 
-require_once __DIR__ . '/vendor/autoload.php';
-use Lkn\PGPFGForGivewp\Includes\PGPFGForGivewp;
-use Lkn\PGPFGForGivewp\Includes\PGPFGForGivewpActivator;
-use Lkn\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
-
 // If this file is called directly, abort.
-if ( ! defined('WPINC')) {
+if ( ! defined('ABSPATH')) {
     die;
 }
+require_once __DIR__ . '/vendor/autoload.php';
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewp;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpActivator;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
@@ -79,7 +79,7 @@ register_deactivation_hook(__FILE__, 'pgpfg_pix_deactivate_plugin');
  *
  * @since    1.0.0
  */
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'lkn_wc_cielo_plugin_row_meta', 10, 2);
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pgpfg_pix_wc_cielo_plugin_row_meta', 10, 2);
 
 /**
  * Plugin row meta links.
@@ -91,7 +91,7 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'lkn_wc_cielo_plu
  *
  * @return array
  */
-function lkn_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
+function pgpfg_pix_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
     $new_meta_links['setting'] = '<a href="' . esc_url(add_query_arg(
         array(
             'post_type' => 'give_forms',
