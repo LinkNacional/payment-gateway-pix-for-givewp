@@ -16,7 +16,7 @@
  * Plugin Name:       Payment Gateway Pix for GiveWP
  * Plugin URI:        https://www.linknacional.com.br/wordpress/givewp/
  * Description:       Streamline your donation process and expand your reach to Brazilian donors by integrating PIX, the instant payment system, into your GiveWP donation forms.
- * Version:           2.0.0
+ * Version:           2.0.1
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-3.0+
@@ -25,22 +25,22 @@
  * Domain Path:       /languages
  */
 
-require_once(__DIR__. '/vendor/autoload.php');
-use Lkn\PGPFGForGivewp\Includes\PGPFGForGivewp;
-use Lkn\PGPFGForGivewp\Includes\PGPFGForGivewpActivator;
-use Lkn\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
-
 // If this file is called directly, abort.
-if (!defined('WPINC')) {
+if ( ! defined('ABSPATH')) {
     die;
 }
+require_once __DIR__ . '/vendor/autoload.php';
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewp;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpActivator;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
+
 /**
  * Currently plugin version.
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PGPFG_PIX_PLUGIN_VERSION', '2.0.0');
-define('PGPFG_PIX_PLUGIN_FILE', __DIR__. '/payment-gateway-pix-for-givewp.php');
+define('PGPFG_PIX_PLUGIN_VERSION', '2.0.1');
+define('PGPFG_PIX_PLUGIN_FILE', __DIR__ . '/payment-gateway-pix-for-givewp.php');
 define('PGPFG_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PGPFG_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PGPFG_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languages');
@@ -50,8 +50,7 @@ define('PGPFG_PIX_PLUGIN_BASENAME', plugin_basename(PGPFG_PIX_PLUGIN_FILE));
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function pgpfg_pix_activate_plugin(): void
-{
+function pgpfg_pix_activate_plugin(): void {
     PGPFGForGivewpActivator::activate();
 }
 
@@ -59,8 +58,7 @@ function pgpfg_pix_activate_plugin(): void
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function pgpfg_pix_deactivate_plugin(): void
-{
+function pgpfg_pix_deactivate_plugin(): void {
     PGPFGForGivewpDeactivator::deactivate();
 }
 
@@ -81,7 +79,7 @@ register_deactivation_hook(__FILE__, 'pgpfg_pix_deactivate_plugin');
  *
  * @since    1.0.0
  */
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'lkn_wc_cielo_plugin_row_meta',10,2);
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pgpfg_pix_wc_cielo_plugin_row_meta', 10, 2);
 
 /**
  * Plugin row meta links.
@@ -93,23 +91,21 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'lkn_wc_cielo_plu
  *
  * @return array
  */
-function lkn_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
-    $new_meta_links['setting'] = '<a href="' . esc_url( add_query_arg(
+function pgpfg_pix_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
+    $new_meta_links['setting'] = '<a href="' . esc_url(add_query_arg(
         array(
             'post_type' => 'give_forms',
-            'page'      => 'give-settings',
-            'tab'       => 'gateways',
-            'section'   => 'lkn-payment-pix'
+            'page' => 'give-settings',
+            'tab' => 'gateways',
+            'section' => 'lkn-payment-pix'
         ),
         admin_url('edit.php')
-    ) ) . '">' . __('Settings', 'payment-gateway-pix-for-givewp') . '</a>';
+    )) . '">' . __('Settings', 'payment-gateway-pix-for-givewp') . '</a>';
     
-
     return array_merge($plugin_meta, $new_meta_links);
 }
 
-function pgpfg_pix_run_plugin(): void
-{
+function pgpfg_pix_run_plugin(): void {
     $plugin = new PGPFGForGivewp();
     $plugin->run();
 }

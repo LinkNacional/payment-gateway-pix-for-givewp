@@ -52,47 +52,43 @@ const { __ } = wp.i18n;
       noticeDiv.innerHTML += '<a style="margin: 18px; padding-right: 0px; margin-top: 20px;" href="https://www.linknacional.com.br/wordpress/givewp/" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
 
       const lknCieloNoticeDiv = document.createElement('div')
-      lknCieloNoticeDiv.setAttribute('style', "background-color: #fcf9e8;color: #646970;border: solid 1px #d3d3d3;border-left: 4px #dba617 solid;font-size: 16px;margin-top: 10px;")
+      lknCieloNoticeDiv.setAttribute('style', 'background-color: #fcf9e8;color: #646970;border: solid 1px #d3d3d3;border-left: 4px #dba617 solid;font-size: 16px;margin-top: 10px;')
       lknCieloNoticeDiv.setAttribute('id', 'lkn-cielo-hosting-notice')
 
       lknCieloNoticeDiv.innerHTML = '<a  href="https://www.linknacional.com.br/wordpress/" target="_blank" style="text-decoration:none; display: block;padding: 10px;">' + __('WordPress Maintenance and Support!', 'payment-gateway-pix-for-givewp') + '</a>'
-
-
 
       if (giveForm && lknCieloNoticeDiv) {
         giveForm.after(noticeDiv)
         noticeDiv.after(lknCieloNoticeDiv)
 
-        const linkInNoticeDiv = noticeDiv.getElementsByTagName('a');
-        const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a');
+        const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
+        const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
 
         setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
+        if (typeof WPDarkMode !== 'undefined') {
+          WPDarkMode.onChange(() => {
+            if (WPDarkMode.isActive) {
+              setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
+            } else {
+              const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
+              const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
 
-        WPDarkMode.onChange(() => {
-
-          if (WPDarkMode.isActive) {
-            setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
-
-          } else {
-            const linkInNoticeDiv = noticeDiv.getElementsByTagName('a');
-            const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a');
-
-            if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
-              for (let i = 0; i < linkInNoticeDiv.length; i++) {
-                linkInNoticeDiv[i].style.color = '#2271b1';
+              if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
+                for (let i = 0; i < linkInNoticeDiv.length; i++) {
+                  linkInNoticeDiv[i].style.color = '#2271b1'
+                }
+                for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
+                  linkLknCieloInNoticeDiv[i].style.color = '#2271b1'
+                }
               }
-              for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
-                linkLknCieloInNoticeDiv[i].style.color = '#2271b1';
-              }
+
+              noticeDiv.style.color = '#646970'
+              noticeDiv.style.backgroundColor = '#fcf9e8'
+              lknCieloNoticeDiv.style.color = '#646970'
+              lknCieloNoticeDiv.style.backgroundColor = '#fcf9e8'
             }
-
-            noticeDiv.style.color = '#646970'
-            noticeDiv.style.backgroundColor = '#fcf9e8'
-            lknCieloNoticeDiv.style.color = '#646970'
-            lknCieloNoticeDiv.style.backgroundColor = '#fcf9e8'
-          }
-        });
-
+          })
+        }
       }
       const checkLogs = $('#check-logs')
 
@@ -106,25 +102,27 @@ const { __ } = wp.i18n;
       }
     }
 
-    function setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
-      if (WPDarkMode.isActive) {
-        noticeDiv.style.color = 'white'
-        noticeDiv.style.backgroundColor = '#292a2a'
-        lknCieloNoticeDiv.style.backgroundColor = '#292a2a'
-        lknCieloNoticeDiv.style.color = 'white'
+    function setDarkCss (linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
+      if (typeof WPDarkMode !== 'undefined') {
+        if (WPDarkMode.isActive) {
+          noticeDiv.style.color = 'white'
+          noticeDiv.style.backgroundColor = '#292a2a'
+          lknCieloNoticeDiv.style.backgroundColor = '#292a2a'
+          lknCieloNoticeDiv.style.color = 'white'
 
-        if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
-          for (let i = 0; i < linkInNoticeDiv.length; i++) {
-            linkInNoticeDiv[i].style.color = 'lightblue';
-          }
-          for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
-            linkLknCieloInNoticeDiv[i].style.color = 'lightblue';
+          if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
+            for (let i = 0; i < linkInNoticeDiv.length; i++) {
+              linkInNoticeDiv[i].style.color = 'lightblue'
+            }
+            for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
+              linkLknCieloInNoticeDiv[i].style.color = 'lightblue'
+            }
           }
         }
       }
     }
 
-    function lknFindGetParameter(parameterName) {
+    function lknFindGetParameter (parameterName) {
       let result = null
       let tmp = []
       location.search

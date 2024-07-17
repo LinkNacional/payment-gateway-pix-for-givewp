@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Includes;
+namespace Pgpfg\PGPFGForGivewp\Includes;
 
 /**
  * Fired during plugin activation
@@ -22,8 +22,7 @@ namespace Lkn\PGPFGForGivewp\Includes;
  * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class PGPFGForGivewpActivator
-{
+final class PGPFGForGivewpActivator {
     /**
      * Short Description. (use period)
      *
@@ -31,7 +30,6 @@ final class PGPFGForGivewpActivator
      *
      * @since    1.0.0
      */
-    public static function activate(): void
-    {
+    public static function activate(): void {
     }
 }

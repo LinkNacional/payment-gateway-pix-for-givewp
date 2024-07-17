@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Includes;
+namespace Pgpfg\PGPFGForGivewp\Includes;
 
 /**
  * Fired during plugin deactivation
@@ -22,8 +22,7 @@ namespace Lkn\PGPFGForGivewp\Includes;
  * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-class PGPFGForGivewpDeactivator
-{
+final class PGPFGForGivewpDeactivator {
     /**
      * Short Description. (use period)
      *
@@ -31,9 +30,6 @@ class PGPFGForGivewpDeactivator
      *
      * @since    1.0.0
      */
-    public static function deactivate()
-    {
-
+    public static function deactivate(): void {
     }
-
 }

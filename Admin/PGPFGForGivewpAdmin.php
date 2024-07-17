@@ -1,8 +1,8 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Admin;
+namespace Pgpfg\PGPFGForGivewp\Admin;
 
-use Lkn\PGPFGForGivewp\Includes\PGPFGHelperClass;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass;
 use WP_Error;
 
 /**
@@ -25,8 +25,7 @@ use WP_Error;
  * @subpackage PGPFGForGivewp/admin
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class PGPFGForGivewpAdmin
-{
+final class PGPFGForGivewpAdmin {
     /**
      * The ID of this plugin.
      *
@@ -52,8 +51,7 @@ final class PGPFGForGivewpAdmin
      * @param      string    $plugin_name       The name of this plugin.
      * @param      string    $version    The version of this plugin.
      */
-    public function __construct($plugin_name, $version)
-    {
+    public function __construct($plugin_name, $version) {
         $this->plugin_name = $plugin_name . '-admin';
         $this->version = $version;
     }
@@ -65,21 +63,20 @@ final class PGPFGForGivewpAdmin
      *
      * @return array
      */
-    public function add_setting_into_new_section($settings)
-    {
+    public function add_setting_into_new_section($settings) {
         switch (give_get_current_setting_section()) {
             case 'lkn-payment-pix':
                 // Verifique se a configuração específica já está no array
                 $exists = false;
                 foreach ($settings as $setting) {
-                    if (isset($setting['id']) && $setting['id'] === 'lkn-payment-pix-type-setting') {
+                    if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
                         $exists = true;
                         break;
                     }
                 }
     
                 // Adicione as configurações apenas se ainda não existirem
-                if (!$exists) {
+                if ( ! $exists) {
                     $settings[] = array(
                         'type' => 'title',
                         'id' => 'lkn-payment-pix'
@@ -170,8 +167,7 @@ final class PGPFGForGivewpAdmin
      *
      * @return array
      */
-    public function add_new_setting_section($sections)
-    {
+    public function add_new_setting_section($sections) {
         // Separar palavras com travessão no atributo $sections
         $sections['lkn-payment-pix'] = __('Pix QR Code', 'payment-gateway-pix-for-givewp');
 
@@ -183,8 +179,7 @@ final class PGPFGForGivewpAdmin
      *
      * @since    1.0.0
      */
-    public function enqueue_styles(): void
-    {
+    public function enqueue_styles(): void {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -204,8 +199,7 @@ final class PGPFGForGivewpAdmin
      *
      * @since    1.0.0
      */
-    public function enqueue_scripts(): void
-    {
+    public function enqueue_scripts(): void {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -223,10 +217,10 @@ final class PGPFGForGivewpAdmin
         $logPath = give_get_option('pgpfg_for_givewp_last_log_url');
         $wp_error = false;
         $remote = null;
-        if ($logPath !== false) {
+        if (false !== $logPath) {
             $remote = wp_remote_get($logPath);
 
-            if(gettype($remote) === gettype(new WP_Error())) {
+            if (gettype($remote) === gettype(new WP_Error())) {
                 PGPFGHelperClass::log(wp_json_encode(array(
                     'Remote Response' => $remote,
                     'log url' => $logPath,
@@ -235,18 +229,17 @@ final class PGPFGForGivewpAdmin
 
                 $wp_error = $remote;
             }
-
         }
         $logContents = wp_remote_retrieve_body($remote);
 
         wp_localize_script(
             $this->plugin_name,
             'lknAttr',
-            [
+            array(
                 'logContents' => ($wp_error ? wp_json_encode(array(
                     'Error' => 'Error retrieving log'
                 ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) : $logContents)
-            ]
+            )
         );
     }
 }

@@ -1,7 +1,8 @@
+/* eslint-disable no-undef */
 const {
   __
 } = wp.i18n
-function lknPGPFGGiveWPCrcChecksum(string) {
+function lknPGPFGGiveWPCrcChecksum (string) {
   let crc = 0xFFFF
   const strlen = string.length
   for (let c = 0; c < strlen; c++) {
@@ -21,7 +22,7 @@ function lknPGPFGGiveWPCrcChecksum(string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
-function lknPGPFGGiveWPPixBuilder(amount = '') {
+function lknPGPFGGiveWPPixBuilder (amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
   const pixName = lknAttr.pixName
@@ -96,10 +97,10 @@ function lknPGPFGGiveWPPixBuilder(amount = '') {
 }
 const lknGatewayPix = {
   id: 'pix-payment-gateway',
-  async initialize() {
+  async initialize () {
     // Aqui vai todas as funções necessárias ao carregar a página de pagamento
   },
-  async beforeCreatePayment(values) {
+  async beforeCreatePayment (values) {
     // Aqui vai tudo que precisa rodar depois de submeter o formulário e antes do pagamento ser completado
     // Ponha validações e adicione atributos que você vai precisar no back-end aqui
 
@@ -116,12 +117,12 @@ const lknGatewayPix = {
       pluginIntent: 'lkn-plugin-intent'
     }
   },
-  async afterCreatePayment(response) {
+  async afterCreatePayment (response) {
     // Aqui roda tudo que você precisa após o formulário ser submetido
     // Antes de ir para a tela do comprovante de pagamento
   },
   // Função onde os campos HTML são criados
-  Fields() {
+  Fields () {
     const {
       useWatch
     } = window.givewp.form.hooks
