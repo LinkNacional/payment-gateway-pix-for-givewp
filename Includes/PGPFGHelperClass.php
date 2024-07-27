@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Includes;
+namespace Pgpfg\PGPFGForGivewp\Includes;
 
 use DateTime;
 use Give\Donations\Models\Donation;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Includes;
+namespace Pgpfg\PGPFGForGivewp\Includes;
 
 use Give\Donations\Models\Donation;
 use Give\Donations\Models\DonationNote;
@@ -12,7 +12,7 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
-use Lkn\PGPFGForGivewp\Includes\PGPFGHelperClass;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass;
 
 /**
  * @inheritDoc

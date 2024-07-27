@@ -1,6 +1,6 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\PublicView;
+namespace Pgpfg\PGPFGForGivewp\PublicView;
 
 /**
  * The public-facing functionality of the plugin.

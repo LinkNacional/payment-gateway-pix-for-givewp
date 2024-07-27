@@ -1,10 +1,10 @@
 <?php
 
-namespace Lkn\PGPFGForGivewp\Includes;
+namespace Pgpfg\PGPFGForGivewp\Includes;
 
-use Lkn\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
-use Lkn\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
-use Lkn\PGPFGForGivewp\PublicView\PGPFGGatewayClass;
+use Pgpfg\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
+use Pgpfg\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
+use Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayClass;
 
 /**
  * The file that defines the core plugin class
@@ -117,7 +117,7 @@ final class PGPFGForGivewp {
     }
 
     public function load_pgpfg($paymentGatewayRegister): void {
-        $paymentGatewayRegister->registerGateway('Lkn\PGPFGForGivewp\PublicView\PGPFGGatewayClass');
+        $paymentGatewayRegister->registerGateway('Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayClass');
     }
 
     public function add_new_cron_recurrencies() {
@@ -132,7 +132,7 @@ final class PGPFGForGivewp {
     }
 
     public function define_cron_hook(): void {
-        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array('Lkn\PGPFGForGivewp\Includes\PGPFGHelperClass', 'delete_old_logs'));
+        add_action('lkn_payment_pix_delete_old_logs_cron_hook', array('Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass', 'delete_old_logs'));
     }
 
     public function define_event_delete_old_logs(): void {
@@ -174,7 +174,7 @@ final class PGPFGForGivewp {
 
         // Deactivate plugin.
         if ($is_deactivate_plugin) {
-            deactivate_plugins(PGPFG_PIX_PLUGIN_BASENAME);
+            deactivate_plugins('payment-gateway-pix-for-givewp/payment-gateway-pix-for-givewp.php');
 
             if (isset($_GET['activate'])) {
                 unset($_GET['activate']);

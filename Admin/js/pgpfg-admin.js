@@ -65,29 +65,30 @@ const { __ } = wp.i18n;
         const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
 
         setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
+        if (typeof WPDarkMode !== 'undefined') {
+          WPDarkMode.onChange(() => {
+            if (WPDarkMode.isActive) {
+              setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
+            } else {
+              const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
+              const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
 
-        WPDarkMode.onChange(() => {
-          if (WPDarkMode.isActive) {
-            setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
-          } else {
-            const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
-            const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
+              if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
+                for (let i = 0; i < linkInNoticeDiv.length; i++) {
+                  linkInNoticeDiv[i].style.color = '#2271b1'
+                }
+                for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
+                  linkLknCieloInNoticeDiv[i].style.color = '#2271b1'
+                }
+              }
 
-            if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
-              for (let i = 0; i < linkInNoticeDiv.length; i++) {
-                linkInNoticeDiv[i].style.color = '#2271b1'
-              }
-              for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
-                linkLknCieloInNoticeDiv[i].style.color = '#2271b1'
-              }
+              noticeDiv.style.color = '#646970'
+              noticeDiv.style.backgroundColor = '#fcf9e8'
+              lknCieloNoticeDiv.style.color = '#646970'
+              lknCieloNoticeDiv.style.backgroundColor = '#fcf9e8'
             }
-
-            noticeDiv.style.color = '#646970'
-            noticeDiv.style.backgroundColor = '#fcf9e8'
-            lknCieloNoticeDiv.style.color = '#646970'
-            lknCieloNoticeDiv.style.backgroundColor = '#fcf9e8'
-          }
-        })
+          })
+        }
       }
       const checkLogs = $('#check-logs')
 
@@ -102,18 +103,20 @@ const { __ } = wp.i18n;
     }
 
     function setDarkCss (linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
-      if (WPDarkMode.isActive) {
-        noticeDiv.style.color = 'white'
-        noticeDiv.style.backgroundColor = '#292a2a'
-        lknCieloNoticeDiv.style.backgroundColor = '#292a2a'
-        lknCieloNoticeDiv.style.color = 'white'
+      if (typeof WPDarkMode !== 'undefined') {
+        if (WPDarkMode.isActive) {
+          noticeDiv.style.color = 'white'
+          noticeDiv.style.backgroundColor = '#292a2a'
+          lknCieloNoticeDiv.style.backgroundColor = '#292a2a'
+          lknCieloNoticeDiv.style.color = 'white'
 
-        if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
-          for (let i = 0; i < linkInNoticeDiv.length; i++) {
-            linkInNoticeDiv[i].style.color = 'lightblue'
-          }
-          for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
-            linkLknCieloInNoticeDiv[i].style.color = 'lightblue'
+          if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
+            for (let i = 0; i < linkInNoticeDiv.length; i++) {
+              linkInNoticeDiv[i].style.color = 'lightblue'
+            }
+            for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
+              linkLknCieloInNoticeDiv[i].style.color = 'lightblue'
+            }
           }
         }
       }
