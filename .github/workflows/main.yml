@@ -18,13 +18,13 @@ jobs:
     - uses: actions/checkout@v3
 
     # Run composer install // TODO Only run composer after autoload config
-    #- name: Run composer install
-    #  uses: php-actions/composer@v6
-    #  with:
-    #    php_version: ${{ env.PHP_VERSION }}
-    #    working_dir: "."
-    #    dev: no
-    #    command: install
+    - name: Run composer install
+      uses: php-actions/composer@v6
+      with:
+        php_version: ${{ env.PHP_VERSION }}
+        working_dir: "."
+        dev: no
+        command: install
 
     - name: Make plugin root directory
       run: |
@@ -50,7 +50,7 @@ jobs:
       uses: mathieudutour/github-tag-action@v6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        custom_tag: "2.0.0" # This tag will be updated by the action // TODO Update this value
+        custom_tag: "2.0.2" # This tag will be updated by the action // TODO Update this value
 
     # Generate new release
     - name: Generate new Release
