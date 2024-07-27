@@ -52,7 +52,7 @@ final class PGPFGGatewayClass extends PaymentGateway {
     public function getLegacyFormFieldMarkup(int $formId, array $args): string {
         wp_enqueue_style('pgpfg-public', PGPFG_PIX_PLUGIN_URL . 'Public/css/pgpfg-public.css');
         wp_enqueue_style('pgpfg-material-symbols-outlined', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
-        
+
         // Array de argumentos
         $template_args = array(
             'pixType' => give_get_option('lkn-payment-pix-type-setting'),
