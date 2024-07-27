@@ -1,3 +1,8 @@
+# 2.0.2 - 27/07/2024
+* Adicionada compatibilidade com autoloader;
+* Correção de erro na declaração de atributos JS;
+* Correção de script de CI.
+
 # 2.0.1 - 16/07/2024
 * Alteração em plugin para manter as normativas do wordpress.
 

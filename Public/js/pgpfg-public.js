@@ -145,7 +145,7 @@
       const qrContainer = lknPixGiveWPIframe.contents().find('p[id="qr"]')[0]
       if (qrContainer !== null || qrContainer !== undefined) {
         qrContainer.innerHTML = ''
-        new QRCode(qrContainer, {
+        const qrCodeObj = new QRCode(qrContainer, {
           text: lknPixGiveWPResult,
           width: 150,
           height: 150

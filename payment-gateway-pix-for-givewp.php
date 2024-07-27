@@ -16,7 +16,7 @@
  * Plugin Name:       Payment Gateway Pix for GiveWP
  * Plugin URI:        https://www.linknacional.com.br/wordpress/givewp/
  * Description:       Streamline your donation process and expand your reach to Brazilian donors by integrating PIX, the instant payment system, into your GiveWP donation forms.
- * Version:           2.0.1
+ * Version:           2.0.2
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-3.0+
@@ -29,7 +29,9 @@
 if ( ! defined('ABSPATH')) {
     die;
 }
+
 require_once __DIR__ . '/vendor/autoload.php';
+
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewp;
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpActivator;
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
@@ -39,8 +41,8 @@ use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PGPFG_PIX_PLUGIN_VERSION', '2.0.1');
-define('PGPFG_PIX_PLUGIN_FILE', __DIR__ . '/payment-gateway-pix-for-givewp.php');
+define('PGPFG_PIX_PLUGIN_VERSION', '2.0.2');
+define('PGPFG_PIX_PLUGIN_FILE', __FILE__);
 define('PGPFG_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PGPFG_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('PGPFG_PIX_LANGUAGE_DIR', plugin_dir_path(__FILE__) . '/languages');
@@ -101,7 +103,7 @@ function pgpfg_pix_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
         ),
         admin_url('edit.php')
     )) . '">' . __('Settings', 'payment-gateway-pix-for-givewp') . '</a>';
-    
+
     return array_merge($plugin_meta, $new_meta_links);
 }
 

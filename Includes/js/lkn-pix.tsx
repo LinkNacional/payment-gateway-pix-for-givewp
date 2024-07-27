@@ -1,5 +1,3 @@
-import qrcodeJs from "qrcode.js";
-
 const { __ } = wp.i18n;
 
 function lknPGPFGGiveWPCrcChecksum(string) {

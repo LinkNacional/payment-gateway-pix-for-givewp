@@ -124,11 +124,15 @@ const lknGatewayPix = {
       name: 'amount'
     })
     useEffect(() => {
-      const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
-      const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
-      setPix(lknPGPFGGiveWPPixBuilder(amount))
+      const donationSummary = document.querySelector('.givewp-elements-donationSummary__list__item__value')
+      if (donationSummary) {
+        const strAux = donationSummary.innerHTML.split(',')
+        const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+        setPix(lknPGPFGGiveWPPixBuilder(amount))
+      }
       if (document.getElementById('qr') !== undefined) {
         document.getElementById('qr').innerHTML = ''
+        document.getElementById('qr').style.textAlign = 'center'
         const qrCode = new QRCode(document.getElementById('qr'), {
           text: pix,
           width: 150,
@@ -145,12 +149,6 @@ const lknGatewayPix = {
       type: 'hidden',
       id: 'donation-value',
       value: donationAmount
-    }), /* #__PURE__ */React.createElement('link', {
-      rel: 'stylesheet',
-      href: lknAttr.pluginUrl + 'Public/css/pgpfg-public.css'
-    }), /* #__PURE__ */React.createElement('link', {
-      rel: 'stylesheet',
-      href: 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0'
     }), /* #__PURE__ */React.createElement('div', {
       id: 'lkn-pix-form-donation'
     }, /* #__PURE__ */React.createElement('legend', null, __('Pix Key:', 'payment-gateway-pix-for-givewp')), /* #__PURE__ */React.createElement('div', {
