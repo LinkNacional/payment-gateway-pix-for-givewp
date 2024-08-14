@@ -99,17 +99,17 @@ final class PGPFGGatewayClass extends PaymentGateway {
     <div id="lkn-pix-form-donation">
         ' . ($template_args['isFormEnabled'] ? give_default_cc_address_fields($template_args['formId']) . '<br/>' : '') . '
         <legend>' . esc_html__('Pix Key:', 'payment-gateway-pix-for-givewp') . '</legend>
-        <div class="pix-container">
+        <div class="pix-container" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
             <p id="qr">' . esc_html__('Loading...', 'payment-gateway-pix-for-givewp') . '</p>
             <br/>
             <p id="pix"></p>
             <p id="copy-pix" style="display: none;">
                 <button id="toggle-viewing" type="button" title="' . esc_attr__('Show Pix', 'payment-gateway-pix-for-givewp') . '">
-                    <span id="show" class="material-symbols-outlined" style="display: none;">visibility_off</span>
-                    <span id="hide" class="material-symbols-outlined">visibility</span>
+                    <span id="show" class="material-symbols-outlined" style="display: none;">Sbow</span>
+                    <span id="hide" class="material-symbols-outlined">Hide</span>
                 </button>
                 <button id="copy-button" type="button" title="' . esc_attr__('Copy Pix', 'payment-gateway-pix-for-givewp') . '">
-                    <span class="material-symbols-outlined">content_copy</span>
+                    <span class="material-symbols-outlined">Copy</span>
                 </button>
             </p>
         </div>
