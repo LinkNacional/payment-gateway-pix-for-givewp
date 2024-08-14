@@ -79,7 +79,7 @@ final class PGPFGForGivewpAdmin {
                 if ( ! $exists) {
                     $settings[] = array(
                         'type' => 'title',
-                        'id' => 'lkn-payment-pix'
+                        'id' => 'lkn-payment-pix',
                     );
 
                     $settings[] = array(
@@ -152,8 +152,13 @@ final class PGPFGForGivewpAdmin {
                         'id' => 'lkn-payment-pix',
                         'type' => 'sectionend'
                     );
-                }
 
+                    $settings_pro= apply_filters("lkn_payment_pix_for_givewp_pro_admin_settings",$settings);
+                    if(!empty($settings_pro) && $settings != $settings_pro){
+                        return array_merge($settings,$settings_pro);
+                    }
+
+                }
                 break;
         }
 

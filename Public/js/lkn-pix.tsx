@@ -113,7 +113,8 @@ const lknGatewayPix = {
 
             if (document.getElementById('qr') !== undefined) {
                 document.getElementById('qr')!.innerHTML = ''
-                document.getElementById('qr')!.style.textAlign = 'center';
+                document.getElementById('qr')!.style.display = 'flex';
+                document.getElementById('qr')!.style.justifyContent = 'center';
                 const qrCode = new QRCode(document.getElementById('qr'), {
                     text: pix,
                     width: 150,

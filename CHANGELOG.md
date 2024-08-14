@@ -1,3 +1,6 @@
+# 2.0.3 - 14/08/2024
+* Correção de bug de exibição.
+
 # 2.0.2 - 27/07/2024
 * Adicionada compatibilidade com autoloader;
 * Correção de erro na declaração de atributos JS;

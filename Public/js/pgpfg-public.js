@@ -16,7 +16,7 @@
 
   let lknPixGiveWPObserver
 
-  function lknPixGiveWPCrcChecksum (string) {
+  function lknPixGiveWPCrcChecksum(string) {
     let crc = 0xFFFF
     const strlen = string.length
 
@@ -39,7 +39,7 @@
     return hex
   }
 
-  function lknPixGiveWPPixBuilder (amount = '') {
+  function lknPixGiveWPPixBuilder(amount = '') {
     amount = amount === 'NaN' ? '' : amount
 
     // (00 Payload Format Indicator)
@@ -71,7 +71,7 @@
   }
 
   let lknPixGiveWPChangeDebouncer
-  function lknPixGiveWPChangeForm () {
+  function lknPixGiveWPChangeForm() {
     try {
       if (lknPixGiveWPIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
 
@@ -165,7 +165,7 @@
   }
 
   let lknPixGiveWPObserveDeboncer
-  function lknPixGiveWPObserve () {
+  function lknPixGiveWPObserve() {
     try {
       if (lknPixGiveWPIframe.contents().find('div[id="lkn-react-pix-form"]').length) { return }
       if (lknPixGiveWPObserver === undefined || lknPixGiveWPObserver === null) {
