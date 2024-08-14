@@ -223,7 +223,7 @@ final class PGPFGForGivewp {
             'plugin instalado e ativado para o complemento Payment Gateway Pix For GiveWP ativar'
         );
 
-        echo esc_html($message);
+        echo wp_kses_post($message);
     }
 
     /**
