@@ -69,51 +69,51 @@ final class PGPFGGatewayClass extends PaymentGateway {
         type="hidden"
         id="pix_type"
         value="' . esc_attr($template_args['pixType']) . '"
-    />
-    <input
-        type="hidden"
-        id="pix_key"
-        value="' . esc_attr($template_args['pixKey']) . '"
-    />
-    <input
-        type="hidden"
-        id="pix_name"
-        value="' . esc_attr($template_args['pixName']) . '"
-    />
-    <input
-        type="hidden"
-        id="pix_city"
-        value="' . esc_attr($template_args['pixCity']) . '"
-    />
-    <input
-        type="hidden"
-        id="pix_id"
-        value="' . esc_attr($template_args['pixId']) . '"
-    />
-    <input
-        type="hidden"
-        name="gatewayData[pix-payment-gateway-id]"
-        value="pix"
-    />
+        />
+        <input
+            type="hidden"
+            id="pix_key"
+            value="' . esc_attr($template_args['pixKey']) . '"
+        />
+        <input
+            type="hidden"
+            id="pix_name"
+            value="' . esc_attr($template_args['pixName']) . '"
+        />
+        <input
+            type="hidden"
+            id="pix_city"
+            value="' . esc_attr($template_args['pixCity']) . '"
+        />
+        <input
+            type="hidden"
+            id="pix_id"
+            value="' . esc_attr($template_args['pixId']) . '"
+        />
+        <input
+            type="hidden"
+            name="gatewayData[pix-payment-gateway-id]"
+            value="pix"
+        />
 
-    <div id="lkn-pix-form-donation">
-        ' . ($template_args['isFormEnabled'] ? give_default_cc_address_fields($template_args['formId']) . '<br/>' : '') . '
-        <legend>' . esc_html__('Pix Key:', 'payment-gateway-pix-for-givewp') . '</legend>
-        <div class="pix-container" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
-            <p id="qr">' . esc_html__('Loading...', 'payment-gateway-pix-for-givewp') . '</p>
-            <br/>
-            <p id="pix"></p>
-            <p id="copy-pix" style="display: none;">
-                <button id="toggle-viewing" type="button" title="' . esc_attr__('Show Pix', 'payment-gateway-pix-for-givewp') . '">
-                    <span id="show" class="material-symbols-outlined" style="display: none;">Sbow</span>
-                    <span id="hide" class="material-symbols-outlined">Hide</span>
-                </button>
-                <button id="copy-button" type="button" title="' . esc_attr__('Copy Pix', 'payment-gateway-pix-for-givewp') . '">
-                    <span class="material-symbols-outlined">Copy</span>
-                </button>
-            </p>
-        </div>
-    </div>';
+        <div id="lkn-pix-form-donation">
+            ' . ($template_args['isFormEnabled'] ? give_default_cc_address_fields($template_args['formId']) . '<br/>' : '') . '
+            <legend>' . esc_html__('Pix Key:', 'payment-gateway-pix-for-givewp') . '</legend>
+            <div class="pix-container" style="display:flex;flex-direction:column;justify-content:center;align-items:center">
+                <p id="qr">' . esc_html__('Loading...', 'payment-gateway-pix-for-givewp') . '</p>
+                <br/>
+                <p id="pix"></p>
+                <p id="copy-pix" style="display: none;">
+                    <button id="toggle-viewing" type="button" title="' . esc_attr__('Show Pix', 'payment-gateway-pix-for-givewp') . '">
+                        <span id="show" class="material-symbols-outlined" style="display: none;">Show</span>
+                        <span id="hide" class="material-symbols-outlined">Hide</span>
+                    </button>
+                    <button id="copy-button" type="button" title="' . esc_attr__('Copy Pix', 'payment-gateway-pix-for-givewp') . '">
+                        <span class="material-symbols-outlined">Copy</span>
+                    </button>
+                </p>
+            </div>
+        </div>';
 
         return $html;
     }
@@ -142,6 +142,7 @@ final class PGPFGGatewayClass extends PaymentGateway {
                 'pixName' => give_get_option('lkn-payment-pix-name-setting'),
                 'pixCity' => give_get_option('lkn-payment-pix-city-setting'),
                 'pixId' => give_get_option('lkn-payment-pix-paymentid-setting'),
+                'pgpfgPublicCssUrl' => plugin_dir_url(__FILE__) . 'css/pgpfg-public.css'
             )
         );
 
