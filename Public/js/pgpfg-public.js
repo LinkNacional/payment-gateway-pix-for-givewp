@@ -235,5 +235,18 @@
     lknPixGiveWPObserve()
 
     lknPixGiveWPChangeForm()
+
+    //Aplica css dentro do iframe
+    var iframe = document.querySelector('iframe[name="give-embed-form"]');
+    if(iframe){
+      var doc = iframe.contentDocument || iframe.contentWindow.document;      
+      var link = doc.createElement('link');
+
+      link.href = lknAttr.pgpfgPublicCssUrl;
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      
+      doc.head.appendChild(link);
+    }
   })
 })(jQuery)
