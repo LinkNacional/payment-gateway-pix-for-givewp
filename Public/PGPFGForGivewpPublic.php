@@ -92,5 +92,12 @@ final class PGPFGForGivewpPublic {
          */
         wp_enqueue_script('qrcode', plugin_dir_url(__FILE__) . 'js/qrcode.js', array(), $this->version, false);
         wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pgpfg-public.js', array('jquery', 'qrcode'), $this->version, false);
+        wp_localize_script(
+            $this->plugin_name,
+            'lknAttr',
+            array(
+                'pgpfgPublicCssUrl' => plugin_dir_url(__FILE__) . 'css/pgpfg-public.css'
+            )
+        );
     }
 }

@@ -1,6 +1,15 @@
 const {
   __
-} = wp.i18n;
+} = wp.i18n
+var iframe = window.parent.document.querySelector('iframe');
+if (iframe) {
+  var doc = iframe.contentDocument || iframe.contentWindow.document;
+  var link = doc.createElement('link');
+  link.href = lknAttr.pgpfgPublicCssUrl;
+  link.rel = 'stylesheet';
+  link.type = 'text/css';
+  doc.head.appendChild(link);
+}
 function lknPGPFGGiveWPCrcChecksum(string) {
   let crc = 0xFFFF;
   const strlen = string.length;
