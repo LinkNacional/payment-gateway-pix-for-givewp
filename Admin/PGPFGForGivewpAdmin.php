@@ -148,16 +148,12 @@ final class PGPFGForGivewpAdmin {
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                         )
                     );
-                    $newSettings = apply_filters("lkn_payment_pix_for_givewp_pro_admin_settings",$settings);
-
-                    if($newSettings != $settings){
-                        $settings = array_merge($settings,$newSettings);
-                    }
-
+                    $settings = apply_filters('lkn_payment_pix_for_givewp_pro_admin_settings', $settings);
                     $settings[] = array(
                         'id' => 'lkn-payment-pix',
                         'type' => 'sectionend'
                     );
+                    return $settings;
                 }
                 break;
         }
