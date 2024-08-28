@@ -80,6 +80,7 @@ final class PGPFGForGivewpAdmin {
                     $settings[] = array(
                         'type' => 'title',
                         'id' => 'lkn-payment-pix',
+                        'title'=> "Free Settings"
                     );
 
                     $settings[] = array(
@@ -147,6 +148,11 @@ final class PGPFGForGivewpAdmin {
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                         )
                     );
+                    $newSettings = apply_filters("lkn_payment_pix_for_givewp_pro_admin_settings",$settings);
+
+                    if($newSettings != $settings){
+                        $settings = array_merge($settings,$newSettings);
+                    }
 
                     $settings[] = array(
                         'id' => 'lkn-payment-pix',
