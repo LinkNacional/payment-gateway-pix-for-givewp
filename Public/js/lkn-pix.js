@@ -1,6 +1,6 @@
 const {
   __
-} = wp.i18n
+} = wp.i18n;
 var iframe = window.parent.document.querySelector('iframe');
 if (iframe) {
   var doc = iframe.contentDocument || iframe.contentWindow.document;
@@ -180,7 +180,10 @@ const lknGatewayPix = {
       type: "button",
       title: __('Show Pix', 'payment-gateway-pix-for-givewp'),
       style: {
-        width: "15%"
+        width: "20%",
+        background: "black",
+        color: "white",
+        fontWeight: "900"
       },
       onClick: () => {
         let pixInput = document.querySelector("#lkn-pix-input");

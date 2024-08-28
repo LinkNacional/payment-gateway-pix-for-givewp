@@ -1,12 +1,12 @@
 const { __ } = wp.i18n;
 var iframe = window.parent.document.querySelector('iframe');
 if (iframe) {
-  var doc = iframe.contentDocument || iframe.contentWindow.document;
-  var link = doc.createElement('link');
-  link.href = lknAttr.pgpfgPublicCssUrl;
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  doc.head.appendChild(link);
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
+    var link = doc.createElement('link');
+    link.href = lknAttr.pgpfgPublicCssUrl;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    doc.head.appendChild(link);
 }
 function lknPGPFGGiveWPCrcChecksum(string) {
     let crc = 0xFFFF
@@ -145,10 +145,11 @@ const lknGatewayPix = {
                         <br />
                         <div style={{ display: "flex" }}>
                             <input type="text" readOnly id="lkn-pix-input" />
-                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} style={{ width: "15%" }} onClick={() => {
+                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} style={{ width: "20%", background: "black", color: "white", fontWeight: "900" }} onClick={() => {
                                 let pixInput = document.querySelector("#lkn-pix-input");
                                 navigator.clipboard.writeText(pixInput.value);
                                 alert("Pix Copiado");
+
                             }}>
                                 Copy
                             </button>
