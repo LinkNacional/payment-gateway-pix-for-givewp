@@ -35,74 +35,124 @@ const { __ } = wp.i18n;
   $(window).load(function () {
     const adminPage = lknFindGetParameter('section')
 
-    if (adminPage && (adminPage === 'lkn-payment-pix')) {
-      const giveForm = $('.give-submit-wrap')
-      const noticeDiv = document.createElement('div')
-      noticeDiv.setAttribute('style', 'padding: 10px; padding-top:15px;padding-bottom:15px;background-color: #fcf9e8;color: #646970;border: solid 1px lightgrey;border-left-color: #dba617;border-left-width: 4px;font-size: 14px;min-width: 625px;margin-top: 10px;')
+    if (adminPage && adminPage === 'lkn-payment-pix') {
+      const giveForm = $('.give-submit-wrap');
 
-      noticeDiv.innerHTML = '<div style="font-size: 21px;">' + __('Enjoying the plugin?', 'payment-gateway-pix-for-givewp') + '</div>'
-      noticeDiv.innerHTML += '<p style="font-size: 14px;">' + __('Try out our other GiveWP plugins', 'payment-gateway-pix-for-givewp') + '</p'
-      noticeDiv.innerHTML += '<ul style="margin: 10px; list-style: disclosure-closed;">'
-      noticeDiv.innerHTML += '<li>' + __('Cielo API Credit Card Payment', 'payment-gateway-pix-for-givewp') + '</li>'
-      noticeDiv.innerHTML += '<li>' + __('Google Pay Payment', 'payment-gateway-pix-for-givewp') + '</li>'
-      noticeDiv.innerHTML += '<li>' + __('Bitcoin and Ethereum Payment', 'payment-gateway-pix-for-givewp') + '</li>'
-      noticeDiv.innerHTML += '<li>' + __('International Donations using foreign currencies such as Euro or Yen', 'payment-gateway-pix-for-givewp') + '</li>'
-      noticeDiv.innerHTML += '<li>' + __('And more!', 'payment-gateway-pix-for-givewp') + '</li>'
-      noticeDiv.innerHTML += '</ul>'
-      noticeDiv.innerHTML += '<a style="margin: 18px; padding-right: 0px; margin-top: 20px;" href="https://www.linknacional.com.br/wordpress/givewp/" target="_blank">' + __('Learn more now', 'payment-gateway-pix-for-givewp') + '</a>'
+      if (giveForm.length > 0) {
+        // Criar e estilizar o noticeDiv
+        const noticeDiv = document.createElement('div');
+        noticeDiv.setAttribute('style', 'padding: 10px; padding-top: 15px; padding-bottom: 15px; background-color: #fcf9e8; color: #646970; border: solid 1px lightgrey; border-left-color: #dba617; border-left-width: 4px; font-size: 14px; min-width: 625px; margin-top: 10px;');
 
-      const lknCieloNoticeDiv = document.createElement('div')
-      lknCieloNoticeDiv.setAttribute('style', 'background-color: #fcf9e8;color: #646970;border: solid 1px #d3d3d3;border-left: 4px #dba617 solid;font-size: 16px;margin-top: 10px;')
-      lknCieloNoticeDiv.setAttribute('id', 'lkn-cielo-hosting-notice')
+        // Criar o conteúdo do noticeDiv
+        const title = document.createElement('div');
+        title.style.fontSize = '21px';
+        title.innerText = __('Enjoying the plugin?', 'payment-gateway-pix-for-givewp');
+        noticeDiv.appendChild(title);
 
-      lknCieloNoticeDiv.innerHTML = '<a  href="https://www.linknacional.com.br/wordpress/" target="_blank" style="text-decoration:none; display: block;padding: 10px;">' + __('WordPress Maintenance and Support!', 'payment-gateway-pix-for-givewp') + '</a>'
+        const description = document.createElement('p');
+        description.style.fontSize = '14px';
+        description.innerText = __('Try out our other GiveWP plugins', 'payment-gateway-pix-for-givewp');
+        noticeDiv.appendChild(description);
 
-      if (giveForm && lknCieloNoticeDiv) {
-        giveForm.after(noticeDiv)
-        noticeDiv.after(lknCieloNoticeDiv)
+        // Criar a lista de plugins
+        const ul = document.createElement('ul');
+        ul.style.margin = '0'; // Remover margem externa da lista
+        ul.style.padding = '0'; // Remover preenchimento externo da lista
+        ul.style.listStyle = 'none'; // Remover estilo de lista padrão
 
-        const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
-        const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
+        const plugins = [
+          __('Cielo API Credit Card Payment', 'payment-gateway-pix-for-givewp'),
+          __('Google Pay Payment', 'payment-gateway-pix-for-givewp'),
+          __('Bitcoin and Ethereum Payment', 'payment-gateway-pix-for-givewp'),
+          __('International Donations using foreign currencies such as Euro or Yen', 'payment-gateway-pix-for-givewp'),
+          __('And more!', 'payment-gateway-pix-for-givewp')
+        ];
 
-        setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
+        plugins.forEach(plugin => {
+          const li = document.createElement('li');
+          li.innerText = plugin;
+          li.style.marginLeft = '0'; // Remover margem à esquerda para cada item
+          ul.appendChild(li);
+        });
+
+        noticeDiv.appendChild(ul);
+
+        const learnMoreLink = document.createElement('a');
+        learnMoreLink.href = 'https://www.linknacional.com.br/wordpress/givewp/';
+        learnMoreLink.target = '_blank';
+        learnMoreLink.style.margin = '18px';
+        learnMoreLink.style.paddingRight = '0px';
+        learnMoreLink.style.marginTop = '20px';
+        learnMoreLink.innerText = __('Learn more now', 'payment-gateway-pix-for-givewp');
+        noticeDiv.appendChild(learnMoreLink);
+
+        // Criar e estilizar o lknCieloNoticeDiv
+        const lknCieloNoticeDiv = document.createElement('div');
+        lknCieloNoticeDiv.setAttribute('style', 'background-color: #fcf9e8; color: #646970; border: solid 1px #d3d3d3; border-left: 4px #dba617 solid; font-size: 16px; margin-top: 10px;');
+        lknCieloNoticeDiv.setAttribute('id', 'lkn-cielo-hosting-notice');
+
+        const lknCieloLink = document.createElement('a');
+        lknCieloLink.href = 'https://www.linknacional.com.br/wordpress/';
+        lknCieloLink.target = '_blank';
+        lknCieloLink.style.textDecoration = 'none';
+        lknCieloLink.style.display = 'block';
+        lknCieloLink.style.padding = '10px';
+        lknCieloLink.innerText = __('WordPress Maintenance and Support!', 'payment-gateway-pix-for-givewp');
+        lknCieloNoticeDiv.appendChild(lknCieloLink);
+
+        // Adicionando os elementos ao DOM
+        giveForm.after(noticeDiv);
+        noticeDiv.after(lknCieloNoticeDiv);
+
+        const linkInNoticeDiv = noticeDiv.getElementsByTagName('a');
+        const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a');
+
+        function setDarkCss(links1, links2, div1, div2) {
+          for (let i = 0; i < links1.length; i++) {
+            links1[i].style.color = '#ffffff'; // Exemplo para o modo escuro
+          }
+          for (let i = 0; i < links2.length; i++) {
+            links2[i].style.color = '#ffffff'; // Exemplo para o modo escuro
+          }
+          div1.style.color = '#ffffff'; // Exemplo para o modo escuro
+          div1.style.backgroundColor = '#333333'; // Exemplo para o modo escuro
+          div2.style.color = '#ffffff'; // Exemplo para o modo escuro
+          div2.style.backgroundColor = '#333333'; // Exemplo para o modo escuro
+        }
+
         if (typeof WPDarkMode !== 'undefined') {
           WPDarkMode.onChange(() => {
             if (WPDarkMode.isActive) {
-              setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv)
+              setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv);
             } else {
-              const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
-              const linkLknCieloInNoticeDiv = lknCieloNoticeDiv.getElementsByTagName('a')
-
-              if (linkInNoticeDiv && linkLknCieloInNoticeDiv) {
-                for (let i = 0; i < linkInNoticeDiv.length; i++) {
-                  linkInNoticeDiv[i].style.color = '#2271b1'
-                }
-                for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
-                  linkLknCieloInNoticeDiv[i].style.color = '#2271b1'
-                }
+              for (let i = 0; i < linkInNoticeDiv.length; i++) {
+                linkInNoticeDiv[i].style.color = '#2271b1'; // Cor padrão para o modo claro
               }
-
-              noticeDiv.style.color = '#646970'
-              noticeDiv.style.backgroundColor = '#fcf9e8'
-              lknCieloNoticeDiv.style.color = '#646970'
-              lknCieloNoticeDiv.style.backgroundColor = '#fcf9e8'
+              for (let i = 0; i < linkLknCieloInNoticeDiv.length; i++) {
+                linkLknCieloInNoticeDiv[i].style.color = '#2271b1'; // Cor padrão para o modo claro
+              }
+              noticeDiv.style.color = '#646970'; // Cor padrão para o modo claro
+              noticeDiv.style.backgroundColor = '#fcf9e8'; // Cor padrão para o modo claro
+              lknCieloNoticeDiv.style.color = '#646970'; // Cor padrão para o modo claro
+              lknCieloNoticeDiv.style.backgroundColor = '#fcf9e8'; // Cor padrão para o modo claro
             }
-          })
+          });
         }
-      }
-      const checkLogs = $('#check-logs')
 
-      if (checkLogs) {
-        checkLogs.on('click', (ev) => {
-          const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(lknAttr.logContents)
+        const checkLogs = $('#check-logs');
 
-          checkLogs.attr('href', dataStr)
-          checkLogs.attr('download', 'pix_payment.log')
-        })
+        if (checkLogs.length > 0) {
+          checkLogs.on('click', (ev) => {
+            const dataStr = 'data:text/json;charset=utf-8,' + encodeURIComponent(lknAttr.logContents);
+            checkLogs.attr('href', dataStr);
+            checkLogs.attr('download', 'pix_payment.log');
+          });
+        }
       }
     }
 
-    function setDarkCss (linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
+
+    function setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
       if (typeof WPDarkMode !== 'undefined') {
         if (WPDarkMode.isActive) {
           noticeDiv.style.color = 'white'
@@ -122,7 +172,7 @@ const { __ } = wp.i18n;
       }
     }
 
-    function lknFindGetParameter (parameterName) {
+    function lknFindGetParameter(parameterName) {
       let result = null
       let tmp = []
       location.search
