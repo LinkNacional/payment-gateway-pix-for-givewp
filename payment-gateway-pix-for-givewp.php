@@ -16,7 +16,7 @@
  * Plugin Name:       Payment Gateway Pix for GiveWP
  * Plugin URI:        https://www.linknacional.com.br/wordpress/givewp/
  * Description:       Streamline your donation process and expand your reach to Brazilian donors by integrating PIX, the instant payment system, into your GiveWP donation forms.
- * Version:           2.0.3
+ * Version:           2.0.4
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-3.0+
