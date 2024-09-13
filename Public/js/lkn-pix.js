@@ -182,7 +182,7 @@ const lknGatewayPix = {
       type: 'button',
       title: __('Show Pix', 'payment-gateway-pix-for-givewp'),
       style: {
-        width: '20%',
+        width: '30%',
         background: 'black',
         color: 'white',
         fontWeight: '900'

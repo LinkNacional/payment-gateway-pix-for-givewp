@@ -145,7 +145,7 @@ const lknGatewayPix = {
                         <br />
                         <div style={{ display: "flex" }}>
                             <input type="text" readOnly id="lkn-pix-input" />
-                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} style={{ width: "20%", background: "black", color: "white", fontWeight: "900" }} onClick={() => {
+                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} style={{ width: "30%", background: "black", color: "white", fontWeight: "900" }} onClick={() => {
                                 let pixInput = document.querySelector("#lkn-pix-input");
                                 navigator.clipboard.writeText(pixInput.value);
                                 alert("Pix Copiado");
