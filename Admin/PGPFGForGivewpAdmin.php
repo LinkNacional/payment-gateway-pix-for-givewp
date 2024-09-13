@@ -80,6 +80,7 @@ final class PGPFGForGivewpAdmin {
                     $settings[] = array(
                         'type' => 'title',
                         'id' => 'lkn-payment-pix',
+                        "title" => "Free Settings"
                     );
 
                     $settings[] = array(

@@ -12,7 +12,7 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
-use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass ;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass;
 
 /**
  * @inheritDoc

@@ -102,7 +102,7 @@ const { __ } = wp.i18n;
       }
     }
 
-    function setDarkCss (linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
+    function setDarkCss(linkInNoticeDiv, linkLknCieloInNoticeDiv, noticeDiv, lknCieloNoticeDiv) {
       if (typeof WPDarkMode !== 'undefined') {
         if (WPDarkMode.isActive) {
           noticeDiv.style.color = 'white'
@@ -122,7 +122,7 @@ const { __ } = wp.i18n;
       }
     }
 
-    function lknFindGetParameter (parameterName) {
+    function lknFindGetParameter(parameterName) {
       let result = null
       let tmp = []
       location.search

@@ -1,4 +1,8 @@
-# 2.0.3 - 14/08/2024
+# 2.0.4 - 09/09/2024
+* Correção do front-end no formulário 3.0;
+* Retirando estilo de lista do banner no painel de administrador.
+
+# 2.0.3 - 30/08/2024
 * Correção de bug de exibição.
 
 # 2.0.2 - 27/07/2024

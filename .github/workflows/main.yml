@@ -50,7 +50,7 @@ jobs:
       uses: mathieudutour/github-tag-action@v6.0
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        custom_tag: "2.0.3" # This tag will be updated by the action // TODO Update this value
+        custom_tag: "2.0.4" # This tag will be updated by the action // TODO Update this value
 
     # Generate new release
     - name: Generate new Release

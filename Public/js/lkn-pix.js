@@ -1,14 +1,14 @@
 const {
   __
 } = wp.i18n
-var iframe = window.parent.document.querySelector('iframe');
+const iframe = window.parent.document.querySelector('iframe')
 if (iframe) {
-  var doc = iframe.contentDocument || iframe.contentWindow.document;
-  var link = doc.createElement('link');
-  link.href = lknAttr.pgpfgPublicCssUrl;
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  doc.head.appendChild(link);
+  const doc = iframe.contentDocument || iframe.contentWindow.document
+  const link = doc.createElement('link')
+  link.href = lknAttr.pgpfgPublicCssUrl
+  link.rel = 'stylesheet'
+  link.type = 'text/css'
+  doc.head.appendChild(link)
 }
 function lknPGPFGGiveWPCrcChecksum(string) {
   let crc = 0xFFFF
@@ -150,6 +150,10 @@ const lknGatewayPix = {
         })
       }
     })
+    const inputPix = document.querySelector('#lkn-pix-input')
+    if (inputPix) {
+      inputPix.value = pix
+    }
     return /* #__PURE__ */React.createElement('div', {
       id: 'lkn-react-pix-form',
       style: {
@@ -165,48 +169,30 @@ const lknGatewayPix = {
       className: 'pix-container'
     }, /* #__PURE__ */React.createElement('p', {
       id: 'qr'
-    }), /* #__PURE__ */React.createElement('br', null), /* #__PURE__ */React.createElement('p', {
-      id: 'pix',
-      name: 'pix'
-    }, pix), /* #__PURE__ */React.createElement('p', {
-      id: 'copy-pix'
-    }, /* #__PURE__ */React.createElement('button', {
+    }), /* #__PURE__ */React.createElement('br', null), /* #__PURE__ */React.createElement('div', {
+      style: {
+        display: 'flex'
+      }
+    }, /* #__PURE__ */React.createElement('input', {
+      type: 'text',
+      readOnly: true,
+      id: 'lkn-pix-input'
+    }), /* #__PURE__ */React.createElement('button', {
       id: 'toggle-viewing',
       type: 'button',
       title: __('Show Pix', 'payment-gateway-pix-for-givewp'),
-      onClick: () => {
-        const pixElement = document.getElementById('pix')
-        const hideElement = document.getElementById('hide')
-        const showElement = document.getElementById('show')
-        if (pixElement.style.display === 'none') {
-          showElement.style.display = 'none'
-          hideElement.style.display = 'block'
-          pixElement.style.display = 'inline'
-        } else {
-          showElement.style.display = 'block'
-          hideElement.style.display = 'none'
-          pixElement.style.display = 'none'
-        }
-      }
-    }, /* #__PURE__ */React.createElement('span', {
-      id: 'show',
-      className: 'material-symbols-outlined'
-    }, 'visibility_off'), /* #__PURE__ */React.createElement('span', {
-      id: 'hide',
-      className: 'material-symbols-outlined',
       style: {
-        display: 'none'
-      }
-    }, 'visibility')), /* #__PURE__ */React.createElement('button', {
-      id: 'copy-button',
-      type: 'button',
-      title: __('Copy Pix', 'payment-gateway-pix-for-givewp'),
+        width: '30%',
+        background: 'black',
+        color: 'white',
+        fontWeight: '900'
+      },
       onClick: () => {
-        navigator.clipboard.writeText(pix)
+        const pixInput = document.querySelector('#lkn-pix-input')
+        navigator.clipboard.writeText(pixInput.value)
+        alert('Pix Copiado')
       }
-    }, /* #__PURE__ */React.createElement('span', {
-      className: 'material-symbols-outlined'
-    }, 'content_copy'))))))
+    }, 'Copy')))))
   }
 }
 window.givewp.gateways.register(lknGatewayPix)

@@ -1,12 +1,12 @@
 const { __ } = wp.i18n;
 var iframe = window.parent.document.querySelector('iframe');
 if (iframe) {
-  var doc = iframe.contentDocument || iframe.contentWindow.document;
-  var link = doc.createElement('link');
-  link.href = lknAttr.pgpfgPublicCssUrl;
-  link.rel = 'stylesheet';
-  link.type = 'text/css';
-  doc.head.appendChild(link);
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
+    var link = doc.createElement('link');
+    link.href = lknAttr.pgpfgPublicCssUrl;
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    doc.head.appendChild(link);
 }
 function lknPGPFGGiveWPCrcChecksum(string) {
     let crc = 0xFFFF
@@ -131,7 +131,10 @@ const lknGatewayPix = {
                 })
             }
         })
-
+        let inputPix = document.querySelector("#lkn-pix-input");
+        if (inputPix) {
+            inputPix.value = pix;
+        }
         return (
             <div id="lkn-react-pix-form" style={{ textAlign: "center" }}>
                 <input type="hidden" id="donation-value" value={donationAmount}></input>
@@ -140,30 +143,20 @@ const lknGatewayPix = {
                     <div className='pix-container'>
                         <p id='qr' ></p>
                         <br />
-                        <p id='pix' name='pix'>{pix}</p>
-                        <p id='copy-pix' >
-                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {
-                                const pixElement = document.getElementById('pix')
-                                const hideElement = document.getElementById('hide')
-                                const showElement = document.getElementById('show')
+                        <div style={{ display: "flex" }}>
+                            <input type="text" readOnly id="lkn-pix-input" />
+                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} style={{ width: "30%", background: "black", color: "white", fontWeight: "900" }} onClick={() => {
+                                let pixInput = document.querySelector("#lkn-pix-input");
+                                navigator.clipboard.writeText(pixInput.value);
+                                alert("Pix Copiado");
 
-                                if (pixElement!.style.display === 'none') {
-                                    showElement!.style.display = 'none'
-                                    hideElement!.style.display = 'block'
-                                    pixElement!.style.display = 'block'
-                                } else {
-                                    showElement!.style.display = 'block'
-                                    hideElement!.style.display = 'none'
-                                    pixElement!.style.display = 'none'
-                                }
                             }}>
-                                <span id="show" className="material-symbols-outlined">visibility_off</span>
-                                <span id="hide" className="material-symbols-outlined" style={{ display: 'none' }}>visibility</span>
+                                Copy
                             </button>
-                            <button id="copy-button" type="button" title={__('Copy Pix', 'payment-gateway-pix-for-givewp')} onClick={() => { navigator.clipboard.writeText(pix) }}>
-                                <span className="material-symbols-outlined">content_copy</span>
-                            </button>
-                        </p>
+                        </div>
+
+
+
                     </div>
                 </div>
             </div >
