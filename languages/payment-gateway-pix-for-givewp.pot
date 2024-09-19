@@ -85,3 +85,27 @@ msgstr ""
 
 msgid "Settings"
 msgstr ""
+
+msgid "Choose which type of key you will use to receive the PIX."
+msgstr ""
+
+msgid "Enter the Pix key created in your bank that will be used to receive donations."
+msgstr ""
+
+msgid "Enter the full name of the Pix beneficiary."
+msgstr ""
+
+msgid "Enter the name of the city of the Pix key beneficiary."
+msgstr ""
+
+msgid "Recipient's city (optional)"
+msgstr ""
+
+msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
+msgstr ""
+
+msgid "Select whether billing details should be added to donation forms (classic and legacy forms)."
+msgstr ""
+
+msgid "PIX Key Settings"
+msgstr ""
