@@ -8,18 +8,70 @@ li {
     margin: 10px;
 }
 
-#PGPFGForGivewpAdminSettingsDiv {
+.PGPFGForGivewpAdminSettingsDiv {
     padding: 1px 20px;
     background-color: white;
     margin-top: 30px;
     border: 2px solid #C6C6C6;
 }
 
-#PGPFGForGivewpAdminSettingsP {
+.PGPFGForGivewpAdminSettingsP {
     color: #252323;
     font-style: normal;
     font-size: x-large;
     width: 100%;
     margin-bottom: 0;
     font-weight: bold;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    background-color: #666666;
+    color: white;
+    border-radius: 70%;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: help;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    /* Adjust this value to control the position of the tooltip */
+    left: 50%;
+    margin-left: -100px;
+    /* Adjust this value to center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+    font-size: small;
+    font-weight: 400;
+    text-wrap: balance;
+}
+
+@media (min-width: 783px) {
+    .PGPFGForGivewpAdminSettingsTr {
+        display: flex;
+    }
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.give-radio-inline ul{
+    margin-top: 14px !important;
 }

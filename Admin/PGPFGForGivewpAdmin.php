@@ -68,6 +68,12 @@ final class PGPFGForGivewpAdmin {
             case 'lkn-payment-pix':
                 // Verifique se a configuração específica já está no array
                 wp_enqueue_script('PGPFGForGivewpAdminSettingsScript', plugin_dir_url(__FILE__) . 'js/PGPFGForGivewpAdminSettings.js', array('jquery'), $this->version, false);
+
+                $translation_array = array(
+                    'seeLogs' => __('See logs', 'payment-gateway-pix-for-givewp')
+                );
+
+                wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
                 foreach ($settings as $setting) {
                     if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
@@ -119,18 +125,11 @@ final class PGPFGForGivewpAdmin {
                     );
 
                     $settings[] = array(
-                        'name' => __("Recipient's city (optional)", 'payment-gateway-pix-for-givewp'),
+                        'name' => __("Recipient city (optional)", 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-city-setting',
                         'desc' => __('Enter the name of the city of the Pix key beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text'
                     );
-
-                    /*$settings[] = array(
-                        'name' => __('Payment Identificator (optional)', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-paymentid-setting',
-                        'desc' => __('Insert the payment identificator, not required.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text'
-                    ); */
 
                     $settings[] = array(
                         'name' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
@@ -228,11 +227,14 @@ final class PGPFGForGivewpAdmin {
             $remote = wp_remote_get($logPath);
 
             if (gettype($remote) === gettype(new WP_Error())) {
-                PGPFGHelperClass::log(wp_json_encode(array(
-                    'Remote Response' => $remote,
-                    'log url' => $logPath,
-                    'log path' => give_get_option('pgpfg_for_givewp_last_log')
-                ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+                PGPFGHelperClass::log(
+                    'info', 
+                    array(
+                        'Remote Response' => $remote,
+                        'log url' => $logPath,
+                        'log path' => give_get_option('pgpfg_for_givewp_last_log')
+                    )
+                );
 
                 $wp_error = $remote;
             }

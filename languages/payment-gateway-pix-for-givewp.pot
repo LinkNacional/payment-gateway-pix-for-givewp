@@ -98,7 +98,7 @@ msgstr ""
 msgid "Enter the name of the city of the Pix key beneficiary."
 msgstr ""
 
-msgid "Recipient's city (optional)"
+msgid "Recipient city (optional)"
 msgstr ""
 
 msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
