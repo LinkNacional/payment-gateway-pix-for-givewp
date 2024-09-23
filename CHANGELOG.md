@@ -1,3 +1,7 @@
+# 2.1.0 - 23/09/2024
+* Adição de svg para mostrar configurações PRO;
+* Adição de script para alterar os estilos das configurações.
+
 # 2.0.4 - 09/09/2024
 * Correção do front-end no formulário 3.0;
 * Retirando estilo de lista do banner no painel de administrador.
