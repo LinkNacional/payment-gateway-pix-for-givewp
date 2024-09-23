@@ -158,9 +158,12 @@ final class PGPFGGatewayClass extends PaymentGateway {
                 throw new PaymentGatewayException(__('Payment ID is required.', 'payment-gateway-pix-for-givewp'));
             }
 
-            PGPFGHelperClass::log(wp_json_encode(array(
-                'Donation success' => $gatewayData['pix-payment-gateway-id']
-            ), JSON_PRETTY_PRINT));
+            PGPFGHelperClass::log(
+                'info',
+                array(
+                    'Donation success' => $gatewayData['pix-payment-gateway-id']
+                )
+            );
 
             return new PaymentPending();
         } catch (Exception $e) {
@@ -174,11 +177,14 @@ final class PGPFGGatewayClass extends PaymentGateway {
                 'content' => sprintf('Donation failed. Reason: %1$s', esc_html($errorMessage))
             ));
 
-            PGPFGHelperClass::log(wp_json_encode(array(
-                'Donation failed' => $errorMessage,
-                'Gateway Data' => $gatewayData,
-                'Stack Trace' => $e->getTrace()
-            ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+            PGPFGHelperClass::log(
+                'error',
+                array(
+                    'Donation failed' => $errorMessage,
+                    'Gateway Data' => $gatewayData,
+                    'Stack Trace' => $e->getTrace()
+                )
+            );
 
             throw new PaymentGatewayException(esc_html($errorMessage));
         }

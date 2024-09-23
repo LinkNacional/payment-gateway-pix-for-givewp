@@ -13,6 +13,7 @@ use Give\Framework\PaymentGateways\Commands\PaymentPending;
 use Give\Framework\PaymentGateways\Commands\PaymentRefunded;
 use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
+use Give\Log\LogFactory;
 
 /**
  * @inheritDoc
@@ -24,17 +25,20 @@ final class PGPFGHelperClass {
      * @param string $message
      * @param mixed $configs
      */
-    public static function log(string $message): void {
+    public static function log($logType, $data): void {
         if (give_get_option('lkn-payment-pix-log-setting') === 'disabled') {
             return;
         }
 
-        $logPath = __DIR__ . '/logs/' . gmdate('d.m.Y-H.i.s') . '.log';
-
-        error_log($message, 3, $logPath);
-
-        give_update_option('pgpfg_for_givewp_last_log', $logPath);
-        give_update_option('pgpfg_for_givewp_last_log_url', PGPFG_PIX_PLUGIN_URL . 'logs/' . gmdate('d.m.Y-H.i.s') . '.log');
+        $logFactory = new LogFactory();
+        $log = $logFactory->make(
+            $logType,
+            'Payment Gateway Pix for GiveWP Log',
+            'Payment Gateway Pix for GiveWP Log',
+            'Payment Gateway Pix for GiveWP',
+            $data
+        );
+        $log->save();
     }
 
     /*
