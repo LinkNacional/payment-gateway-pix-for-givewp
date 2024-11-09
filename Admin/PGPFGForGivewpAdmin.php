@@ -67,6 +67,13 @@ final class PGPFGForGivewpAdmin {
         switch (give_get_current_setting_section()) {
             case 'lkn-payment-pix':
                 // Verifique se a configuração específica já está no array
+                wp_enqueue_script('PGPFGForGivewpAdminSettingsScript', plugin_dir_url(__FILE__) . 'js/PGPFGForGivewpAdminSettings.js', array('jquery'), $this->version, false);
+
+                $translation_array = array(
+                    'seeLogs' => __('See logs', 'payment-gateway-pix-for-givewp')
+                );
+
+                wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
                 foreach ($settings as $setting) {
                     if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
@@ -80,12 +87,12 @@ final class PGPFGForGivewpAdmin {
                     $settings[] = array(
                         'type' => 'title',
                         'id' => 'lkn-payment-pix',
-                        "title" => "Free Settings"
+                        "title" => __('PIX Key Settings', 'payment-gateway-pix-for-givewp'),
                     );
 
                     $settings[] = array(
                         'name' => __('Type of Key', 'payment-gateway-pix-for-givewp'),
-                        'desc' => __('Insert the type of the pix key.', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Choose which type of key you will use to receive the PIX.', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-type-setting',
                         'type' => 'select',
                         'default' => 'tel',
@@ -100,34 +107,33 @@ final class PGPFGForGivewpAdmin {
                     $settings[] = array(
                         'name' => __('Pix Key', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-key',
-                        'desc' => __('Insert the pix key that will be used on the donations.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text'
+                        'desc' => __('Enter the Pix key created in your bank that will be used to receive donations.', 'payment-gateway-pix-for-givewp'),
+                        'type' => 'text',
+                        'attributes' => array(
+                            'required' => 'required'
+                        )
                     );
 
                     $settings[] = array(
                         'name' => __('Recipient Name', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-name-setting',
-                        'desc' => __('Insert the name of the key\'s recipient.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text'
+                        'desc' => __('Enter the full name of the Pix beneficiary.', 'payment-gateway-pix-for-givewp'),
+                        'type' => 'text',
+                        'attributes' => array(
+                            'required' => 'required'
+                        )
                     );
 
                     $settings[] = array(
-                        'name' => __('Recipient City', 'payment-gateway-pix-for-givewp'),
+                        'name' => __("Recipient city (optional)", 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-city-setting',
-                        'desc' => __('Insert the key recipient\'s city.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text'
-                    );
-
-                    $settings[] = array(
-                        'name' => __('Payment Identificator (optional)', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-paymentid-setting',
-                        'desc' => __('Insert the payment identificator, not required.', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Enter the name of the city of the Pix key beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text'
                     );
 
                     $settings[] = array(
                         'name' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
-                        'desc' => __('Select if logs should be created for debug purposes.', 'payment-gateway-pix-for-givewp') . ((give_get_option('lkn-payment-pix-log-setting') === 'enabled' && file_exists(give_get_option('pgpfg_for_givewp_last_log')) && filesize(give_get_option('pgpfg_for_givewp_last_log'))) ? (' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)') : ''),
+                        'desc' => __('When this feature is enabled, the plugin will record transaction logs, ideal for error identification.', 'payment-gateway-pix-for-givewp') . ((give_get_option('lkn-payment-pix-log-setting') === 'enabled' && file_exists(give_get_option('pgpfg_for_givewp_last_log')) && filesize(give_get_option('pgpfg_for_givewp_last_log'))) ? (' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)') : ''),
                         'id' => 'lkn-payment-pix-log-setting',
                         'type' => 'radio_inline',
                         'default' => 'disabled',
@@ -139,7 +145,7 @@ final class PGPFGForGivewpAdmin {
 
                     $settings[] = array(
                         'name' => __('Collect Billing Details', 'payment-gateway-pix-for-givewp'),
-                        'desc' => __('Select if billing details should be added do the donation forms (classic and legacy forms).', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Select whether billing details should be added to donation forms (classic and legacy forms).', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-details-setting',
                         'type' => 'radio_inline',
                         'default' => 'disabled',
@@ -221,11 +227,14 @@ final class PGPFGForGivewpAdmin {
             $remote = wp_remote_get($logPath);
 
             if (gettype($remote) === gettype(new WP_Error())) {
-                PGPFGHelperClass::log(wp_json_encode(array(
-                    'Remote Response' => $remote,
-                    'log url' => $logPath,
-                    'log path' => give_get_option('pgpfg_for_givewp_last_log')
-                ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+                PGPFGHelperClass::log(
+                    'info', 
+                    array(
+                        'Remote Response' => $remote,
+                        'log url' => $logPath,
+                        'log path' => give_get_option('pgpfg_for_givewp_last_log')
+                    )
+                );
 
                 $wp_error = $remote;
             }

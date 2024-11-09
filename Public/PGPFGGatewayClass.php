@@ -50,8 +50,8 @@ final class PGPFGGatewayClass extends PaymentGateway {
      * @inheritDoc
      */
     public function getLegacyFormFieldMarkup(int $formId, array $args): string {
-        wp_enqueue_style('pgpfg-public', PGPFG_PIX_PLUGIN_URL . 'Public/css/pgpfg-public.css');
-        wp_enqueue_style('pgpfg-material-symbols-outlined', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0');
+        wp_enqueue_style('pgpfg-public', PGPFG_PIX_PLUGIN_URL . 'Public/css/pgpfg-public.css', array(), PGPFG_PIX_PLUGIN_VERSION);
+        wp_enqueue_style('pgpfg-material-symbols-outlined', 'https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0', array(), PGPFG_PIX_PLUGIN_VERSION);
 
         // Array de argumentos
         $template_args = array(
@@ -158,9 +158,12 @@ final class PGPFGGatewayClass extends PaymentGateway {
                 throw new PaymentGatewayException(__('Payment ID is required.', 'payment-gateway-pix-for-givewp'));
             }
 
-            PGPFGHelperClass::log(wp_json_encode(array(
-                'Donation success' => $gatewayData['pix-payment-gateway-id']
-            ), JSON_PRETTY_PRINT));
+            PGPFGHelperClass::log(
+                'info',
+                array(
+                    'Donation success' => $gatewayData['pix-payment-gateway-id']
+                )
+            );
 
             return new PaymentPending();
         } catch (Exception $e) {
@@ -174,11 +177,14 @@ final class PGPFGGatewayClass extends PaymentGateway {
                 'content' => sprintf('Donation failed. Reason: %1$s', esc_html($errorMessage))
             ));
 
-            PGPFGHelperClass::log(wp_json_encode(array(
-                'Donation failed' => $errorMessage,
-                'Gateway Data' => $gatewayData,
-                'Stack Trace' => $e->getTrace()
-            ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT));
+            PGPFGHelperClass::log(
+                'error',
+                array(
+                    'Donation failed' => $errorMessage,
+                    'Gateway Data' => $gatewayData,
+                    'Stack Trace' => $e->getTrace()
+                )
+            );
 
             throw new PaymentGatewayException(esc_html($errorMessage));
         }

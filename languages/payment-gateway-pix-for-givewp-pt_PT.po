@@ -57,7 +57,7 @@ msgid "Enable Debug Mode"
 msgstr "Habilitar Modo de Depuração"
 
 msgid "Select if logs should be created for debug purposes."
-msgstr "Selecione se devem ser criados logs para depuração."
+msgstr "Seleccione se devem ser criados logs para depuração."
 
 msgid "Enable"
 msgstr "Habilitar"
@@ -66,13 +66,40 @@ msgid "Disable"
 msgstr "Desabilitar"
 
 msgid "Collect Billing Details"
-msgstr "Coletar Detalhes de Cobrança"
+msgstr "Colectar Detalhes de Cobrança"
 
 msgid "Select if billing details should be added do the donation forms (classic and legacy forms)."
-msgstr "Selecione se detalhes de cobrança devem ser adicionados aos formulários de doação (para formulários classic ou legacy)."
+msgstr "Seleccione se detalhes de cobrança devem ser adicionados aos formulários de doação (para formulários classic ou legacy)."
 
 msgid "Pix QR Code"
 msgstr "Pix QR Code"
 
 msgid "Check Last Log"
 msgstr "Checa Último Log"
+
+msgid "Choose which type of key you will use to receive the PIX."
+msgstr "Escolha o tipo de chave que irá utilizar para receber o PIX."
+
+msgid "Enter the Pix key created in your bank that will be used to receive donations."
+msgstr "Insira a chave Pix criada no seu banco que será usada para receber doações."
+
+msgid "Enter the full name of the Pix beneficiary."
+msgstr "Insira o nome completo do beneficiário do Pix."
+
+msgid "Enter the name of the city of the Pix key beneficiary."
+msgstr "Insira o nome da cidade do beneficiário da chave Pix."
+
+msgid "Recipient city (optional)"
+msgstr "Cidade do destinatário (opcional)"
+
+msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
+msgstr "Ao activar esta funcionalidade, o plugin registará os logs das transacções, ideal para a identificação de erros."
+
+msgid "Select whether billing details should be added to donation forms (classic and legacy forms)."
+msgstr "Seleccione se os detalhes de facturação devem ser adicionados aos formulários de doação (formulários clássicos e antigos)."
+
+msgid "PIX Key Settings"
+msgstr "Configurações Chave PIX"
+
+msgid "See logs"
+msgstr "Ver logs"
