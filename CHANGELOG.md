@@ -1,4 +1,4 @@
-# 2.1.0 - 23/09/2024
+# 2.1.0 - 09/11/2024
 * Adição de svg para mostrar configurações PRO;
 * Adição de script para alterar os estilos das configurações.
 
