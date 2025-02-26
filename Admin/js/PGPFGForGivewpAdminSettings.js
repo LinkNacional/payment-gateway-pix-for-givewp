@@ -38,7 +38,7 @@ const lknPaymentPixLogSettingLabel = document.querySelector('label[for="lkn-paym
 if (lknPaymentPixLogSettingLabel) {
     const link = document.createElement('a');
     link.setAttribute('target', '_blank');
-    link.setAttribute('href', 'https://wordpress.local/wp-admin/edit.php?post_type=give_forms&page=give-tools&tab=logs');
+    link.setAttribute('href', wpApiSettings.root.replace('/wp-json/', '/wp-admin/edit.php?post_type=give_forms&page=give-tools&tab=logs'));
     link.innerHTML = pgpfgTranslations.seeLogs;
     lknPaymentPixLogSettingLabel.innerHTML += '<br>';
     lknPaymentPixLogSettingLabel.appendChild(link);
