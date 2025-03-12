@@ -20,6 +20,7 @@
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-3.0+
+ * Requires Plugins: give
  * License URI:       http://www.gnu.org/licenses/gpl-3.0.txt
  * Text Domain:       payment-gateway-pix-for-givewp
  * Domain Path:       /languages
