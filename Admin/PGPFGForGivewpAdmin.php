@@ -67,7 +67,7 @@ final class PGPFGForGivewpAdmin {
         switch (give_get_current_setting_section()) {
             case 'lkn-payment-pix':
                 // Verifique se a configuração específica já está no array
-                wp_enqueue_script('PGPFGForGivewpAdminSettingsScript', plugin_dir_url(__FILE__) . 'js/PGPFGForGivewpAdminSettings.js', array('jquery'), $this->version, false);
+                wp_enqueue_script('PGPFGForGivewpAdminSettingsScript', plugin_dir_url(__FILE__) . 'js/PGPFGForGivewpAdminSettings.js', array('jquery', 'wp-api'), $this->version, false);
 
                 $translation_array = array(
                     'seeLogs' => __('See logs', 'payment-gateway-pix-for-givewp')

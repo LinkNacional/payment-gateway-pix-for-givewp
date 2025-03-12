@@ -1,3 +1,6 @@
+# 2.1.1 - 26/02/2025
+* Correção de url para ver logs.
+
 # 2.1.0 - 09/11/2024
 * Adição de svg para mostrar configurações PRO;
 * Adição de script para alterar os estilos das configurações.

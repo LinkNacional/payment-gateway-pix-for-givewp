@@ -4,7 +4,7 @@ Donate link: https://www.linknacional.com.br/
 Tags: gateway, payments, givewp
 Requires at least: 6.0
 Tested up to: 6.7
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 Requires PHP: 7.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,6 +66,10 @@ The Payment Gateway Pix for GiveWP is now activated.
  2. Form view (donate to us)
 
 == Changelog ==
+= 2.1.1 =
+**26/02/2025**
+* Fix URL to view logs.
+
 = 2.1.0 =
 **09/11/2024**
 * Add svg to show PRO settings;
@@ -98,6 +102,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 * Added debug mode for advanced users.
 
 == Upgrade Notice ==
+= 2.1.1 =
+* Fix URL to view logs.
+
 = 2.1.0 =
 * Add svg to show PRO settings;
 * Add script to change settings styles.
