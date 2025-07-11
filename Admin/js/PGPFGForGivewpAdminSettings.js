@@ -2,7 +2,8 @@
 var elements = document.querySelectorAll('.give-setting-tab-header.give-setting-tab-header-gateways');
 
 // Para cada elemento selecionado
-elements.forEach(function(element, index) {
+console.log(elements);
+elements.forEach(function (element, index) {
     // Crie uma nova div e defina sua classe
     var divElement = document.createElement('div');
     divElement.className = 'PGPFGForGivewpAdminSettingsDiv';
@@ -66,7 +67,7 @@ thElements.forEach(function (th) {
     var descriptionField = th.nextElementSibling.querySelector('.give-field-description');
 
     // Verifica se o campo de descrição contém um link
-    if(descriptionField){
+    if (descriptionField) {
         var linkElement = descriptionField.querySelector('a');
 
         // Se o campo de descrição contém um link, adiciona apenas o texto que não é parte do link ao texto da dica de ferramenta
@@ -113,8 +114,9 @@ thElements.forEach(function (th) {
 });
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
-    var divElement = document.querySelector('.PGPFGForGivewpAdminSettingsDiv');
-    if (divElement) {
+    var divElement = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv');
+
+    /*if (divElement) {
         // Cria um novo elemento de imagem
         var img = document.createElement('img');
         img.src = window.location.origin + '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/ProSettings.svg';
@@ -122,5 +124,29 @@ if (!document.getElementById('lkn-payment-pix-license-setting')) {
 
         // Adiciona a imagem após o divElement
         divElement.parentNode.insertBefore(img, divElement.nextSibling);
-    }
+    }*/
 }
+const lkn_menu = document.querySelectorAll('.lkn-pix-menu li')
+const campos = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
+
+let antigo;
+let atual = 0;
+for (var i = 0; i < lkn_menu.length; i++) {
+    lkn_menu[i].addEventListener("click", function (event) {
+        clicou(event.target.id); // Passa o ID do elemento clicado
+    });
+}
+for (var i = 1; i < campos.length; i++) {
+    campos[i].classList.add('lkn-pix-configuracao-disable');
+}
+
+function clicou(i) {
+    antigo = atual;
+    lkn_menu[antigo].classList.remove('lkn-pix-menu-ativo');
+    campos[antigo].classList.add('lkn-pix-configuracao-disable');
+
+    atual = parseInt(i);
+    lkn_menu[atual].classList.add('lkn-pix-menu-ativo');
+    campos[atual].classList.remove('lkn-pix-configuracao-disable');
+}
+

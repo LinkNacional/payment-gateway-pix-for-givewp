@@ -75,15 +75,29 @@ final class PGPFGForGivewpAdmin {
 
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
+                $pro_plugin_active = function_exists('is_plugin_active') && is_plugin_active('payment-gateway-pix-for-givewp-pro/payment-gateway-pix-for-givewp-pro.php');
                 foreach ($settings as $setting) {
                     if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
                         $exists = true;
                         break;
                     }
                 }
-
                 // Adicione as configurações apenas se ainda não existirem
                 if ( ! $exists) {
+                    $settings[] = array(
+                        'type' => 'checkbox',
+                        'id' => 'lkn-pix-menu',
+                        'name' =>'
+                        <div = class="lkn-container-menu">
+                            <ul class="lkn-pix-menu">
+                                <li id="0" class="lkn-pix-menu-ativo">Pix QRCode(free)</li>
+                                <li id="1">Geral</li>
+                                <li id="2">MaxiPago</li>
+                                <li id="3">Banco do Brasil(BB)</li>
+                            </ul>
+                        </div>'
+                    );
+
                     $settings[] = array(
                         'type' => 'title',
                         'id' => 'lkn-payment-pix',
@@ -159,8 +173,125 @@ final class PGPFGForGivewpAdmin {
                         'id' => 'lkn-payment-pix',
                         'type' => 'sectionend'
                     );
-                }
-                break;
+                
+                    //PRO SETTINGS free version
+                    if(!$pro_plugin_active){
+                        $settings[] = array(
+                        'type' => 'title',
+                        'id' => 'lkn-payment-pix-pro-general',
+                        'title' => 'Pro Settings (APENAS COM PRO)', 'give',
+                        );
+
+                        $settings[] = array(
+                        'name' => __('License', 'payment-gateway-pix-for-givewp-pro'),
+                        'id' => 'lkn-payment-pix-license-setting-free',
+                        'type' => 'password',
+                        'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp-pro'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
+                        );
+
+                        $settings[] = array(
+                        'name' => __('Environment', 'payment-gateway-pix-for-givewp-pro'),
+                        'id' => 'lkn-payment-pix-pro-environment',
+                        'type' => 'select',
+                        'options' => array(
+                            'app' => __('Production', 'payment-gateway-pix-for-givewp-pro'),
+                            'sandbox' => __('Development', 'payment-gateway-pix-for-givewp-pro'),
+                        )
+                        );
+
+                        $settings[] = array(
+                        'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp-pro'),
+                        'id' => 'lkn-payment-pix-pro-logs',
+                        'desc' => __('When enabled, all transactions will be logged, ideal for error identification. Default: Disabled', 'payment-gateway-pix-for-givewp-pro'),
+                        'type' => 'radio_inline',
+                        'default' => 'disabled',
+                        'options' => array(
+                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                        )
+                        );
+
+                        $settings[] = array(
+                        'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp-pro'),
+                        'id' => 'lkn-payment-pix-pro-debug',
+                        'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp-pro'),
+                        'type' => 'radio_inline',
+                        'default' => 'disabled',
+                        'options' => array(
+                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                        )
+                        );
+                        $settings[] = array(
+                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'type' => 'sectionend'
+                        );
+
+                        $settings[] = array(
+                            'type' => 'title',
+                            'id' => 'lkn-payment-pix-pro-maxipago',
+                            'title' => 'Maxipago Settings',
+                        );
+
+                        $settings[] = array(
+                            'name' => 'Maxipago Merchant Key',
+                            'id' => 'lkn-payment-pix-pro-maxipago-key',
+                            'desc' => __('Unique key linked to your store in Maxipago.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'name' => 'Maxipago Merchant Id',
+                            'id' => 'lkn-payment-pix-pro-maxipago-id',
+                            'desc' => __('Unique identifier used to identify your store in Maxipago.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+                        $settings[] = array(
+                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'type' => 'sectionend'
+                        );
+
+                        $settings[] = array(
+                            'type' => 'title',
+                            'id' => 'lkn-payment-pix-pro-bb',
+                            'title' => 'Banco do Brasil PIX API',
+                        );
+
+                        $settings[] = array(
+                            'name' => 'BB Client Id',
+                            'id' => 'lkn-payment-pix-pro-bb-client-id',
+                            'desc' => __('Unique identifier used to identify your account at Banco do Brasil.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'name' => 'BB Client Secret',
+                            'id' => 'lkn-payment-pix-pro-bb-client-secret',
+                            'desc' => __('Private key used to authenticate integrations with Banco do Brasil services.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'name' => 'BB Developer Key',
+                            'id' => 'lkn-payment-pix-pro-bb-developer-key',
+                            'desc' => __('Key used by developers to access Banco do Brasil APIs.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'name' => 'BB Pix Key',
+                            'id' => 'lkn-payment-pix-pro-bb-pix-key',
+                            'type' => 'text',
+                            'desc' => sprintf(__('Pix key linked to the client and registered at Banco do Brasil. It must be active for the transaction to be processed correctly. %sLearn more%s', 'payment-gateway-pix-for-givewp-pro'), '<a target="_blank" href="https://apoio.developers.bb.com.br/referency/post/648385d0de39c800131d8579">', '</a>')
+                        );
+
+                        $settings[] = array(
+                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'type' => 'sectionend'
+                        );
+                        }  
+            }
+            break;
         }
 
         return $settings;

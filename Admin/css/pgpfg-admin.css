@@ -11,8 +11,6 @@ li {
 .PGPFGForGivewpAdminSettingsDiv {
     padding: 1px 20px;
     background-color: white;
-    margin-top: 30px;
-    border: 2px solid #C6C6C6;
 }
 
 .PGPFGForGivewpAdminSettingsP {
@@ -27,7 +25,7 @@ li {
 .tooltip {
     position: relative;
     display: inline-block;
-    background-color: #666666;
+    background-color: #ccc;
     color: white;
     border-radius: 70%;
     width: 20px;
@@ -72,6 +70,48 @@ li {
     opacity: 1;
 }
 
-.give-radio-inline ul{
+.give-radio-inline ul {
     margin-top: 14px !important;
+}
+
+.lkn-container-menu {
+    display: flex;
+}
+
+input#lkn-pix-menu {
+    display: none;
+}
+
+.lkn-pix-menu {
+    display: flex;
+    margin-bottom: 0;
+    background-color: #DCDCDE;
+    flex-wrap: wrap;
+}
+
+.lkn-pix-menu li {
+    margin: 0px;
+    font-size: 18px;
+    padding: 15px 20px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lkn-pix-menu li:hover {
+    background-color: #BCBCBC;
+    transition: 200ms;
+}
+
+.lkn-pix-menu-ativo {
+    background-color: #fff;
+    color: #000;
+    transition: 100ms;
+}
+
+.lkn-pix-menu-ativo:hover {
+    background-color: #FFF !important;
+}
+
+.lkn-pix-configuracao-disable {
+    display: none;
 }
