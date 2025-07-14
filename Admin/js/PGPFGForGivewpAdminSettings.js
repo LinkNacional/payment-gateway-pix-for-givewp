@@ -118,19 +118,6 @@ thElements.forEach(function (th) {
     }
 });
 
-if (!document.getElementById('lkn-payment-pix-license-setting')) {
-    var divElement = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv');
-
-    /*if (divElement) {
-        // Cria um novo elemento de imagem
-        var img = document.createElement('img');
-        img.src = window.location.origin + '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/ProSettings.svg';
-        img.style.width = '100%';
-
-        // Adiciona a imagem após o divElement
-        divElement.parentNode.insertBefore(img, divElement.nextSibling);
-    }*/
-}
 const lkn_menu = document.querySelectorAll('.lkn-pix-menu li')
 const campos = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
 
@@ -153,4 +140,21 @@ function clicou(i) {
     atual = parseInt(i);
     lkn_menu[atual].classList.add('lkn-pix-menu-ativo');
     campos[atual].classList.remove('lkn-pix-configuracao-disable');
+}
+if (!document.getElementById('lkn-payment-pix-license-setting')) {
+    var divElement = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv');
+
+    for (let i = 1; divElement.length; i++) {
+        divElement[i].classList.add('config-disable');
+    }
+
+    /*if (divElement) {
+        // Cria um novo elemento de imagem
+        var img = document.createElement('img');
+        img.src = window.location.origin + '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/ProSettings.svg';
+        img.style.width = '100%';
+
+        // Adiciona a imagem após o divElement
+        divElement.parentNode.insertBefore(img, divElement.nextSibling);
+    }*/
 }

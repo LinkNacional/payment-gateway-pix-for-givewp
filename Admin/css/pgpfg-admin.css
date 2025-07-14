@@ -125,3 +125,9 @@ input#lkn-pix-menu {
 .give-forminp.give-forminp-password div p {
     width: fit-content !important;
 }
+
+.config-disable {
+    pointer-events: none;
+    opacity: 0.6;
+    /* opcional: visual "desativado" */
+}
