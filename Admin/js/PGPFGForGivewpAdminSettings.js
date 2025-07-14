@@ -118,43 +118,32 @@ thElements.forEach(function (th) {
     }
 });
 
-const lkn_menu = document.querySelectorAll('.lkn-pix-menu li')
-const campos = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
+const lkn_PGPFG_menu = document.querySelectorAll('.lkn-pix-menu li')
+const lkn_PGPFG_settings = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
 
 let antigo;
 let atual = 0;
-for (var i = 0; i < lkn_menu.length; i++) {
-    lkn_menu[i].addEventListener("click", function (event) {
-        clicou(event.target.id); // Passa o ID do elemento clicado
+for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
+    lkn_PGPFG_menu[i].addEventListener("click", function (event) {
+        navegarParaAba(event.target.id); // Passa o ID do elemento clicado
     });
 }
-for (var i = 1; i < campos.length; i++) {
-    campos[i].classList.add('lkn-pix-configuracao-disable');
+for (var i = 1; i < lkn_PGPFG_settings.length; i++) {
+    lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
 }
 
-function clicou(i) {
+function navegarParaAba(idAba) {
     antigo = atual;
-    lkn_menu[antigo].classList.remove('lkn-pix-menu-ativo');
-    campos[antigo].classList.add('lkn-pix-configuracao-disable');
+    lkn_PGPFG_menu[antigo].classList.remove('lkn-pix-menu-ativo');
+    lkn_PGPFG_settings[antigo].classList.add('lkn-pix-configuracao-disable');
 
-    atual = parseInt(i);
-    lkn_menu[atual].classList.add('lkn-pix-menu-ativo');
-    campos[atual].classList.remove('lkn-pix-configuracao-disable');
+    atual = parseInt(idAba);
+    lkn_PGPFG_menu[atual].classList.add('lkn-pix-menu-ativo');
+    lkn_PGPFG_settings[atual].classList.remove('lkn-pix-configuracao-disable');
 }
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
-    var divElement = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv');
 
-    for (let i = 1; divElement.length; i++) {
-        divElement[i].classList.add('config-disable');
+    for (let i = 1; lkn_PGPFG_settings.length; i++) {
+        lkn_PGPFG_settings[i].classList.add('config-disable');
     }
-
-    /*if (divElement) {
-        // Cria um novo elemento de imagem
-        var img = document.createElement('img');
-        img.src = window.location.origin + '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/ProSettings.svg';
-        img.style.width = '100%';
-
-        // Adiciona a imagem após o divElement
-        divElement.parentNode.insertBefore(img, divElement.nextSibling);
-    }*/
 }
