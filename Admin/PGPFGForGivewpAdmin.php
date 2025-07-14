@@ -84,13 +84,13 @@ final class PGPFGForGivewpAdmin {
                 }
                 // Adicione as configurações apenas se ainda não existirem
                 if ( ! $exists) {
-                    $settings[] = array(
+                        $settings[] = array(
                         'type' => 'checkbox',
                         'id' => 'lkn-pix-menu',
                         'name' =>'
                         <div = class="lkn-container-menu">
                             <ul class="lkn-pix-menu">
-                                <li id="0" class="lkn-pix-menu-ativo">Pix QRCode(free)</li>
+                                <li id="0" class="lkn-pix-menu-ativo">Pix QRCode (free)</li>
                                 <li id="1">Geral</li>
                                 <li id="2">MaxiPago</li>
                                 <li id="3">Banco do Brasil(BB)</li>

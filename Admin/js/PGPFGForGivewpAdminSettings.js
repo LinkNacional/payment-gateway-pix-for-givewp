@@ -122,14 +122,15 @@ const lkn_PGPFG_settings = document.querySelectorAll('.PGPFGForGivewpAdminSettin
 
 let antigo;
 let atual = 1;
+
 for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
     lkn_PGPFG_menu[i].addEventListener("click", function (event) {
         navegarParaAba(event.target.id); // Passa o ID do elemento clicado
     });
 }
 for (var i = 0; i < lkn_PGPFG_settings.length; i++) {
-    if (i == 1) {
-        i++
+    if (i == atual) {
+        i++;
     }
     lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
 }
@@ -150,9 +151,20 @@ function navegarParaAba(idAba) {
         }
     }
 }
-
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
+    document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
+    atual = 0
+    lkn_PGPFG_settings[0].classList.remove('lkn-pix-configuracao-disable')
+    lkn_PGPFG_settings[1].classList.add('lkn-pix-configuracao-disable')
+
     for (let i = 1; lkn_PGPFG_settings.length; i++) {
         lkn_PGPFG_settings[i].classList.add('config-disable');
     }
+} else {
+    lkn_PGPFG_menu[0].style.order = 0; // Item 1 vira segundo
+    lkn_PGPFG_menu[1].style.order = -1;
+
+    lkn_PGPFG_menu[0].classList.remove('lkn-pix-menu-ativo');
+    lkn_PGPFG_menu[1].classList.add('lkn-pix-menu-ativo');
 }
+
