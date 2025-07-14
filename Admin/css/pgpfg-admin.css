@@ -37,6 +37,12 @@ li {
     cursor: help;
 }
 
+.tdTooltipCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .tooltip .tooltiptext {
     visibility: hidden;
     width: 200px;

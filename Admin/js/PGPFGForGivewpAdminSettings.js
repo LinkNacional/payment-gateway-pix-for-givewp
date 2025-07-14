@@ -34,7 +34,6 @@ elements.forEach(function (element, index) {
     divElement.appendChild(tableElement);
 });
 
-
 const lknPaymentPixLogSettingLabel = document.querySelector('label[for="lkn-payment-pix-log-setting"]');
 if (lknPaymentPixLogSettingLabel) {
     const link = document.createElement('a');
@@ -44,8 +43,6 @@ if (lknPaymentPixLogSettingLabel) {
     lknPaymentPixLogSettingLabel.innerHTML += '<br>';
     lknPaymentPixLogSettingLabel.appendChild(link);
 }
-
-
 
 var thElements = document.querySelectorAll('.form-table.give-setting-tab-body.give-setting-tab-body-gateways th');
 // Para cada elemento th
@@ -96,8 +93,16 @@ thElements.forEach(function (th) {
         tooltip.appendChild(questionIcon);
         tooltip.appendChild(tooltipText);
 
-        // Adiciona o tooltip ao elemento th
-        th.appendChild(tooltip);
+        // Adiciona o tooltip ao TD novo, e o TD ao elemento th
+
+        var tooltipCell = document.createElement('td');
+        tooltipCell.appendChild(tooltip);
+
+        //Classe de estilo
+        tooltipCell.classList.add('tdTooltipCell')
+
+        // Adiciona a nova célula ao tr pai
+        th.parentElement.appendChild(tooltipCell);
 
         // Define os estilos para o elemento th
         th.style.display = 'flex';
@@ -149,4 +154,3 @@ function clicou(i) {
     lkn_menu[atual].classList.add('lkn-pix-menu-ativo');
     campos[atual].classList.remove('lkn-pix-configuracao-disable');
 }
-

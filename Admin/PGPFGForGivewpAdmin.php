@@ -186,23 +186,23 @@ final class PGPFGForGivewpAdmin {
                         'name' => __('License', 'payment-gateway-pix-for-givewp-pro'),
                         'id' => 'lkn-payment-pix-license-setting-free',
                         'type' => 'password',
-                        'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp-pro'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
+                        'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
                         );
 
                         $settings[] = array(
-                        'name' => __('Environment', 'payment-gateway-pix-for-givewp-pro'),
-                        'id' => 'lkn-payment-pix-pro-environment',
+                        'name' => __('Environment', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-environment',
                         'type' => 'select',
                         'options' => array(
-                            'app' => __('Production', 'payment-gateway-pix-for-givewp-pro'),
-                            'sandbox' => __('Development', 'payment-gateway-pix-for-givewp-pro'),
+                            'app' => __('Production', 'payment-gateway-pix-for-givewp'),
+                            'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
                         )
                         );
 
                         $settings[] = array(
-                        'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp-pro'),
-                        'id' => 'lkn-payment-pix-pro-logs',
-                        'desc' => __('When enabled, all transactions will be logged, ideal for error identification. Default: Disabled', 'payment-gateway-pix-for-givewp-pro'),
+                        'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-logs',
+                        'desc' => __('When enabled, all transactions will be logged, ideal for error identification. Default: Disabled', 'payment-gateway-pix-for-givewp'),
                         'type' => 'radio_inline',
                         'default' => 'disabled',
                         'options' => array(
@@ -212,9 +212,9 @@ final class PGPFGForGivewpAdmin {
                         );
 
                         $settings[] = array(
-                        'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp-pro'),
-                        'id' => 'lkn-payment-pix-pro-debug',
-                        'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp-pro'),
+                        'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-debug',
+                        'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
                         'type' => 'radio_inline',
                         'default' => 'disabled',
                         'options' => array(
@@ -223,37 +223,37 @@ final class PGPFGForGivewpAdmin {
                         )
                         );
                         $settings[] = array(
-                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'id' => 'lkn-payment-pix-sectionend',
                             'type' => 'sectionend'
                         );
 
                         $settings[] = array(
                             'type' => 'title',
-                            'id' => 'lkn-payment-pix-pro-maxipago',
+                            'id' => 'lkn-payment-pix-maxipago',
                             'title' => 'Maxipago Settings',
                         );
 
                         $settings[] = array(
                             'name' => 'Maxipago Merchant Key',
-                            'id' => 'lkn-payment-pix-pro-maxipago-key',
-                            'desc' => __('Unique key linked to your store in Maxipago.', 'payment-gateway-pix-for-givewp-pro'),
+                            'id' => 'lkn-payment-pix-maxipago-key',
+                            'desc' => __('Unique key linked to your store in Maxipago.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password'
                         );
 
                         $settings[] = array(
                             'name' => 'Maxipago Merchant Id',
-                            'id' => 'lkn-payment-pix-pro-maxipago-id',
-                            'desc' => __('Unique identifier used to identify your store in Maxipago.', 'payment-gateway-pix-for-givewp-pro'),
+                            'id' => 'lkn-payment-pix-maxipago-id',
+                            'desc' => __('Unique identifier used to identify your store in Maxipago.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password'
                         );
                         $settings[] = array(
-                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'id' => 'lkn-payment-pix-sectionend',
                             'type' => 'sectionend'
                         );
 
                         $settings[] = array(
                             'type' => 'title',
-                            'id' => 'lkn-payment-pix-pro-bb',
+                            'id' => 'lkn-payment-pix-bb',
                             'title' => 'Banco do Brasil PIX API',
                         );
 
