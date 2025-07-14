@@ -129,5 +129,15 @@ input#lkn-pix-menu {
 .config-disable {
     pointer-events: none;
     opacity: 0.6;
-    /* opcional: visual "desativado" */
+}
+
+.lkn-label-pro {
+    color: #FF0B0B;
+    font-size: 18px;
+    padding: 15px 20px;
+    background-color: #F9F9F9;
+}
+
+input#lkn-label-pro {
+    display: none;
 }

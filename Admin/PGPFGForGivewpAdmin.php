@@ -176,10 +176,20 @@ final class PGPFGForGivewpAdmin {
                 
                     //PRO SETTINGS free version
                     if(!$pro_plugin_active){
+
+                        $settings[] = array(
+                        'type' => 'checkbox',
+                        'id' => 'lkn-label-pro',
+                        'name' =>'
+                        <div = class="lkn-label-pro">
+                            Disponivel apenas com a versão Pro
+                        </div>'
+                        );
+
                         $settings[] = array(
                         'type' => 'title',
-                        'id' => 'lkn-payment-pix-pro-general',
-                        'title' => 'Pro Settings (APENAS COM PRO)', 'give',
+                        'id' => 'lkn-payment-pix-general',
+                        'title' => 'Pro Settings', 'give',
                         );
 
                         $settings[] = array(
@@ -222,6 +232,18 @@ final class PGPFGForGivewpAdmin {
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                         )
                         );
+                        $settings[] = array(
+                        'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-debug',
+                        'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
+                        'type' => 'radio_inline',
+                        'default' => 'disabled',
+                        'options' => array(
+                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                        )
+                        );
+
                         $settings[] = array(
                             'id' => 'lkn-payment-pix-sectionend',
                             'type' => 'sectionend'

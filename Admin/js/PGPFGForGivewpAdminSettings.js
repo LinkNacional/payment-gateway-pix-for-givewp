@@ -2,7 +2,6 @@
 var elements = document.querySelectorAll('.give-setting-tab-header.give-setting-tab-header-gateways');
 
 // Para cada elemento selecionado
-console.log(elements);
 elements.forEach(function (element, index) {
     // Crie uma nova div e defina sua classe
     var divElement = document.createElement('div');
@@ -122,16 +121,18 @@ const lkn_PGPFG_menu = document.querySelectorAll('.lkn-pix-menu li')
 const lkn_PGPFG_settings = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
 
 let antigo;
-let atual = 0;
+let atual = 1;
 for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
     lkn_PGPFG_menu[i].addEventListener("click", function (event) {
         navegarParaAba(event.target.id); // Passa o ID do elemento clicado
     });
 }
-for (var i = 1; i < lkn_PGPFG_settings.length; i++) {
+for (var i = 0; i < lkn_PGPFG_settings.length; i++) {
+    if (i == 1) {
+        i++
+    }
     lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
 }
-
 function navegarParaAba(idAba) {
     antigo = atual;
     lkn_PGPFG_menu[antigo].classList.remove('lkn-pix-menu-ativo');
@@ -140,9 +141,17 @@ function navegarParaAba(idAba) {
     atual = parseInt(idAba);
     lkn_PGPFG_menu[atual].classList.add('lkn-pix-menu-ativo');
     lkn_PGPFG_settings[atual].classList.remove('lkn-pix-configuracao-disable');
-}
-if (!document.getElementById('lkn-payment-pix-license-setting')) {
 
+    if (!document.getElementById('lkn-payment-pix-license-setting')) {
+        if (atual == 0) {
+            document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
+        } else {
+            document.querySelector('.lkn-label-pro').classList.remove('lkn-pix-configuracao-disable')
+        }
+    }
+}
+
+if (!document.getElementById('lkn-payment-pix-license-setting')) {
     for (let i = 1; lkn_PGPFG_settings.length; i++) {
         lkn_PGPFG_settings[i].classList.add('config-disable');
     }
