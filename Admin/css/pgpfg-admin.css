@@ -121,3 +121,7 @@ input#lkn-pix-menu {
 .lkn-pix-configuracao-disable {
     display: none;
 }
+
+.give-forminp.give-forminp-password div p {
+    width: fit-content !important;
+}
