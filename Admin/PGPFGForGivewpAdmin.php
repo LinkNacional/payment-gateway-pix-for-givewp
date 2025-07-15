@@ -89,7 +89,7 @@ final class PGPFGForGivewpAdmin {
                         'id' => 'lkn-pix-menu',
                         'name' =>'
                         <div = class="lkn-container-menu">
-                            <div class="lkn-menu-toggle-ativo">
+                            <div class="lkn-menu-container-mobile lkn-menu-toggle-ativo">
                                 <div class="lkn-menu-toggle">☰</div>
                             </div>
                             <ul class="lkn-pix-menu lkn-pix-menu-mobile">

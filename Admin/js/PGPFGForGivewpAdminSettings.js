@@ -172,3 +172,8 @@ document.querySelector('.lkn-menu-toggle').addEventListener('click', function ()
     document.querySelector('.lkn-pix-menu').classList.toggle('show');
 });
 
+const menu_toggle = document.querySelector('.lkn-menu-toggle');
+menu_toggle.addEventListener('click', () => {
+    document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
+    document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
+})

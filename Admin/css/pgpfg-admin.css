@@ -144,6 +144,10 @@ input#lkn-label-pro {
     display: none;
 }
 
+.lkn-menu-toggle {
+    display: none;
+}
+
 @media (max-width: 660px) {
 
     .lkn-menu-toggle {
@@ -171,7 +175,12 @@ input#lkn-label-pro {
         background-color: blue;
     }
 
+    .lkn-pix-menu {
+        display: none;
+    }
+
     .lkn-pix-menu-mobile {
+        display: flex;
         flex-direction: column;
         z-index: 11;
         position: absolute;
