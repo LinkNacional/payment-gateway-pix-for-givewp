@@ -168,3 +168,7 @@ if (!document.getElementById('lkn-payment-pix-license-setting')) {
     lkn_PGPFG_menu[1].classList.add('lkn-pix-menu-ativo');
 }
 
+document.querySelector('.lkn-menu-toggle').addEventListener('click', function () {
+    document.querySelector('.lkn-pix-menu').classList.toggle('show');
+});
+

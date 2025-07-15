@@ -82,6 +82,8 @@ li {
 
 .lkn-container-menu {
     display: flex;
+    align-items: end;
+    position: relative !important;
 }
 
 input#lkn-pix-menu {
@@ -90,7 +92,7 @@ input#lkn-pix-menu {
 
 .lkn-pix-menu {
     display: flex;
-    margin-bottom: 0;
+    margin: 0;
     background-color: #DCDCDE;
     flex-wrap: wrap;
 }
@@ -140,4 +142,40 @@ input#lkn-pix-menu {
 
 input#lkn-label-pro {
     display: none;
+}
+
+@media (max-width: 660px) {
+
+    .lkn-menu-toggle {
+        width: 48px;
+        height: 49px;
+        border: none;
+        background-color: #BCBCBC;
+        color: #000;
+
+        font-size: 20px;
+        font-weight: 600;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .lkn-menu-toggle-ativo {
+
+        position: absolute;
+        z-index: 10;
+        top: 1%;
+        width: 220px;
+        height: 500px;
+        background-color: blue;
+    }
+
+    .lkn-pix-menu-mobile {
+        flex-direction: column;
+        z-index: 11;
+        position: absolute;
+        top: 47px;
+    }
+
 }
