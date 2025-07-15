@@ -117,21 +117,21 @@ thElements.forEach(function (th) {
     }
 });
 
+//Configurações iniciais do menu
 const lkn_PGPFG_menu = document.querySelectorAll('.lkn-pix-menu li')
 const lkn_PGPFG_settings = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
 
 let antigo;
-let atual = 1;
+let atual = 0;
 
 for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
     lkn_PGPFG_menu[i].addEventListener("click", function (event) {
         navegarParaAba(event.target.id); // Passa o ID do elemento clicado
     });
 }
-for (var i = 0; i < lkn_PGPFG_settings.length; i++) {
-    if (i == atual) {
-        i++;
-    }
+
+//Desabilita os divs responsaveis pelas settings, menos a primeira.
+for (var i = 1; i < lkn_PGPFG_settings.length; i++) {
     lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
 }
 
@@ -144,6 +144,7 @@ function navegarParaAba(idAba) {
     lkn_PGPFG_menu[atual].classList.add('lkn-pix-menu-ativo');
     lkn_PGPFG_settings[atual].classList.remove('lkn-pix-configuracao-disable');
 
+    //Mensagem 'Disponivel apenas com pro' aparece quando nao está na primeira opção do menu
     if (!document.getElementById('lkn-payment-pix-license-setting')) {
         if (atual == 0) {
             document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
@@ -159,7 +160,8 @@ menu_toggle.addEventListener('click', () => {
     document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
     document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
 })
-//Fecha menu
+
+//Fecha menu ao clica na tela
 lkn_PGPFG_settings.forEach(function (section) {
     section.addEventListener('click', () => {
         if (document.querySelector('.lkn-menu-container-mobile').classList.contains('lkn-menu-toggle-ativo')) {
@@ -170,18 +172,10 @@ lkn_PGPFG_settings.forEach(function (section) {
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
+
+    //Desabilita a mensagem de pro na primeira seção de configuração 
     document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
-    atual = 0
-    lkn_PGPFG_settings[0].classList.remove('lkn-pix-configuracao-disable')
-    lkn_PGPFG_settings[1].classList.add('lkn-pix-configuracao-disable')
-
     for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
-        lkn_PGPFG_settings[i].classList.add('config-disable');
+        lkn_PGPFG_settings[i].classList.add('lkn-disabled-settings');
     }
-} else {
-    lkn_PGPFG_menu[0].style.order = 0; // Item 1 vira segundo
-    lkn_PGPFG_menu[1].style.order = -1;
-
-    lkn_PGPFG_menu[0].classList.remove('lkn-pix-menu-ativo');
-    lkn_PGPFG_menu[1].classList.add('lkn-pix-menu-ativo');
 }

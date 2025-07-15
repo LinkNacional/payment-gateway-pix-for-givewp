@@ -89,10 +89,8 @@ final class PGPFGForGivewpAdmin {
                         'id' => 'lkn-pix-menu',
                         'name' =>'
                         <div = class="lkn-container-menu">
-                            
                             <div class="lkn-menu-toggle">☰
-                            <div class="lkn-menu-container-mobile">
-                            </div>
+                                <div class="lkn-menu-container-mobile"></div>
                             </div>
                             <ul class="lkn-pix-menu">
                                 <li id="0" class="lkn-pix-menu-ativo">Pix QRCode (free)</li>
