@@ -134,6 +134,7 @@ for (var i = 0; i < lkn_PGPFG_settings.length; i++) {
     }
     lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
 }
+
 function navegarParaAba(idAba) {
     antigo = atual;
     lkn_PGPFG_menu[antigo].classList.remove('lkn-pix-menu-ativo');
@@ -151,13 +152,30 @@ function navegarParaAba(idAba) {
         }
     }
 }
+
+//Abrir e fechar o menu mobile
+const menu_toggle = document.querySelector('.lkn-menu-toggle');
+menu_toggle.addEventListener('click', () => {
+    document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
+    document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
+})
+//Fecha menu
+lkn_PGPFG_settings.forEach(function (section) {
+    section.addEventListener('click', () => {
+        if (document.querySelector('.lkn-menu-container-mobile').classList.contains('lkn-menu-toggle-ativo')) {
+            document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
+            document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
+        }
+    })
+})
+
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
     document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
     atual = 0
     lkn_PGPFG_settings[0].classList.remove('lkn-pix-configuracao-disable')
     lkn_PGPFG_settings[1].classList.add('lkn-pix-configuracao-disable')
 
-    for (let i = 1; lkn_PGPFG_settings.length; i++) {
+    for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
         lkn_PGPFG_settings[i].classList.add('config-disable');
     }
 } else {
@@ -167,13 +185,3 @@ if (!document.getElementById('lkn-payment-pix-license-setting')) {
     lkn_PGPFG_menu[0].classList.remove('lkn-pix-menu-ativo');
     lkn_PGPFG_menu[1].classList.add('lkn-pix-menu-ativo');
 }
-
-document.querySelector('.lkn-menu-toggle').addEventListener('click', function () {
-    document.querySelector('.lkn-pix-menu').classList.toggle('show');
-});
-
-const menu_toggle = document.querySelector('.lkn-menu-toggle');
-menu_toggle.addEventListener('click', () => {
-    document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
-    document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
-})
