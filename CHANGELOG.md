@@ -1,3 +1,6 @@
+# 3.0.0 - 15/07/2025
+* Novo menu para seções de configuração
+
 # 2.1.1 - 26/02/2025
 * Correção de url para ver logs.
 
