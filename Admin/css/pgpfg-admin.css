@@ -133,6 +133,10 @@ input#lkn-pix-menu {
     opacity: 0.6;
 }
 
+.lkn-disabled-settings .tooltip {
+    pointer-events: auto;
+}
+
 .lkn-label-pro {
     color: #FF0B0B;
     font-size: 18px;
