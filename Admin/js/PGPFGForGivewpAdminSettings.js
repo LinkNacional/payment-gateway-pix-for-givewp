@@ -66,6 +66,10 @@ thElements.forEach(function (th) {
     if (descriptionField) {
         var linkElement = descriptionField.querySelector('a');
 
+        let p = document.createElement('p');
+        p.innerHTML = descriptionField.textContent;
+        th.appendChild(p)
+
         // Se o campo de descrição contém um link, adiciona apenas o texto que não é parte do link ao texto da dica de ferramenta
         if (linkElement) {
             var linkText = linkElement.textContent;
@@ -75,11 +79,13 @@ thElements.forEach(function (th) {
 
             // Move o link para o elemento th
             var divElement = document.createElement('div');
-            divElement.style.display = 'flex';
-            divElement.style.flexDirection = 'column';
-            divElement.appendChild(th.querySelector('label'));
-            divElement.appendChild(linkElement);
-            th.appendChild(divElement);
+            //divElement.style.display = 'flex';
+            //divElement.style.flexDirection = 'column';
+            //divElement.appendChild(th.querySelector('label'));
+            //divElement.appendChild(linkElement);
+            //th.appendChild(divElement);
+
+
         } else {
             // Se o campo de descrição não contém um link, adiciona todo o texto de descrição ao texto da dica de ferramenta
             tooltipText.textContent = descriptionField.textContent;
@@ -89,19 +95,19 @@ thElements.forEach(function (th) {
         descriptionField.parentNode.removeChild(descriptionField);
 
         // Adiciona o ícone de interrogação e o texto da dica de ferramenta ao tooltip
-        tooltip.appendChild(questionIcon);
-        tooltip.appendChild(tooltipText);
+        //tooltip.appendChild(questionIcon);
+        //tooltip.appendChild(tooltipText);
 
         // Adiciona o tooltip ao TD novo, e o TD ao elemento th
 
         var tooltipCell = document.createElement('td');
-        tooltipCell.appendChild(tooltip);
+        //tooltipCell.appendChild(tooltip);
 
         //Classe de estilo
         tooltipCell.classList.add('tdTooltipCell')
 
         // Adiciona a nova célula ao tr pai
-        th.parentElement.appendChild(tooltipCell);
+        //th.parentElement.appendChild(tooltipCell);
 
         // Define os estilos para o elemento th
         th.style.display = 'flex';
@@ -169,6 +175,14 @@ lkn_PGPFG_settings.forEach(function (section) {
             document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
         }
     })
+})
+
+const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
+trs.forEach(function (tr) {
+    let labelText = tr.querySelector('label').innerHTML;
+    let label = document.createElement('label')
+    label.innerHTML = labelText;
+    tr.querySelector('td').insertBefore(label, tr.querySelector('td').firstChild)
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
