@@ -25,7 +25,8 @@ use WP_Error;
  * @subpackage PGPFGForGivewp/admin
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class PGPFGForGivewpAdmin {
+final class PGPFGForGivewpAdmin
+{
     /**
      * The ID of this plugin.
      *
@@ -51,7 +52,8 @@ final class PGPFGForGivewpAdmin {
      * @param      string    $plugin_name       The name of this plugin.
      * @param      string    $version    The version of this plugin.
      */
-    public function __construct($plugin_name, $version) {
+    public function __construct($plugin_name, $version)
+    {
         $this->plugin_name = $plugin_name . '-admin';
         $this->version = $version;
     }
@@ -63,7 +65,8 @@ final class PGPFGForGivewpAdmin {
      *
      * @return array
      */
-    public function add_setting_into_new_section($settings) {
+    public function add_setting_into_new_section($settings)
+    {
         switch (give_get_current_setting_section()) {
             case 'lkn-payment-pix':
                 // Verifique se a configuração específica já está no array
@@ -83,11 +86,11 @@ final class PGPFGForGivewpAdmin {
                     }
                 }
                 // Adicione as configurações apenas se ainda não existirem
-                if ( ! $exists) {
-                        $settings[] = array(
+                if (! $exists) {
+                    $settings[] = array(
                         'type' => 'checkbox',
                         'id' => 'lkn-pix-menu',
-                        'name' =>'
+                        'name' => '
                         <div = class="lkn-container-menu">
                             <div class="lkn-menu-toggle">☰
                                 <div class="lkn-menu-container-mobile"></div>
@@ -176,75 +179,67 @@ final class PGPFGForGivewpAdmin {
                         'id' => 'lkn-payment-pix',
                         'type' => 'sectionend'
                     );
-                
+
                     //PRO SETTINGS free version
-                    if(!$pro_plugin_active){
+                    if (!$pro_plugin_active) {
 
                         $settings[] = array(
-                        'type' => 'checkbox',
-                        'id' => 'lkn-label-pro',
-                        'name' =>'
-                        <div = class="lkn-label-pro">
-                            Disponivel apenas com a versão Pro
-                        </div>'
+                            'type' => 'title',
+                            'id' => 'lkn-payment-pix-general',
+                            'title' => 'Pro Settings',
+                            'give',
                         );
 
                         $settings[] = array(
-                        'type' => 'title',
-                        'id' => 'lkn-payment-pix-general',
-                        'title' => 'Pro Settings', 'give',
+                            'name' => __('License', 'payment-gateway-pix-for-givewp-pro'),
+                            'id' => 'lkn-payment-pix-license-setting-free',
+                            'type' => 'password',
+                            'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
                         );
 
                         $settings[] = array(
-                        'name' => __('License', 'payment-gateway-pix-for-givewp-pro'),
-                        'id' => 'lkn-payment-pix-license-setting-free',
-                        'type' => 'password',
-                        'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
+                            'name' => __('Environment', 'payment-gateway-pix-for-givewp'),
+                            'id' => 'lkn-payment-pix-environment',
+                            'type' => 'select',
+                            'options' => array(
+                                'app' => __('Production', 'payment-gateway-pix-for-givewp'),
+                                'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
+                            )
                         );
 
                         $settings[] = array(
-                        'name' => __('Environment', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-environment',
-                        'type' => 'select',
-                        'options' => array(
-                            'app' => __('Production', 'payment-gateway-pix-for-givewp'),
-                            'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
-                        )
+                            'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
+                            'id' => 'lkn-payment-pix-logs',
+                            'desc' => __('When enabled, all transactions will be logged, ideal for error identification. Default: Disabled', 'payment-gateway-pix-for-givewp'),
+                            'type' => 'radio_inline',
+                            'default' => 'disabled',
+                            'options' => array(
+                                'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                                'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                            )
                         );
 
                         $settings[] = array(
-                        'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-logs',
-                        'desc' => __('When enabled, all transactions will be logged, ideal for error identification. Default: Disabled', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'radio_inline',
-                        'default' => 'disabled',
-                        'options' => array(
-                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                        )
-                        );
-
-                        $settings[] = array(
-                        'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-debug',
-                        'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'radio_inline',
-                        'default' => 'disabled',
-                        'options' => array(
-                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                        )
+                            'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
+                            'id' => 'lkn-payment-pix-debug',
+                            'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
+                            'type' => 'radio_inline',
+                            'default' => 'disabled',
+                            'options' => array(
+                                'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                                'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                            )
                         );
                         $settings[] = array(
-                        'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-debug',
-                        'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'radio_inline',
-                        'default' => 'disabled',
-                        'options' => array(
-                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                        )
+                            'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
+                            'id' => 'lkn-payment-pix-debug',
+                            'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
+                            'type' => 'radio_inline',
+                            'default' => 'disabled',
+                            'options' => array(
+                                'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                                'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                            )
                         );
 
                         $settings[] = array(
@@ -314,9 +309,9 @@ final class PGPFGForGivewpAdmin {
                             'id' => 'lkn-payment-pix-pro-sectionend',
                             'type' => 'sectionend'
                         );
-                        }  
-            }
-            break;
+                    }
+                }
+                break;
         }
 
         return $settings;
@@ -329,7 +324,8 @@ final class PGPFGForGivewpAdmin {
      *
      * @return array
      */
-    public function add_new_setting_section($sections) {
+    public function add_new_setting_section($sections)
+    {
         // Separar palavras com travessão no atributo $sections
         $sections['lkn-payment-pix'] = __('Pix QR Code', 'payment-gateway-pix-for-givewp');
 
@@ -341,7 +337,8 @@ final class PGPFGForGivewpAdmin {
      *
      * @since    1.0.0
      */
-    public function enqueue_styles(): void {
+    public function enqueue_styles(): void
+    {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -361,7 +358,8 @@ final class PGPFGForGivewpAdmin {
      *
      * @since    1.0.0
      */
-    public function enqueue_scripts(): void {
+    public function enqueue_scripts(): void
+    {
         /**
          * This function is provided for demonstration purposes only.
          *
@@ -384,7 +382,7 @@ final class PGPFGForGivewpAdmin {
 
             if (gettype($remote) === gettype(new WP_Error())) {
                 PGPFGHelperClass::log(
-                    'info', 
+                    'info',
                     array(
                         'Remote Response' => $remote,
                         'log url' => $logPath,

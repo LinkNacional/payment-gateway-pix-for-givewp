@@ -219,9 +219,7 @@ input#lkn-pix-menu {
 
 .lkn-label-pro {
     color: #FF0B0B;
-    font-size: 18px;
-    padding: 15px 20px;
-    background-color: #F9F9F9;
+    font-weight: bold;
 }
 
 input#lkn-label-pro {
@@ -230,68 +228,4 @@ input#lkn-label-pro {
 
 .lkn-menu-toggle {
     display: none;
-}
-
-/*@media (max-width: 660px) {
-
-    .lkn-menu-toggle {
-        width: 48px;
-        height: 49px;
-        border: none;
-        background-color: #DCDCDE;
-        color: #000;
-
-        font-size: 20px;
-        font-weight: 600;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        position: relative !important;
-
-        cursor: pointer;
-
-        transition: 200ms;
-    }
-
-    .lkn-menu-toggle:hover {
-        background-color: #BCBCBC;
-        transition: 200ms;
-    }
-
-    .lkn-container-menu {
-        background-color: #fff;
-    }
-
-    .lkn-menu-toggle-ativo {
-
-        position: absolute;
-        z-index: 10;
-        top: 47px;
-        left: 1%;
-        width: 220px;
-        height: 500px;
-        background-color: #404040;
-        opacity: 0.7;
-
-        transition: 200ms;
-    }
-
-    .lkn-pix-menu {
-        display: none;
-
-        transition: 200ms;
-    }
-
-    .lkn-pix-menu-mobile {
-        display: flex;
-        flex-direction: column;
-        z-index: 11;
-        position: absolute;
-        top: 47px;
-
-        transition: 300ms;
-    }
-
 }

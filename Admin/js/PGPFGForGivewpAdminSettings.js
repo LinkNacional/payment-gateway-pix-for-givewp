@@ -197,10 +197,19 @@ trs.forEach(function (tr) {
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
-
-    //Desabilita a mensagem de pro na primeira seção de configuração 
-    document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
     for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
-        lkn_PGPFG_settings[i].classList.add('lkn-disabled-settings');
+        let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
+        configs.forEach(function (config) {
+            Array.from(config.children).forEach(function (child) {
+                if (child.nodeName === 'LABEL' || child.nodeName === 'HR') {
+                    return;
+                }
+                child.classList.add('lkn-disabled-settings');
+            });
+            let p = document.createElement('p');
+            p.innerHTML = 'Disponivel apenas com a versão Pro'
+            p.classList.add('lkn-label-pro')
+            config.appendChild(p)
+        })
     }
 }
