@@ -69,6 +69,7 @@ thElements.forEach(function (th) {
         let p = document.createElement('p');
         p.innerHTML = descriptionField.textContent;
         th.appendChild(p)
+        console.log(descriptionField.textContent);
 
         // Se o campo de descrição contém um link, adiciona apenas o texto que não é parte do link ao texto da dica de ferramenta
         if (linkElement) {

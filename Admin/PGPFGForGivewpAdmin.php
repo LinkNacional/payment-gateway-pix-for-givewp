@@ -94,9 +94,9 @@ final class PGPFGForGivewpAdmin {
                             </div>
                             <ul class="lkn-pix-menu">
                                 <li id="0" class="lkn-pix-menu-ativo">Pix QRCode (free)</li>
-                                <li id="1">Geral</li>
-                                <li id="2">MaxiPago</li>
-                                <li id="3">Banco do Brasil(BB)</li>
+                                <li id="1">Pro Settings</li>
+                                <li id="2">Pix MaxiPago</li>
+                                <li id="3">Pix Banco do Brasil(BB)</li>
                             </ul>
                         </div>'
                     );
