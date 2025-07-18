@@ -9,12 +9,19 @@ li {
 }
 
 .PGPFGForGivewpAdminSettingsDiv {
-    padding: 1px 20px;
+    padding: 1px 0px;
     background-color: transparent;
+    margin-left: 0px !important;
 }
 
 .PGPFGForGivewpAdminSettingsDiv hr {
     display: none;
+}
+
+.title-hr {
+    border-top: 1px solid rgb(204, 204, 204);
+    margin: 8px 0px;
+    width: 100%;
 }
 
 .PGPFGForGivewpAdminSettingsP {
@@ -28,16 +35,45 @@ li {
 }
 
 .PGPFGForGivewpAdminSettingsDiv tr {
-    padding: 10px 14px;
-    margin: 10px 0px;
-    max-width: 800px;
+    /*padding: 10px 14px;*/
+    /*margin: auto;*/
+    max-width: 850px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv tbody {
+    margin: auto;
 }
 
 .PGPFGForGivewpAdminSettingsDiv td {
     background-color: #fff;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    flex: 1;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+.PGPFGForGivewpAdminSettingsDiv td label {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 6px 4px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv .give-input-field,
+.PGPFGForGivewpAdminSettingsDiv select,
+.PGPFGForGivewpAdminSettingsDiv fieldset,
+.PGPFGForGivewpAdminSettingsDiv.button.button-primary {
+    margin: 25px 0px;
+}
+
+fieldset ul li {
+    margin: 3px 0px !important;
+}
+
+fieldset ul li label {
+    font-size: 14px !important;
+    font-weight: 400 !important;
 }
 
 .PGPFGForGivewpAdminSettingsDiv td ul {
@@ -48,13 +84,19 @@ li {
 .PGPFGForGivewpAdminSettingsDiv tr th {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv tr th p {
+    font-size: 13px;
+    color: rgb(52, 59, 69)
 }
 
 .PGPFGForGivewpAdminSettingsDiv tr th label {
     font-size: 20px;
-    font-weight: 500;
-    width: 200px;
-    color: #000;
+    min-width: 200px;
+    color: rgb(18, 21, 25);
 }
 
 .tooltip {

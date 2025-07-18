@@ -38,7 +38,7 @@ const { __ } = wp.i18n;
     if (adminPage && (adminPage === 'lkn-payment-pix')) {
       const giveForm = $('.give-submit-wrap')
       const noticeDiv = document.createElement('div')
-      noticeDiv.setAttribute('style', 'padding: 10px; padding-top:15px;padding-bottom:15px;background-color: #fcf9e8;color: #646970;border: solid 1px lightgrey;border-left-color: #dba617;border-left-width: 4px;font-size: 14px;min-width: 625px;margin-top: 10px;')
+      noticeDiv.setAttribute('style', 'padding: 10px; padding-top:15px;padding-bottom:15px;background-color: #fcf9e8;color: #646970;border: solid 1px lightgrey;border-left-color: #dba617;border-left-width: 4px;font-size: 14px;min-width: 625px;margin-top: 10px;min-width:300px;')
 
       noticeDiv.innerHTML = '<div style="font-size: 21px;">' + __('Enjoying the plugin?', 'payment-gateway-pix-for-givewp') + '</div>'
       noticeDiv.innerHTML += '<p style="font-size: 14px;">' + __('Try out our other GiveWP plugins', 'payment-gateway-pix-for-givewp') + '</p'

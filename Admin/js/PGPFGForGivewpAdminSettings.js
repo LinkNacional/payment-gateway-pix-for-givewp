@@ -111,7 +111,6 @@ thElements.forEach(function (th) {
 
         // Define os estilos para o elemento th
         th.style.display = 'flex';
-        th.style.justifyContent = 'space-between';
 
         // Verifica se o elemento tr contém um input do tipo radio
         var hasRadioInput = th.parentNode.querySelector('input[type="radio"]') !== null;
@@ -179,10 +178,21 @@ lkn_PGPFG_settings.forEach(function (section) {
 
 const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
 trs.forEach(function (tr) {
-    let labelText = tr.querySelector('label').innerHTML;
-    let label = document.createElement('label')
-    label.innerHTML = labelText;
-    tr.querySelector('td').insertBefore(label, tr.querySelector('td').firstChild)
+    let label = tr.querySelector('label');
+    let textoComplementar = label.querySelector('a');
+    if (textoComplementar) {
+        let p = document.createElement('p');
+        p.appendChild(textoComplementar);
+        tr.querySelector('td').appendChild(p)
+    }
+    let labelText = label.innerHTML;
+
+    let novaLabel = document.createElement('label')
+    novaLabel.innerHTML = labelText;
+    let hr = document.createElement('div');
+    hr.classList.add('title-hr');
+    tr.querySelector('td').insertBefore(hr, tr.querySelector('td').firstChild)
+    tr.querySelector('td').insertBefore(novaLabel, tr.querySelector('td').firstChild)
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
