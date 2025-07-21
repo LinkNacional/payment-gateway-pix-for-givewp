@@ -47,14 +47,6 @@ var thElements = document.querySelectorAll('.form-table.give-setting-tab-body.gi
 // Para cada elemento th
 thElements.forEach(function (th) {
     th.parentElement.className = 'PGPFGForGivewpAdminSettingsTr';
-    // Cria um novo elemento div com a classe tooltip
-    var tooltip = document.createElement('div');
-    tooltip.className = 'tooltip';
-
-    // Cria o elemento span para o ícone de interrogação
-    var questionIcon = document.createElement('span');
-    questionIcon.textContent = '?';
-
     // Cria o elemento span para o texto da dica de ferramenta
     var tooltipText = document.createElement('span');
     tooltipText.className = 'tooltiptext';
@@ -67,58 +59,12 @@ thElements.forEach(function (th) {
         var linkElement = descriptionField.querySelector('a');
 
         let p = document.createElement('p');
-        p.innerHTML = descriptionField.textContent;
+        p.innerHTML = descriptionField.innerHTML.replace(/\s+<a/g, '<a');;
         th.appendChild(p)
-
-        // Se o campo de descrição contém um link, adiciona apenas o texto que não é parte do link ao texto da dica de ferramenta
-        if (linkElement) {
-            var linkText = linkElement.textContent;
-            var descriptionText = descriptionField.textContent;
-            var nonLinkText = descriptionText.replace(linkText, '').trim();
-            tooltipText.textContent = nonLinkText;
-
-            // Move o link para o elemento th
-            var divElement = document.createElement('div');
-            //divElement.style.display = 'flex';
-            //divElement.style.flexDirection = 'column';
-            //divElement.appendChild(th.querySelector('label'));
-            //divElement.appendChild(linkElement);
-            //th.appendChild(divElement);
-
-
-        } else {
-            // Se o campo de descrição não contém um link, adiciona todo o texto de descrição ao texto da dica de ferramenta
-            tooltipText.textContent = descriptionField.textContent;
-        }
 
         // Remove o campo de descrição
         descriptionField.parentNode.removeChild(descriptionField);
 
-        // Adiciona o ícone de interrogação e o texto da dica de ferramenta ao tooltip
-        //tooltip.appendChild(questionIcon);
-        //tooltip.appendChild(tooltipText);
-
-        // Adiciona o tooltip ao TD novo, e o TD ao elemento th
-
-        var tooltipCell = document.createElement('td');
-        //tooltipCell.appendChild(tooltip);
-
-        //Classe de estilo
-        tooltipCell.classList.add('tdTooltipCell')
-
-        // Adiciona a nova célula ao tr pai
-        //th.parentElement.appendChild(tooltipCell);
-
-        // Define os estilos para o elemento th
-        th.style.display = 'flex';
-
-        // Verifica se o elemento tr contém um input do tipo radio
-        var hasRadioInput = th.parentNode.querySelector('input[type="radio"]') !== null;
-        // Se o elemento tr contém um input do tipo radio
-        if (hasRadioInput) {
-            // Adiciona o padding
-            th.style.paddingTop = '32px';
-        }
     }
 });
 
@@ -135,11 +81,6 @@ for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
     });
 }
 
-//Desabilita os divs responsaveis pelas settings, menos a primeira.
-for (var i = 1; i < lkn_PGPFG_settings.length; i++) {
-    lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
-}
-
 function navegarParaAba(idAba) {
     antigo = atual;
     lkn_PGPFG_menu[antigo].classList.remove('lkn-pix-menu-ativo');
@@ -148,42 +89,18 @@ function navegarParaAba(idAba) {
     atual = parseInt(idAba);
     lkn_PGPFG_menu[atual].classList.add('lkn-pix-menu-ativo');
     lkn_PGPFG_settings[atual].classList.remove('lkn-pix-configuracao-disable');
-
-    //Mensagem 'Disponivel apenas com pro' aparece quando nao está na primeira opção do menu
-    if (!document.getElementById('lkn-payment-pix-license-setting')) {
-        if (atual == 0) {
-            document.querySelector('.lkn-label-pro').classList.add('lkn-pix-configuracao-disable')
-        } else {
-            document.querySelector('.lkn-label-pro').classList.remove('lkn-pix-configuracao-disable')
-        }
-    }
 }
-
-//Abrir e fechar o menu mobile
-const menu_toggle = document.querySelector('.lkn-menu-toggle');
-menu_toggle.addEventListener('click', () => {
-    document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
-    document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
-})
-
-//Fecha menu ao clica na tela
-lkn_PGPFG_settings.forEach(function (section) {
-    section.addEventListener('click', () => {
-        if (document.querySelector('.lkn-menu-container-mobile').classList.contains('lkn-menu-toggle-ativo')) {
-            document.querySelector('.lkn-menu-container-mobile').classList.toggle('lkn-menu-toggle-ativo');
-            document.querySelector('.lkn-pix-menu').classList.toggle('lkn-pix-menu-mobile');
-        }
-    })
-})
 
 const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
 trs.forEach(function (tr) {
     let label = tr.querySelector('label');
-    let textoComplementar = label.querySelector('a');
+    let textoComplementar = tr.querySelector('a');
     if (textoComplementar) {
+        let elLabel = document.createElement('label');
         let p = document.createElement('p');
+        elLabel.appendChild(p);
         p.appendChild(textoComplementar);
-        tr.querySelector('td').appendChild(p)
+        tr.querySelector('td').appendChild(elLabel)
     }
     let labelText = label.innerHTML;
 
@@ -193,20 +110,6 @@ trs.forEach(function (tr) {
     hr.classList.add('title-hr');
     tr.querySelector('td').insertBefore(hr, tr.querySelector('td').firstChild)
     tr.querySelector('td').insertBefore(novaLabel, tr.querySelector('td').firstChild)
-})
-
-//Corrigindo campo link license pro.
-const labels = document.querySelectorAll('td label');
-labels.forEach(function (label) {
-    if (label.textContent.trim() === 'License' || label.textContent.trim() === 'Licença') {
-        const td = label.parentElement;
-        const th = td.parentElement.querySelector('th');
-        th.lastChild.innerHTML = th.lastChild.innerHTML.slice(0, -15) + '.';
-
-        const p = document.createElement('label');
-        p.innerHTML = "<p><a target='_blank' href=https://www.linknacional.com.br/wordpress/givewp/> Link Nacional </a></p>";
-        td.appendChild(p);
-    }
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
