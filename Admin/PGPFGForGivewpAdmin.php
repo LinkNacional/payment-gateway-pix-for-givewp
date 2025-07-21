@@ -191,7 +191,7 @@ final class PGPFGForGivewpAdmin
                         );
 
                         $settings[] = array(
-                            'name' => __('License', 'payment-gateway-pix-for-givewp-pro'),
+                            'name' => __('License', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-license-setting-free',
                             'type' => 'password',
                             'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),

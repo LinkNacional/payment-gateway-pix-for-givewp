@@ -69,7 +69,6 @@ thElements.forEach(function (th) {
         let p = document.createElement('p');
         p.innerHTML = descriptionField.textContent;
         th.appendChild(p)
-        console.log(descriptionField.textContent);
 
         // Se o campo de descrição contém um link, adiciona apenas o texto que não é parte do link ao texto da dica de ferramenta
         if (linkElement) {
@@ -212,4 +211,21 @@ if (!document.getElementById('lkn-payment-pix-license-setting')) {
             config.appendChild(p)
         })
     }
+
+    document.querySelector('.give-submit-wrap input').addEventListener('click', () => {
+        event.preventDefault();
+        //limpa Campos Pro button-primary give-save-button
+        for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
+            let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
+            configs.forEach(function (config) {
+                config.querySelectorAll("input[type='text'], input[type='password']").forEach(function (input) {
+                    input.value = '';
+                })
+            })
+        }
+        const form = document.querySelector('form');
+        if (form) {
+            form.submit();
+        }
+    })
 }
