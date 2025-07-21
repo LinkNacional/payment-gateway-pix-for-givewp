@@ -195,6 +195,20 @@ trs.forEach(function (tr) {
     tr.querySelector('td').insertBefore(novaLabel, tr.querySelector('td').firstChild)
 })
 
+//Corrigindo campo link license pro.
+const labels = document.querySelectorAll('td label');
+labels.forEach(function (label) {
+    if (label.textContent.trim() === 'License' || label.textContent.trim() === 'Licença') {
+        const td = label.parentElement;
+        const th = td.parentElement.querySelector('th');
+        th.lastChild.innerHTML = th.lastChild.innerHTML.slice(0, -15) + '.';
+
+        const p = document.createElement('label');
+        p.innerHTML = "<p><a target='_blank' href=https://www.linknacional.com.br/wordpress/givewp/> Link Nacional </a></p>";
+        td.appendChild(p);
+    }
+})
+
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
     for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
         let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
