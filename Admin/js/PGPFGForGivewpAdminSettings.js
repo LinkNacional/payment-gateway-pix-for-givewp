@@ -81,6 +81,11 @@ for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
     });
 }
 
+//Desabilita os divs responsaveis pelas settings, menos a primeira.
+for (var i = 1; i < lkn_PGPFG_settings.length; i++) {
+    lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
+}
+
 function navegarParaAba(idAba) {
     antigo = atual;
     lkn_PGPFG_menu[antigo].classList.remove('lkn-pix-menu-ativo');

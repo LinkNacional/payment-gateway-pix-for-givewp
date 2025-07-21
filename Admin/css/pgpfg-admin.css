@@ -60,9 +60,24 @@ li {
     margin: 6px 0px;
 }
 
+input[type=radio]:checked {
+    position: relative !important;
+}
+
+input[type=radio]:checked::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv fieldset {
+    margin: 10px 0px;
+}
+
 .PGPFGForGivewpAdminSettingsDiv .give-input-field,
 .PGPFGForGivewpAdminSettingsDiv select,
-.PGPFGForGivewpAdminSettingsDiv fieldset,
 .PGPFGForGivewpAdminSettingsDiv .button.button-primary {
     margin: 25px 0px;
 }
