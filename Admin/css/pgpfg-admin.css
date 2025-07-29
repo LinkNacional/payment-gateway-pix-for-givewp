@@ -57,7 +57,13 @@ li {
 .PGPFGForGivewpAdminSettingsDiv td label {
     font-weight: bold;
     font-size: 16px;
-    margin: 6px 0px;
+    margin: 6px 4px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td p {
+    color: rgb(60, 67, 74);
+    font-weight: 400;
+    margin: 0px 4px !important;
 }
 
 input[type=radio]:checked {
@@ -73,13 +79,13 @@ input[type=radio]:checked::before {
 }
 
 .PGPFGForGivewpAdminSettingsDiv fieldset {
-    margin: 10px 0px;
+    margin: 10px 4px;
 }
 
 .PGPFGForGivewpAdminSettingsDiv .give-input-field,
 .PGPFGForGivewpAdminSettingsDiv select,
 .PGPFGForGivewpAdminSettingsDiv .button.button-primary {
-    margin: 25px 0px;
+    margin: 25px 4px;
 }
 
 fieldset ul li {
@@ -232,9 +238,9 @@ input#lkn-pix-menu {
     pointer-events: auto;
 }
 
-.lkn-label-pro {
-    color: #FF0B0B;
-    font-weight: bold;
+p.lkn-label-pro {
+    color: #FF0B0B !important;
+    font-weight: bold !important;
 }
 
 input#lkn-label-pro {
