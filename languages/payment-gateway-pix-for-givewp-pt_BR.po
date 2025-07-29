@@ -80,7 +80,7 @@ msgstr "Checar Último Log"
 msgid "Settings"
 msgstr "Configurações"
 
-msgid "Choose which type of key you will use to receive the PIX."
+msgid "Choose the type of key you'll use to receive Pix payments"
 msgstr "Escolha qual tipo de chave irá utilizar para receber o PIX."
 
 msgid "Enter the Pix key created in your bank that will be used to receive donations."
@@ -113,7 +113,7 @@ msgstr "Escolha qual tipo de chave irá utilizar para receber o Pix"
 msgid "Enter the Pix key created in your bank that will be used to receive donations"
 msgstr "Digite a chave Pix criada no seu Banco que será usada no recebimento das doações"
 
-msgstr "Recipient Name"
+msgid "Recipient name"
 msgstr "Nome do beneficiário"
 
 msgid "Recipient city"
@@ -124,3 +124,24 @@ msgstr "Grava as transações no logs."
 
 msgid "Enable to show billing details on donation forms"
 msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+
+msgid "Select the environment in which the payment gateway will operate."
+msgstr "Selecione o ambiente em que o gateway de pagamento operará."
+
+msgid "Enable transaction logging"
+msgstr "Habilitar registro de transações"
+
+msgid "Displays details of gateway operations in the console."
+msgstr "Exibe detalhes das operações dos gateways no console."
+
+msgid "Chave de identificação da loja virtual"
+msgstr "Store identification key"
+
+msgid "Store identification credential"
+msgstr "Credencial de identificação da loja virtual"
+
+msgid "Required to authenticate requests to the BB API."
+msgstr "Necessária para autenticar requisições à API do BB."
+
+msgid "The provided Pix key must be registered and active in Banco do Brasil."
+msgstr "A chave Pix informada deve estar cadastrada e ativa no BB."
