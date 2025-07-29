@@ -51,9 +51,27 @@ thElements.forEach(function (th) {
     var tooltipText = document.createElement('span');
     tooltipText.className = 'tooltiptext';
 
+    // Obtém o ID do campo para buscar a nova_desc
+    var fieldId = null;
+    var inputField = th.nextElementSibling.querySelector('input, select, textarea, fieldset');
+    if (inputField) {
+        // Verifica se é um fieldset
+        if (inputField.tagName.toLowerCase() === 'fieldset') {
+            // Se for fieldset, busca o primeiro input dentro dele
+            var innerInput = inputField.querySelector('input');
+            if (innerInput) {
+                // Para campos radio, geralmente usamos o 'name' como ID
+                fieldId = innerInput.getAttribute('name') || innerInput.getAttribute('id');
+            }
+        } else {
+            // Se não for fieldset, pega o ID normalmente
+            fieldId = inputField.getAttribute('id');
+        }
+    }
     // Obtém o texto de descrição do campo correspondente
     var descriptionField = th.nextElementSibling.querySelector('.give-field-description');
 
+    let subtitle = pgpfgTranslations.subtitle[fieldId] ?? null;
     // Verifica se o campo de descrição contém um link
     if (descriptionField) {
         var linkElement = descriptionField.querySelector('a');
@@ -61,10 +79,18 @@ thElements.forEach(function (th) {
         let p = document.createElement('p');
         p.innerHTML = descriptionField.innerHTML.replace(/\s+<a/g, '<a');;
         th.appendChild(p)
-
+        //p.innerHTML = p.innerHTML + novaDesc;
         // Remove o campo de descrição
         descriptionField.parentNode.removeChild(descriptionField);
 
+    }
+    if (subtitle) {
+        let p = document.createElement('p');
+        p.innerHTML = subtitle;
+        p.classList.add('lkn-pix-subtitle');
+        let td = th.parentElement.querySelector('td');
+        td.appendChild(p);
+        console.log(subtitle)
     }
 });
 
@@ -113,8 +139,14 @@ trs.forEach(function (tr) {
     novaLabel.innerHTML = labelText;
     let hr = document.createElement('div');
     hr.classList.add('title-hr');
-    tr.querySelector('td').insertBefore(hr, tr.querySelector('td').firstChild)
-    tr.querySelector('td').insertBefore(novaLabel, tr.querySelector('td').firstChild)
+    let td = tr.querySelector('td');
+    td.insertBefore(hr, td.firstChild);
+    td.insertBefore(novaLabel, td.firstChild);
+
+    let subtitle = td.querySelector('.lkn-pix-subtitle');
+    if (subtitle) {
+        td.insertBefore(subtitle, hr);
+    }
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {

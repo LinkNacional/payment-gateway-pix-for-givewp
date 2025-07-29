@@ -106,3 +106,21 @@ msgstr "Configurações Chave PIX"
 
 msgid "See logs"
 msgstr "Ver logs"
+
+msgid "Choose the type of key you'll use to receive Pix payments"
+msgstr "Escolha qual tipo de chave irá utilizar para receber o Pix"
+
+msgid "Enter the Pix key created in your bank that will be used to receive donations"
+msgstr "Digite a chave Pix criada no seu Banco que será usada no recebimento das doações"
+
+msgstr "Recipient Name"
+msgstr "Nome do beneficiário"
+
+msgid "Recipient city"
+msgstr "Cidade do beneficiário"
+
+msgid "Saves transactions to the logs."
+msgstr "Grava as transações no logs."
+
+msgid "Enable to show billing details on donation forms"
+msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"

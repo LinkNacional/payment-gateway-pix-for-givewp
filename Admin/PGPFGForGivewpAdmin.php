@@ -73,7 +73,15 @@ final class PGPFGForGivewpAdmin
                 wp_enqueue_script('PGPFGForGivewpAdminSettingsScript', plugin_dir_url(__FILE__) . 'js/PGPFGForGivewpAdminSettings.js', array('jquery', 'wp-api'), $this->version, false);
 
                 $translation_array = array(
-                    'seeLogs' => __('See logs', 'payment-gateway-pix-for-givewp')
+                    'seeLogs' => __('See logs', 'payment-gateway-pix-for-givewp'),
+                    'subtitle' => array(
+                        'lkn-payment-pix-type-setting' => __("Choose the type of key you'll use to receive Pix payments", 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-key' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-name-setting' => __("Recipient Name", 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-city-setting' => __("Recipient City", 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-log-setting' => __('Saves transactions to the logs.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-details-setting' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp')
+                    )
                 );
 
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
@@ -122,6 +130,7 @@ final class PGPFGForGivewpAdmin
                             'cnpj' => __('CNPJ', 'payment-gateway-pix-for-givewp'),
                             'email' => __('Email', 'payment-gateway-pix-for-givewp')
                         ),
+                        'subtitle' => __("Choose the type of key you'll use to receive Pix payments", 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
@@ -131,7 +140,8 @@ final class PGPFGForGivewpAdmin
                         'type' => 'text',
                         'attributes' => array(
                             'required' => 'required'
-                        )
+                        ),
+                        'subtitle' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
@@ -141,14 +151,16 @@ final class PGPFGForGivewpAdmin
                         'type' => 'text',
                         'attributes' => array(
                             'required' => 'required'
-                        )
+                        ),
+                        'subtitle' => __("Recipient Name", 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
                         'name' => __("Recipient city (optional)", 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-city-setting',
                         'desc' => __('Enter the name of the city of the Pix key beneficiary.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text'
+                        'type' => 'text',
+                        'subtitle' => __("Recipient City", 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
@@ -160,7 +172,8 @@ final class PGPFGForGivewpAdmin
                         'options' => array(
                             'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                        )
+                        ),
+                        'subtitle' => __('Saves transactions to the logs.', 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
@@ -172,7 +185,8 @@ final class PGPFGForGivewpAdmin
                         'options' => array(
                             'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                        )
+                        ),
+                        'subtitle' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
@@ -219,17 +233,6 @@ final class PGPFGForGivewpAdmin
                             )
                         );
 
-                        $settings[] = array(
-                            'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
-                            'id' => 'lkn-payment-pix-debug',
-                            'desc' => __('When enabled, the console will have detailed information about the operations of the PIX payment gateway. Default: Disabled', 'payment-gateway-pix-for-givewp'),
-                            'type' => 'radio_inline',
-                            'default' => 'disabled',
-                            'options' => array(
-                                'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                                'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                            )
-                        );
                         $settings[] = array(
                             'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-debug',
