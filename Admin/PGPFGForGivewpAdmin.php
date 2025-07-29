@@ -103,6 +103,10 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-bb-client-id' => __('This is the code that identifies your store in the Banco do Brasil system.', 'payment-gateway-pix-for-givewp-pro'),
                         'lkn-payment-pix-bb-client-secret' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp-pro'),
                         'lkn-payment-pix-bb-developer-key' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp-pro')
+                    ),
+                    'join' => array(
+                        'lkn-payment-pix-key' => 'with-previous',
+                        'lkn-payment-pix-type-setting' => 'with-next'
                     )
                 );
 
@@ -152,7 +156,9 @@ final class PGPFGForGivewpAdmin
                             'cnpj' => __('CNPJ', 'payment-gateway-pix-for-givewp'),
                             'email' => __('Email', 'payment-gateway-pix-for-givewp')
                         ),
-                        'subtitle' => __("Choose the type of key you'll use to receive Pix payments", 'payment-gateway-pix-for-givewp')
+                        'subtitle' => __("Choose the type of key you'll use to receive Pix payments", 'payment-gateway-pix-for-givewp'),
+                        'join' => 'with-next'
+
                     );
 
                     $settings[] = array(
@@ -163,7 +169,8 @@ final class PGPFGForGivewpAdmin
                         'attributes' => array(
                             'required' => 'required'
                         ),
-                        'subtitle' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp')
+                        'subtitle' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp'),
+                        'join' => 'with-previous'
                     );
 
                     $settings[] = array(

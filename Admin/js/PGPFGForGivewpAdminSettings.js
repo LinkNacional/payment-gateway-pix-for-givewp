@@ -103,6 +103,15 @@ thElements.forEach(function (th) {
         let td = th.parentElement.querySelector('td');
         td.appendChild(div);
     }
+    /*let join = pgpfgTranslations.join[fieldId] ?? null;
+    if (join == 'with-next') {
+        let td = th.parentElement.querySelector('td');
+        td.classList.add('join-next')
+    }
+    if (join == 'with-previous') {
+        let td = th.parentElement.querySelector('td');
+        td.classList.add('join-previous');
+    }*/
 });
 
 //Configurações iniciais do menu
@@ -133,6 +142,7 @@ function navegarParaAba(idAba) {
     lkn_PGPFG_settings[atual].classList.remove('lkn-pix-configuracao-disable');
 }
 
+let previous;
 const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
 trs.forEach(function (tr) {
     let label = tr.querySelector('label');
@@ -157,6 +167,39 @@ trs.forEach(function (tr) {
     let subtitle = td.querySelector('.lkn-pix-subtitle');
     if (subtitle) {
         td.insertBefore(subtitle, hr);
+    }
+
+    // Obtém o ID do campo para buscar a nova_desc
+    var fieldId = null;
+    var th = tr.querySelector('th');
+    var inputField = tr.querySelector('td input, td select, td textarea, td fieldset');
+    if (inputField) {
+        // Verifica se é um fieldset
+        if (inputField.tagName.toLowerCase() === 'fieldset') {
+            // Se for fieldset, busca o primeiro input dentro dele
+            var innerInput = inputField.querySelector('input');
+            if (innerInput) {
+                // Para campos radio, geralmente usamos o 'name' como ID
+                fieldId = innerInput.getAttribute('name') || innerInput.getAttribute('id');
+            }
+        } else {
+            // Se não for fieldset, pega o ID normalmente
+            fieldId = inputField.getAttribute('id');
+        }
+    }
+    let join = pgpfgTranslations.join[fieldId] ?? null;
+    if (join == 'with-next') {
+        let td = th.parentElement.querySelector('td');
+        td.classList.add('join-next')
+        previous = th;
+    }
+    if (join == 'with-previous') {
+        let td = th.parentElement.querySelector('td');
+        td.classList.add('join-previous');
+        previous.querySelector('label').innerHTML = td.querySelector('label').innerHTML;
+        previous.querySelector('p').innerHTML = td.querySelector('p').innerHTML;
+        th.querySelector('label').style.display = 'none';
+        th.querySelector('p').style.display = 'none';
     }
 })
 

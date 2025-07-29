@@ -57,7 +57,7 @@ li {
 .PGPFGForGivewpAdminSettingsDiv td label {
     font-weight: bold;
     font-size: 16px;
-    margin: 6px 4px;
+    margin: 3px 4px;
 }
 
 .PGPFGForGivewpAdminSettingsDiv td label.lkn-pix-subtitle p {
@@ -256,4 +256,15 @@ input#lkn-label-pro {
 
 .lkn-menu-toggle {
     display: none;
+}
+
+.join-next {
+    margin: 0px !important;
+    border-bottom: none !important;
+    border-radius: 5px 5px 0px 0px !important;
+}
+
+.join-previous {
+    border-top: none !important;
+    border-radius: 0px 0px 5px 5px !important;
 }
