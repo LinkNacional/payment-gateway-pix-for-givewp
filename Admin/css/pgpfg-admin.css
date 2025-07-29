@@ -60,10 +60,16 @@ li {
     margin: 6px 4px;
 }
 
-.PGPFGForGivewpAdminSettingsDiv td p {
+.PGPFGForGivewpAdminSettingsDiv td label.lkn-pix-subtitle p {
     color: rgb(60, 67, 74);
     font-weight: 400;
-    margin: 0px 4px !important;
+    margin: 0px !important;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td label p.lkn-pix-description {
+    color: rgb(100, 105, 112);
+    font-weight: 400;
+    margin: 0px !important;
 }
 
 input[type=radio]:checked {
@@ -241,6 +247,7 @@ input#lkn-pix-menu {
 p.lkn-label-pro {
     color: #FF0B0B !important;
     font-weight: bold !important;
+    margin-left: 4px;
 }
 
 input#lkn-label-pro {

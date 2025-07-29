@@ -81,7 +81,7 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-city-setting' => __("Recipient city", 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-log-setting' => __('Saves transactions to the logs.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-details-setting' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp'),
-                        //pro--free
+                        //free
                         'lkn-payment-pix-environment' => __('Select the environment in which the payment gateway will operate.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-logs' => __('Enable transaction logging', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-debug' => __('Displays details of gateway operations in the console.', 'payment-gateway-pix-for-givewp'),
@@ -92,7 +92,18 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-bb-developer-key' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
                         'lkn-payment-pix-bb-pix-key' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp-pro')
                     ),
-                    'description' => array()
+                    'description' => array(
+                        'lkn-payment-pix-details-setting' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp'),
+                        //free
+                        'lkn-payment-pix-environment' => __('Development for test environment, Production for real donations.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-logs' => __('When enabled, all payment gateway operations will be recorded in the logging system.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-debug' => __('Enables detailed messages in the console with information about payment gateway operations.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-maxipago-key' => __('The Merchant Key is a secret credential provided by MaxiPago, used to authenticate all requests from your store to the payment API.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-maxipago-id' => __('The Merchant ID is the unique identifier provided by MaxiPago that represents your online store on the payment platform.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-bb-client-id' => __('This is the code that identifies your store in the Banco do Brasil system.', 'payment-gateway-pix-for-givewp-pro'),
+                        'lkn-payment-pix-bb-client-secret' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp-pro'),
+                        'lkn-payment-pix-bb-developer-key' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp-pro')
+                    )
                 );
 
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
@@ -197,7 +208,8 @@ final class PGPFGForGivewpAdmin
                             'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                         ),
-                        'subtitle' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp')
+                        'subtitle' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp'),
+                        'description' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
@@ -219,7 +231,7 @@ final class PGPFGForGivewpAdmin
                             'name' => __('License', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-license-setting-free',
                             'type' => 'password',
-                            'desc' => sprintf(__('Enter the license acquired at Link Nacional %sLink Nacional%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
+                            'desc' => sprintf(__('Enter the license acquired at Link Nacional %s Saiba mais%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
                         );
 
                         $settings[] = array(
@@ -230,7 +242,8 @@ final class PGPFGForGivewpAdmin
                                 'app' => __('Production', 'payment-gateway-pix-for-givewp'),
                                 'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
                             ),
-                            'subtitle' => __('Select the environment in which the payment gateway will operate.', 'payment-gateway-pix-for-givewp')
+                            'subtitle' => __('Select the environment in which the payment gateway will operate.', 'payment-gateway-pix-for-givewp'),
+                            'description' => __('Development for test environment, Production for real donations.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
@@ -243,7 +256,8 @@ final class PGPFGForGivewpAdmin
                                 'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
                                 'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                             ),
-                            'subtitle' => __('Enable transaction logging', 'payment-gateway-pix-for-givewp')
+                            'subtitle' => __('Enable transaction logging', 'payment-gateway-pix-for-givewp'),
+                            'description' => __('When enabled, all payment gateway operations will be recorded in the logging system.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
@@ -256,7 +270,8 @@ final class PGPFGForGivewpAdmin
                                 'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
                                 'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                             ),
-                            'subtitle' => __('Displays details of gateway operations in the console.', 'payment-gateway-pix-for-givewp')
+                            'subtitle' => __('Displays details of gateway operations in the console.', 'payment-gateway-pix-for-givewp'),
+                            'description' => __('Enables detailed messages in the console with information about payment gateway operations.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
@@ -275,7 +290,8 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-maxipago-key',
                             'desc' => __('Unique key linked to your store in Maxipago.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
-                            'subtitle' => __('Store identification key', 'payment-gateway-pix-for-givewp')
+                            'subtitle' => __('Store identification key', 'payment-gateway-pix-for-givewp'),
+                            'description' => __('The Merchant Key is a secret credential provided by MaxiPago, used to authenticate all requests from your store to the payment API.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
@@ -283,7 +299,8 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-maxipago-id',
                             'desc' => __('Unique identifier used to identify your store in Maxipago.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
-                            'subtitle' => __('Store identification credential', 'payment-gateway-pix-for-givewp')
+                            'subtitle' => __('Store identification credential', 'payment-gateway-pix-for-givewp'),
+                            'description' => __('The Merchant ID is the unique identifier provided by MaxiPago that represents your online store on the payment platform.', 'payment-gateway-pix-for-givewp')
                         );
                         $settings[] = array(
                             'id' => 'lkn-payment-pix-sectionend',
@@ -301,7 +318,8 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-bb-client-id',
                             'desc' => __('Unique identifier used to identify your account at Banco do Brasil.', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password',
-                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro')
+                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                            'description' => __('This is the code that identifies your store in the Banco do Brasil system.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
@@ -309,7 +327,8 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-bb-client-secret',
                             'desc' => __('Private key used to authenticate integrations with Banco do Brasil services.', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password',
-                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro')
+                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                            'description' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
@@ -317,7 +336,8 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-bb-developer-key',
                             'desc' => __('Key used by developers to access Banco do Brasil APIs.', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password',
-                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro')
+                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                            'description' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(

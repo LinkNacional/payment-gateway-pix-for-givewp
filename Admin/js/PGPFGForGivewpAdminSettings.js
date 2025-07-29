@@ -72,6 +72,7 @@ thElements.forEach(function (th) {
     var descriptionField = th.nextElementSibling.querySelector('.give-field-description');
 
     let subtitle = pgpfgTranslations.subtitle[fieldId] ?? null;
+    let description = pgpfgTranslations.description[fieldId] ?? null;
     // Verifica se o campo de descrição contém um link
     if (descriptionField) {
         var linkElement = descriptionField.querySelector('a');
@@ -86,11 +87,21 @@ thElements.forEach(function (th) {
     }
     if (subtitle) {
         let p = document.createElement('p');
+        let div = document.createElement('label');
         p.innerHTML = subtitle;
-        p.classList.add('lkn-pix-subtitle');
+        div.classList.add('lkn-pix-subtitle');
+        div.append(p);
         let td = th.parentElement.querySelector('td');
-        td.appendChild(p);
-        console.log(subtitle)
+        td.appendChild(div);
+    }
+    if (description) {
+        let p = document.createElement('p');
+        let div = document.createElement('label');
+        p.classList.add('lkn-pix-description');
+        p.innerHTML = description;
+        div.append(p);
+        let td = th.parentElement.querySelector('td');
+        td.appendChild(div);
     }
 });
 

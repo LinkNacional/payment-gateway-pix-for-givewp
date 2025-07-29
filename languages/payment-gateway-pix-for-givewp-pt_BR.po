@@ -145,3 +145,30 @@ msgstr "Necessária para autenticar requisições à API do BB."
 
 msgid "The provided Pix key must be registered and active in Banco do Brasil."
 msgstr "A chave Pix informada deve estar cadastrada e ativa no BB."
+
+msgid "Enable to show billing details on donation forms"
+msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+
+msgid "Development for test environment, Production for real donations."
+msgstr "Desenvolvimento para ambiente de testes, Produção para ambiente de doações reais."
+
+msgid "When enabled, all payment gateway operations will be recorded in the logging system."
+msgstr "Quando ativado, todas as operações dos gateways de pagamento serão registradas no sistema de logs."
+
+msgid "Enables detailed messages in the console with information about payment gateway operations."
+msgstr "Habilita mensagens detalhadas no console com informações sobre as operações dos gateways de pagamento."
+
+msgid "The Merchant Key is a secret credential provided by MaxiPago, used to authenticate all requests from your store to the payment API."
+msgstr "O Merchant Key é uma credencial secreta fornecida pela MaxiPago, usada para autenticar todas as requisições da sua loja à API de pagamentos."
+
+msgid "The Merchant ID is the unique identifier provided by MaxiPago that represents your online store on the payment platform."
+msgstr "O Merchant ID é o identificador único fornecido pela MaxiPago, que representa sua loja virtual na plataforma de pagamentos."
+
+msgid "This is the code that identifies your store in the Banco do Brasil system."
+msgstr "Este é o código que identifica sua loja no sistema do Banco do Brasil."
+
+msgid "BB API secret credential. Use with Client ID for secure authentication."
+msgstr "Credencial secreta da API BB. Use com o Client ID para autenticação segura."
+
+msgid "The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API."
+msgstr "A Developer Key é uma credencial de segurança fornecida pelo Banco do Brasil para autenticar sua aplicação na API de Pagamentos."
