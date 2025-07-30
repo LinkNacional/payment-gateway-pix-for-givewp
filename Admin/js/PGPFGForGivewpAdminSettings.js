@@ -1,4 +1,11 @@
 // Selecione todos os elementos com a classe desejada
+//console.log('pgpfgTranslations:', typeof pgpfgTranslations !== 'undefined' ? pgpfgTranslations : 'UNDEFINED');
+// document.addEventListener('DOMContentLoaded', function () {
+//     let configPro = window.pgpfgProTranslations;
+//     console.log(configPro)
+//     pgpfgTranslations.subtitle = configPro.subtitle;
+// });
+
 var elements = document.querySelectorAll('.give-setting-tab-header.give-setting-tab-header-gateways');
 
 // Para cada elemento selecionado
@@ -103,15 +110,6 @@ thElements.forEach(function (th) {
         let td = th.parentElement.querySelector('td');
         td.appendChild(div);
     }
-    /*let join = pgpfgTranslations.join[fieldId] ?? null;
-    if (join == 'with-next') {
-        let td = th.parentElement.querySelector('td');
-        td.classList.add('join-next')
-    }
-    if (join == 'with-previous') {
-        let td = th.parentElement.querySelector('td');
-        td.classList.add('join-previous');
-    }*/
 });
 
 //Configurações iniciais do menu

@@ -58,6 +58,51 @@ final class PGPFGForGivewpAdmin
         $this->version = $version;
     }
 
+    private function merge_pro_translations($translation_array)
+    {
+        // Verificar se existe traduções do plugin PRO
+        if (isset($GLOBALS['pgpfg_pro_translations']) && is_array($GLOBALS['pgpfg_pro_translations'])) {
+            $pro_translations = $GLOBALS['pgpfg_pro_translations'];
+
+            // Mesclar subtitle
+            if (isset($pro_translations['subtitle']) && is_array($pro_translations['subtitle'])) {
+                $translation_array['subtitle'] = array_merge(
+                    $translation_array['subtitle'],
+                    $pro_translations['subtitle']
+                );
+            }
+
+            // Mesclar description
+            if (isset($pro_translations['description']) && is_array($pro_translations['description'])) {
+                $translation_array['description'] = array_merge(
+                    $translation_array['description'],
+                    $pro_translations['description']
+                );
+            }
+
+            // Mesclar join
+            if (isset($pro_translations['join']) && is_array($pro_translations['join'])) {
+                $translation_array['join'] = array_merge(
+                    $translation_array['join'],
+                    $pro_translations['join']
+                );
+            }
+
+            // Mesclar outras propriedades (translations, etc.)
+            foreach ($pro_translations as $key => $value) {
+                if (!in_array($key, ['subtitle', 'description', 'join'])) {
+                    $translation_array[$key] = $value;
+                }
+            }
+
+            error_log('Mesclagem PHP concluída com sucesso!');
+        } else {
+            error_log('Plugin PRO não encontrado ou traduções não definidas');
+        }
+
+        return $translation_array;
+    }
+
     /**
      * Add setting to new section 'Custom Settings' of 'General' Tab.
      *
@@ -89,8 +134,8 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-maxipago-id' => __('Store identification credential', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-bb-client-id' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
                         'lkn-payment-pix-bb-client-secret' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
-                        'lkn-payment-pix-bb-developer-key' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
-                        'lkn-payment-pix-bb-pix-key' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp-pro')
+                        'lkn-payment-pix-bb-developer-key' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-bb-pix-key' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp')
                     ),
                     'description' => array(
                         'lkn-payment-pix-details-setting' => __('Enable to show billing details on donation forms.', 'payment-gateway-pix-for-givewp'),
@@ -109,7 +154,7 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-type-setting' => 'with-next'
                     )
                 );
-
+                $translation_array = $this->merge_pro_translations($translation_array);
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
                 $pro_plugin_active = function_exists('is_plugin_active') && is_plugin_active('payment-gateway-pix-for-givewp-pro/payment-gateway-pix-for-givewp-pro.php');
@@ -323,27 +368,27 @@ final class PGPFGForGivewpAdmin
                         $settings[] = array(
                             'name' => 'BB Client Id',
                             'id' => 'lkn-payment-pix-bb-client-id',
-                            'desc' => __('Unique identifier used to identify your account at Banco do Brasil.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Unique identifier used to identify your account at Banco do Brasil.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
-                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
                             'description' => __('This is the code that identifies your store in the Banco do Brasil system.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
                             'name' => 'BB Client Secret',
                             'id' => 'lkn-payment-pix-bb-client-secret',
-                            'desc' => __('Private key used to authenticate integrations with Banco do Brasil services.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Private key used to authenticate integrations with Banco do Brasil services.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
-                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
                             'description' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
                             'name' => 'BB Developer Key',
                             'id' => 'lkn-payment-pix-bb-developer-key',
-                            'desc' => __('Key used by developers to access Banco do Brasil APIs.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Key used by developers to access Banco do Brasil APIs.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
-                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                            'subtitle' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
                             'description' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp')
                         );
 
@@ -352,7 +397,7 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-bb-pix-key',
                             'type' => 'text',
                             'desc' => sprintf(__('Pix key linked to the client and registered at Banco do Brasil. It must be active for the transaction to be processed correctly. %sLearn more%s', 'payment-gateway-pix-for-givewp-pro'), '<a target="_blank" href="https://apoio.developers.bb.com.br/referency/post/648385d0de39c800131d8579">', '</a>'),
-                            'subtitle' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp-pro')
+                            'subtitle' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp')
                         );
 
                         $settings[] = array(
