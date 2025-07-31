@@ -1,10 +1,4 @@
 // Selecione todos os elementos com a classe desejada
-//console.log('pgpfgTranslations:', typeof pgpfgTranslations !== 'undefined' ? pgpfgTranslations : 'UNDEFINED');
-// document.addEventListener('DOMContentLoaded', function () {
-//     let configPro = window.pgpfgProTranslations;
-//     console.log(configPro)
-//     pgpfgTranslations.subtitle = configPro.subtitle;
-// });
 
 var elements = document.querySelectorAll('.give-setting-tab-header.give-setting-tab-header-gateways');
 
