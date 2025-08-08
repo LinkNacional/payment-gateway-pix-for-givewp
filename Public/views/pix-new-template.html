@@ -1,0 +1,85 @@
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+>
+<div id="pix_new_content">
+    <div class="container_pix">
+        <div class="span_title_container">
+            <span class="span_title_text">Instruções</span>
+        </div>
+        <div class="schedule_instructions_container">
+            <span>Dentro do APP do seu banco, leia o QRCode ou copie e cole o código PIX.</span>
+            <span>Confirmação de pagamento automática.</span>
+        </div>
+        <div class="schedule_check_container">
+            <span class="schedule_text">Próxima verificação em (Nº de tentativas: 5):</span>
+            <span id="timer">0s</span>
+        </div>
+
+        <div class="payment_check_container">
+            <button
+                class="payment_check_button"
+                disabled
+            >Já paguei o PIX</button>
+        </div>
+        <span class="payment_check_text">Ao clicar neste botão, verificaremos se o pagamento foi confirmado com
+            sucesso.</span>
+    </div>
+    <div class="container_pix">
+        <span class="span_title_value">Total da doação</span>
+        <span
+            class="span_total_value"
+            id="pix_page_currency_text"
+        >{{currencyTxt}}</span>
+        <span class="span_date">{{dueDateMsg}}</span>
+        <div id="copy_container">
+            <input
+                type="text"
+                class="input_copy_code"
+                readonly
+                style="border: none; background-color: #D9D9D9;"
+                value="{{donKey}}"
+            >
+            <input
+                type="hidden"
+                id="transactionId"
+                value="{{transactionId}}"
+            >
+
+            <input
+                type="hidden"
+                id="donationId"
+                value="{{donationId}}"
+            >
+            <button class="button_copy_code">COPIAR</button>
+        </div>
+        <div id="pix_page_qr_code">
+            <img
+                src="{{donQrCode}}"
+                alt="{{qrCodeDesc}}"
+                class="pix_img"
+            >
+        </div>
+    </div>
+    <div class="share_container">
+        <button
+            class="share_button"
+            style="background-color: transparent"
+        >
+            <img
+                src="{{filePath}}"
+                alt="icon"
+            >
+        </button>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var mainElement = document.querySelector("main");
+        var elementToMove = document.getElementById("pix_new_content");
+        if (mainElement && elementToMove) {
+            mainElement.insertAdjacentElement("afterend", elementToMove);
+        }
+    });
+</script>

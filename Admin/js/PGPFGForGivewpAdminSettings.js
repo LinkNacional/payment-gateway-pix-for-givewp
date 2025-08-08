@@ -196,7 +196,7 @@ trs.forEach(function (tr) {
 })
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
-    for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
+    for (let i = 2; i < lkn_PGPFG_settings.length; i++) {
         let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
         configs.forEach(function (config) {
             Array.from(config.children).forEach(function (child) {
@@ -215,7 +215,7 @@ if (!document.getElementById('lkn-payment-pix-license-setting')) {
     document.querySelector('.give-submit-wrap input').addEventListener('click', () => {
         event.preventDefault();
         //limpa Campos Pro button-primary give-save-button
-        for (let i = 1; i < lkn_PGPFG_settings.length; i++) {
+        for (let i = 2; i < lkn_PGPFG_settings.length; i++) {
             let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
             configs.forEach(function (config) {
                 config.querySelectorAll("input[type='text'], input[type='password']").forEach(function (input) {

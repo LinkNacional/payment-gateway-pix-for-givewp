@@ -176,9 +176,10 @@ final class PGPFGForGivewpAdmin
                             </div>
                             <ul class="lkn-pix-menu">
                                 <li id="0" class="lkn-pix-menu-ativo">Pix QRCode (free)</li>
-                                <li id="1">Pro Settings</li>
-                                <li id="2">Pix MaxiPago</li>
-                                <li id="3">Pix Banco do Brasil(BB)</li>
+                                <li id="1">PagHiper</li>
+                                <li id="2">Pro Settings</li>
+                                <li id="3">Pix MaxiPago</li>
+                                <li id="4">Pix Banco do Brasil(BB)</li>
                             </ul>
                         </div>'
                     );
@@ -267,6 +268,83 @@ final class PGPFGForGivewpAdmin
                     $settings[] = array(
                         'id' => 'lkn-payment-pix',
                         'type' => 'sectionend'
+                    );
+
+                    $settings[] = array(
+                        'type' => 'title',
+                        'id' => 'lkn_paghiper',
+                        'title' => 'PagHiper Settings'
+                    );
+
+                    $settings[] = array(
+                        'name' => 'PagHiper API Key',
+                        'id' => 'lkn_paghiper_api_key_setting_field',
+                        'desc' => 'Chave de serviço API da PagHiper',
+                        'type' => 'api_key',
+                    );
+
+                    $settings[] = array(
+                        'name' => 'PagHiper Token',
+                        'id' => 'lkn_paghiper_token_setting_field',
+                        'desc' => 'Chave de serviço API da PagHiper',
+                        'type' => 'api_key',
+                    );
+
+                    $settings[] = array(
+                        'name' => 'Descrição da transação',
+                        'id' => 'lkn_paghiper_desc_setting_field',
+                        'desc' => 'A descrição que aparecerá no boleto/PIX do cliente',
+                        'type' => 'text',
+                        'default' => 'Doação',
+                    );
+
+                    $settings[] = array(
+                        'name' => 'Vencimento padrão para boletos emitidos',
+                        'id' => 'lkn_paghiper_due_date_setting_field',
+                        'desc' => 'Dias corridos até o vencimento, o valor máximo até o vencimento é de 400 dias',
+                        'type' => 'number',
+                        'default' => '1',
+                    );
+
+                    $settings[] = array(
+                        'name' => 'Taxa fixa PIX',
+                        'id' => 'lkn_paghiper_fee_pix_setting_field',
+                        'desc' => 'Taxa cobrada a mais do cliente por utilizar PIX como método de pagamento. Ex.: 2.0 (dois reais). Obs.: Use o ponto (.) para separar as casas decimais',
+                        'type' => 'number',
+                        'default' => '0',
+                    );
+
+                    $settings[] = array(
+                        'name' => 'Taxa fixa boleto',
+                        'id' => 'lkn_paghiper_fee_bol_setting_field',
+                        'desc' => 'Taxa cobrada a mais do cliente por utilizar boleto como método de pagamento. Ex.: 2.0 (dois reais). Obs.: Use o ponto (.) para separar as casas decimais',
+                        'type' => 'number',
+                        'default' => '0',
+                    );
+                    $settings[] = array(
+                        "name" => "Página do pagamento PIX",
+                        'id' => "lkn_paghiper_select_template_pix",
+                        'default' => "null",
+                        'type' => "select",
+                        'options' => array(),
+                        'desc' => "Por favor insira a tag [lkn_pix_page] na página que deseja selecionar"
+                    );
+
+                    $settings[] = array(
+                        'name' => 'Modo de Depuração',
+                        'id' => 'lkn_paghiper_debug',
+                        'desc' => 'Habilitar ambiente para Debug. <a id="lkn-give-debug">Log da transação.</a>',
+                        'type' => 'radio',
+                        'default' => 'disabled',
+                        'options' => array(
+                            'enabled' => 'Habilitar',
+                            'disabled' => 'Desabilitar',
+                        ),
+                    );
+
+                    $settings[] = array(
+                        'id' => 'lkn_paghiper',
+                        'type' => 'sectionend',
                     );
 
                     //PRO SETTINGS free version
