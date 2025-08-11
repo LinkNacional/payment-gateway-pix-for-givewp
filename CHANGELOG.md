@@ -1,6 +1,7 @@
 # 2.2.0 - 15/07/2025
 * Novo menu para seções de configuração
 * Novo estilo para as seções de configuração
+* Gateway PagHiper pix e boleto
 
 # 2.1.1 - 26/02/2025
 * Correção de url para ver logs.

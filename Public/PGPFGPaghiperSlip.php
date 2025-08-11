@@ -57,11 +57,11 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
             $bolFee = 0;
         }
 
-        $info = esc_html__('Para pagamentos via Boleto bancário é cobrada uma taxa fixa de R$ ');
+        $info = esc_html__('Para pagamentos via Boleto bancário é cobrada uma taxa fixa de R$ ', 'payment-gateway-pix-for-givewp');
         $info = $info . $bolFee;
 
-        $cpfCnpj = esc_html__('CPF / CNPJ');
-        $cpfCnpjTooltip = esc_html__('Insira um número de CPF ou CNPJ válido');
+        $cpfCnpj = esc_html__('CPF / CNPJ', 'payment-gateway-pix-for-givewp');
+        $cpfCnpjTooltip = esc_html__('Insira um número de CPF ou CNPJ válido', 'payment-gateway-pix-for-givewp');
         $astr = esc_html('*');
 
         return "
@@ -97,7 +97,7 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
             $bolFee = 0;
         }
 
-        $info = esc_html__('Para pagamentos via Boleto bancário é cobrada uma taxa fixa de R$ ');
+        $info = esc_html__('Para pagamentos via Boleto bancário é cobrada uma taxa fixa de R$ ', 'payment-gateway-pix-for-givewp');
         $info = $info . $bolFee;
 
         wp_register_script(
@@ -109,9 +109,9 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
         );
 
         $bolGlobals = array(
-            'title' => esc_html__('Informação do Pagamento'),
-            'cpf_cnpj_label' => esc_html__('CPF / CNPJ'),
-            'cpf_cnpj_tooltip' => esc_html__('Insira um número de CPF ou CNPJ válido'),
+            'title' => esc_html__('Informação do Pagamento', 'payment-gateway-pix-for-givewp'),
+            'cpf_cnpj_label' => esc_html__('CPF / CNPJ', 'payment-gateway-pix-for-givewp'),
+            'cpf_cnpj_tooltip' => esc_html__('Insira um número de CPF ou CNPJ válido', 'payment-gateway-pix-for-givewp'),
             'astr_symbol' => esc_html(' *'),
             'bol_fee' => ($bolFee > 0),
             'info' => $info

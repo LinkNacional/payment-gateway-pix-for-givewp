@@ -231,44 +231,43 @@ final class LknGivePaghiperHelper
         $custom_field_value = give_get_meta($payment_id);
         if (isset($custom_field_value["lkn_give_paghiper_response"])) {
             $arr = json_decode($custom_field_value["lkn_give_paghiper_response"][0], true);
-            $pix_page_url = $arr["pix_page"];
+            $pix_page_url = esc_url($arr["pix_page"]);
 
-            $javascript_code = "
+?>
             <script>
                 document.addEventListener('DOMContentLoaded', function() {
                     const adminBox = document.getElementById('give-order-details');
-                    let urlQrCode = new URL('{$pix_page_url}');
+                    let urlQrCode = new URL('<?php echo esc_js($pix_page_url); ?>');
                     params = new URLSearchParams(urlQrCode.search);
-            
+
                     if (adminBox) {
                         let giveAdminBox = adminBox.getElementsByClassName('give-admin-box-inside');
                         let qrCode = JSON.parse(atob(params.get('pix')));
-                        
+
                         // Crie a nova div
                         var newDiv = document.createElement('div');
                         newDiv.className = 'give-admin-box-inside';
-            
+
                         // Crie o novo parágrafo
                         var newP = document.createElement('p');
-                        newP.innerHTML = '<strong>Chave PIX:</strong><br><button pixKey=\"' + qrCode.key + '\">Copiar Chave PIX</button>';
-            
+                        newP.innerHTML = '<strong><?php echo esc_js(__('Chave PIX:', 'payment-gateway-pix-for-givewp')); ?></strong><br><button pixKey="' + qrCode.key + '"><?php echo esc_js(__('Copiar Chave PIX', 'payment-gateway-pix-for-givewp')); ?></button>';
+
                         let button = newP.querySelector('button');
                         button.addEventListener('click', function(event) {
                             event.preventDefault();
                             navigator.clipboard.writeText(button.getAttribute('pixKey'));
-                            alert('Chave Pix Copiada');
+                            alert('<?php echo esc_js(__('Chave Pix Copiada', 'payment-gateway-pix-for-givewp')); ?>');
                         });
-            
+
                         // Adicione o parágrafo à nova div
                         newDiv.appendChild(newP);
-            
+
                         // Insira a nova div após o segundo elemento com a classe .give-admin-box-inside
                         giveAdminBox[1].after(newDiv);
                     }
                 });
-            </script>";
-
-            echo $javascript_code;
+            </script>
+<?php
         }
     }
 }

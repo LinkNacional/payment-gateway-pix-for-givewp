@@ -172,3 +172,9 @@ msgstr "Credencial secreta da API BB. Use com o Client ID para autenticação se
 
 msgid "The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API."
 msgstr "A Developer Key é uma credencial de segurança fornecida pelo Banco do Brasil para autenticar sua aplicação na API de Pagamentos."
+
+msgid "Enter the license acquired at Link Nacional %sLearn more%s."
+msgstr "Digite sua licença adiquirida na link Nacional %sSaiba mais%s."
+
+msgid "Private key used to authenticate integrations with Banco do Brasil services."
+msgstr "Chave privada usada para autenciar a API do Banco do Brasil"

@@ -99,10 +99,10 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
         $token = $configs['token'];
         $apiKey = $configs['apiKey'];
 
-        $alertMessagePix = esc_html__('Atenção! Não será possível realizar doações recorrentes via Pix.');
-        $alertMessageBol = esc_html__('Atenção! Não será possível realizar doações recorrentes via Boleto.');
-        $title = esc_html__('Informação do Pagamento');
-        $secureNotice = esc_html__('Secure Donation via SSL Encryption.');
+        $alertMessagePix = esc_html__('Atenção! Não será possível realizar doações recorrentes via Pix.', 'payment-gateway-pix-for-givewp');
+        $alertMessageBol = esc_html__('Atenção! Não será possível realizar doações recorrentes via Boleto.', 'payment-gateway-pix-for-givewp');
+        $title = esc_html__('Informação do Pagamento', 'payment-gateway-pix-for-givewp');
+        $secureNotice = esc_html__('Secure Donation via SSL Encryption.', 'payment-gateway-pix-for-givewp');
         $gatewayForm = $this->gateway_form();
 
         $scriptGlobals = array(
@@ -118,8 +118,8 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             return Give()->notices->print_frontend_notice(
                 sprintf(
                     '<strong>%1$s</strong> %2$s',
-                    esc_html__('Error:'),
-                    esc_html__('Credenciais do PagHiper não informadas ou inválida.')
+                    esc_html__('Error:', 'payment-gateway-pix-for-givewp'),
+                    esc_html__('Credenciais do PagHiper não informadas ou inválida.', 'payment-gateway-pix-for-givewp')
                 )
             );
         }
@@ -127,8 +127,8 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             return Give()->notices->print_frontend_notice(
                 sprintf(
                     '<strong>%1$s</strong> %2$s',
-                    esc_html__('Error:'),
-                    esc_html__('Donation disabled due to lack of SSL (HTTPS).')
+                    esc_html__('Error:', 'payment-gateway-pix-for-givewp'),
+                    esc_html__('Donation disabled due to lack of SSL (HTTPS).', 'payment-gateway-pix-for-givewp')
                 )
             );
         }
@@ -182,7 +182,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 LknGivePaghiperHelper::regLog('error', 'payment', 'GiveWP Error', var_export($errors, true));
 
                 // Errors? Send back.
-                throw new PaymentGatewayException(esc_html__($errors, 'give'));
+                throw new PaymentGatewayException(esc_html($errors));
             }
 
             $apiKey = $configs['apiKey'];
@@ -205,19 +205,20 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 LknGivePaghiperHelper::regLog('error', 'payment', 'Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização', wp_json_encode($gatewayData));
 
                 // Problems? Send back.
-                throw new PaymentGatewayException(esc_html__('Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização'));
+                throw new PaymentGatewayException(esc_html__('Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização', 'payment-gateway-pix-for-givewp'));
             }
 
             // Verify the currency.
             if ('BRL' !== $donCurrency) {
                 // Not suport international currencies.
-                throw new PaymentGatewayException(esc_html__('Pagamento com moeda estrangeira não suportado.'));
+                throw new PaymentGatewayException(esc_html__('Pagamento com moeda estrangeira não suportado.', 'payment-gateway-pix-for-givewp'));
             }
 
             $donPrice = number_format($donPrice, 2, '', '');
 
             if ($donPrice < 300) {
-                throw new PaymentGatewayException(esc_html__('O valor mínimo para doações via ' . $donGatewayName . ' é R$ 3,00'));
+                // translators: %s is the payment gateway name (e.g., "Pix", "Boleto")
+                throw new PaymentGatewayException(sprintf(esc_html__('O valor mínimo para doações via %s é R$ 3,00', 'payment-gateway-pix-for-givewp'), $donGatewayName));
             }
 
             // Attributes sanitizing.
@@ -254,7 +255,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
             // In CPF/CNPJ not valid.
             if (false == $donValidDocument) {
-                throw new PaymentGatewayException(esc_html__('O CPF/CNPJ informado é inválido.'));
+                throw new PaymentGatewayException(esc_html__('O CPF/CNPJ informado é inválido.', 'payment-gateway-pix-for-givewp'));
             }
 
             // Create a query arg with the donation ID to listener callback.
@@ -328,7 +329,8 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 // Verifies if the Pix API not returned a success code.
                 if ('success' != $paghiperResult) {
-                    throw new PaymentGatewayException(esc_html__('Falha na doação. Razão: ' . $paghiperMsg));
+                    // translators: %s is the error message from PagHiper API
+                    throw new PaymentGatewayException(sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), $paghiperMsg));
                 }
 
                 // Break the due date in YY/mm/dd.
@@ -366,7 +368,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 if (isset($gatewayData["is_multi"])) {
                     echo '<script type="text/javascript">';
-                    echo 'window.top.location.href = "' . $dir . '";';
+                    echo 'window.top.location.href = "' . esc_js($dir) . '";';
                     echo '</script>';
                     exit();
                 }
@@ -380,7 +382,8 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 // Verifies if the Slip API not returned a success code.
                 if ('success' != $paghiperResult) {
-                    throw new PaymentGatewayException(esc_html__('Falha na doação. Razão: ' . $paghiperMsg));
+                    // translators: %s is the error message from PagHiper API
+                    throw new PaymentGatewayException(sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), $paghiperMsg));
                 }
 
                 $dir = null;
@@ -416,7 +419,8 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
             DonationNote::create(array(
                 'donationId' => $donation->id,
-                'content' => sprintf(esc_html__('Falha na doação. Razão: %s'), $errorMsg)
+                // translators: %s is the error message
+                'content' => sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), esc_html($errorMsg))
             ));
 
             throw new PaymentGatewayException($errorMsg);
@@ -488,7 +492,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         DonationNote::create(array(
             'donationId' => $donation->id,
-            'content' => esc_html__('Doação reembolsada via PagHiper.')
+            'content' => esc_html__('Doação reembolsada via PagHiper.', 'payment-gateway-pix-for-givewp')
         ));
 
         return new PaymentRefunded();

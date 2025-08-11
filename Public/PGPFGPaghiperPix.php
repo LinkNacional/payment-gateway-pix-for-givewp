@@ -55,11 +55,11 @@ final class PGPFGPaghiperPix extends PGPFGGatewayPaghiperAbstractPayment
             $pixFee = 0;
         }
 
-        $info = esc_html__('Para pagamentos via Pix é cobrada uma taxa fixa de R$ ');
+        $info = esc_html__('Para pagamentos via Pix é cobrada uma taxa fixa de R$ ', 'payment-gateway-pix-for-givewp');
         $info = $info . $pixFee;
 
-        $cpfCnpj = esc_html__('CPF / CNPJ');
-        $cpfCnpjTooltip = esc_html__('Insira um número de CPF ou CNPJ válido');
+        $cpfCnpj = esc_html__('CPF / CNPJ', 'payment-gateway-pix-for-givewp');
+        $cpfCnpjTooltip = esc_html__('Insira um número de CPF ou CNPJ válido', 'payment-gateway-pix-for-givewp');
         $astr = esc_html('*');
 
         return "
@@ -95,7 +95,7 @@ final class PGPFGPaghiperPix extends PGPFGGatewayPaghiperAbstractPayment
             $pixFee = 0;
         }
 
-        $info = esc_html__('Para pagamentos via Pix é cobrada uma taxa fixa de R$ ');
+        $info = esc_html__('Para pagamentos via Pix é cobrada uma taxa fixa de R$ ', 'payment-gateway-pix-for-givewp');
         $info = $info . $pixFee;
 
         wp_register_script(
@@ -107,9 +107,9 @@ final class PGPFGPaghiperPix extends PGPFGGatewayPaghiperAbstractPayment
         );
 
         $pixGlobals = array(
-            'title' => esc_html__('Informação do Pagamento'),
-            'cpf_cnpj_label' => esc_html__('CPF / CNPJ'),
-            'cpf_cnpj_tooltip' => esc_html__('Insira um número de CPF ou CNPJ válido'),
+            'title' => esc_html__('Informação do Pagamento', 'payment-gateway-pix-for-givewp'),
+            'cpf_cnpj_label' => esc_html__('CPF / CNPJ', 'payment-gateway-pix-for-givewp'),
+            'cpf_cnpj_tooltip' => esc_html__('Insira um número de CPF ou CNPJ válido', 'payment-gateway-pix-for-givewp'),
             'astr_symbol' => esc_html(' *'),
             'pix_fee' => ($pixFee > 0),
             'info' => $info

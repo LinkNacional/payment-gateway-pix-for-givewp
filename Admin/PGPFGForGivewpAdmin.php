@@ -132,8 +132,8 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-debug' => __('Displays details of gateway operations in the console.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-maxipago-key' => __('Store identification key', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-maxipago-id' => __('Store identification credential', 'payment-gateway-pix-for-givewp'),
-                        'lkn-payment-pix-bb-client-id' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
-                        'lkn-payment-pix-bb-client-secret' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp-pro'),
+                        'lkn-payment-pix-bb-client-id' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-bb-client-secret' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-bb-developer-key' => __('Required to authenticate requests to the BB API.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-bb-pix-key' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp')
                     ),
@@ -145,9 +145,9 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-debug' => __('Enables detailed messages in the console with information about payment gateway operations.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-maxipago-key' => __('The Merchant Key is a secret credential provided by MaxiPago, used to authenticate all requests from your store to the payment API.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-maxipago-id' => __('The Merchant ID is the unique identifier provided by MaxiPago that represents your online store on the payment platform.', 'payment-gateway-pix-for-givewp'),
-                        'lkn-payment-pix-bb-client-id' => __('This is the code that identifies your store in the Banco do Brasil system.', 'payment-gateway-pix-for-givewp-pro'),
-                        'lkn-payment-pix-bb-client-secret' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp-pro'),
-                        'lkn-payment-pix-bb-developer-key' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp-pro')
+                        'lkn-payment-pix-bb-client-id' => __('This is the code that identifies your store in the Banco do Brasil system.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-bb-client-secret' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp'),
+                        'lkn-payment-pix-bb-developer-key' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp')
                     ),
                     'join' => array(
                         'lkn-payment-pix-key' => 'with-previous',
@@ -361,7 +361,8 @@ final class PGPFGForGivewpAdmin
                             'name' => __('License', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-license-setting-free',
                             'type' => 'password',
-                            'desc' => sprintf(__('Enter the license acquired at Link Nacional %s Saiba mais%s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>'),
+                            // translators: %1$s: start link, %2$s: end link
+                            'desc' => sprintf(__('Enter the license acquired at Link Nacional %1$sLearn more%2$s.', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href=https://www.linknacional.com.br/wordpress/givewp/>', '</a>')
                         );
 
                         $settings[] = array(
@@ -474,7 +475,8 @@ final class PGPFGForGivewpAdmin
                             'name' => 'BB Pix Key',
                             'id' => 'lkn-payment-pix-bb-pix-key',
                             'type' => 'text',
-                            'desc' => sprintf(__('Pix key linked to the client and registered at Banco do Brasil. It must be active for the transaction to be processed correctly. %sLearn more%s', 'payment-gateway-pix-for-givewp-pro'), '<a target="_blank" href="https://apoio.developers.bb.com.br/referency/post/648385d0de39c800131d8579">', '</a>'),
+                            // translators: %1$s: start link, %2$s: end link    
+                            'desc' => sprintf(__('Pix key linked to the client and registered at Banco do Brasil. It must be active for the transaction to be processed correctly. %1$sLearn more%2$s', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href="https://apoio.developers.bb.com.br/referency/post/648385d0de39c800131d8579">', '</a>'),
                             'subtitle' => __('The provided Pix key must be registered and active in Banco do Brasil.', 'payment-gateway-pix-for-givewp')
                         );
 
