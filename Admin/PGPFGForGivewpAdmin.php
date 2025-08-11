@@ -94,10 +94,6 @@ final class PGPFGForGivewpAdmin
                     $translation_array[$key] = $value;
                 }
             }
-
-            error_log('Mesclagem PHP concluída com sucesso!');
-        } else {
-            error_log('Plugin PRO não encontrado ou traduções não definidas');
         }
 
         return $translation_array;

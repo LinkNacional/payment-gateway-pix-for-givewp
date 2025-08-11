@@ -11,10 +11,10 @@
 // Catch URL params.
 try {
     if (! empty($_GET["pix"]) && isset($_GET["pix"])) {
-        wp_enqueue_script('lkn-pix-page-script-js', plugin_dir_url(__FILE__) . 'js/lkn-give-paghiper-pix-page.js', array('jquery'), false, false);
+        wp_enqueue_script('lkn-pix-page-script-js', plugin_dir_url(__FILE__) . 'js/lkn-give-paghiper-pix-page.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
 
         wp_enqueue_style("lkn-pix-page-css", PGPFG_PIX_PLUGIN_URL . "Public/css/lkn-give-paghiper-public.css", array(), PGPFG_PIX_PLUGIN_VERSION);
-        $pixParams = $_GET['pix'];
+        $pixParams = sanitize_text_field(wp_unslash($_GET['pix']));
 
         $pixParamsEncoded = sanitize_text_field($pixParams);
         $pixParamsDecoded = json_decode(base64_decode($pixParamsEncoded, true));
@@ -79,7 +79,7 @@ try {
             ),
             $html
         );
-
+        //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $html;
     } else {
         throw new Exception("Erro", 1);
@@ -131,6 +131,6 @@ document.addEventListener(\"DOMContentLoaded\", function() {
 
 
     ";
-
+    //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
     echo $html;
 }

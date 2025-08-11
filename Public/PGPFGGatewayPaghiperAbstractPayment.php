@@ -91,7 +91,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         $configs = LknGivePaghiperHelper::get_configs();
 
-        wp_enqueue_script($this->id . '-script-js', plugin_dir_url(__FILE__) . 'js/lkn-give-paghiper-public.js', array('jquery'), false, false);
+        wp_enqueue_script($this->id . '-script-js', plugin_dir_url(__FILE__) . 'js/lkn-give-paghiper-public.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
 
         $pixFee = $configs['pixFee'];
         $bolFee = $configs['bolFee'];
@@ -223,10 +223,10 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
             // Attributes sanitizing.
             $donDescript = $configs['description'];
-            $donDescript = strip_tags($donDescript);
+            $donDescript = wp_strip_all_tags($donDescript);
             $donEmail = filter_var($donEmail, \FILTER_SANITIZE_EMAIL);
             $donFullName = $donFirstName . ' ' . $donLastName;
-            $donFullName = strip_tags($donFullName);
+            $donFullName = wp_strip_all_tags($donFullName);
             $donCpfCnpj = $gatewayData['lkn_give_primary_document'];
             $donCpfCnpj = preg_replace('/\D/', '', $donCpfCnpj);
             $donValidDocument = false;
@@ -423,7 +423,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 'content' => sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), esc_html($errorMsg))
             ));
 
-            throw new PaymentGatewayException($errorMsg);
+            throw new PaymentGatewayException(esc_html($errorMsg));
             exit;
         }
     }
