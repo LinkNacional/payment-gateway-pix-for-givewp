@@ -179,10 +179,10 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $errors = give_get_errors();
 
             if ($errors) {
-                LknGivePaghiperHelper::regLog('error', 'payment', 'GiveWP Error', var_export($errors, true));
+                LknGivePaghiperHelper::regLog('error', 'payment', 'GiveWP Error',  wp_json_encode($errors, true));
 
                 // Errors? Send back.
-                throw new PaymentGatewayException(esc_html($errors));
+                throw new PaymentGatewayException(esc_html((wp_json_encode($errors))));
             }
 
             $apiKey = $configs['apiKey'];
@@ -320,7 +320,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $resultRequest = LknGivePaghiperHelper::connect_request($header, $body, $postUrl);
 
             // Register log.
-            LknGivePaghiperHelper::regLog('info', 'payment', 'Gateway ID: ' . var_export($donGateway, true) . ' - Response Request', var_export($resultRequest, true));
+            LknGivePaghiperHelper::regLog('info', 'payment', 'Gateway ID: ' . esc_html($donGateway) . ' - Response Request', wp_json_encode($resultRequest, true));
 
             if ('lkn-give-paghiper-pix' === $donGateway) {
                 $paghiperResult = $resultRequest->pix_create_request->result;
@@ -563,7 +563,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $params = $request->get_body_params();
 
             // Register log.
-            LknGivePaghiperHelper::regLog('info', 'listener', 'notification POST received', var_export(ucfirst($donationGateway), false) . ' - Response Request: ' . var_export($params, true));
+            LknGivePaghiperHelper::regLog('info', 'listener', 'notification POST received', esc_html($donationGateway) . ' - Response Request: ' . wp_json_encode($params, true));
 
             // Body Params:
             $token = $configs['token'];
@@ -596,7 +596,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $response = LknGivePaghiperHelper::connect_request($header, $body, $postUrl);
 
             // Register log.
-            LknGivePaghiperHelper::regLog('info', 'listener', 'Listener notification POST - Response Request', var_export($response, true));
+            LknGivePaghiperHelper::regLog('info', 'listener', 'Listener notification POST - Response Request', wp_json_encode($response, true));
 
             $requestResult = $response->status_request->result;
             $requestMsg = $response->status_request->response_message;
@@ -604,7 +604,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             if ('success' != $requestResult) {
                 give_insert_payment_note($donationId, 'Notificação recebida, erro na consulta da API verifique as chaves de acesso e os logs da transação.');
 
-                LknGivePaghiperHelper::regLog('error', 'listener', 'Falha na atualização de status da doação #' . $donationId, 'Razão: ' . var_export($requestMsg, true) . ' | Result: ' . var_export($requestResult, true));
+                LknGivePaghiperHelper::regLog('error', 'listener', 'Falha na atualização de status da doação #' . $donationId, 'Razão: ' . esc_html($requestMsg) . ' | Result: ' . wp_json_encode($requestResult, true));
 
                 return false;
             }
