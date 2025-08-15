@@ -478,7 +478,30 @@ final class PGPFGForGivewpAdmin
                         );
 
                         $settings[] = array(
-                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'id' => 'lkn-payment-pix-sectionend',
+                            'type' => 'sectionend'
+                        );
+                        $settings[] = array(
+                            'type' => 'title',
+                            'id' => 'lkn-payment-pix-bb',
+                            'title' => 'Cielo PIX API',
+                        );
+
+                        $settings[] = array(
+                            'name' => 'Cielo Merchant ID',
+                            'id' => 'lkn-payment-pix-cielo-merchant-id',
+                            'desc' => __('Identificador único da sua loja na Cielo.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'name' => 'Cielo Merchant Key',
+                            'id' => 'lkn-payment-pix-cielo-merchant-key',
+                            'desc' => __('Chave de acesso da sua loja na Cielo.', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+                        $settings[] = array(
+                            'id' => 'lkn-payment-pix-sectionend',
                             'type' => 'sectionend'
                         );
                     }
