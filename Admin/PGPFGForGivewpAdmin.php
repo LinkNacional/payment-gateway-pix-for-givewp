@@ -177,6 +177,7 @@ final class PGPFGForGivewpAdmin
                                 <li id="3">Pix MaxiPago</li>
                                 <li id="4">Pix Banco do Brasil(BB)</li>
                                 <li id="5">Pix Cielo</li>
+                                <li id="6">Pix E-rede</li>
                             </ul>
                         </div>'
                     );
