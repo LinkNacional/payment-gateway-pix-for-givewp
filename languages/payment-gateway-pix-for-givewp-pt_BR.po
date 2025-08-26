@@ -47,8 +47,8 @@ msgstr "Cidade do Beneficiário"
 msgid "Insert the key recipient's city."
 msgstr "Insira a cidade do beneficiário da chave"
 
-msgid "Payment Identificator (optional)"
-msgstr "Identificador de Pagamento (opcional)"
+msgid "Payment Identificator"
+msgstr "Identificador de Pagamento"
 
 msgid "Insert the payment identificator, not required."
 msgstr "Insira o identificador de pagamento, não obrigatório."
@@ -92,8 +92,8 @@ msgstr "Informe o nome completo do favorecido pelo Pix."
 msgid "Enter the name of the city of the Pix key beneficiary."
 msgstr "Digite o nome da cidade do favorecido pela chave Pix."
 
-msgid "Recipient city (optional)"
-msgstr "Cidade do destinatário (opcional)"
+msgid "Recipient city"
+msgstr "Cidade do destinatário"
 
 msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
 msgstr "Ao ativar esse recurso, o plugin irá gravar logs das transações ideal para identificação de erros."

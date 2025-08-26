@@ -229,7 +229,7 @@ final class PGPFGForGivewpAdmin
                     );
 
                     $settings[] = array(
-                        'name' => __("Recipient city (optional)", 'payment-gateway-pix-for-givewp'),
+                        'name' => __("Recipient city ", 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-city-setting',
                         'desc' => __('Enter the name of the city of the Pix key beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',

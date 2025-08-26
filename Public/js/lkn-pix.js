@@ -34,7 +34,8 @@ function lknPGPFGGiveWPPixBuilder(amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
   const pixName = lknAttr.pixName
-  const pixCity = lknAttr.pixCity
+  const pixCity = lknAttr.pixCity == "" ? "São Paulo" : lknAttr.pixCity
+
   let key
   switch (pixType) {
     case 'tel':
