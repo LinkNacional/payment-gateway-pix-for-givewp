@@ -505,6 +505,31 @@ final class PGPFGForGivewpAdmin
                             'id' => 'lkn-payment-pix-sectionend',
                             'type' => 'sectionend'
                         );
+
+                        $settings[] = array(
+                            'type' => 'title',
+                            'id' => 'lkn-payment-pix-pro-bb',
+                            'title' => 'Cielo PIX API',
+                        );
+
+                        $settings[] = array(
+                            'name' => "E-rede PV",
+                            'id' => 'lkn-payment-pix-pro-erede-pv',
+                            'desc' => __('Unique identifier of your merchant within Rede', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'name' => "E-rede Token",
+                            'id' => 'lkn-payment-pix-pro-erede-token',
+                            'desc' => __('Secret key associated with your PV', 'payment-gateway-pix-for-givewp-pro'),
+                            'type' => 'password'
+                        );
+
+                        $settings[] = array(
+                            'id' => 'lkn-payment-pix-pro-sectionend',
+                            'type' => 'sectionend'
+                        );
                     }
                 }
                 break;
