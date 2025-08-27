@@ -318,8 +318,12 @@ final class PGPFGForGivewp
     public function get_pix_status($request)
     {
         $transaction_id = $request->get_param('transaction_id');
+        $donation_id = $request->get_param('donationId');
         if (empty($transaction_id)) {
             return new \WP_Error('missing_transaction_id', 'O parâmetro transaction_id é obrigatório.', array('status' => 400));
+        }
+        if (empty($donation_id)) {
+            return new \WP_Error('missing_donation_id', 'O parâmetro donationId é obrigatório.', array('status' => 400));
         }
 
         // Dados de autenticação
@@ -353,22 +357,34 @@ final class PGPFGForGivewp
         // Adaptação para o JS: status 'completed' ou 'paid' se apropriado
         $status = '';
         $message = '';
+        $redirect_url = '';
         if (isset($data['status_request']['status'])) {
             $status_raw = strtolower($data['status_request']['status']);
-            if ($status_raw === 'completed' || $status_raw === 'paid') {
-                $status = $status_raw;
+            if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
+                $status = 'success';
+                $message = 'Pagamento Realizado com sucesso!';
+                // Atualiza o status da doação no GiveWP
+                if (function_exists('give_update_payment_status')) {
+                    give_update_payment_status($donation_id, 'completed');
+                }
+                // Pega o link da página de recebimento do GiveWP
+                if (function_exists('give_get_receipt_url')) {
+                    $redirect_url = give_get_receipt_url($donation_id);
+                }
             } elseif ($status_raw === 'processing') {
                 $status = 'processing';
+                $message = $data['status_request']['response_message'] ?? '';
             } else {
                 $status = $status_raw;
+                $message = $data['status_request']['response_message'] ?? '';
             }
-            $message = $data['status_request']['response_message'] ?? '';
         }
 
         return array(
             'status' => $status,
             'message' => $message,
-            'raw' => $data
+            'raw' => $data,
+            'redirect_url' => $redirect_url
         );
     }
 

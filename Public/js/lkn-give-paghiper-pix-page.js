@@ -44,25 +44,27 @@
             donationId: pixPageGlobals.donationId
           },
           success: function (response) {
-            if (response.status === 'completed' || response.status === 'paid') {
+            if (response.status === 'success') {
               clearInterval(paymentTimer)
-              $.ajax({
-                url: pixPageGlobals.page_url + '/wp-json/paghiper/v1/success_payment',
-                type: 'POST',
-                headers: {
-                  Accept: 'application/json'
-                },
-                data: {
-                  donation_id: donationId
-                },
-
-                success: function (response) {
-                  window.location.href = response.redirect_url
-                },
-                error: function (xhr, status, error) {
-                  console.error('Erro ao redirecionar a página do pagamento:', error)
-                }
-              })
+              // Substitui o QRCode pela mensagem de sucesso e botão para recibo
+              let html = '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">' + response.message + '</div>';
+              if (response.redirect_url) {
+                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:1em;background:#28a428;color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
+              }
+              $('#pix_page_qr_code').html(html);
+              $('#pix-receipt-btn').on('click', function () {
+                window.location.href = response.redirect_url;
+              });
+            } else if (response.status === 'completed' || response.status === 'paid') {
+              clearInterval(paymentTimer)
+              let html = '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">Pagamento Realizado com sucesso!</div>';
+              if (response.redirect_url) {
+                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:1em;background:#28a428;color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
+              }
+              $('#pix_page_qr_code').html(html);
+              $('#pix-receipt-btn').on('click', function () {
+                window.location.href = response.redirect_url;
+              });
             }
           },
           error: function (xhr, status, error) {
