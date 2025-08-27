@@ -326,13 +326,8 @@ final class PGPFGForGivewp
         $apiKey = trim(give_get_option('lkn_paghiper_api_key_setting_field', ''));
         $token = trim(give_get_option('lkn_paghiper_token_setting_field', ''));
 
-        // Verifica ambiente: produção ou sandbox
-        $environment = give_get_option('lkn-payment-pix-environment', 'app');
-        if ($environment === 'sandbox') {
-            $url = 'https://pixsandbox.paghiper.com/invoice/status/';
-        } else {
-            $url = 'https://pix.paghiper.com/invoice/status/';
-        }
+        // Sempre usar o endpoint de produção
+        $url = 'https://pix.paghiper.com/invoice/status/';
 
         $transaction_id = base64_decode($transaction_id);
 
@@ -373,8 +368,7 @@ final class PGPFGForGivewp
         return array(
             'status' => $status,
             'message' => $message,
-            'raw' => $data,
-            'environment' => $environment
+            'raw' => $data
         );
     }
 
