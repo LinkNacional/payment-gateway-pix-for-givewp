@@ -457,14 +457,12 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         // Obtém todas as páginas
         $pages = get_pages();
-        $id = 0;
         // Itera sobre as páginas para encontrar a página com o ID correspondente
         foreach ($pages as $page) {
-            if ($id == $selected_page_id) {
+            if ($page->ID == $selected_page_id) {
                 $selected_page = $page;
                 break;
             }
-            $id++;
         }
 
         // Verifica se a página foi encontrada
@@ -474,6 +472,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         // Obtém o permalink da página
         $permalink = $selected_page->guid;
+
         // Verifica se o permalink foi obtido corretamente
         if ($permalink) {
             return $permalink;

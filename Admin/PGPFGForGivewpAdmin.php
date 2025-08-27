@@ -3,6 +3,7 @@
 namespace Pgpfg\PGPFGForGivewp\Admin;
 
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass;
+use Pgpfg\PGPFGForGivewp\Includes\LknGivePaghiperHelper;
 use WP_Error;
 
 /**
@@ -154,6 +155,9 @@ final class PGPFGForGivewpAdmin
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
                 $pro_plugin_active = function_exists('is_plugin_active') && is_plugin_active('payment-gateway-pix-for-givewp-pro/payment-gateway-pix-for-givewp-pro.php');
+
+                $all_pages = LknGivePaghiperHelper::get_all_pages_for_select();
+
                 foreach ($settings as $setting) {
                     if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
                         $exists = true;
@@ -324,7 +328,7 @@ final class PGPFGForGivewpAdmin
                         'id' => "lkn_paghiper_select_template_pix",
                         'default' => "null",
                         'type' => "select",
-                        'options' => array(),
+                        'options' => count($all_pages) > 0 ? $all_pages : array(),
                         'desc' => "Por favor insira a tag [lkn_pix_page] na página que deseja selecionar"
                     );
 

@@ -270,4 +270,18 @@ final class LknGivePaghiperHelper
 <?php
         }
     }
+
+    /**
+     * Lista todas as páginas do WordPress para uso em selects.
+     * @return array [id => título]
+     */
+    public static function get_all_pages_for_select(): array
+    {
+        $pages = get_pages();
+        $result = array();
+        foreach ($pages as $page) {
+            $result[$page->ID] = $page->post_title;
+        }
+        return $result;
+    }
 }
