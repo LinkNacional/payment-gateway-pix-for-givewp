@@ -44,24 +44,35 @@
             donationId: pixPageGlobals.donationId
           },
           success: function (response) {
-            if (response.status === 'success') {
+            if (response.status === 'success' || response.status === 'completed' || response.status === 'paid') {
               clearInterval(paymentTimer)
-              // Substitui o QRCode pela mensagem de sucesso e botão para recibo
-              let html = '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">' + response.message + '</div>';
+              // Cria a nova div estilizada
+              let html = '<div id="pix_success_container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:auto;height:auto;">';
+              html += '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">' + (response.status === 'success' ? response.message : 'Pagamento Realizado com sucesso!') + '</div>';
               if (response.redirect_url) {
-                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:1em;background:#28a428;color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
+                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:16px;background-color:rgb(58,58,58);color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
               }
-              $('#pix_page_qr_code').html(html);
-              $('#pix-receipt-btn').on('click', function () {
-                window.location.href = response.redirect_url;
-              });
-            } else if (response.status === 'completed' || response.status === 'paid') {
-              clearInterval(paymentTimer)
-              let html = '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">Pagamento Realizado com sucesso!</div>';
-              if (response.redirect_url) {
-                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:1em;background:#28a428;color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
+              html += '</div>';
+              // Insere a nova div abaixo das divs existentes
+              var $copyContainer = $('#copy_container');
+              var $qrCodeContainer = $('#pix_page_qr_code');
+              if ($qrCodeContainer.length) {
+                $qrCodeContainer.after(html);
+              } else if ($copyContainer.length) {
+                $copyContainer.after(html);
+              } else {
+                // Se não encontrar, adiciona ao body
+                $('body').append(html);
               }
-              $('#pix_page_qr_code').html(html);
+              // Remove as divs antigas
+              $copyContainer.remove();
+              $qrCodeContainer.remove();
+              // Ajusta o botão de verificação, contador e texto
+              var $checkPaymentBtn = $('.payment_check_button');
+              $checkPaymentBtn.prop('disabled', true).removeAttr('style');
+              $('#timer').text('0s');
+              $('.schedule_text').text('Proxima verificação em (N. tentativas 0):');
+              // Adiciona evento ao botão
               $('#pix-receipt-btn').on('click', function () {
                 window.location.href = response.redirect_url;
               });

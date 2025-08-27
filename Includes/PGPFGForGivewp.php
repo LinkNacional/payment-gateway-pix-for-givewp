@@ -306,16 +306,16 @@ final class PGPFGForGivewp
     {
         register_rest_route('paghiper', '/v1/status', array(
             'methods' => 'POST',
-            'callback' => array($this, 'get_pix_status'),
+            'callback' => array($this, 'get_paghipder_pix_status'),
             'permission_callback' => '__return_true',
         ));
     }
 
     /**
      * Verifica o status do Pix no PagHiper via API.
-     * Espera parâmetro transaction_id via GET.
+     * Espera parâmetro transaction_id e donationId via POST.
      */
-    public function get_pix_status($request)
+    public function get_paghipder_pix_status($request)
     {
         $transaction_id = $request->get_param('transaction_id');
         $donation_id = $request->get_param('donationId');
@@ -334,6 +334,7 @@ final class PGPFGForGivewp
         $url = 'https://pix.paghiper.com/invoice/status/';
 
         $transaction_id = base64_decode($transaction_id);
+        $donation_id = base64_decode($donation_id);
 
         $body = array(
             'apiKey' => $apiKey,
@@ -360,17 +361,23 @@ final class PGPFGForGivewp
         $redirect_url = '';
         if (isset($data['status_request']['status'])) {
             $status_raw = strtolower($data['status_request']['status']);
-            if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
-                $status = 'success';
-                $message = 'Pagamento Realizado com sucesso!';
-                // Atualiza o status da doação no GiveWP
-                if (function_exists('give_update_payment_status')) {
-                    give_update_payment_status($donation_id, 'completed');
-                }
-                // Pega o link da página de recebimento do GiveWP
-                if (function_exists('give_get_receipt_url')) {
-                    $redirect_url = give_get_receipt_url($donation_id);
-                }
+                if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
+                    $status = 'success';
+                    $message = 'Pagamento Realizado com sucesso!';
+                    // Atualiza o status da doação no GiveWP
+                    if (function_exists('give_update_payment_status')) {
+                        // Garante que o status seja atualizado corretamente
+                        give_update_payment_status((int)$donation_id, 'publish');
+                    }
+
+                    // Gera o link público do recibo usando o receipt_id (hash) do GiveWP
+                    $receipt_id = get_post_meta($donation_id, '_give_payment_purchase_key', true);
+                    // Se não encontrar o hash, não retorna o link
+                    if (!empty($receipt_id)) {
+                        $redirect_url = home_url('/?givewp-route=donation-confirmation-receipt-view&receipt-id=' . sanitize_text_field($receipt_id));
+                    } else {
+                        $redirect_url = '';
+                    }
             } elseif ($status_raw === 'processing') {
                 $status = 'processing';
                 $message = $data['status_request']['response_message'] ?? '';
