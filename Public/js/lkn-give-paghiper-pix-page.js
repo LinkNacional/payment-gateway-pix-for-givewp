@@ -44,7 +44,6 @@
             donationId: pixPageGlobals.donationId
           },
           success: function (response) {
-            $('#testing').text(' ' + response.status)
             if (response.status === 'completed' || response.status === 'paid') {
               clearInterval(paymentTimer)
               $.ajax({

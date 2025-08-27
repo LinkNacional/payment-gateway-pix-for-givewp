@@ -298,6 +298,84 @@ final class PGPFGForGivewp
         $plugin_public = new PGPFGForGivewpPublic($this->plugin_name, $this->version);
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+
+        $this->loader->add_action('rest_api_init', $this, 'register_rest_routes');
+    }
+
+    public function register_rest_routes(): void
+    {
+        register_rest_route('paghiper', '/v1/status', array(
+            'methods' => 'POST',
+            'callback' => array($this, 'get_pix_status'),
+            'permission_callback' => '__return_true',
+        ));
+    }
+
+    /**
+     * Verifica o status do Pix no PagHiper via API.
+     * Espera parâmetro transaction_id via GET.
+     */
+    public function get_pix_status($request)
+    {
+        $transaction_id = $request->get_param('transaction_id');
+        if (empty($transaction_id)) {
+            return new \WP_Error('missing_transaction_id', 'O parâmetro transaction_id é obrigatório.', array('status' => 400));
+        }
+
+        // Dados de autenticação
+        $apiKey = trim(give_get_option('lkn_paghiper_api_key_setting_field', ''));
+        $token = trim(give_get_option('lkn_paghiper_token_setting_field', ''));
+
+        // Verifica ambiente: produção ou sandbox
+        $environment = give_get_option('lkn-payment-pix-environment', 'app');
+        if ($environment === 'sandbox') {
+            $url = 'https://pixsandbox.paghiper.com/invoice/status/';
+        } else {
+            $url = 'https://pix.paghiper.com/invoice/status/';
+        }
+
+        $transaction_id = base64_decode($transaction_id);
+
+        $body = array(
+            'apiKey' => $apiKey,
+            'token' => $token,
+            'transaction_id' => $transaction_id
+        );
+
+        $args = array(
+            'headers' => array('Content-Type' => 'application/json'),
+            'body' => wp_json_encode($body),
+            'timeout' => 10
+        );
+
+        $response = wp_remote_post($url, $args);
+
+        if (is_wp_error($response)) {
+            return new \WP_Error('request_failed', $response->get_error_message(), array('status' => 500));
+        }
+        $data = json_decode(wp_remote_retrieve_body($response), true);
+
+        // Adaptação para o JS: status 'completed' ou 'paid' se apropriado
+        $status = '';
+        $message = '';
+        if (isset($data['status_request']['status'])) {
+            $status_raw = strtolower($data['status_request']['status']);
+            if ($status_raw === 'completed' || $status_raw === 'paid') {
+                $status = $status_raw;
+            } elseif ($status_raw === 'processing') {
+                $status = 'processing';
+            } else {
+                $status = $status_raw;
+            }
+            $message = $data['status_request']['response_message'] ?? '';
+        }
+
+        return array(
+            'status' => $status,
+            'message' => $message,
+            'raw' => $data,
+            'environment' => $environment
+        );
     }
 
     /**
