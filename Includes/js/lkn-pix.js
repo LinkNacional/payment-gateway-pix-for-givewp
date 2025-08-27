@@ -172,7 +172,7 @@ const lknGatewayPix = {
     }, /* #__PURE__ */React.createElement('button', {
       id: 'toggle-viewing',
       type: 'button',
-      title: __('Show Pix', 'payment-gateway-pix-for-givewp'),
+      title: __('Copy Pix', 'payment-gateway-pix-for-givewp'),
       onClick: () => {
         const pixElement = document.getElementById('pix')
         const hideElement = document.getElementById('hide')

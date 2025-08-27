@@ -135,7 +135,7 @@ const lknGatewayPix = {
                         <br />
                         <p id='pix' name='pix'>{pix}</p>
                         <p id='copy-pix' >
-                            <button id="toggle-viewing" type="button" title={__('Show Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {
+                            <button id="toggle-viewing" type="button" title={__('Copy Pix', 'payment-gateway-pix-for-givewp')} onClick={() => {
                                 const pixElement = document.getElementById('pix')
                                 const hideElement = document.getElementById('hide')
                                 const showElement = document.getElementById('show')
