@@ -329,7 +329,7 @@ final class PGPFGForGivewpAdmin
                         'default' => "null",
                         'type' => "select",
                         'options' => count($all_pages) > 0 ? $all_pages : array(),
-                        'desc' => "Por favor insira a tag [lkn_pix_page] na página que deseja selecionar"
+                        'desc' => "Por favor insira a tag [lkn_give_paghiper_pix] na página que deseja selecionar"
                     );
 
                     $settings[] = array(
