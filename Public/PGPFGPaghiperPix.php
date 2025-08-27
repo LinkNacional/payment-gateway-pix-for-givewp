@@ -24,7 +24,7 @@ final class PGPFGPaghiperPix extends PGPFGGatewayPaghiperAbstractPayment
             'lkn-give-paghiper-pix',
             'pix',
             'PagHiper Pix',
-            'Pix'
+            'PagHiper Pix'
         );
     }
 
