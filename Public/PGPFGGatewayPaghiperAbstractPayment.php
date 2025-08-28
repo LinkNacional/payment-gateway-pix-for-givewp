@@ -145,9 +145,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                     </span>
                 </div>
 
-				<div id=\"give-paghiper-single-cc-fields-{$id_prefix}\" class=\"give-paghiper-single-cc-field-wrap\">
-					{$gatewayForm}
-				</div>
+                <div id=\"give-paghiper-single-cc-fields-{$id_prefix}\" class=\"give-paghiper-single-cc-field-wrap\">
+                    {$gatewayForm}
+                </div>
                 <input type=\"hidden\" id=\"lkn-input-form\" name=\"gatewayData[is_multi]\" value=\"false\"> 
             </fieldset>
         ";
@@ -378,7 +378,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             if ('lkn-give-paghiper-slip' === $donGateway) {
                 $paghiperResult = $resultRequest->create_request->result;
                 $paghiperMsg = $resultRequest->create_request->response_message;
-                $paghiperTransaction = $resultRequest->create_request->transaction_id;
+                $paghiperTransaction = isset($resultRequest->create_request->transaction_id) ? $resultRequest->create_request->transaction_id : '';
 
                 // Verifies if the Slip API not returned a success code.
                 if ('success' != $paghiperResult) {
