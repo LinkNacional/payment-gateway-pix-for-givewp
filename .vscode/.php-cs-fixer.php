@@ -2,7 +2,6 @@
 
 /**
  * php-cs-fixer config that follows the WordPress style guide for PHP.
- * Source: https://gist.github.com/srbrunoferreira/5b0d96955c3913f6b1cd805c2a14079d
  * Adapted from: https://github.com/vena/php-cs-fixer-wordpress/blob/main/src/WordPressRuleSet.php
  * WordPress style guide: https://developer.wordpress.org/coding-standards/wordpress-coding-standards/php/.
  */
