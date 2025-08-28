@@ -277,6 +277,20 @@ final class LknGivePaghiperHelper
      */
     public static function get_all_pages_for_select(): array
     {
+        // Verifica se existe a página "PagHiper Pix"
+        $paghiper_page = get_page_by_title('PagHiper Pix');
+        if (!$paghiper_page) {
+            // Cria a página
+            $page_id = wp_insert_post(array(
+                'post_title'   => 'PagHiper Pix',
+                'post_content' => '[lkn_give_paghiper_pix]',
+                'post_status'  => 'publish',
+                'post_type'    => 'page',
+            ));
+            $paghiper_page = get_post($page_id);
+        }
+
+        // Lista todas as páginas
         $pages = get_pages();
         $result = array();
         foreach ($pages as $page) {

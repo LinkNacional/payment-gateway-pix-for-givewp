@@ -157,6 +157,8 @@ final class PGPFGForGivewpAdmin
                 $pro_plugin_active = function_exists('is_plugin_active') && is_plugin_active('payment-gateway-pix-for-givewp-pro/payment-gateway-pix-for-givewp-pro.php');
 
                 $all_pages = LknGivePaghiperHelper::get_all_pages_for_select();
+                $paghiper_page = get_page_by_title('PagHiper Pix');
+                $paghiper_page_id = $paghiper_page ? $paghiper_page->ID : '';
 
                 foreach ($settings as $setting) {
                     if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
@@ -326,7 +328,7 @@ final class PGPFGForGivewpAdmin
                     $settings[] = array(
                         "name" => "Página do pagamento PIX",
                         'id' => "lkn_paghiper_select_template_pix",
-                        'default' => "null",
+                        'default' => $paghiper_page_id,
                         'type' => "select",
                         'options' => count($all_pages) > 0 ? $all_pages : array(),
                         'desc' => "Por favor insira a tag [lkn_give_paghiper_pix] na página que deseja selecionar"
