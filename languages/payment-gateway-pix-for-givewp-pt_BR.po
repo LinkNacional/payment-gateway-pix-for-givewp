@@ -47,8 +47,8 @@ msgstr "Cidade do Beneficiário"
 msgid "Insert the key recipient's city."
 msgstr "Insira a cidade do beneficiário da chave"
 
-msgid "Payment Identificator (optional)"
-msgstr "Identificador de Pagamento (opcional)"
+msgid "Payment Identificator"
+msgstr "Identificador de Pagamento"
 
 msgid "Insert the payment identificator, not required."
 msgstr "Insira o identificador de pagamento, não obrigatório."
@@ -80,7 +80,7 @@ msgstr "Checar Último Log"
 msgid "Settings"
 msgstr "Configurações"
 
-msgid "Choose which type of key you will use to receive the PIX."
+msgid "Choose the type of key you'll use to receive Pix payments"
 msgstr "Escolha qual tipo de chave irá utilizar para receber o PIX."
 
 msgid "Enter the Pix key created in your bank that will be used to receive donations."
@@ -92,8 +92,8 @@ msgstr "Informe o nome completo do favorecido pelo Pix."
 msgid "Enter the name of the city of the Pix key beneficiary."
 msgstr "Digite o nome da cidade do favorecido pela chave Pix."
 
-msgid "Recipient city (optional)"
-msgstr "Cidade do destinatário (opcional)"
+msgid "Recipient city"
+msgstr "Cidade do destinatário"
 
 msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
 msgstr "Ao ativar esse recurso, o plugin irá gravar logs das transações ideal para identificação de erros."
@@ -106,3 +106,75 @@ msgstr "Configurações Chave PIX"
 
 msgid "See logs"
 msgstr "Ver logs"
+
+msgid "Choose the type of key you'll use to receive Pix payments"
+msgstr "Escolha qual tipo de chave irá utilizar para receber o Pix"
+
+msgid "Enter the Pix key created in your bank that will be used to receive donations"
+msgstr "Digite a chave Pix criada no seu Banco que será usada no recebimento das doações"
+
+msgid "Recipient name"
+msgstr "Nome do beneficiário"
+
+msgid "Recipient city"
+msgstr "Cidade do beneficiário"
+
+msgid "Saves transactions to the logs."
+msgstr "Grava as transações no logs."
+
+msgid "Enable to show billing details on donation forms"
+msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+
+msgid "Select the environment in which the payment gateway will operate."
+msgstr "Selecione o ambiente em que o gateway de pagamento operará."
+
+msgid "Enable transaction logging"
+msgstr "Habilitar registro de transações"
+
+msgid "Displays details of gateway operations in the console."
+msgstr "Exibe detalhes das operações dos gateways no console."
+
+msgid "Chave de identificação da loja virtual"
+msgstr "Store identification key"
+
+msgid "Store identification credential"
+msgstr "Credencial de identificação da loja virtual"
+
+msgid "Required to authenticate requests to the BB API."
+msgstr "Necessária para autenticar requisições à API do BB."
+
+msgid "The provided Pix key must be registered and active in Banco do Brasil."
+msgstr "A chave Pix informada deve estar cadastrada e ativa no BB."
+
+msgid "Enable to show billing details on donation forms"
+msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+
+msgid "Development for test environment, Production for real donations."
+msgstr "Desenvolvimento para ambiente de testes, Produção para ambiente de doações reais."
+
+msgid "When enabled, all payment gateway operations will be recorded in the logging system."
+msgstr "Quando ativado, todas as operações dos gateways de pagamento serão registradas no sistema de logs."
+
+msgid "Enables detailed messages in the console with information about payment gateway operations."
+msgstr "Habilita mensagens detalhadas no console com informações sobre as operações dos gateways de pagamento."
+
+msgid "The Merchant Key is a secret credential provided by MaxiPago, used to authenticate all requests from your store to the payment API."
+msgstr "O Merchant Key é uma credencial secreta fornecida pela MaxiPago, usada para autenticar todas as requisições da sua loja à API de pagamentos."
+
+msgid "The Merchant ID is the unique identifier provided by MaxiPago that represents your online store on the payment platform."
+msgstr "O Merchant ID é o identificador único fornecido pela MaxiPago, que representa sua loja virtual na plataforma de pagamentos."
+
+msgid "This is the code that identifies your store in the Banco do Brasil system."
+msgstr "Este é o código que identifica sua loja no sistema do Banco do Brasil."
+
+msgid "BB API secret credential. Use with Client ID for secure authentication."
+msgstr "Credencial secreta da API BB. Use com o Client ID para autenticação segura."
+
+msgid "The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API."
+msgstr "A Developer Key é uma credencial de segurança fornecida pelo Banco do Brasil para autenticar sua aplicação na API de Pagamentos."
+
+msgid "Enter the license acquired at Link Nacional %sLearn more%s."
+msgstr "Digite sua licença adiquirida na link Nacional %sSaiba mais%s."
+
+msgid "Private key used to authenticate integrations with Banco do Brasil services."
+msgstr "Chave privada usada para autenciar a API do Banco do Brasil"

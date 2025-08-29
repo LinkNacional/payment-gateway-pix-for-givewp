@@ -33,7 +33,8 @@ use Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayClass;
  * @subpackage PGPFGForGivewp/includes
  * @author     Link Nacional <contato@linknacional.com>
  */
-final class PGPFGForGivewp {
+final class PGPFGForGivewp
+{
     /**
      * The loader that's responsible for maintaining and registering all hooks that power
      * the plugin.
@@ -71,7 +72,8 @@ final class PGPFGForGivewp {
      *
      * @since    1.0.0
      */
-    public function __construct() {
+    public function __construct()
+    {
         if (defined('PGPFG_PIX_PLUGIN_VERSION')) {
             $this->version = PGPFG_PIX_PLUGIN_VERSION;
         } else {
@@ -97,7 +99,8 @@ final class PGPFGForGivewp {
      * @since    1.0.0
      * @access   private
      */
-    private function load_dependencies(): void {
+    private function load_dependencies(): void
+    {
         $this->loader = new PGPFGForGivewpLoader();
     }
 
@@ -110,17 +113,34 @@ final class PGPFGForGivewp {
      * @since    1.0.0
      * @access   private
      */
-    private function set_locale(): void {
+    private function set_locale(): void
+    {
         $plugin_i18n = new PGPFGForGivewpi18n();
 
         $this->loader->add_action('plugins_loaded', $plugin_i18n, 'load_plugin_textdomain');
     }
 
-    public function load_pgpfg($paymentGatewayRegister): void {
-        $paymentGatewayRegister->registerGateway('Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayClass');
+    public function load_pgpfg($paymentGatewayRegister): void
+    {
+        // Registrar o primeiro gateway
+        try {
+            $paymentGatewayRegister->registerGateway('Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayClass');
+        } catch (Exception $e) {
+        }
+
+        // Registrar o segundo gateway (PagHiper)
+        try {
+            $paymentGatewayRegister->registerGateway('Pgpfg\PGPFGForGivewp\PublicView\PGPFGPaghiperPix');
+        } catch (Exception $e) {
+        }
+        try {
+            $paymentGatewayRegister->registerGateway('Pgpfg\PGPFGForGivewp\PublicView\PGPFGPaghiperSlip');
+        } catch (Exception $e) {
+        }
     }
 
-    public function add_new_cron_recurrencies() {
+    public function add_new_cron_recurrencies()
+    {
         $schedules = array(
             'biweekly' => array(
                 'interval' => 15 * DAY_IN_SECONDS,
@@ -131,20 +151,30 @@ final class PGPFGForGivewp {
         return $schedules;
     }
 
-    public function define_cron_hook(): void {
+    public function define_cron_hook(): void
+    {
         add_action('lkn_payment_pix_delete_old_logs_cron_hook', array('Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass', 'delete_old_logs'));
     }
 
-    public function define_event_delete_old_logs(): void {
-        if ( ! wp_next_scheduled('lkn_payment_pix_delete_old_logs_cron_hook')) {
+    public function define_event_delete_old_logs(): void
+    {
+        if (! wp_next_scheduled('lkn_payment_pix_delete_old_logs_cron_hook')) {
             $time = time() + (15 * DAY_IN_SECONDS);
             wp_schedule_event($time, 'biweekly', 'lkn_payment_pix_delete_old_logs_cron_hook');
         }
     }
 
-    public function check_environment() {
+    public function add_give_paghiper_shortcodes(): void
+    {
+        add_shortcode('lkn_give_paghiper_pix', function (): void {
+            include_once PGPFG_PIX_PLUGIN_DIR . 'Public/PGPFGForPaghiperPixPage.php'; //LknGivePaghiperPixPage
+        });
+    }
+
+    public function check_environment()
+    {
         // Load plugin helper functions.
-        if ( ! function_exists('deactivate_plugins') || ! function_exists('is_plugin_active')) {
+        if (! function_exists('deactivate_plugins') || ! function_exists('is_plugin_active')) {
             require_once ABSPATH . 'wp-admin/includes/plugin.php';
         }
 
@@ -165,7 +195,7 @@ final class PGPFGForGivewp {
         $is_give_active = is_plugin_active('give/give.php');
 
         // Verify if Free plugin is actived.
-        if ( ! $is_give_active) {
+        if (! $is_give_active) {
             // Show admin notice.
             $this->inactive_notice();
 
@@ -186,7 +216,8 @@ final class PGPFGForGivewp {
         return true;
     }
 
-    public function dependency_notice(): void {
+    public function dependency_notice(): void
+    {
         // Admin notice.
         $message = sprintf(
             '<strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a>  %5$s %6$s+ %7$s.',
@@ -212,7 +243,8 @@ final class PGPFGForGivewp {
      *
      * @since 1.0.0
      */
-    public function inactive_notice(): void {
+    public function inactive_notice(): void
+    {
         // Admin notice.
         $message = sprintf(
             '<div class="notice notice-error"><p><strong>%1$s</strong> %2$s <a href="%3$s" target="_blank">%4$s</a> %5$s.</p></div>',
@@ -233,7 +265,10 @@ final class PGPFGForGivewp {
      * @since    1.0.0
      * @access   private
      */
-    private function define_admin_hooks(): void {
+    private function define_admin_hooks(): void
+    {
+        $this->loader->add_action('init', $this, 'add_give_paghiper_shortcodes');
+
         $plugin_admin = new PGPFGForGivewpAdmin($this->get_plugin_name(), $this->get_version());
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
@@ -258,10 +293,106 @@ final class PGPFGForGivewp {
      * @since    1.0.0
      * @access   private
      */
-    private function define_public_hooks(): void {
+    private function define_public_hooks(): void
+    {
         $plugin_public = new PGPFGForGivewpPublic($this->plugin_name, $this->version);
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+
+        $this->loader->add_action('rest_api_init', $this, 'register_rest_routes');
+    }
+
+    public function register_rest_routes(): void
+    {
+        register_rest_route('paghiper', '/v1/status', array(
+            'methods' => 'POST',
+            'callback' => array($this, 'get_paghipder_pix_status'),
+            'permission_callback' => '__return_true',
+        ));
+    }
+
+    /**
+     * Verifica o status do Pix no PagHiper via API.
+     * Espera parâmetro transaction_id e donationId via POST.
+     */
+    public function get_paghipder_pix_status($request)
+    {
+        $transaction_id = $request->get_param('transaction_id');
+        $donation_id = $request->get_param('donationId');
+        if (empty($transaction_id)) {
+            return new \WP_Error('missing_transaction_id', 'O parâmetro transaction_id é obrigatório.', array('status' => 400));
+        }
+        if (empty($donation_id)) {
+            return new \WP_Error('missing_donation_id', 'O parâmetro donationId é obrigatório.', array('status' => 400));
+        }
+
+        // Dados de autenticação
+        $apiKey = trim(give_get_option('lkn_paghiper_api_key_setting_field', ''));
+        $token = trim(give_get_option('lkn_paghiper_token_setting_field', ''));
+
+        // Sempre usar o endpoint de produção
+        $url = 'https://pix.paghiper.com/invoice/status/';
+
+        $transaction_id = base64_decode($transaction_id);
+        $donation_id = base64_decode($donation_id);
+
+        $body = array(
+            'apiKey' => $apiKey,
+            'token' => $token,
+            'transaction_id' => $transaction_id
+        );
+
+        $args = array(
+            'headers' => array('Content-Type' => 'application/json'),
+            'body' => wp_json_encode($body),
+            'timeout' => 10
+        );
+
+        $response = wp_remote_post($url, $args);
+
+        if (is_wp_error($response)) {
+            return new \WP_Error('request_failed', $response->get_error_message(), array('status' => 500));
+        }
+        $data = json_decode(wp_remote_retrieve_body($response), true);
+
+        // Adaptação para o JS: status 'completed' ou 'paid' se apropriado
+        $status = '';
+        $message = '';
+        $redirect_url = '';
+        if (isset($data['status_request']['status'])) {
+            $status_raw = strtolower($data['status_request']['status']);
+                if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
+                    $status = 'success';
+                    $message = 'Pagamento Realizado com sucesso!';
+                    // Atualiza o status da doação no GiveWP
+                    if (function_exists('give_update_payment_status')) {
+                        // Garante que o status seja atualizado corretamente
+                        give_update_payment_status((int)$donation_id, 'publish');
+                    }
+
+                    // Gera o link público do recibo usando o receipt_id (hash) do GiveWP
+                    $receipt_id = get_post_meta($donation_id, '_give_payment_purchase_key', true);
+                    // Se não encontrar o hash, não retorna o link
+                    if (!empty($receipt_id)) {
+                        $redirect_url = home_url('/?givewp-route=donation-confirmation-receipt-view&receipt-id=' . sanitize_text_field($receipt_id));
+                    } else {
+                        $redirect_url = '';
+                    }
+            } elseif ($status_raw === 'processing') {
+                $status = 'processing';
+                $message = $data['status_request']['response_message'] ?? '';
+            } else {
+                $status = $status_raw;
+                $message = $data['status_request']['response_message'] ?? '';
+            }
+        }
+
+        return array(
+            'status' => $status,
+            'message' => $message,
+            'raw' => $data,
+            'redirect_url' => $redirect_url
+        );
     }
 
     /**
@@ -269,7 +400,8 @@ final class PGPFGForGivewp {
      *
      * @since    1.0.0
      */
-    public function run(): void {
+    public function run(): void
+    {
         $is_give_active = $this->check_environment();
         if ($is_give_active) {
             $this->load_dependencies();
@@ -287,7 +419,8 @@ final class PGPFGForGivewp {
      * @since     1.0.0
      * @return    string    The name of the plugin.
      */
-    public function get_plugin_name() {
+    public function get_plugin_name()
+    {
         return $this->plugin_name;
     }
 
@@ -297,7 +430,8 @@ final class PGPFGForGivewp {
      * @since     1.0.0
      * @return    PGPFGForGivewp_Loader    Orchestrates the hooks of the plugin.
      */
-    public function get_loader() {
+    public function get_loader()
+    {
         return $this->loader;
     }
 
@@ -307,7 +441,8 @@ final class PGPFGForGivewp {
      * @since     1.0.0
      * @return    string    The version number of the plugin.
      */
-    public function get_version() {
+    public function get_version()
+    {
         return $this->version;
     }
 }

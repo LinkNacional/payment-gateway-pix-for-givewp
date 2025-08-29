@@ -104,7 +104,7 @@ final class PGPFGGatewayClass extends PaymentGateway {
                 <br/>
                 <p id="pix"></p>
                 <p id="copy-pix" style="display: none;">
-                    <button id="toggle-viewing" type="button" title="' . esc_attr__('Show Pix', 'payment-gateway-pix-for-givewp') . '">
+                    <button id="toggle-viewing" type="button" title="' . esc_attr__('Copy Pix', 'payment-gateway-pix-for-givewp') . '">
                         <span id="show" class="material-symbols-outlined" style="display: none;">Show</span>
                         <span id="hide" class="material-symbols-outlined">Hide</span>
                     </button>

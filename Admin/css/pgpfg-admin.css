@@ -9,10 +9,19 @@ li {
 }
 
 .PGPFGForGivewpAdminSettingsDiv {
-    padding: 1px 20px;
-    background-color: white;
-    margin-top: 30px;
-    border: 2px solid #C6C6C6;
+    padding: 1px 0px;
+    background-color: transparent;
+    margin-left: 0px !important;
+}
+
+.PGPFGForGivewpAdminSettingsDiv hr {
+    display: none;
+}
+
+.title-hr {
+    border-top: 1px solid rgb(204, 204, 204);
+    margin: 8px 0px;
+    width: 100%;
 }
 
 .PGPFGForGivewpAdminSettingsP {
@@ -22,21 +31,120 @@ li {
     width: 100%;
     margin-bottom: 0;
     font-weight: bold;
+    display: none;
+}
+
+.PGPFGForGivewpAdminSettingsDiv tr {
+    /*padding: 10px 14px;*/
+    /*margin: auto;*/
+    max-width: 850px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding: 10px 30px;
+    border-radius: 5px;
+    border: 1px solid rgb(223, 223, 223);
+}
+
+.PGPFGForGivewpAdminSettingsDiv td div {
+    align-items: center;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td label {
+    font-weight: bold;
+    font-size: 16px;
+    margin: 3px 4px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td label.lkn-pix-subtitle p {
+    color: rgb(60, 67, 74);
+    font-weight: 400;
+    margin: 0px !important;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td label p.lkn-pix-description {
+    color: rgb(100, 105, 112);
+    font-weight: 400;
+    margin: 0px !important;
+}
+
+input[type=radio]:checked {
+    position: relative !important;
+}
+
+input[type=radio]:checked::before {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin: 0px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv fieldset {
+    margin: 10px 4px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv .give-input-field,
+.PGPFGForGivewpAdminSettingsDiv select,
+.PGPFGForGivewpAdminSettingsDiv .button.button-primary {
+    margin: 25px 4px;
+}
+
+fieldset ul li {
+    margin: 3px 0px !important;
+}
+
+fieldset ul li label {
+    font-size: 14px !important;
+    font-weight: 400 !important;
+}
+
+.PGPFGForGivewpAdminSettingsDiv td ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.PGPFGForGivewpAdminSettingsDiv tr th {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 20px;
+}
+
+.PGPFGForGivewpAdminSettingsDiv tr th p {
+    font-size: 13px;
+    color: rgb(52, 59, 69)
+}
+
+.PGPFGForGivewpAdminSettingsDiv tr th label {
+    font-size: 20px;
+    min-width: 200px;
+    color: rgb(18, 21, 25);
 }
 
 .tooltip {
     position: relative;
     display: inline-block;
-    background-color: #666666;
+    background-color: #ccc;
     color: white;
     border-radius: 70%;
-    width: 20px;
-    min-width: 20px;
-    height: 20px;
+    width: 14px;
+    min-width: 14px;
+    height: 14px;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: help;
+}
+
+.tdTooltipCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .tooltip .tooltiptext {
@@ -57,7 +165,7 @@ li {
     opacity: 0;
     transition: opacity 0.3s;
     font-size: small;
-    font-weight: 400;
+    font-weight: 300;
     text-wrap: balance;
 }
 
@@ -72,6 +180,91 @@ li {
     opacity: 1;
 }
 
-.give-radio-inline ul{
+.give-radio-inline ul {
     margin-top: 14px !important;
+}
+
+.lkn-container-menu {
+    display: flex;
+    align-items: end;
+    position: relative !important;
+}
+
+input#lkn-pix-menu {
+    display: none;
+}
+
+.lkn-pix-menu {
+    display: flex;
+    margin: 0px 0px 30px 0px;
+    background-color: transparent;
+    flex-wrap: wrap;
+    color: #9A9A9A;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #dcdcde;
+}
+
+.lkn-pix-menu li {
+    margin: 0px 5px 0px 0px;
+    padding: 7px 30px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.lkn-pix-menu li:hover {
+    background-color: #BCBCBC;
+    transition: 200ms;
+}
+
+.lkn-pix-menu-ativo {
+    background-color: #fff;
+    color: #000;
+    transition: 100ms;
+}
+
+.lkn-pix-menu-ativo:hover {
+    background-color: #FFF !important;
+}
+
+.lkn-pix-configuracao-disable {
+    display: none;
+}
+
+.give-forminp.give-forminp-password div p {
+    width: fit-content !important;
+}
+
+.lkn-disabled-settings {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.lkn-disabled-settings .tooltip {
+    pointer-events: auto;
+}
+
+p.lkn-label-pro {
+    color: #FF0B0B !important;
+    font-weight: bold !important;
+    margin-left: 4px;
+}
+
+input#lkn-label-pro {
+    display: none;
+}
+
+.lkn-menu-toggle {
+    display: none;
+}
+
+.join-next {
+    margin: 0px !important;
+    border-bottom: none !important;
+    border-radius: 5px 5px 0px 0px !important;
+}
+
+.join-previous {
+    border-top: none !important;
+    border-radius: 0px 0px 5px 5px !important;
 }

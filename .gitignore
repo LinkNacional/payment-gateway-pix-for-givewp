@@ -1,5 +1,6 @@
 .devcontainer/devcontainer.json
 .vscode/settings.json
+.vscode/mcp.json
 .phan/stubs
 node_modules
 vendor

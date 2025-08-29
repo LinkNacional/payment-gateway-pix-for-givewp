@@ -8,6 +8,7 @@
     color: black;
     background-color: transparent;
     border: none;
+    height: 50px;
 }
 
 #toggle-viewing:hover,
@@ -49,6 +50,10 @@
 @media only screen and (max-width: 572px) {
     #lkn-pix-form-donation {
         max-width: 80vw;
+    }
+
+    #toggle-viewing {
+        font-size: 13px;
     }
 }
 

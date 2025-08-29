@@ -89,8 +89,8 @@ msgstr "Insira o nome completo do beneficiário do Pix."
 msgid "Enter the name of the city of the Pix key beneficiary."
 msgstr "Insira o nome da cidade do beneficiário da chave Pix."
 
-msgid "Recipient city (optional)"
-msgstr "Cidade do destinatário (opcional)"
+msgid "Recipient city"
+msgstr "Cidade do destinatário"
 
 msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
 msgstr "Ao activar esta funcionalidade, o plugin registará os logs das transacções, ideal para a identificação de erros."

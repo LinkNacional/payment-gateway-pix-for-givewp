@@ -4,7 +4,7 @@
   "description": "This repository provides a development environment for WHMCS or WordPress",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/srbrunoferreira/docker-php-dev-container.git"
+    "url": "https://github.com/LinkNacional/payment-gateway-pix-for-givewp"
   },
   "keywords": [
     "WordPress",
@@ -13,12 +13,12 @@
     "Dev Container",
     "VS Code"
   ],
-  "author": "Bruno Ferreira <srbrunoferreira@outlook.com>",
+  "author": "Link Nacional <contato@linknacional.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/srbrunoferreira/docker-php-dev-container/issues"
+    "url": "https://github.com/LinkNacional/payment-gateway-pix-for-givewp/issues"
   },
-  "homepage": "https://github.com/srbrunoferreira/docker-php-dev-container#readme",
+  "homepage": "https://www.linknacional.com.br",
   "devDependencies": {
     "@types/react": "^18.2.37",
     "eslint": "^8.34.0",

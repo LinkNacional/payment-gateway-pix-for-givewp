@@ -1,8 +1,9 @@
 // Selecione todos os elementos com a classe desejada
+
 var elements = document.querySelectorAll('.give-setting-tab-header.give-setting-tab-header-gateways');
 
 // Para cada elemento selecionado
-elements.forEach(function(element, index) {
+elements.forEach(function (element, index) {
     // Crie uma nova div e defina sua classe
     var divElement = document.createElement('div');
     divElement.className = 'PGPFGForGivewpAdminSettingsDiv';
@@ -33,7 +34,6 @@ elements.forEach(function(element, index) {
     divElement.appendChild(tableElement);
 });
 
-
 const lknPaymentPixLogSettingLabel = document.querySelector('label[for="lkn-payment-pix-log-setting"]');
 if (lknPaymentPixLogSettingLabel) {
     const link = document.createElement('a');
@@ -44,83 +44,188 @@ if (lknPaymentPixLogSettingLabel) {
     lknPaymentPixLogSettingLabel.appendChild(link);
 }
 
-
-
 var thElements = document.querySelectorAll('.form-table.give-setting-tab-body.give-setting-tab-body-gateways th');
 // Para cada elemento th
 thElements.forEach(function (th) {
     th.parentElement.className = 'PGPFGForGivewpAdminSettingsTr';
-    // Cria um novo elemento div com a classe tooltip
-    var tooltip = document.createElement('div');
-    tooltip.className = 'tooltip';
-
-    // Cria o elemento span para o ícone de interrogação
-    var questionIcon = document.createElement('span');
-    questionIcon.textContent = '?';
-
     // Cria o elemento span para o texto da dica de ferramenta
     var tooltipText = document.createElement('span');
     tooltipText.className = 'tooltiptext';
 
+    // Obtém o ID do campo para buscar a nova_desc
+    var fieldId = null;
+    var inputField = th.nextElementSibling.querySelector('input, select, textarea, fieldset');
+    if (inputField) {
+        // Verifica se é um fieldset
+        if (inputField.tagName.toLowerCase() === 'fieldset') {
+            // Se for fieldset, busca o primeiro input dentro dele
+            var innerInput = inputField.querySelector('input');
+            if (innerInput) {
+                // Para campos radio, geralmente usamos o 'name' como ID
+                fieldId = innerInput.getAttribute('name') || innerInput.getAttribute('id');
+            }
+        } else {
+            // Se não for fieldset, pega o ID normalmente
+            fieldId = inputField.getAttribute('id');
+        }
+    }
     // Obtém o texto de descrição do campo correspondente
     var descriptionField = th.nextElementSibling.querySelector('.give-field-description');
 
+    let subtitle = pgpfgTranslations.subtitle[fieldId] ?? null;
+    let description = pgpfgTranslations.description[fieldId] ?? null;
     // Verifica se o campo de descrição contém um link
-    if(descriptionField){
+    if (descriptionField) {
         var linkElement = descriptionField.querySelector('a');
 
-        // Se o campo de descrição contém um link, adiciona apenas o texto que não é parte do link ao texto da dica de ferramenta
-        if (linkElement) {
-            var linkText = linkElement.textContent;
-            var descriptionText = descriptionField.textContent;
-            var nonLinkText = descriptionText.replace(linkText, '').trim();
-            tooltipText.textContent = nonLinkText;
-
-            // Move o link para o elemento th
-            var divElement = document.createElement('div');
-            divElement.style.display = 'flex';
-            divElement.style.flexDirection = 'column';
-            divElement.appendChild(th.querySelector('label'));
-            divElement.appendChild(linkElement);
-            th.appendChild(divElement);
-        } else {
-            // Se o campo de descrição não contém um link, adiciona todo o texto de descrição ao texto da dica de ferramenta
-            tooltipText.textContent = descriptionField.textContent;
-        }
-
+        let p = document.createElement('p');
+        p.innerHTML = descriptionField.innerHTML.replace(/\s+<a/g, '<a');;
+        th.appendChild(p)
+        //p.innerHTML = p.innerHTML + novaDesc;
         // Remove o campo de descrição
         descriptionField.parentNode.removeChild(descriptionField);
 
-        // Adiciona o ícone de interrogação e o texto da dica de ferramenta ao tooltip
-        tooltip.appendChild(questionIcon);
-        tooltip.appendChild(tooltipText);
-
-        // Adiciona o tooltip ao elemento th
-        th.appendChild(tooltip);
-
-        // Define os estilos para o elemento th
-        th.style.display = 'flex';
-        th.style.justifyContent = 'space-between';
-
-        // Verifica se o elemento tr contém um input do tipo radio
-        var hasRadioInput = th.parentNode.querySelector('input[type="radio"]') !== null;
-        // Se o elemento tr contém um input do tipo radio
-        if (hasRadioInput) {
-            // Adiciona o padding
-            th.style.paddingTop = '32px';
-        }
+    }
+    if (subtitle) {
+        let p = document.createElement('p');
+        let div = document.createElement('label');
+        p.innerHTML = subtitle;
+        div.classList.add('lkn-pix-subtitle');
+        div.append(p);
+        let td = th.parentElement.querySelector('td');
+        td.appendChild(div);
+    }
+    if (description) {
+        let p = document.createElement('p');
+        let div = document.createElement('label');
+        p.classList.add('lkn-pix-description');
+        p.innerHTML = description;
+        div.append(p);
+        let td = th.parentElement.querySelector('td');
+        td.appendChild(div);
     }
 });
 
-if (!document.getElementById('lkn-payment-pix-license-setting')) {
-    var divElement = document.querySelector('.PGPFGForGivewpAdminSettingsDiv');
-    if (divElement) {
-        // Cria um novo elemento de imagem
-        var img = document.createElement('img');
-        img.src = window.location.origin + '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/ProSettings.svg';
-        img.style.width = '100%';
+//Configurações iniciais do menu
+const lkn_PGPFG_menu = document.querySelectorAll('.lkn-pix-menu li')
+const lkn_PGPFG_settings = document.querySelectorAll('.PGPFGForGivewpAdminSettingsDiv')
 
-        // Adiciona a imagem após o divElement
-        divElement.parentNode.insertBefore(img, divElement.nextSibling);
+let antigo;
+let atual = 0;
+
+for (var i = 0; i < lkn_PGPFG_menu.length; i++) {
+    lkn_PGPFG_menu[i].addEventListener("click", function (event) {
+        navegarParaAba(event.target.id); // Passa o ID do elemento clicado
+    });
+}
+
+//Desabilita os divs responsaveis pelas settings, menos a primeira.
+for (var i = 1; i < lkn_PGPFG_settings.length; i++) {
+    lkn_PGPFG_settings[i].classList.add('lkn-pix-configuracao-disable');
+}
+
+function navegarParaAba(idAba) {
+    antigo = atual;
+    lkn_PGPFG_menu[antigo].classList.remove('lkn-pix-menu-ativo');
+    lkn_PGPFG_settings[antigo].classList.add('lkn-pix-configuracao-disable');
+
+    atual = parseInt(idAba);
+    lkn_PGPFG_menu[atual].classList.add('lkn-pix-menu-ativo');
+    lkn_PGPFG_settings[atual].classList.remove('lkn-pix-configuracao-disable');
+}
+
+let previous;
+const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
+trs.forEach(function (tr) {
+    let label = tr.querySelector('label');
+    let textoComplementar = tr.querySelector('a');
+    if (textoComplementar) {
+        let elLabel = document.createElement('label');
+        let p = document.createElement('p');
+        elLabel.appendChild(p);
+        p.appendChild(textoComplementar);
+        tr.querySelector('td').appendChild(elLabel)
     }
+    let labelText = label.innerHTML;
+
+    let novaLabel = document.createElement('label')
+    novaLabel.innerHTML = labelText;
+    let hr = document.createElement('div');
+    hr.classList.add('title-hr');
+    let td = tr.querySelector('td');
+    td.insertBefore(hr, td.firstChild);
+    td.insertBefore(novaLabel, td.firstChild);
+
+    let subtitle = td.querySelector('.lkn-pix-subtitle');
+    if (subtitle) {
+        td.insertBefore(subtitle, hr);
+    }
+
+    // Obtém o ID do campo para buscar a nova_desc
+    var fieldId = null;
+    var th = tr.querySelector('th');
+    var inputField = tr.querySelector('td input, td select, td textarea, td fieldset');
+    if (inputField) {
+        // Verifica se é um fieldset
+        if (inputField.tagName.toLowerCase() === 'fieldset') {
+            // Se for fieldset, busca o primeiro input dentro dele
+            var innerInput = inputField.querySelector('input');
+            if (innerInput) {
+                // Para campos radio, geralmente usamos o 'name' como ID
+                fieldId = innerInput.getAttribute('name') || innerInput.getAttribute('id');
+            }
+        } else {
+            // Se não for fieldset, pega o ID normalmente
+            fieldId = inputField.getAttribute('id');
+        }
+    }
+    let join = pgpfgTranslations.join[fieldId] ?? null;
+    if (join == 'with-next') {
+        let td = th.parentElement.querySelector('td');
+        td.classList.add('join-next')
+        previous = th;
+    }
+    if (join == 'with-previous') {
+        let td = th.parentElement.querySelector('td');
+        td.classList.add('join-previous');
+        previous.querySelector('label').innerHTML = td.querySelector('label').innerHTML;
+        previous.querySelector('p').innerHTML = td.querySelector('p').innerHTML;
+        th.querySelector('label').style.display = 'none';
+        th.querySelector('p').style.display = 'none';
+    }
+})
+
+if (!document.getElementById('lkn-payment-pix-license-setting')) {
+    for (let i = 2; i < lkn_PGPFG_settings.length; i++) {
+        let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
+        configs.forEach(function (config) {
+            Array.from(config.children).forEach(function (child) {
+                if (child.nodeName === 'LABEL' || child.nodeName === 'HR') {
+                    return;
+                }
+                child.classList.add('lkn-disabled-settings');
+            });
+            let p = document.createElement('p');
+            p.innerHTML = 'Disponivel apenas com a versão Pro'
+            p.classList.add('lkn-label-pro')
+            config.appendChild(p)
+        })
+    }
+
+    document.querySelector('.give-submit-wrap input').addEventListener('click', () => {
+        event.preventDefault();
+        //limpa Campos Pro button-primary give-save-button
+        for (let i = 2; i < lkn_PGPFG_settings.length; i++) {
+            let configs = lkn_PGPFG_settings[i].querySelectorAll('td');
+            configs.forEach(function (config) {
+                config.querySelectorAll("input[type='text'], input[type='password']").forEach(function (input) {
+                    input.value = '';
+                })
+            })
+        }
+        const form = document.querySelector('form');
+        if (form) {
+            form.submit();
+        }
+    })
 }
