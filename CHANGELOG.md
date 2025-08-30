@@ -1,4 +1,7 @@
-# 2.2.0 - 15/07/2025
+# 2.2.1 - 30/07/2025
+* Correção nos IDs de pagamentos duplicados.
+
+# 2.2.0 - 29/07/2025
 * Novo menu para seções de configuração
 * Novo estilo para as seções de configuração
 * Gateway PagHiper pix e boleto

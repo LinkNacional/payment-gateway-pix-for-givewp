@@ -94,7 +94,7 @@
     }, /* #__PURE__ */React.createElement('input', {
       type: 'tel',
       autocomplete: 'off',
-      id: 'lkn_give_paghiper_primary_document',
+      id: 'lkn_pgpf_give_paghiper_primary_document',
       placeholder: LKN_PIX_CPF_CNPJ_LABEL,
       required: 'true',
       'aria-required': 'true',
@@ -114,14 +114,14 @@
       info = ''
     }
     return /* #__PURE__ */React.createElement('h2', {
-      id: 'lkn_give_paghiper_info',
+      id: 'lkn_pgpf_give_paghiper_info',
       style: {
         fontSize: '18px'
       }
     }, info)
   }
   const LknPixGateway = {
-    id: 'lkn-give-paghiper-pix',
+    id: 'lkn-pgpf-give-paghiper-pix',
     // The function that runs when form is opened.
     async initialize() {
       // Function to remove event bubling on value buttons.
@@ -136,7 +136,7 @@
     },
     // The function that runs when form is submited but not completed.
     async beforeCreatePayment(values) {
-      const cpfCnpjField = document.querySelectorAll('#lkn_give_paghiper_primary_document')[0]
+      const cpfCnpjField = document.querySelectorAll('#lkn_pgpf_give_paghiper_primary_document')[0]
       const cpfCnpj = cpfCnpjField.value
       values.cpfCnpj = cpfCnpj
 
@@ -176,12 +176,12 @@
           fontSize: '22px'
         }
       }, LKN_PIX_TITLE)), /* #__PURE__ */React.createElement('div', {
-        id: 'lkn_paghiper_wrapper',
+        id: 'lkn_pgpf_paghiper_wrapper',
         style: {
           width: '100%'
         }
       }, PixFeeInfo, /* #__PURE__ */React.createElement('div', {
-        id: 'lkn_give_paghiper_cpf_cnpj',
+        id: 'lkn_pgpf_give_paghiper_cpf_cnpj',
         style: {
           fontSize: '14px',
           marginTop: '30px'

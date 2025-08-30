@@ -9,7 +9,7 @@
     }
 
     setInfoBanner(pixFee, bolFee) {
-      const divInfo = this.dom.getElementById('lkn_give_paghiper_info')
+      const divInfo = this.dom.getElementById('lkn_pgpf_give_paghiper_info')
       const divPix = this.dom.getElementById('paghiper-pix-div')
       const divBol = this.dom.getElementById('paghiper-slip-div')
 
@@ -42,7 +42,7 @@
 
     validateGateway() {
       const gatewaySelected = this.dom.getElementsByClassName('give-gateway-option-selected')[0].childNodes[1].value
-      if (gatewaySelected !== 'lkn-give-paghiper-pix' || gatewaySelected !== 'lkn-give-paghiper-slip') {
+      if (gatewaySelected !== 'lkn-pgpf-give-paghiper-pix' || gatewaySelected !== 'lkn-pgpf-give-paghiper-slip') {
         const recurrencyBtn = this.dom.getElementsByClassName('give-recurring-donors-choice')[0]
 
         if (recurrencyBtn) {
@@ -194,7 +194,7 @@
       const lknPaghiperiframe = document.getElementById('iFrameResizer0')
       const dom = lknPaghiperiframe.contentDocument
       const lknPaghiperPaymethod = new LknPaghiperPayment(dom)
-      const lknPaghiperCpfCnpjInput = dom.getElementById('lkn_give_paghiper_cpf_cnpj_input')
+      const lknPaghiperCpfCnpjInput = dom.getElementById('lkn_pgpf_give_paghiper_cpf_cnpj_input')
 
       lknPaghiperPaymethod.setInfoBanner(LKN_PIX_FEE, LKN_BOL_FEE)
 
@@ -208,9 +208,9 @@
 
       dom.addEventListener('give_gateway_loaded', (event) => {
         const selectedGateway = event.detail.selectedGateway
-        const lknPaghiperCpfCnpjInput = dom.getElementById('lkn_give_paghiper_cpf_cnpj_input')
+        const lknPaghiperCpfCnpjInput = dom.getElementById('lkn_pgpf_give_paghiper_cpf_cnpj_input')
 
-        if (selectedGateway === 'lkn-give-paghiper-pix' || selectedGateway === 'lkn-give-paghiper-slip') {
+        if (selectedGateway === 'lkn-pgpf-give-paghiper-pix' || selectedGateway === 'lkn-pgpf-give-paghiper-slip') {
           lknPaghiperPaymethod.setInfoBanner(LKN_PIX_FEE, LKN_BOL_FEE)
 
           lknPaghiperPaymethod.appendDonateBtn()
@@ -224,7 +224,7 @@
       })
     } else if (lknPaghiperform) {
       const lknPaghiperPaymethod = new LknPaghiperPayment(document)
-      const lknPaghiperCpfCnpjInput = document.getElementById('lkn_give_paghiper_cpf_cnpj_input')
+      const lknPaghiperCpfCnpjInput = document.getElementById('lkn_pgpf_give_paghiper_cpf_cnpj_input')
 
       lknPaghiperPaymethod.setInfoBanner(LKN_PIX_FEE, LKN_BOL_FEE)
 
@@ -238,9 +238,9 @@
 
       document.addEventListener('give_gateway_loaded', (event) => {
         const selectedGateway = event.detail.selectedGateway
-        const lknPaghiperCpfCnpjInput = document.getElementById('lkn_give_paghiper_cpf_cnpj_input')
+        const lknPaghiperCpfCnpjInput = document.getElementById('lkn_pgpf_give_paghiper_cpf_cnpj_input')
 
-        if (selectedGateway === 'lkn-give-paghiper-pix' || selectedGateway === 'lkn-give-paghiper-slip') {
+        if (selectedGateway === 'lkn-pgpf-give-paghiper-pix' || selectedGateway === 'lkn-pgpf-give-paghiper-slip') {
           lknPaghiperPaymethod.setInfoBanner(LKN_PIX_FEE, LKN_BOL_FEE)
 
           lknPaghiperPaymethod.appendDonateBtn()

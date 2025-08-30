@@ -15,7 +15,7 @@ if (! defined('ABSPATH')) {
  * @see        https://www.linknacional.com.br/
  * @author     Link Nacional
  */
-final class LknGivePaghiperHelper
+final class PGPFGivePaghiperHelper
 {
     /**
      * Check plugin environment and show plugin dependency notice.
@@ -145,7 +145,7 @@ final class LknGivePaghiperHelper
      */
     public static function regLog($logType, $category, $description, $data, $forceLog = false): void
     {
-        if (give_get_option('lkn_paghiper_debug') == 'enable' || $forceLog) {
+        if (give_get_option('lkn_pgpf_paghiper_debug') == 'enable' || $forceLog) {
             $logFactory = new LogFactory();
             $log = $logFactory->make(
                 $logType,
@@ -172,22 +172,22 @@ final class LknGivePaghiperHelper
         $configs['basePath'] = PGPFG_PIX_PLUGIN_DIR . 'logs/';
         $configs['base'] = $configs['basePath'] . gmdate('d.m.Y-H.i.s') . '.log';
 
-        $configs['debug'] = give_get_option('lkn_paghiper_debug', 'nolog');
+        $configs['debug'] = give_get_option('lkn_pgpf_paghiper_debug', 'nolog');
 
         $configs['urlBol'] = 'https://api.paghiper.com/';
         $configs['urlPix'] = 'https://pix.paghiper.com/';
 
-        $configs['apiKey'] = trim(give_get_option('lkn_paghiper_api_key_setting_field', ''));
-        $configs['token'] = trim(give_get_option('lkn_paghiper_token_setting_field', ''));
+        $configs['apiKey'] = trim(give_get_option('lkn_pgpf_paghiper_api_key_setting_field', ''));
+        $configs['token'] = trim(give_get_option('lkn_pgpf_paghiper_token_setting_field', ''));
         // Function that validates the module key.
-        $configs['moduleKey'] = trim(give_get_option('lkn_paghiper_license_setting_field', ''));
+        $configs['moduleKey'] = trim(give_get_option('lkn_pgpf_paghiper_license_setting_field', ''));
 
-        $configs["teste"] = trim(give_get_option("lkn_paghiper_select_template_pix"));
+        $configs["teste"] = trim(give_get_option("lkn_pgpf_paghiper_select_template_pix"));
 
-        $configs['expDate'] = preg_replace('/\D/', '', give_get_option('lkn_paghiper_due_date_setting_field'));
-        $configs['bolFee'] = preg_replace('/[^0-9.]/', '', give_get_option('lkn_paghiper_fee_bol_setting_field'));
-        $configs['pixFee'] = preg_replace('/[^0-9.]/', '', give_get_option('lkn_paghiper_fee_pix_setting_field'));
-        $configs['description'] = trim(give_get_option('lkn_paghiper_desc_setting_field', 'Doação'));
+        $configs['expDate'] = preg_replace('/\D/', '', give_get_option('lkn_pgpf_paghiper_due_date_setting_field'));
+        $configs['bolFee'] = preg_replace('/[^0-9.]/', '', give_get_option('lkn_pgpf_paghiper_fee_bol_setting_field'));
+        $configs['pixFee'] = preg_replace('/[^0-9.]/', '', give_get_option('lkn_pgpf_paghiper_fee_pix_setting_field'));
+        $configs['description'] = trim(give_get_option('lkn_pgpf_paghiper_desc_setting_field', 'Doação'));
 
         return $configs;
     }
@@ -219,7 +219,7 @@ final class LknGivePaghiperHelper
             return json_decode(wp_remote_retrieve_body($response), false);
         } catch (Exception $e) {
             // Register log.
-            LknGivePaghiperHelper::regLog('error', 'curl', 'POST Curl Error', $e->getMessage());
+            PGPFGivePaghiperHelper::regLog('error', 'curl', 'POST Curl Error', $e->getMessage());
 
             return array();
         }
@@ -229,8 +229,8 @@ final class LknGivePaghiperHelper
     {
         // Recupera um metadado personalizado
         $custom_field_value = give_get_meta($payment_id);
-        if (isset($custom_field_value["lkn_give_paghiper_response"])) {
-            $arr = json_decode($custom_field_value["lkn_give_paghiper_response"][0], true);
+        if (isset($custom_field_value["lkn_pgpf_give_paghiper_response"])) {
+            $arr = json_decode($custom_field_value["lkn_pgpf_give_paghiper_response"][0], true);
             $pix_page_url = esc_url($arr["pix_page"]);
 
 ?>
@@ -283,11 +283,18 @@ final class LknGivePaghiperHelper
             // Cria a página
             $page_id = wp_insert_post(array(
                 'post_title'   => 'PagHiper Pix',
-                'post_content' => '[lkn_give_paghiper_pix]',
+                'post_content' => '[lkn_pgpf_give_paghiper_pix]',
                 'post_status'  => 'publish',
                 'post_type'    => 'page',
             ));
             $paghiper_page = get_post($page_id);
+        } else {
+            if ($paghiper_page->post_content === '[lkn_give_paghiper_pix]') {
+                wp_update_post([
+                    'ID' => $paghiper_page->ID,
+                    'post_content' => '[lkn_pgpf_give_paghiper_pix]'
+                ]);
+            }
         }
 
         // Lista todas as páginas
