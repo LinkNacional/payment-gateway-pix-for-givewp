@@ -1,7 +1,7 @@
 === Payment Gateway Pix For GiveWP ===
 Contributors: linknacional
 Donate link: https://www.linknacional.com.br/
-Tags: gateway, payments, givewp
+Tags: gateway, payments, givewp, pix, give
 Requires at least: 6.0
 Tested up to: 6.8
 Stable tag: 2.2.1
