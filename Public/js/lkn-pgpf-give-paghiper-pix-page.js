@@ -1,9 +1,9 @@
 (function ($) {
   'use strict'
 
-  const LKN_PAGHIPER_REDIRECT = window.pixPageGlobals.redirect
-  const LKN_PAGHIPER_REDIRECT_URL = window.pixPageGlobals.redirect_url
-  const LKN_PAGHIPER_DON_VALUE = window.pixPageGlobals.don_value
+  const lkn_pgpf_paghiper_REDIRECT = window.pixPageGlobals.redirect
+  const lkn_pgpf_paghiper_REDIRECT_URL = window.pixPageGlobals.redirect_url
+  const lkn_pgpf_paghiper_DON_VALUE = window.pixPageGlobals.don_value
 
   $(window).on('load', function () {
     let firstRequest = true
@@ -11,8 +11,8 @@
     let attempt = 5
     let activeButton = true
 
-    if (LKN_PAGHIPER_REDIRECT === '1') {
-      parent.window.location.replace(LKN_PAGHIPER_REDIRECT_URL)
+    if (lkn_pgpf_paghiper_REDIRECT === '1') {
+      parent.window.location.replace(lkn_pgpf_paghiper_REDIRECT_URL)
     }
 
     const formatter = new Intl.NumberFormat('pt-BR', {
@@ -20,9 +20,9 @@
       currency: 'BRL'
     })
 
-    const value = formatter.format(LKN_PAGHIPER_DON_VALUE)
+    const value = formatter.format(lkn_pgpf_paghiper_DON_VALUE)
 
-    const apiUrl = pixPageGlobals.page_url + '/wp-json/paghiper/v1/status'
+    const apiUrl = pixPageGlobals.page_url + '/wp-json/pgpfpaghiper/v1/status'
 
     $(document).ready(function ($) {
       const transactionId = $('#transactionId').val()

@@ -164,9 +164,9 @@ final class PGPFGForGivewp
         }
     }
 
-    public function add_give_paghiper_shortcodes(): void
+    public function add_pgpf_give_paghiper_shortcodes(): void
     {
-        add_shortcode('lkn_give_paghiper_pix', function (): void {
+        add_shortcode('lkn_pgpf_give_paghiper_pix', function (): void {
             include_once PGPFG_PIX_PLUGIN_DIR . 'Public/PGPFGForPaghiperPixPage.php'; //LknGivePaghiperPixPage
         });
     }
@@ -267,7 +267,7 @@ final class PGPFGForGivewp
      */
     private function define_admin_hooks(): void
     {
-        $this->loader->add_action('init', $this, 'add_give_paghiper_shortcodes');
+        $this->loader->add_action('init', $this, 'add_pgpf_give_paghiper_shortcodes');
 
         $plugin_admin = new PGPFGForGivewpAdmin($this->get_plugin_name(), $this->get_version());
 
@@ -304,7 +304,7 @@ final class PGPFGForGivewp
 
     public function register_rest_routes(): void
     {
-        register_rest_route('paghiper', '/v1/status', array(
+        register_rest_route('pgpfpaghiper', '/v1/status', array(
             'methods' => 'POST',
             'callback' => array($this, 'get_paghipder_pix_status'),
             'permission_callback' => '__return_true',
@@ -327,8 +327,8 @@ final class PGPFGForGivewp
         }
 
         // Dados de autenticação
-        $apiKey = trim(give_get_option('lkn_paghiper_api_key_setting_field', ''));
-        $token = trim(give_get_option('lkn_paghiper_token_setting_field', ''));
+        $apiKey = trim(give_get_option('lkn_pgpf_paghiper_api_key_setting_field', ''));
+        $token = trim(give_get_option('lkn_pgpf_paghiper_token_setting_field', ''));
 
         // Sempre usar o endpoint de produção
         $url = 'https://pix.paghiper.com/invoice/status/';

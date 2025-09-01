@@ -9,8 +9,8 @@
 
 namespace Pgpfg\PGPFGForGivewp\PublicView;
 
-use Pgpfg\PGPFGForGivewp\Includes\LknGivePaghiperHelper;
-//use Pgpfg\PGPFGForGivewp\Includes\LknGivePaghiperHelper as IncludesLknGivePaghiperHelper;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGivePaghiperHelper;
+//use Pgpfg\PGPFGForGivewp\Includes\PGPFGivePaghiperHelper as IncludesPGPFGivePaghiperHelper;
 use Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayPaghiperAbstractPayment;
 
 /**
@@ -23,7 +23,7 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
     public function __construct()
     {
         parent::__construct(
-            'lkn-give-paghiper-slip',
+            'lkn-pgpf-give-paghiper-slip',
             'slip',
             'PagHiper Boleto',
             'Boleto bancário'
@@ -35,7 +35,7 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
      */
     public static function id(): string
     {
-        return 'lkn-give-paghiper-slip';
+        return 'lkn-pgpf-give-paghiper-slip';
     }
 
     public function getLegacyFormFieldMarkup(int $formId, array $args): string
@@ -48,7 +48,7 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
      */
     protected function gateway_form(): string
     {
-        $configs = LknGivePaghiperHelper::get_configs();
+        $configs = PGPFGivePaghiperHelper::get_configs();
 
         // Verify if the payment tax is a number, if not a number, set as zero.
         if (is_numeric($configs['bolFee'])) {
@@ -65,18 +65,18 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
         $astr = esc_html('*');
 
         return "
-        <div id=\"lkn_give_paghiper_info_wrapper\">
-            <h2 id=\"lkn_give_paghiper_info\">{$info}</h2>
+        <div id=\"lkn_pgpf_give_paghiper_info_wrapper\">
+            <h2 id=\"lkn_pgpf_give_paghiper_info\">{$info}</h2>
         </div>
 
-        <fieldset id=\"lkn_give_paghiper_cpf_cnpj\" class=\"form-row form-row-wide lkn_give_paghiper_hidden\">
-            <label for=\"lkn_give_paghiper_primary_document\" class=\"give-label\">
+        <fieldset id=\"lkn_pgpf_give_paghiper_cpf_cnpj\" class=\"form-row form-row-wide lkn_pgpf_give_paghiper_hidden\">
+            <label for=\"lkn_pgpf_give_paghiper_primary_document\" class=\"give-label\">
                 {$cpfCnpj}
                 <span class=\"give-required-indicator\">{$astr}</span>
                 <span class=\"give-tooltip hint--top hint--medium hint--bounce\" aria-label=\"$cpfCnpjTooltip\" rel=\"tooltip\"><i class=\"give-icon give-icon-question\"></i></span>
             </label>
 
-            <input type=\"tel\" autocomplete=\"off\" name=\"gatewayData[lkn_give_primary_document]\" id=\"lkn_give_paghiper_cpf_cnpj_input\" class=\"give-input required\" placeholder=\"$cpfCnpj\" required aria-required=\"true\" maxlength=\"20\">
+            <input type=\"tel\" autocomplete=\"off\" name=\"gatewayData[lkn_give_primary_document]\" id=\"lkn_pgpf_give_paghiper_cpf_cnpj_input\" class=\"give-input required\" placeholder=\"$cpfCnpj\" required aria-required=\"true\" maxlength=\"20\">
         </fieldset>
 
 		<div id=\"paghiper-slip-div\"></div>";
@@ -88,7 +88,7 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
      */
     public function enqueueScript(int $formId): void
     {
-        $configs = LknGivePaghiperHelper::get_configs();
+        $configs = PGPFGivePaghiperHelper::get_configs();
 
         // Verify if the payment tax is a number, if not a number, set as zero.
         if (is_numeric($configs['bolFee'])) {
