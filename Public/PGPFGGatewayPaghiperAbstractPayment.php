@@ -22,7 +22,7 @@ use Give\Framework\PaymentGateways\Exceptions\PaymentGatewayException;
 use Give\Framework\PaymentGateways\PaymentGateway;
 use Give\Framework\PaymentGateways\SubscriptionModule;
 use Give\PaymentGateways\Gateways\Stripe\Webhooks\Listeners\PaymentIntentPaymentFailed;
-use Pgpfg\PGPFGForGivewp\Includes\LknGivePaghiperHelper;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGivePaghiperHelper;
 use Pgpfg\PGPFGForGivewp\Includes\LknGivePaghiperLicense;
 use WP_REST_Request;
 
@@ -89,9 +89,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
     {
         $id_prefix = ! empty($args['id_prefix']) ? $args['id_prefix'] : '';
 
-        $configs = LknGivePaghiperHelper::get_configs();
+        $configs = PGPFGivePaghiperHelper::get_configs();
 
-        wp_enqueue_script($this->id . '-script-js', plugin_dir_url(__FILE__) . 'js/lkn-give-paghiper-public.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
+        wp_enqueue_script($this->id . '-script-js', plugin_dir_url(__FILE__) . 'js/lkn-pgpf-give-paghiper-public.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
 
         $pixFee = $configs['pixFee'];
         $bolFee = $configs['bolFee'];
@@ -145,9 +145,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                     </span>
                 </div>
 
-				<div id=\"give-paghiper-single-cc-fields-{$id_prefix}\" class=\"give-paghiper-single-cc-field-wrap\">
-					{$gatewayForm}
-				</div>
+                <div id=\"give-paghiper-single-cc-fields-{$id_prefix}\" class=\"give-paghiper-single-cc-field-wrap\">
+                    {$gatewayForm}
+                </div>
                 <input type=\"hidden\" id=\"lkn-input-form\" name=\"gatewayData[is_multi]\" value=\"false\"> 
             </fieldset>
         ";
@@ -170,7 +170,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
     {
         try {
             // Set the configs values.
-            $configs = LknGivePaghiperHelper::get_configs();
+            $configs = PGPFGivePaghiperHelper::get_configs();
 
             // Make sure we don't have any left over errors present.
             give_clear_errors();
@@ -179,7 +179,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $errors = give_get_errors();
 
             if ($errors) {
-                LknGivePaghiperHelper::regLog('error', 'payment', 'GiveWP Error',  wp_json_encode($errors, true));
+                PGPFGivePaghiperHelper::regLog('error', 'payment', 'GiveWP Error',  wp_json_encode($errors, true));
 
                 // Errors? Send back.
                 throw new PaymentGatewayException(esc_html((wp_json_encode($errors))));
@@ -197,12 +197,16 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $donLastName = $donation->lastName;
             $donGateway = $donation->gatewayId;
 
-            $donGatewayName = ('lkn-give-paghiper-pix' === $donGateway) ? 'Pix' : 'Boleto';
+            $donGatewayName = ('lkn-pgpf-give-paghiper-pix' === $donGateway) ? 'Pix' : 'Boleto';
 
             // Verify the payment.
             if (empty($donId)) {
                 // Record the error.
+<<<<<<< HEAD
                 LknGivePaghiperHelper::regLog('error', 'payment', 'Payment error. Payment creation failed before completing authorization.', wp_json_encode($gatewayData));
+=======
+                PGPFGivePaghiperHelper::regLog('error', 'payment', 'Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização', wp_json_encode($gatewayData));
+>>>>>>> 22d2f5f6bb50056a430b018be360524ea6bffc9f
 
                 // Problems? Send back.
                 throw new PaymentGatewayException(esc_html__('Payment error. Payment creation failed before completing authorization.', 'payment-gateway-pix-for-givewp'));
@@ -232,7 +236,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $donValidDocument = false;
 
             // If payment using Pix gateway, catch the pix fee, else, catch the slip fee.
-            $donFee = ('lkn-give-paghiper-pix' === $donGateway) ? $configs['pixFee'] : $configs['bolFee'];
+            $donFee = ('lkn-pgpf-give-paghiper-pix' === $donGateway) ? $configs['pixFee'] : $configs['bolFee'];
 
             if (empty($donDescript)) {
                 $donDescript = 'Doação';
@@ -248,9 +252,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
             // Validate the CPF/CNPJ.
             if (strlen($donCpfCnpj) == 11) {
-                $donValidDocument = LknGivePaghiperHelper::validate_cpf($donCpfCnpj);
+                $donValidDocument = PGPFGivePaghiperHelper::validate_cpf($donCpfCnpj);
             } else {
-                $donValidDocument = LknGivePaghiperHelper::validate_cnpj($donCpfCnpj);
+                $donValidDocument = PGPFGivePaghiperHelper::validate_cnpj($donCpfCnpj);
             }
 
             // In CPF/CNPJ not valid.
@@ -259,7 +263,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             }
 
             // Create a query arg with the donation ID to listener callback.
-            $donListenerUrl = add_query_arg('id_for_paghiper_listener', $donId, site_url() . '/wp-json/lkn-give-paghiper-listener/v1/notification');
+            $donListenerUrl = add_query_arg('id_for_paghiper_listener', $donId, site_url() . '/wp-json/lkn-pgpf-give-paghiper-listener/v1/notification');
 
             $header = array(
                 'Accept' => 'application/json',
@@ -268,13 +272,13 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 'Content-Type' => 'application/json;charset=UTF-8'
             );
 
-            $orderIdPrefix = ('lkn-give-paghiper-pix' === $donGateway) ? 'pix_' : 'bol_';
+            $orderIdPrefix = ('lkn-pgpf-give-paghiper-pix' === $donGateway) ? 'pix_' : 'bol_';
 
             // Initialize variable.
             $body = null;
 
             // Body for Pix.
-            if ('lkn-give-paghiper-pix' === $donGateway) {
+            if ('lkn-pgpf-give-paghiper-pix' === $donGateway) {
                 $body = array(
                     'apiKey' => $apiKey,                    // PagHiper Api Key.
                     'order_id' => $orderIdPrefix . $donId,  // Unique ID of order.
@@ -294,7 +298,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             }
 
             // Body for Banking Slip.
-            if ('lkn-give-paghiper-slip' === $donGateway) {
+            if ('lkn-pgpf-give-paghiper-slip' === $donGateway) {
                 $body = array(
                     'apiKey' => $apiKey,                    // PagHiper Api Key.
                     'order_id' => $orderIdPrefix . $donId,  // Unique ID of order.
@@ -314,15 +318,15 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 );
             }
 
-            $postUrl = ('lkn-give-paghiper-pix' === $donGateway) ? $configs['urlPix'] . 'invoice/create/' : $configs['urlBol'] . 'transaction/create/';
+            $postUrl = ('lkn-pgpf-give-paghiper-pix' === $donGateway) ? $configs['urlPix'] . 'invoice/create/' : $configs['urlBol'] . 'transaction/create/';
 
             // Make POST request.
-            $resultRequest = LknGivePaghiperHelper::connect_request($header, $body, $postUrl);
+            $resultRequest = PGPFGivePaghiperHelper::connect_request($header, $body, $postUrl);
 
             // Register log.
-            LknGivePaghiperHelper::regLog('info', 'payment', 'Gateway ID: ' . esc_html($donGateway) . ' - Response Request', wp_json_encode($resultRequest, true));
+            PGPFGivePaghiperHelper::regLog('info', 'payment', 'Gateway ID: ' . esc_html($donGateway) . ' - Response Request', wp_json_encode($resultRequest, true));
 
-            if ('lkn-give-paghiper-pix' === $donGateway) {
+            if ('lkn-pgpf-give-paghiper-pix' === $donGateway) {
                 $paghiperResult = $resultRequest->pix_create_request->result;
                 $paghiperMsg = $resultRequest->pix_create_request->response_message;
                 $paghiperTransaction = $resultRequest->pix_create_request->transaction_id;
@@ -349,7 +353,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 $transactionArray = base64_encode(wp_json_encode($transactionArray));
 
-                $transactionPage = empty($this->lkn_get_page()) ? get_permalink(give_get_option("lkn_paghiper_pix_payment_page"), false) : $this->lkn_get_page();
+                $transactionPage = empty($this->lkn_get_page()) ? get_permalink(give_get_option("lkn_pgpf_paghiper_pix_payment_page"), false) : $this->lkn_get_page();
                 // URL to page with payment informations.[
 
                 $dir = $transactionPage . $this->lkn_set_link($transactionPage, $transactionArray);
@@ -361,7 +365,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                     'pix_page' => $dir                           // URL of pix payment page.
                 );
 
-                give_update_payment_meta($donId, 'lkn_give_paghiper_response', wp_json_encode($arrayMeta));
+                give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_response', wp_json_encode($arrayMeta));
 
                 $donation->status = DonationStatus::PROCESSING();
                 $donation->save();
@@ -375,10 +379,10 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 return new RedirectOffsite($dir);
             }
-            if ('lkn-give-paghiper-slip' === $donGateway) {
+            if ('lkn-pgpf-give-paghiper-slip' === $donGateway) {
                 $paghiperResult = $resultRequest->create_request->result;
                 $paghiperMsg = $resultRequest->create_request->response_message;
-                $paghiperTransaction = $resultRequest->create_request->transaction_id;
+                $paghiperTransaction = isset($resultRequest->create_request->transaction_id) ? $resultRequest->create_request->transaction_id : '';
 
                 // Verifies if the Slip API not returned a success code.
                 if ('success' != $paghiperResult) {
@@ -401,7 +405,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                     'bol_page' => $dir                           // URL of slip page.
                 );
 
-                give_update_payment_meta($donId, 'lkn_give_paghiper_response', wp_json_encode($arrayMeta));
+                give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_response', wp_json_encode($arrayMeta));
 
                 // Redirect to page with banking slip.
                 $donation->status = DonationStatus::PROCESSING();
@@ -412,7 +416,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $errorMsg = $e->getMessage();
 
             // Register log.
-            LknGivePaghiperHelper::regLog('error', 'payment', 'Erro no processamento do pagamento', $errorMsg);
+            PGPFGivePaghiperHelper::regLog('error', 'payment', 'Erro no processamento do pagamento', $errorMsg);
 
             $donation->status = DonationStatus::FAILED();
             $donation->save();
@@ -445,7 +449,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
     private function lkn_get_page()
     {
         // Obtém o ID da página a partir das opções
-        $selected_page_id = give_get_option("lkn_paghiper_select_template_pix");
+        $selected_page_id = give_get_option("lkn_pgpf_paghiper_select_template_pix");
 
         // Verifica se o ID está vazio e retorna se estiver
         if (empty($selected_page_id)) {
@@ -457,14 +461,12 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         // Obtém todas as páginas
         $pages = get_pages();
-        $id = 0;
         // Itera sobre as páginas para encontrar a página com o ID correspondente
         foreach ($pages as $page) {
-            if ($id == $selected_page_id) {
+            if ($page->ID == $selected_page_id) {
                 $selected_page = $page;
                 break;
             }
-            $id++;
         }
 
         // Verifica se a página foi encontrada
@@ -474,6 +476,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         // Obtém o permalink da página
         $permalink = $selected_page->guid;
+
         // Verifica se o permalink foi obtido corretamente
         if ($permalink) {
             return $permalink;
@@ -524,7 +527,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             return wp_remote_retrieve_body($response);
         } catch (Exception $e) {
             // Register log.
-            LknGivePaghiperHelper::regLog('error', 'curl', 'GET Curl Error', $e->getMessage());
+            PGPFGivePaghiperHelper::regLog('error', 'curl', 'GET Curl Error', $e->getMessage());
 
             return array();
         }
@@ -538,14 +541,14 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
     public static function listener(WP_REST_Request $request)
     {
         try {
-            $configs = LknGivePaghiperHelper::get_configs();
+            $configs = PGPFGivePaghiperHelper::get_configs();
 
             $urlParams = $request->get_params();
 
             $donationId = sanitize_text_field($urlParams['id_for_paghiper_listener']);
 
             if (empty($donationId)) {
-                LknGivePaghiperHelper::regLog('error', 'listener', 'Falha no listener, ID não retornado.', '');
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Falha no listener, ID não retornado.', '');
 
                 return false;
             }
@@ -563,7 +566,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $params = $request->get_body_params();
 
             // Register log.
-            LknGivePaghiperHelper::regLog('info', 'listener', 'notification POST received', esc_html($donationGateway) . ' - Response Request: ' . wp_json_encode($params, true));
+            PGPFGivePaghiperHelper::regLog('info', 'listener', 'notification POST received', esc_html($donationGateway) . ' - Response Request: ' . wp_json_encode($params, true));
 
             // Body Params:
             $token = $configs['token'];
@@ -593,10 +596,10 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $postUrl = ('pix' === $donationGateway) ? $configs['urlPix'] . 'invoice/notification/' : $configs['urlBol'] . 'transaction/notification/';
 
             // Make POST request.
-            $response = LknGivePaghiperHelper::connect_request($header, $body, $postUrl);
+            $response = PGPFGivePaghiperHelper::connect_request($header, $body, $postUrl);
 
             // Register log.
-            LknGivePaghiperHelper::regLog('info', 'listener', 'Listener notification POST - Response Request', wp_json_encode($response, true));
+            PGPFGivePaghiperHelper::regLog('info', 'listener', 'Listener notification POST - Response Request', wp_json_encode($response, true));
 
             $requestResult = $response->status_request->result;
             $requestMsg = $response->status_request->response_message;
@@ -604,7 +607,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             if ('success' != $requestResult) {
                 give_insert_payment_note($donationId, 'Notificação recebida, erro na consulta da API verifique as chaves de acesso e os logs da transação.');
 
-                LknGivePaghiperHelper::regLog('error', 'listener', 'Falha na atualização de status da doação #' . $donationId, 'Razão: ' . esc_html($requestMsg) . ' | Result: ' . wp_json_encode($requestResult, true));
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Falha na atualização de status da doação #' . $donationId, 'Razão: ' . esc_html($requestMsg) . ' | Result: ' . wp_json_encode($requestResult, true));
 
                 return false;
             }
@@ -620,14 +623,14 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             switch ($orderStatus) {
                 case 'completed':
                 case 'paid':
-                    give_update_payment_meta($donationId, 'lkn_give_paghiper_response', $orderCode . ':::' . $orderId . ':::Pagamento confirmado com sucesso');
+                    give_update_payment_meta($donationId, 'lkn_pgpf_give_paghiper_response', $orderCode . ':::' . $orderId . ':::Pagamento confirmado com sucesso');
 
                     $donation->status = DonationStatus::COMPLETE();
                     $donation->save();
 
                     break;
                 case 'canceled':
-                    give_update_payment_meta($donationId, 'lkn_give_paghiper_response', $orderCode . ':::' . $orderId . ':::Falha no processamento do pagamento');
+                    give_update_payment_meta($donationId, 'lkn_pgpf_give_paghiper_response', $orderCode . ':::' . $orderId . ':::Falha no processamento do pagamento');
 
                     $donation->status = DonationStatus::FAILED();
                     $donation->save();
@@ -647,7 +650,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             return true;
         } catch (Exception $e) {
             // Register log.
-            LknGivePaghiperHelper::regLog('error', 'listener', 'Listener Error', $e->getMessage());
+            PGPFGivePaghiperHelper::regLog('error', 'listener', 'Listener Error', $e->getMessage());
 
             return false;
         }

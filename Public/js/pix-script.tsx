@@ -100,7 +100,7 @@
                     <input
                         type="tel"
                         autocomplete="off"
-                        id="lkn_give_paghiper_primary_document"
+                        id="lkn_pgpf_give_paghiper_primary_document"
                         placeholder={LKN_PIX_CPF_CNPJ_LABEL}
                         required="true"
                         aria-required="true"
@@ -124,12 +124,12 @@
         }
 
         return (
-            <h2 id="lkn_give_paghiper_info" style={{ fontSize: '18px' }}>{info}</h2>
+            <h2 id="lkn_pgpf_give_paghiper_info" style={{ fontSize: '18px' }}>{info}</h2>
         )
     }
 
     const LknPixGateway = {
-        id: 'lkn-give-paghiper-pix',
+        id: 'lkn-pgpf-give-paghiper-pix',
 
         // The function that runs when form is opened.
         async initialize() {
@@ -149,7 +149,7 @@
 
         // The function that runs when form is submited but not completed.
         async beforeCreatePayment(values) {
-            const cpfCnpjField = document.querySelectorAll('#lkn_give_paghiper_primary_document')[0]
+            const cpfCnpjField = document.querySelectorAll('#lkn_pgpf_give_paghiper_primary_document')[0]
             const cpfCnpj = cpfCnpjField.value
 
             values.cpfCnpj = cpfCnpj
@@ -187,10 +187,10 @@
                             </strong>
                         </legend>
 
-                        <div id="lkn_paghiper_wrapper" style={{ width: '100%' }}>
+                        <div id="lkn_pgpf_paghiper_wrapper" style={{ width: '100%' }}>
                             {PixFeeInfo}
 
-                            <div id="lkn_give_paghiper_cpf_cnpj" style={{ fontSize: '14px', marginTop: '30px' }}>
+                            <div id="lkn_pgpf_give_paghiper_cpf_cnpj" style={{ fontSize: '14px', marginTop: '30px' }}>
                                 {' ' + LKN_PIX_CPF_CNPJ_LABEL + ' ' + LKN_PIX_ASTR_SYMB}
 
                                 {PrimaryDocumentInput}

@@ -1,9 +1,9 @@
 (function ($) {
   'use strict'
 
-  const LKN_PAGHIPER_REDIRECT = window.pixPageGlobals.redirect
-  const LKN_PAGHIPER_REDIRECT_URL = window.pixPageGlobals.redirect_url
-  const LKN_PAGHIPER_DON_VALUE = window.pixPageGlobals.don_value
+  const lkn_pgpf_paghiper_REDIRECT = window.pixPageGlobals.redirect
+  const lkn_pgpf_paghiper_REDIRECT_URL = window.pixPageGlobals.redirect_url
+  const lkn_pgpf_paghiper_DON_VALUE = window.pixPageGlobals.don_value
 
   $(window).on('load', function () {
     let firstRequest = true
@@ -11,8 +11,8 @@
     let attempt = 5
     let activeButton = true
 
-    if (LKN_PAGHIPER_REDIRECT === '1') {
-      parent.window.location.replace(LKN_PAGHIPER_REDIRECT_URL)
+    if (lkn_pgpf_paghiper_REDIRECT === '1') {
+      parent.window.location.replace(lkn_pgpf_paghiper_REDIRECT_URL)
     }
 
     const formatter = new Intl.NumberFormat('pt-BR', {
@@ -20,9 +20,9 @@
       currency: 'BRL'
     })
 
-    const value = formatter.format(LKN_PAGHIPER_DON_VALUE)
+    const value = formatter.format(lkn_pgpf_paghiper_DON_VALUE)
 
-    const apiUrl = pixPageGlobals.page_url + '/wp-json/paghiper/v1/status'
+    const apiUrl = pixPageGlobals.page_url + '/wp-json/pgpfpaghiper/v1/status'
 
     $(document).ready(function ($) {
       const transactionId = $('#transactionId').val()
@@ -44,26 +44,38 @@
             donationId: pixPageGlobals.donationId
           },
           success: function (response) {
-            $('#testing').text(' ' + response.status)
-            if (response.status === 'completed' || response.status === 'paid') {
+            if (response.status === 'success' || response.status === 'completed' || response.status === 'paid') {
               clearInterval(paymentTimer)
-              $.ajax({
-                url: pixPageGlobals.page_url + '/wp-json/paghiper/v1/success_payment',
-                type: 'POST',
-                headers: {
-                  Accept: 'application/json'
-                },
-                data: {
-                  donation_id: donationId
-                },
-
-                success: function (response) {
-                  window.location.href = response.redirect_url
-                },
-                error: function (xhr, status, error) {
-                  console.error('Erro ao redirecionar a página do pagamento:', error)
-                }
-              })
+              // Cria a nova div estilizada
+              let html = '<div id="pix_success_container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:auto;height:auto;">';
+              html += '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">' + (response.status === 'success' ? response.message : 'Pagamento Realizado com sucesso!') + '</div>';
+              if (response.redirect_url) {
+                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:16px;background-color:rgb(58,58,58);color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
+              }
+              html += '</div>';
+              // Insere a nova div abaixo das divs existentes
+              var $copyContainer = $('#copy_container');
+              var $qrCodeContainer = $('#pix_page_qr_code');
+              if ($qrCodeContainer.length) {
+                $qrCodeContainer.after(html);
+              } else if ($copyContainer.length) {
+                $copyContainer.after(html);
+              } else {
+                // Se não encontrar, adiciona ao body
+                $('body').append(html);
+              }
+              // Remove as divs antigas
+              $copyContainer.remove();
+              $qrCodeContainer.remove();
+              // Ajusta o botão de verificação, contador e texto
+              var $checkPaymentBtn = $('.payment_check_button');
+              $checkPaymentBtn.prop('disabled', true).removeAttr('style');
+              $('#timer').text('0s');
+              $('.schedule_text').text('Proxima verificação em (N. tentativas 0):');
+              // Adiciona evento ao botão
+              $('#pix-receipt-btn').on('click', function () {
+                window.location.href = response.redirect_url;
+              });
             }
           },
           error: function (xhr, status, error) {

@@ -1,10 +1,10 @@
 === Payment Gateway Pix For GiveWP ===
 Contributors: linknacional
 Donate link: https://www.linknacional.com.br/
-Tags: gateway, payments, givewp
+Tags: gateway, payments, givewp, pix, give
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.2.0
+Stable tag: 2.2.1
 Requires PHP: 7.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,6 +66,14 @@ The Payment Gateway Pix for GiveWP is now activated.
  2. Form view (donate to us)
 
 == Changelog ==
+= 2.2.1 - 08/30/2025 =
+* Fixed duplicate payment IDs.
+
+= 2.2.0 - 08/29/2025 =
+* New menu for configuration sections
+* New style for configuration sections
+* PagHiper Pix and boleto gateway
+
 = 2.1.1 =
 **26/02/2025**
 * Fix URL to view logs.
@@ -102,6 +110,12 @@ The Payment Gateway Pix for GiveWP is now activated.
 * Added debug mode for advanced users.
 
 == Upgrade Notice ==
+= 2.2.1 =
+* Fixed duplicate payment IDs.
+
+= 2.2.0 =
+* Add new gateways.
+
 = 2.1.1 =
 * Fix URL to view logs.
 

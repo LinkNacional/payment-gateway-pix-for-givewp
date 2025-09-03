@@ -3,6 +3,7 @@
 namespace Pgpfg\PGPFGForGivewp\Admin;
 
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass;
+use Pgpfg\PGPFGForGivewp\Includes\PGPFGivePaghiperHelper;
 use WP_Error;
 
 /**
@@ -154,6 +155,11 @@ final class PGPFGForGivewpAdmin
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
                 $pro_plugin_active = function_exists('is_plugin_active') && is_plugin_active('payment-gateway-pix-for-givewp-pro/payment-gateway-pix-for-givewp-pro.php');
+
+                $all_pages = PGPFGivePaghiperHelper::get_all_pages_for_select();
+                $paghiper_page = get_page_by_title('PagHiper Pix');
+                $paghiper_page_id = $paghiper_page ? $paghiper_page->ID : '';
+
                 foreach ($settings as $setting) {
                     if (isset($setting['id']) && 'lkn-payment-pix-type-setting' === $setting['id']) {
                         $exists = true;
@@ -270,27 +276,27 @@ final class PGPFGForGivewpAdmin
 
                     $settings[] = array(
                         'type' => 'title',
-                        'id' => 'lkn_paghiper',
+                        'id' => 'lkn_pgpf_paghiper',
                         'title' => 'PagHiper Settings'
                     );
 
                     $settings[] = array(
                         'name' => 'PagHiper API Key',
-                        'id' => 'lkn_paghiper_api_key_setting_field',
+                        'id' => 'lkn_pgpf_paghiper_api_key_setting_field',
                         'desc' => 'Chave de serviço API da PagHiper',
                         'type' => 'api_key',
                     );
 
                     $settings[] = array(
                         'name' => 'PagHiper Token',
-                        'id' => 'lkn_paghiper_token_setting_field',
+                        'id' => 'lkn_pgpf_paghiper_token_setting_field',
                         'desc' => 'Chave de serviço API da PagHiper',
                         'type' => 'api_key',
                     );
 
                     $settings[] = array(
                         'name' => 'Descrição da transação',
-                        'id' => 'lkn_paghiper_desc_setting_field',
+                        'id' => 'lkn_pgpf_paghiper_desc_setting_field',
                         'desc' => 'A descrição que aparecerá no boleto/PIX do cliente',
                         'type' => 'text',
                         'default' => 'Doação',
@@ -298,7 +304,7 @@ final class PGPFGForGivewpAdmin
 
                     $settings[] = array(
                         'name' => 'Vencimento padrão para boletos emitidos',
-                        'id' => 'lkn_paghiper_due_date_setting_field',
+                        'id' => 'lkn_pgpf_paghiper_due_date_setting_field',
                         'desc' => 'Dias corridos até o vencimento, o valor máximo até o vencimento é de 400 dias',
                         'type' => 'number',
                         'default' => '1',
@@ -306,7 +312,7 @@ final class PGPFGForGivewpAdmin
 
                     $settings[] = array(
                         'name' => 'Taxa fixa PIX',
-                        'id' => 'lkn_paghiper_fee_pix_setting_field',
+                        'id' => 'lkn_pgpf_paghiper_fee_pix_setting_field',
                         'desc' => 'Taxa cobrada a mais do cliente por utilizar PIX como método de pagamento. Ex.: 2.0 (dois reais). Obs.: Use o ponto (.) para separar as casas decimais',
                         'type' => 'number',
                         'default' => '0',
@@ -314,23 +320,23 @@ final class PGPFGForGivewpAdmin
 
                     $settings[] = array(
                         'name' => 'Taxa fixa boleto',
-                        'id' => 'lkn_paghiper_fee_bol_setting_field',
+                        'id' => 'lkn_pgpf_paghiper_fee_bol_setting_field',
                         'desc' => 'Taxa cobrada a mais do cliente por utilizar boleto como método de pagamento. Ex.: 2.0 (dois reais). Obs.: Use o ponto (.) para separar as casas decimais',
                         'type' => 'number',
                         'default' => '0',
                     );
                     $settings[] = array(
                         "name" => "Página do pagamento PIX",
-                        'id' => "lkn_paghiper_select_template_pix",
-                        'default' => "null",
+                        'id' => "lkn_pgpf_paghiper_select_template_pix",
+                        'default' => $paghiper_page_id,
                         'type' => "select",
-                        'options' => array(),
-                        'desc' => "Por favor insira a tag [lkn_pix_page] na página que deseja selecionar"
+                        'options' => count($all_pages) > 0 ? $all_pages : array(),
+                        'desc' => "Por favor insira a tag [lkn_pgpf_give_paghiper_pix] na página que deseja selecionar"
                     );
 
                     $settings[] = array(
                         'name' => 'Modo de Depuração',
-                        'id' => 'lkn_paghiper_debug',
+                        'id' => 'lkn_pgpf_paghiper_debug',
                         'desc' => 'Habilitar ambiente para Debug. <a id="lkn-give-debug">Log da transação.</a>',
                         'type' => 'radio',
                         'default' => 'disabled',
@@ -341,7 +347,7 @@ final class PGPFGForGivewpAdmin
                     );
 
                     $settings[] = array(
-                        'id' => 'lkn_paghiper',
+                        'id' => 'lkn_pgpf_paghiper',
                         'type' => 'sectionend',
                     );
 

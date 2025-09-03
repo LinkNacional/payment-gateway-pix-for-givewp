@@ -66,7 +66,7 @@ if ( ! defined('ABSPATH')) {
             <button
                 id="toggle-viewing"
                 type="button"
-                title="Mostrar Pix"
+                title="Copiar Pix"
             >
                 <span
                     id="show"

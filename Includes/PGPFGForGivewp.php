@@ -164,9 +164,9 @@ final class PGPFGForGivewp
         }
     }
 
-    public function add_give_paghiper_shortcodes(): void
+    public function add_pgpf_give_paghiper_shortcodes(): void
     {
-        add_shortcode('lkn_give_paghiper_pix', function (): void {
+        add_shortcode('lkn_pgpf_give_paghiper_pix', function (): void {
             include_once PGPFG_PIX_PLUGIN_DIR . 'Public/PGPFGForPaghiperPixPage.php'; //LknGivePaghiperPixPage
         });
     }
@@ -267,7 +267,7 @@ final class PGPFGForGivewp
      */
     private function define_admin_hooks(): void
     {
-        $this->loader->add_action('init', $this, 'add_give_paghiper_shortcodes');
+        $this->loader->add_action('init', $this, 'add_pgpf_give_paghiper_shortcodes');
 
         $plugin_admin = new PGPFGForGivewpAdmin($this->get_plugin_name(), $this->get_version());
 
@@ -298,6 +298,101 @@ final class PGPFGForGivewp
         $plugin_public = new PGPFGForGivewpPublic($this->plugin_name, $this->version);
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_styles');
         $this->loader->add_action('wp_enqueue_scripts', $plugin_public, 'enqueue_scripts');
+
+        $this->loader->add_action('rest_api_init', $this, 'register_rest_routes');
+    }
+
+    public function register_rest_routes(): void
+    {
+        register_rest_route('pgpfpaghiper', '/v1/status', array(
+            'methods' => 'POST',
+            'callback' => array($this, 'get_paghipder_pix_status'),
+            'permission_callback' => '__return_true',
+        ));
+    }
+
+    /**
+     * Verifica o status do Pix no PagHiper via API.
+     * Espera parâmetro transaction_id e donationId via POST.
+     */
+    public function get_paghipder_pix_status($request)
+    {
+        $transaction_id = $request->get_param('transaction_id');
+        $donation_id = $request->get_param('donationId');
+        if (empty($transaction_id)) {
+            return new \WP_Error('missing_transaction_id', 'O parâmetro transaction_id é obrigatório.', array('status' => 400));
+        }
+        if (empty($donation_id)) {
+            return new \WP_Error('missing_donation_id', 'O parâmetro donationId é obrigatório.', array('status' => 400));
+        }
+
+        // Dados de autenticação
+        $apiKey = trim(give_get_option('lkn_pgpf_paghiper_api_key_setting_field', ''));
+        $token = trim(give_get_option('lkn_pgpf_paghiper_token_setting_field', ''));
+
+        // Sempre usar o endpoint de produção
+        $url = 'https://pix.paghiper.com/invoice/status/';
+
+        $transaction_id = base64_decode($transaction_id);
+        $donation_id = base64_decode($donation_id);
+
+        $body = array(
+            'apiKey' => $apiKey,
+            'token' => $token,
+            'transaction_id' => $transaction_id
+        );
+
+        $args = array(
+            'headers' => array('Content-Type' => 'application/json'),
+            'body' => wp_json_encode($body),
+            'timeout' => 10
+        );
+
+        $response = wp_remote_post($url, $args);
+
+        if (is_wp_error($response)) {
+            return new \WP_Error('request_failed', $response->get_error_message(), array('status' => 500));
+        }
+        $data = json_decode(wp_remote_retrieve_body($response), true);
+
+        // Adaptação para o JS: status 'completed' ou 'paid' se apropriado
+        $status = '';
+        $message = '';
+        $redirect_url = '';
+        if (isset($data['status_request']['status'])) {
+            $status_raw = strtolower($data['status_request']['status']);
+                if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
+                    $status = 'success';
+                    $message = 'Pagamento Realizado com sucesso!';
+                    // Atualiza o status da doação no GiveWP
+                    if (function_exists('give_update_payment_status')) {
+                        // Garante que o status seja atualizado corretamente
+                        give_update_payment_status((int)$donation_id, 'publish');
+                    }
+
+                    // Gera o link público do recibo usando o receipt_id (hash) do GiveWP
+                    $receipt_id = get_post_meta($donation_id, '_give_payment_purchase_key', true);
+                    // Se não encontrar o hash, não retorna o link
+                    if (!empty($receipt_id)) {
+                        $redirect_url = home_url('/?givewp-route=donation-confirmation-receipt-view&receipt-id=' . sanitize_text_field($receipt_id));
+                    } else {
+                        $redirect_url = '';
+                    }
+            } elseif ($status_raw === 'processing') {
+                $status = 'processing';
+                $message = $data['status_request']['response_message'] ?? '';
+            } else {
+                $status = $status_raw;
+                $message = $data['status_request']['response_message'] ?? '';
+            }
+        }
+
+        return array(
+            'status' => $status,
+            'message' => $message,
+            'raw' => $data,
+            'redirect_url' => $redirect_url
+        );
     }
 
     /**
