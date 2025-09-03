@@ -99,9 +99,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
         $token = $configs['token'];
         $apiKey = $configs['apiKey'];
 
-        $alertMessagePix = esc_html__('Atenção! Não será possível realizar doações recorrentes via Pix.', 'payment-gateway-pix-for-givewp');
-        $alertMessageBol = esc_html__('Atenção! Não será possível realizar doações recorrentes via Boleto.', 'payment-gateway-pix-for-givewp');
-        $title = esc_html__('Informação do Pagamento', 'payment-gateway-pix-for-givewp');
+        $alertMessagePix = esc_html__('Attention! It will not be possible to make recurring donations via Pix..', 'payment-gateway-pix-for-givewp');
+        $alertMessageBol = esc_html__('Attention! It will not be possible to make recurring donations via Boleto.', 'payment-gateway-pix-for-givewp');
+        $title = esc_html__('Payment Information', 'payment-gateway-pix-for-givewp');
         $secureNotice = esc_html__('Secure Donation via SSL Encryption.', 'payment-gateway-pix-for-givewp');
         $gatewayForm = $this->gateway_form();
 
@@ -119,7 +119,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 sprintf(
                     '<strong>%1$s</strong> %2$s',
                     esc_html__('Error:', 'payment-gateway-pix-for-givewp'),
-                    esc_html__('Credenciais do PagHiper não informadas ou inválida.', 'payment-gateway-pix-for-givewp')
+                    esc_html__('PagHiper credentials not provided or invalid.', 'payment-gateway-pix-for-givewp')
                 )
             );
         }
@@ -202,23 +202,23 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             // Verify the payment.
             if (empty($donId)) {
                 // Record the error.
-                LknGivePaghiperHelper::regLog('error', 'payment', 'Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização', wp_json_encode($gatewayData));
+                LknGivePaghiperHelper::regLog('error', 'payment', 'Payment error. Payment creation failed before completing authorization.', wp_json_encode($gatewayData));
 
                 // Problems? Send back.
-                throw new PaymentGatewayException(esc_html__('Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização', 'payment-gateway-pix-for-givewp'));
+                throw new PaymentGatewayException(esc_html__('Payment error. Payment creation failed before completing authorization.', 'payment-gateway-pix-for-givewp'));
             }
 
             // Verify the currency.
             if ('BRL' !== $donCurrency) {
                 // Not suport international currencies.
-                throw new PaymentGatewayException(esc_html__('Pagamento com moeda estrangeira não suportado.', 'payment-gateway-pix-for-givewp'));
+                throw new PaymentGatewayException(esc_html__('Payment with foreign currency not supported.', 'payment-gateway-pix-for-givewp'));
             }
 
             $donPrice = number_format($donPrice, 2, '', '');
 
             if ($donPrice < 300) {
                 // translators: %s is the payment gateway name (e.g., "Pix", "Boleto")
-                throw new PaymentGatewayException(sprintf(esc_html__('O valor mínimo para doações via %s é R$ 3,00', 'payment-gateway-pix-for-givewp'), $donGatewayName));
+                throw new PaymentGatewayException(sprintf(esc_html__('The minimum amount for donations via %s is R$ 3.00.', 'payment-gateway-pix-for-givewp'), $donGatewayName));
             }
 
             // Attributes sanitizing.
@@ -255,7 +255,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
             // In CPF/CNPJ not valid.
             if (false == $donValidDocument) {
-                throw new PaymentGatewayException(esc_html__('O CPF/CNPJ informado é inválido.', 'payment-gateway-pix-for-givewp'));
+                throw new PaymentGatewayException(esc_html__('The provided CPF/CNPJ is invalid', 'payment-gateway-pix-for-givewp'));
             }
 
             // Create a query arg with the donation ID to listener callback.
@@ -330,7 +330,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 // Verifies if the Pix API not returned a success code.
                 if ('success' != $paghiperResult) {
                     // translators: %s is the error message from PagHiper API
-                    throw new PaymentGatewayException(sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), $paghiperMsg));
+                    throw new PaymentGatewayException(sprintf(esc_html__('Donation failed. Reason: %s', 'payment-gateway-pix-for-givewp'), $paghiperMsg));
                 }
 
                 // Break the due date in YY/mm/dd.
@@ -383,7 +383,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 // Verifies if the Slip API not returned a success code.
                 if ('success' != $paghiperResult) {
                     // translators: %s is the error message from PagHiper API
-                    throw new PaymentGatewayException(sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), $paghiperMsg));
+                    throw new PaymentGatewayException(sprintf(esc_html__('Donation failed. Reason: %s', 'payment-gateway-pix-for-givewp'), $paghiperMsg));
                 }
 
                 $dir = null;
@@ -420,7 +420,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             DonationNote::create(array(
                 'donationId' => $donation->id,
                 // translators: %s is the error message
-                'content' => sprintf(esc_html__('Falha na doação. Razão: %s', 'payment-gateway-pix-for-givewp'), esc_html($errorMsg))
+                'content' => sprintf(esc_html__('Donation failed. Reason: %s', 'payment-gateway-pix-for-givewp'), esc_html($errorMsg))
             ));
 
             throw new PaymentGatewayException(esc_html($errorMsg));
@@ -492,7 +492,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         DonationNote::create(array(
             'donationId' => $donation->id,
-            'content' => esc_html__('Doação reembolsada via PagHiper.', 'payment-gateway-pix-for-givewp')
+            'content' => esc_html__('Donation refunded via PagHiper.', 'payment-gateway-pix-for-givewp')
         ));
 
         return new PaymentRefunded();

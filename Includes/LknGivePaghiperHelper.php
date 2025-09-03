@@ -250,13 +250,13 @@ final class LknGivePaghiperHelper
 
                         // Crie o novo parágrafo
                         var newP = document.createElement('p');
-                        newP.innerHTML = '<strong><?php echo esc_js(__('Chave PIX:', 'payment-gateway-pix-for-givewp')); ?></strong><br><button pixKey="' + qrCode.key + '"><?php echo esc_js(__('Copiar Chave PIX', 'payment-gateway-pix-for-givewp')); ?></button>';
+                        newP.innerHTML = '<strong><?php echo esc_js(__('PIX Key:', 'payment-gateway-pix-for-givewp')); ?></strong><br><button pixKey="' + qrCode.key + '"><?php echo esc_js(__('Copy PIX Key', 'payment-gateway-pix-for-givewp')); ?></button>';
 
                         let button = newP.querySelector('button');
                         button.addEventListener('click', function(event) {
                             event.preventDefault();
                             navigator.clipboard.writeText(button.getAttribute('pixKey'));
-                            alert('<?php echo esc_js(__('Chave Pix Copiada', 'payment-gateway-pix-for-givewp')); ?>');
+                            alert('<?php echo esc_js(__('PIX Key Copied', 'payment-gateway-pix-for-givewp')); ?>');
                         });
 
                         // Adicione o parágrafo à nova div

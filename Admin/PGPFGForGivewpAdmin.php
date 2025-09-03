@@ -491,7 +491,7 @@ final class PGPFGForGivewpAdmin
                         $settings[] = array(
                             'name' => 'Cielo Merchant ID',
                             'id' => 'lkn-payment-pix-cielo-merchant-id',
-                            'desc' => __('Identificador único da sua loja na Cielo.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Unique identifier of your store on Cielo.', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password'
                         );
 
