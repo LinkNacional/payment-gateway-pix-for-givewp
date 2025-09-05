@@ -30,10 +30,10 @@ try {
         $transactionId = base64_encode($pixParamsDecoded->transactionId);
         $donationID = base64_encode($pixParamsDecoded->donationId);
 
-        $qrCodeDesc = esc_html__('Chave PIX', 'payment-gateway-pix-for-givewp');
-        $notice = esc_html__('Pix copia e cola, clique no código abaixo para copiar:', 'payment-gateway-pix-for-givewp');
-        $copyMsg = esc_html__('Copiado!', 'payment-gateway-pix-for-givewp');
-        $dueDateMsg = esc_html__(' Vencimento: ', 'payment-gateway-pix-for-givewp');
+        $qrCodeDesc = esc_html__('PIX Key', 'payment-gateway-pix-for-givewp');
+        $notice = esc_html__('Pix copy and paste, click on the code below to copy:', 'payment-gateway-pix-for-givewp');
+        $copyMsg = esc_html__('Copied!', 'payment-gateway-pix-for-givewp');
+        $dueDateMsg = esc_html__(' Due Date: ', 'payment-gateway-pix-for-givewp');
         $currencyTxt = esc_html__('R$ 0,00', 'payment-gateway-pix-for-givewp');
 
         $dueDateMsg .= $donDueDate;

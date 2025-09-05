@@ -1,3 +1,6 @@
+# 2.2.2 05/09/2025
+* Correção nos textos e na tradução do plugin.
+
 # 2.2.1 - 30/07/2025
 * Correção nos IDs de pagamentos duplicados.
 

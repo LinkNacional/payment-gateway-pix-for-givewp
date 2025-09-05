@@ -156,10 +156,10 @@
         let alertMessage
 
         if (divPix) {
-          alertMessage = 'Atenção! Não será possível realizar doações recorrentes via Pix.'
+          alertMessage = 'Attention! It will not be possible to make recurring donations via Pix..'
         }
         if (divBol) {
-          alertMessage = 'Atenção! Não será possível realizar doações recorrentes via Boleto.'
+          alertMessage = 'Attention! It will not be possible to make recurring donations via Boleto.'
         }
 
         alert(alertMessage)
