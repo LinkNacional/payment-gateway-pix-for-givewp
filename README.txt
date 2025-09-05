@@ -66,8 +66,8 @@ The Payment Gateway Pix for GiveWP is now activated.
  2. Form view (donate to us)
 
 == Changelog ==
-= 2.2.2 05/09/2025 =
-* Fixes to the texts and translation of the plugin
+= 2.2.2 - 05/09/2025 =
+* Fixes to the texts and translation of the plugin.
 
 = 2.2.1 - 08/30/2025 =
 * Fixed duplicate payment IDs.
@@ -113,6 +113,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 * Added debug mode for advanced users.
 
 == Upgrade Notice ==
+= 2.2.2 - 05/09/2025 =
+* Fixes to the texts and translation of the plugin.
+
 = 2.2.1 =
 * Fixed duplicate payment IDs.
 
