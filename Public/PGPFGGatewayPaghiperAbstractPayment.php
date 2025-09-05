@@ -202,11 +202,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             // Verify the payment.
             if (empty($donId)) {
                 // Record the error.
-<<<<<<< HEAD
                 LknGivePaghiperHelper::regLog('error', 'payment', 'Payment error. Payment creation failed before completing authorization.', wp_json_encode($gatewayData));
-=======
-                PGPFGivePaghiperHelper::regLog('error', 'payment', 'Erro de pagamento. A criação do pagamento falhou antes de concluir a autorização', wp_json_encode($gatewayData));
->>>>>>> 22d2f5f6bb50056a430b018be360524ea6bffc9f
 
                 // Problems? Send back.
                 throw new PaymentGatewayException(esc_html__('Payment error. Payment creation failed before completing authorization.', 'payment-gateway-pix-for-givewp'));

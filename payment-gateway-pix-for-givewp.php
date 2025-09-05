@@ -16,7 +16,7 @@
  * Plugin Name:       Payment Gateway Pix for GiveWP
  * Plugin URI:        https://www.linknacional.com.br/wordpress/givewp/
  * Description:       Streamline your donation process and expand your reach to Brazilian donors by integrating PIX, the instant payment system, into your GiveWP donation forms.
- * Version:           2.2.1
+ * Version:           2.2.2
  * Author:            Link Nacional
  * Author URI:        https://www.linknacional.com.br/
  * License:           GPL-3.0+
@@ -27,7 +27,7 @@
  */
 
 // If this file is called directly, abort.
-if ( ! defined('ABSPATH')) {
+if (! defined('ABSPATH')) {
     die;
 }
 
@@ -42,7 +42,7 @@ use Pgpfg\PGPFGForGivewp\Includes\PGPFGForGivewpDeactivator;
  * Start at version 1.0.0 and use SemVer - https://semver.org
  * Rename this for your plugin and update it as you release new versions.
  */
-define('PGPFG_PIX_PLUGIN_VERSION', '2.2.1');
+define('PGPFG_PIX_PLUGIN_VERSION', '2.2.2');
 define('PGPFG_PIX_PLUGIN_FILE', __FILE__);
 define('PGPFG_PIX_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('PGPFG_PIX_PLUGIN_DIR', plugin_dir_path(__FILE__));
@@ -53,7 +53,8 @@ define('PGPFG_PIX_PLUGIN_BASENAME', plugin_basename(PGPFG_PIX_PLUGIN_FILE));
  * The code that runs during plugin activation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-activator.php
  */
-function pgpfg_pix_activate_plugin(): void {
+function pgpfg_pix_activate_plugin(): void
+{
     PGPFGForGivewpActivator::activate();
 }
 
@@ -61,7 +62,8 @@ function pgpfg_pix_activate_plugin(): void {
  * The code that runs during plugin deactivation.
  * This action is documented in includes/class-payment-gateway-pix-for-givewp-deactivator.php
  */
-function pgpfg_pix_deactivate_plugin(): void {
+function pgpfg_pix_deactivate_plugin(): void
+{
     PGPFGForGivewpDeactivator::deactivate();
 }
 
@@ -94,7 +96,8 @@ add_filter('plugin_action_links_' . plugin_basename(__FILE__), 'pgpfg_pix_wc_cie
  *
  * @return array
  */
-function pgpfg_pix_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
+function pgpfg_pix_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file)
+{
     $new_meta_links['setting'] = '<a href="' . esc_url(add_query_arg(
         array(
             'post_type' => 'give_forms',
@@ -108,7 +111,8 @@ function pgpfg_pix_wc_cielo_plugin_row_meta($plugin_meta, $plugin_file) {
     return array_merge($plugin_meta, $new_meta_links);
 }
 
-function pgpfg_pix_run_plugin(): void {
+function pgpfg_pix_run_plugin(): void
+{
     $plugin = new PGPFGForGivewp();
     $plugin->run();
 }

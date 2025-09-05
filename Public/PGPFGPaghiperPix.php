@@ -59,7 +59,7 @@ final class PGPFGPaghiperPix extends PGPFGGatewayPaghiperAbstractPayment
         $info = $info . $pixFee;
 
         $cpfCnpj = esc_html__('CPF / CNPJ', 'payment-gateway-pix-for-givewp');
-        $cpfCnpjTooltip = esc_html__('Insira um número de CPF ou CNPJ válido', 'payment-gateway-pix-for-givewp');
+        $cpfCnpjTooltip = esc_html__('Enter a valid CPF or CNPJ number.', 'payment-gateway-pix-for-givewp');
         $astr = esc_html('*');
 
         return "
