@@ -277,72 +277,72 @@ final class PGPFGForGivewpAdmin
                     $settings[] = array(
                         'type' => 'title',
                         'id' => 'lkn_pgpf_paghiper',
-                        'title' => 'PagHiper Settings'
+                        'title' => __('PagHiper Settings', 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
-                        'name' => 'PagHiper API Key',
+                        'name' => __('PagHiper API Key', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_api_key_setting_field',
-                        'desc' => 'Chave de serviço API da PagHiper',
+                        'desc' => __('PagHiper service API key', 'payment-gateway-pix-for-givewp'),
                         'type' => 'api_key',
                     );
 
                     $settings[] = array(
-                        'name' => 'PagHiper Token',
+                        'name' => __('PagHiper Token', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_token_setting_field',
-                        'desc' => 'Chave de serviço API da PagHiper',
+                        'desc' => __('PagHiper service API token', 'payment-gateway-pix-for-givewp'),
                         'type' => 'api_key',
                     );
 
                     $settings[] = array(
-                        'name' => 'Descrição da transação',
+                        'name' => __('Transaction Description', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_desc_setting_field',
-                        'desc' => 'A descrição que aparecerá no boleto/PIX do cliente',
+                        'desc' => __('The description that will appear on the customer\'s boleto/PIX', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
-                        'default' => 'Doação',
+                        'default' => __('Donation', 'payment-gateway-pix-for-givewp'),
                     );
 
                     $settings[] = array(
-                        'name' => 'Vencimento padrão para boletos emitidos',
+                        'name' => __('Default Due Date for Issued Boletos', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_due_date_setting_field',
-                        'desc' => 'Dias corridos até o vencimento, o valor máximo até o vencimento é de 400 dias',
+                        'desc' => __('Calendar days until expiration, maximum value until expiration is 400 days', 'payment-gateway-pix-for-givewp'),
                         'type' => 'number',
                         'default' => '1',
                     );
 
                     $settings[] = array(
-                        'name' => 'Taxa fixa PIX',
+                        'name' => __('PIX Fixed Fee', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_fee_pix_setting_field',
-                        'desc' => 'Taxa cobrada a mais do cliente por utilizar PIX como método de pagamento. Ex.: 2.0 (dois reais). Obs.: Use o ponto (.) para separar as casas decimais',
+                        'desc' => __('Additional fee charged to the customer for using PIX as payment method. Ex.: 2.0 (two reais). Note: Use dot (.) to separate decimal places', 'payment-gateway-pix-for-givewp'),
                         'type' => 'number',
                         'default' => '0',
                     );
 
                     $settings[] = array(
-                        'name' => 'Taxa fixa boleto',
+                        'name' => __('Boleto Fixed Fee', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_fee_bol_setting_field',
-                        'desc' => 'Taxa cobrada a mais do cliente por utilizar boleto como método de pagamento. Ex.: 2.0 (dois reais). Obs.: Use o ponto (.) para separar as casas decimais',
+                        'desc' => __('Additional fee charged to the customer for using boleto as payment method. Ex.: 2.0 (two reais). Note: Use dot (.) to separate decimal places', 'payment-gateway-pix-for-givewp'),
                         'type' => 'number',
                         'default' => '0',
                     );
                     $settings[] = array(
-                        "name" => "Página do pagamento PIX",
+                        "name" => __('PIX Payment Page', 'payment-gateway-pix-for-givewp'),
                         'id' => "lkn_pgpf_paghiper_select_template_pix",
                         'default' => $paghiper_page_id,
                         'type' => "select",
                         'options' => count($all_pages) > 0 ? $all_pages : array(),
-                        'desc' => "Por favor insira a tag [lkn_pgpf_give_paghiper_pix] na página que deseja selecionar"
+                        'desc' => __('Please insert the [lkn_pgpf_give_paghiper_pix] shortcode on the page you want to select', 'payment-gateway-pix-for-givewp')
                     );
 
                     $settings[] = array(
-                        'name' => 'Modo de Depuração',
+                        'name' => __('Debug Mode', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_debug',
-                        'desc' => 'Habilitar ambiente para Debug. <a id="lkn-give-debug">Log da transação.</a>',
+                        'desc' => __('Enable debug environment. <a id="lkn-give-debug">Transaction log.</a>', 'payment-gateway-pix-for-givewp'),
                         'type' => 'radio',
                         'default' => 'disabled',
                         'options' => array(
-                            'enabled' => 'Habilitar',
-                            'disabled' => 'Desabilitar',
+                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp'),
                         ),
                     );
 
