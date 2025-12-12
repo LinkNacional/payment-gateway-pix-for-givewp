@@ -484,7 +484,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
     /**
      * @inheritDoc
      */
-    public function refundDonation(Donation $donation): PaymentRefunded
+    public static function refundDonation(Donation $donation): PaymentRefunded
     {
         $donation->status = DonationStatus::REFUNDED();
         $donation->save();

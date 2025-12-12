@@ -305,4 +305,37 @@ final class PGPFGivePaghiperHelper
         }
         return $result;
     }
+
+    public static function find_give_receipt_page() {
+
+        $cached_page_id = get_option('pgpfg_give_receipt_page_cache', false);
+    
+        // Se encontrou no cache, verifica se a página ainda existe e tem o shortcode
+        if ($cached_page_id) {
+            $page = get_post($cached_page_id);
+            if ($page && $page->post_status === 'publish' && has_shortcode($page->post_content, 'give_receipt')) {
+                return (int) $cached_page_id;
+            } else {
+                // Remove cache inválido
+                delete_option('pgpfg_give_receipt_page_cache');
+            }
+        }
+
+        $pages = get_posts(array(
+            'post_type' => 'page',
+            'post_status' => 'publish',
+            'numberposts' => -1,
+            'fields' => 'ids'
+        ));
+        
+        foreach ($pages as $page_id) {
+            $content = get_post_field('post_content', $page_id);
+            if (has_shortcode($content, 'give_receipt')) {
+                update_option('pgpfg_give_receipt_page_cache', $page_id);
+                return $page_id;
+            }
+        }
+        update_option('pgpfg_give_receipt_page_cache', 0);
+        return false;
+    }
 }
