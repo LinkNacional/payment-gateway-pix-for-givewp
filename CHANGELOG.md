@@ -1,3 +1,6 @@
+# 2.2.3 12/12/2025
+* Correção na pagina de recibo com shortecode PagHyper
+
 # 2.2.2 05/09/2025
 * Correção nos textos e na tradução do plugin.
 

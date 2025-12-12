@@ -4,7 +4,7 @@ Donate link: https://www.linknacional.com.br/
 Tags: gateway, payments, givewp, pix, give
 Requires at least: 6.0
 Tested up to: 6.8
-Stable tag: 2.2.2
+Stable tag: 2.2.3
 Requires PHP: 7.4
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -66,6 +66,9 @@ The Payment Gateway Pix for GiveWP is now activated.
  2. Form view (donate to us)
 
 == Changelog ==
+= 2.2.3 - 12/12/2025 =
+* Correction on the receipt page with the PagHyper shortcode.
+
 = 2.2.2 - 05/09/2025 =
 * Fixes to the texts and translation of the plugin.
 
@@ -113,6 +116,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 * Added debug mode for advanced users.
 
 == Upgrade Notice ==
+= 2.2.3 - 12/12/2025 =
+* Correction on the receipt page with the PagHyper shortcode.
+
 = 2.2.2 - 05/09/2025 =
 * Fixes to the texts and translation of the plugin.
 
