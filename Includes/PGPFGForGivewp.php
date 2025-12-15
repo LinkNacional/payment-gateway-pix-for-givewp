@@ -377,7 +377,8 @@ final class PGPFGForGivewp
                 $receipt_id = get_post_meta($donation_id, '_give_payment_purchase_key', true);
 
                 if (!empty($receipt_id)) {
-                    $custom_url = PGPFGivePaghiperHelper::find_give_receipt_page();
+                    $form_id = get_post_meta($donation_id, '_give_payment_form_id', true);
+                    $custom_url = PGPFGivePaghiperHelper::find_give_receipt_page($form_id);
                     if ($custom_url) {
                         // Usa a página personalizada (seja da meta ou do shortcode)
                         $redirect_url = get_permalink($custom_url) . '?receipt-id=' . sanitize_text_field($receipt_id);
