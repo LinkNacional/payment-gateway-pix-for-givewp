@@ -308,21 +308,27 @@ final class PGPFGivePaghiperHelper
 
     public static function find_give_receipt_page($form_id) {
         
-        $form_settings = json_decode(give_get_meta($form_id, 'formBuilderSettings', true), true);
-        if (isset($form_settings['enableReceiptConfirmationPage']) && $form_settings['enableReceiptConfirmationPage'] === false) {
+        $form_settings = give_get_meta($form_id, 'formBuilderSettings', true);
+
+        if(gettype($form_settings) !== 'array') {
+            $form_settings = json_decode($form_settings, true);
+        }
+
+        if (empty($form_settings['enableReceiptConfirmationPage']) && $form_settings['enableReceiptConfirmationPage'] === false) {
             return false;
-            
         }
         
         $give_success_page = give_get_option('success_page');
-        if (!empty($give_success_page)) {
-            $page = get_post($give_success_page);
-            if ($page && $page->post_status === 'publish') {
-                if (has_shortcode($page->post_content, 'give_receipt')) {
-                    return (int) $give_success_page;
-                }
-            }
+        if (empty($give_success_page)) {
+            return false;
         }
+
+        $page = get_post($give_success_page);
+
+        if ($page && $page->post_status === 'publish' && has_shortcode($page->post_content, 'give_receipt')) {
+            return (int) $give_success_page;
+        }
+
         return false;
     }
 }
