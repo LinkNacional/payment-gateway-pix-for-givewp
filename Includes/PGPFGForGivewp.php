@@ -4,7 +4,10 @@ namespace Pgpfg\PGPFGForGivewp\Includes;
 
 use Pgpfg\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
 use Pgpfg\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
+use Give\Donations\Models\Donation;
+use Give\Donations\ValueObjects\DonationStatus;
 use Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayClass;
+use Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayPaghiperAbstractPayment;
 
 /**
  * The file that defines the core plugin class
@@ -361,23 +364,31 @@ final class PGPFGForGivewp
         $redirect_url = '';
         if (isset($data['status_request']['status'])) {
             $status_raw = strtolower($data['status_request']['status']);
-                if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
-                    $status = 'success';
-                    $message = 'Pagamento Realizado com sucesso!';
-                    // Atualiza o status da doação no GiveWP
-                    if (function_exists('give_update_payment_status')) {
-                        // Garante que o status seja atualizado corretamente
-                        give_update_payment_status((int)$donation_id, 'publish');
-                    }
+            if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
+                $status = 'success';
+                $message = 'Pagamento Realizado com sucesso!';
+                // Atualiza o status da doação no GiveWP
+                if (function_exists('give_update_payment_status')) {
+                    // Garante que o status seja atualizado corretamente
+                    give_update_payment_status((int)$donation_id, 'publish');
+                }
 
-                    // Gera o link público do recibo usando o receipt_id (hash) do GiveWP
-                    $receipt_id = get_post_meta($donation_id, '_give_payment_purchase_key', true);
-                    // Se não encontrar o hash, não retorna o link
-                    if (!empty($receipt_id)) {
-                        $redirect_url = home_url('/?givewp-route=donation-confirmation-receipt-view&receipt-id=' . sanitize_text_field($receipt_id));
+                // Gera o link público do recibo usando o receipt_id (hash) do GiveWP
+                $receipt_id = get_post_meta($donation_id, '_give_payment_purchase_key', true);
+
+                if (!empty($receipt_id)) {
+                    $form_id = get_post_meta($donation_id, '_give_payment_form_id', true);
+                    $custom_url = PGPFGivePaghiperHelper::find_give_receipt_page($form_id);
+                    if ($custom_url) {
+                        // Usa a página personalizada (seja da meta ou do shortcode)
+                        $redirect_url = get_permalink($custom_url) . '?receipt-id=' . sanitize_text_field($receipt_id);
                     } else {
-                        $redirect_url = '';
+                        // Usa a página padrão do GiveWP
+                        $redirect_url = home_url('/?givewp-route=donation-confirmation-receipt-view&receipt-id=' . sanitize_text_field($receipt_id));
                     }
+                } else {
+                    $redirect_url = '';
+                }
             } elseif ($status_raw === 'processing') {
                 $status = 'processing';
                 $message = $data['status_request']['response_message'] ?? '';
@@ -386,7 +397,7 @@ final class PGPFGForGivewp
                 $message = $data['status_request']['response_message'] ?? '';
             }
         }
-
+        
         return array(
             'status' => $status,
             'message' => $message,
