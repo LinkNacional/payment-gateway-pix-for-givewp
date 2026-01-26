@@ -2,6 +2,7 @@
 
 namespace Pgpfg\PGPFGForGivewp\Includes;
 
+use Exception;
 use Pgpfg\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
 use Pgpfg\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
 use Give\Donations\Models\Donation;
@@ -397,7 +398,7 @@ final class PGPFGForGivewp
                 $message = $data['status_request']['response_message'] ?? '';
             }
         }
-        
+
         return array(
             'status' => $status,
             'message' => $message,
