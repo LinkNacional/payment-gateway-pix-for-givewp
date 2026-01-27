@@ -73,38 +73,38 @@ if (pgpfgSettingsContainer && !document.querySelector('#pgpfgSettingsFlexContain
     // Aplicar imagens de fundo dinamicamente
     sideCardDiv.style.backgroundImage = `url("${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardRight.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardRight.svg'}"), url("${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardLeft.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardLeft.svg'}")`;;
 
-    // Criar conteúdo do card lateral margin-bottom: 18px;
+    // Criar conteúdo do card lateral margin-bottom: 18px; style="display: flex; flex-direction: column; gap: 2px; font-family: Inter; font-weight: 500; "
     const cardHTML = `
-            <div id="pgpfgDivLogo" style="display: flex; flex-direction: column; gap: 2px; font-family: Inter; font-weight: 500; ">
+            <div id="pgpfgDivLogo">
                 <div>
-                    <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/linkNacionalLogo.webp') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/linkNacionalLogo.webp'}" alt="Plugin Logo" style="height: 25px;">
+                    <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/linkNacionalLogo.webp') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/linkNacionalLogo.webp'}" alt="Plugin Logo" class="plugin-logo">
                 </div>
-                <p style="font-size: 10px; margin: 0;">${window.pgpfgTranslations ? pgpfgTranslations.versions : 'v1.0'}</p>
+                <p class="version-text">${window.pgpfgTranslations ? pgpfgTranslations.versions : 'v1.0'}</p>
             </div>
-            <div id="pgpfgDivContent" style="display: flex; flex-direction: column; gap: 20px;">
-                <div id="pgpfgDivLinks" style="display: flex; justify-content: space-between; padding-right: 30px; gap: 6%;">
-                    <div style="display: flex; flex-direction: column; gap: 5px; font-family: Inter;">
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/givewp/pix/?utm=plugin" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 2px; font-size: small; white-space: nowrap;">
-                            <b style="color: #D1D838; font-size: small;">•</b> Documentação
+            <div id="pgpfgDivContent">
+                <div id="pgpfgDivLinks">
+                    <div class="link-column">
+                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/givewp/pix/?utm=plugin" >
+                            <b class="bullet">•</b> Documentação
                         </a>
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/planos/?utm=plugin" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 2px; font-size: small; white-space: nowrap;">
-                            <b style="color: #D1D838; font-size: small;">•</b> WordPress VIP
+                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/" >
+                            <b class="bullet">•</b> Hosting
                         </a>
                     </div>
-                    <div style="display: flex; flex-direction: column; gap: 5px; font-family: Inter;">
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/suporte/" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 2px; font-size: small; white-space: nowrap;">
-                            <b style="color: #D1D838; font-size: small;">•</b> Suporte WordPress
+                    <div class="link-column">
+                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/plugins/" >
+                            <b class="bullet">•</b> WP Plugin    
                         </a>
-                        <a target="_blank" href="https://cliente.linknacional.com.br/solicitar/wordpress-woo-gratis/?utm=plugin" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 2px; font-size: small; white-space: nowrap;">
-                            <b style="color: #D1D838; font-size: small;">•</b> Hospedagem WP
+                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/suporte/" >
+                            <b class="bullet">•</b> Suporte WP
                         </a>
                     </div>
                 </div>
-                <div class="pgpfgSupportLinks" style="display: flex; flex-wrap: wrap; width: 100%; justify-content: space-between; align-items: center;">
-                    <div id="pgpfgStarsDiv" style="width: fit-content;">
-                        <a target="_blank" href="https://wordpress.org/plugins/payment-gateway-pix-for-givewp/#reviews" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; flex-direction: column; display: flex; align-items: center; gap: 2px; font-size: small;">
-                            <p style="margin: 0; font-size: x-small; font-family: Inter; width: 100%; text-align: center;">Avaliar o plugin</p>
-                            <div class="PGPFGForGivewpStarRating"">
+                <div class="pgpfgSupportLinks">
+                    <div id="pgpfgStarsDiv">
+                        <a target="_blank" href="https://wordpress.org/plugins/payment-gateway-pix-for-givewp/#reviews" class="stars-link">
+                            <p class="rate-text">Avaliar o plugin</p>
+                            <div class="PGPFGForGivewpStarRating">
                                 <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
                                 <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
                                 <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
@@ -113,12 +113,12 @@ if (pgpfgSettingsContainer && !document.querySelector('#pgpfgSettingsFlexContain
                             </div>
                         </a>
                     </div>
-                    <div class="pgpfgContactLinks" style="display: flex; gap: 4px;">
-                        <a href="https://chat.whatsapp.com/IjzHhDXwmzGLDnBfOibJKO" target="_blank" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 2px; font-size: small;">
-                            <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/whatsapp-icon.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/whatsapp-icon.svg'}" alt="WhatsApp Icon" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+                    <div class="pgpfgContactLinks">
+                        <a href="https://chat.whatsapp.com/IjzHhDXwmzGLDnBfOibJKO" target="_blank" class="contact-link">
+                            <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/whatsapp-icon.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/whatsapp-icon.svg'}" alt="WhatsApp Icon" class="contact-icon">
                         </a>
-                        <a href="https://t.me/wpprobr" target="_blank" style="text-decoration: none; color: inherit; background: none; border: none; padding: 0; margin: 0; font: inherit; cursor: pointer; display: flex; align-items: center; gap: 2px; font-size: small;">
-                            <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/telegram-icon.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/telegram-icon.svg'}" alt="Telegram Icon" style="width: 24px; height: 24px; filter: brightness(0) invert(1);">
+                        <a href="https://t.me/wpprobr" target="_blank" class="contact-link">
+                            <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/telegram-icon.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/telegram-icon.svg'}" alt="Telegram Icon" class="contact-icon">
                         </a>
                     </div>
                 </div>
@@ -126,7 +126,9 @@ if (pgpfgSettingsContainer && !document.querySelector('#pgpfgSettingsFlexContain
         `;
     sideCardDiv.innerHTML = cardHTML;
 
-
+    const cardContainer = document.createElement('div');
+    cardContainer.className = 'lkn-card-container';
+    cardContainer.appendChild(sideCardDiv);
 
     // Criar wrapper flex e reorganizar elementos
     const flexWrapper = document.createElement('div');
@@ -136,7 +138,7 @@ if (pgpfgSettingsContainer && !document.querySelector('#pgpfgSettingsFlexContain
     parentElement.insertBefore(flexWrapper, pgpfgSettingsContainer);
 
     flexWrapper.appendChild(pgpfgSettingsContainer);
-    flexWrapper.appendChild(sideCardDiv);
+    flexWrapper.appendChild(cardContainer);
 }
 
 const lknPaymentPixLogSettingLabel = document.querySelector('label[for="lkn-payment-pix-log-setting"]');

@@ -3,10 +3,6 @@
  * included in this file.
  */
 
-* {
-    box-sizing: border-box;
-}
-
 li {
     list-style: none;
     margin: 10px;
@@ -295,6 +291,24 @@ input#lkn-label-pro {
     border-radius: 0px 0px 5px 5px !important;
 }
 
+.lkn-card-container {
+    flex: 0 0 22%;
+    min-width: 320px;
+    position: sticky;
+    top: 80px;
+    padding: 9px 24px;
+    align-self: flex-start;
+}
+
+#pgpfgDivLogo {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-family: inter;
+    font-weight: 500;
+    margin-bottom: 18px !important;
+}
+
 /* Estilos do cartão lateral */
 #pgpfgSettingsFlexContainer {
     display: flex;
@@ -312,7 +326,6 @@ input#lkn-label-pro {
 }
 
 #pgpfgSideCard {
-    margin: 0px 35px;
     font-family: 'Inter', sans-serif;
     color: white;
     max-width: 370px;
@@ -326,9 +339,8 @@ input#lkn-label-pro {
     flex-direction: column;
     padding: 15px 25px;
     box-sizing: border-box;
-    gap: 10px;
+    gap: 25px;
     position: sticky;
-    top: 50px;
     flex-shrink: 0;
 }
 
@@ -336,7 +348,7 @@ input#lkn-label-pro {
     opacity: 0.8;
 }
 
-@media (max-width: 1300px) {
+@media (max-width: 1225px) {
     #pgpfgSettingsFlexContainer {
         flex-direction: column !important;
     }
@@ -359,4 +371,112 @@ input#lkn-label-pro {
     #pgpfgSideCard {
         padding: 16px !important;
     }
+}
+
+/* Estilos dos elementos do cartão */
+.plugin-logo {
+    height: 25px;
+}
+
+.version-text {
+    font-size: 10px;
+    margin: 0;
+}
+
+#pgpfgDivContent {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#pgpfgDivLinks {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 30px;
+    gap: 6%;
+}
+
+#pgpfgDivContent a,
+.rate-text {
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+
+.link-column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 12px;
+}
+
+.bullet {
+    color: #D1D838;
+    font-size: small;
+}
+
+.pgpfgSupportLinks {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#pgpfgStarsDiv {
+    width: fit-content;
+}
+
+.stars-link {
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: small;
+}
+
+.pgpfgContactLinks {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.contact-link {
+    text-decoration: none;
+    color: inherit;
+    background: none;
+    border: none;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-size: small;
+}
+
+.contact-icon {
+    width: 24px;
+    height: 24px;
+    filter: brightness(0) invert(1);
 }
