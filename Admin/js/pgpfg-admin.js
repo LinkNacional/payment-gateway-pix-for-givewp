@@ -58,7 +58,9 @@ const { __ } = wp.i18n;
       lknCieloNoticeDiv.innerHTML = '<a  href="https://www.linknacional.com.br/wordpress/" target="_blank" style="text-decoration:none; display: block;padding: 10px;">' + __('WordPress Maintenance and Support!', 'payment-gateway-pix-for-givewp') + '</a>'
 
       if (giveForm && lknCieloNoticeDiv) {
-        giveForm.after(noticeDiv)
+        const parent = giveForm.closest('div#pgpfgSettingsFlexContainer')
+        console.log(parent)
+        parent.after(noticeDiv)
         noticeDiv.after(lknCieloNoticeDiv)
 
         const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')

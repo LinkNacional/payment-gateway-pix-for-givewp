@@ -155,7 +155,7 @@ final class PGPFGForGivewpAdmin
                 // Add version information
                 $versions = 'Plugin PIX v' . PGPFG_PIX_PLUGIN_VERSION;
                 if (defined('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION')) {
-                    $versions .= ' | PIX Pro v' . PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION;
+                    $versions .= ' | PIX Pro v' . constant('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION');
                 } else {
                     $versions .= ' | GiveWP v' . GIVE_VERSION;
                 }

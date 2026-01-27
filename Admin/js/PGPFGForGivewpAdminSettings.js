@@ -50,6 +50,12 @@ allSettingsDivs.forEach(function (settingsDiv) {
     pgpfgSettingsContainer.appendChild(settingsDiv);
 });
 
+// Mover o botão salvar para dentro do container
+const submitWrap = document.querySelector('.give-submit-wrap');
+if (submitWrap) {
+    pgpfgSettingsContainer.appendChild(submitWrap);
+}
+
 // Inserir o container no local onde estava o primeiro elemento
 if (firstElementParent && allSettingsDivs.length > 0) {
     if (firstElementNextSibling) {
