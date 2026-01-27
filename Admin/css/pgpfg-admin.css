@@ -332,6 +332,7 @@ input#lkn-label-pro {
     width: 100%;
     height: fit-content;
     background-color: #121519;
+    background-image: url('../images/backgroundCardRight.svg'), url('../images/backgroundCardLeft.svg');
     background-position: right bottom, left top calc(15px);
     background-repeat: no-repeat;
     border-radius: 10px;

@@ -152,14 +152,7 @@ final class PGPFGForGivewpAdmin
                     )
                 );
 
-                // Add version information
-                $versions = 'Plugin PIX v' . PGPFG_PIX_PLUGIN_VERSION;
-                if (defined('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION')) {
-                    $versions .= ' | PIX Pro v' . constant('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION');
-                } else {
-                    $versions .= ' | GiveWP v' . GIVE_VERSION;
-                }
-                $translation_array['versions'] = $versions;
+                $translation_array['sidebarCardHTML'] = $this->render_admin_sidebar_card();
 
                 $translation_array = $this->merge_pro_translations($translation_array);
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
@@ -635,5 +628,18 @@ final class PGPFGForGivewpAdmin
                 ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) : $logContents)
             )
         );
+    }
+
+    /**
+     * Render the admin sidebar card template
+     *
+     * @since    1.0.0
+     * @return   string    The rendered template HTML
+     */
+    private function render_admin_sidebar_card()
+    {
+        ob_start();
+        include plugin_dir_path(__FILE__) . 'templates/payment-gateway-pix-for-givewp-admin-sidebar-card.php';
+        return ob_get_clean();
     }
 }

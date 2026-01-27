@@ -67,78 +67,40 @@ if (firstElementParent && allSettingsDivs.length > 0) {
 
 // Aguardar um momento e adicionar o card lateral
 if (pgpfgSettingsContainer && !document.querySelector('#pgpfgSettingsFlexContainer')) {
-    // Criar div para card lateral
-    const sideCardDiv = document.createElement('div');
-    sideCardDiv.id = 'pgpfgSideCard';
-    // Aplicar imagens de fundo dinamicamente
-    sideCardDiv.style.backgroundImage = `url("${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardRight.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardRight.svg'}"), url("${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardLeft.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/backgroundCardLeft.svg'}")`;;
-
-    // Criar conteúdo do card lateral margin-bottom: 18px; style="display: flex; flex-direction: column; gap: 2px; font-family: Inter; font-weight: 500; "
-    const cardHTML = `
-            <div id="pgpfgDivLogo">
-                <div>
-                    <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/linkNacionalLogo.webp') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/linkNacionalLogo.webp'}" alt="Plugin Logo" class="plugin-logo">
-                </div>
-                <p class="version-text">${window.pgpfgTranslations ? pgpfgTranslations.versions : 'v1.0'}</p>
-            </div>
-            <div id="pgpfgDivContent">
-                <div id="pgpfgDivLinks">
-                    <div class="link-column">
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/givewp/pix/?utm=plugin" >
-                            <b class="bullet">•</b> Documentação
-                        </a>
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/" >
-                            <b class="bullet">•</b> Hosting
-                        </a>
-                    </div>
-                    <div class="link-column">
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/plugins/" >
-                            <b class="bullet">•</b> WP Plugin    
-                        </a>
-                        <a target="_blank" href="https://www.linknacional.com.br/wordpress/suporte/" >
-                            <b class="bullet">•</b> Suporte WP
-                        </a>
-                    </div>
-                </div>
-                <div class="pgpfgSupportLinks">
-                    <div id="pgpfgStarsDiv">
-                        <a target="_blank" href="https://wordpress.org/plugins/payment-gateway-pix-for-givewp/#reviews" class="stars-link">
-                            <p class="rate-text">Avaliar o plugin</p>
-                            <div class="PGPFGForGivewpStarRating">
-                                <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
-                                <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
-                                <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
-                                <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
-                                <span class="dashicons dashicons-star-filled lkn-stars-pix"></span>
-                            </div>
-                        </a>
-                    </div>
-                    <div class="pgpfgContactLinks">
-                        <a href="https://chat.whatsapp.com/IjzHhDXwmzGLDnBfOibJKO" target="_blank" class="contact-link">
-                            <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/whatsapp-icon.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/whatsapp-icon.svg'}" alt="WhatsApp Icon" class="contact-icon">
-                        </a>
-                        <a href="https://t.me/wpprobr" target="_blank" class="contact-link">
-                            <img src="${window.wpApiSettings ? wpApiSettings.root.replace('/wp-json/', '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/telegram-icon.svg') : '/wp-content/plugins/payment-gateway-pix-for-givewp/Admin/images/telegram-icon.svg'}" alt="Telegram Icon" class="contact-icon">
-                        </a>
-                    </div>
-                </div>
-            </div>
-        `;
-    sideCardDiv.innerHTML = cardHTML;
-
-    const cardContainer = document.createElement('div');
-    cardContainer.className = 'lkn-card-container';
-    cardContainer.appendChild(sideCardDiv);
-
     // Criar wrapper flex e reorganizar elementos
     const flexWrapper = document.createElement('div');
     flexWrapper.id = 'pgpfgSettingsFlexContainer';
 
     const parentElement = pgpfgSettingsContainer.parentElement;
     parentElement.insertBefore(flexWrapper, pgpfgSettingsContainer);
-
     flexWrapper.appendChild(pgpfgSettingsContainer);
-    flexWrapper.appendChild(cardContainer);
+
+    // Função para criar card (real ou placeholder)
+    const createCardElement = () => {
+        const cardHTML = window.pgpfgTranslations?.sidebarCardHTML || '';
+
+        if (!cardHTML.trim()) {
+            console.warn('PGPFG: Template do sidebar card não encontrado ou vazio');
+            const emptyCard = document.createElement('div');
+            emptyCard.className = 'lkn-card-container pgpfgSideCard-empty';
+            return emptyCard;
+        }
+
+        const tempDiv = document.createElement('div');
+        tempDiv.innerHTML = cardHTML;
+        const cardContainer = tempDiv.firstElementChild;
+
+        if (!cardContainer) {
+            console.warn('PGPFG: Erro ao criar cardContainer do template');
+            const emptyCard = document.createElement('div');
+            emptyCard.className = 'lkn-card-container pgpfgSideCard-empty';
+            return emptyCard;
+        }
+
+        return cardContainer;
+    };
+
+    flexWrapper.appendChild(createCardElement());
 }
 
 const lknPaymentPixLogSettingLabel = document.querySelector('label[for="lkn-payment-pix-log-setting"]');

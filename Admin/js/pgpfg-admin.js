@@ -59,7 +59,6 @@ const { __ } = wp.i18n;
 
       if (giveForm && lknCieloNoticeDiv) {
         const parent = giveForm.closest('div#pgpfgSettingsFlexContainer')
-        console.log(parent)
         parent.after(noticeDiv)
         noticeDiv.after(lknCieloNoticeDiv)
 
