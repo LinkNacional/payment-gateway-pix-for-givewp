@@ -151,6 +151,16 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-type-setting' => 'with-next'
                     )
                 );
+
+                // Add version information
+                $versions = 'Plugin PIX v' . PGPFG_PIX_PLUGIN_VERSION;
+                if (defined('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION')) {
+                    $versions .= ' | PIX Pro v' . PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION;
+                } else {
+                    $versions .= ' | GiveWP v' . GIVE_VERSION;
+                }
+                $translation_array['versions'] = $versions;
+
                 $translation_array = $this->merge_pro_translations($translation_array);
                 wp_localize_script('PGPFGForGivewpAdminSettingsScript', 'pgpfgTranslations', $translation_array);
                 $exists = false;
@@ -216,9 +226,6 @@ final class PGPFGForGivewpAdmin
                         'id' => 'lkn-payment-pix-key',
                         'desc' => __('Enter the Pix key created in your bank that will be used to receive donations.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
-                        'attributes' => array(
-                            'required' => 'required'
-                        ),
                         'subtitle' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp'),
                         'join' => 'with-previous'
                     );
@@ -228,9 +235,6 @@ final class PGPFGForGivewpAdmin
                         'id' => 'lkn-payment-pix-name-setting',
                         'desc' => __('Enter the full name of the Pix beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
-                        'attributes' => array(
-                            'required' => 'required'
-                        ),
                         'subtitle' => __("Recipient Name", 'payment-gateway-pix-for-givewp')
                     );
 
