@@ -1,5 +1,4 @@
 (() => {
-  console.log('Lkn Pix PagHiper for GiveWP loaded')
   const LKN_PIX_TITLE = pixGlobals.title
   const LKN_PIX_INFO = pixGlobals.info
   const LKN_PIX_CPF_CNPJ_LABEL = pixGlobals.cpf_cnpj_label
@@ -152,9 +151,15 @@
       },
       onChange: e => {
         lknPixFormatInput(e.target);
+        if (props.onInputChange) {
+          props.onInputChange(e.target.value);
+        }
       },
       onInput: e => {
         e.target.value = e.target.value.replace(/\D/g, '');
+        if (props.onInputChange) {
+          props.onInputChange(e.target.value);
+        }
       }
     })))
   }
@@ -193,6 +198,10 @@
 
       // Validar CPF/CNPJ antes de enviar
       if (!lknPixIsValidIdenty(cpfCnpj)) {
+        // Definir erro na UI ao invés de lançar exceção
+        if (window.setPixError) {
+          window.setPixError('CPF/CNPJ Inválido! Tente novamente.');
+        }
         throw new Error('CPF/CNPJ inválido!')
       }
 
@@ -210,11 +219,39 @@
     async afterCreatePayment(response) { },
     // Function that handle the HTML form elements.
     Fields() {
+      const [showMessage, setShowMessage] = React.useState(false)
+      const [hasError, setHasError] = React.useState(false)
+      const [errorMessage, setErrorMessage] = React.useState('')
+
+      // Expor função para definir erro externamente
+      React.useEffect(() => {
+        window.setPixError = (message) => {
+          setHasError(true);
+          setErrorMessage(message);
+          setShowMessage(false);
+        };
+        return () => {
+          delete window.setPixError;
+        };
+      }, []);
+
       const PixFeeInfo = React.createElement(lknPixFeeInfoElement)
       const PrimaryDocumentInput = React.createElement(lknPixElementWithTooltip, {
         title: LKN_PIX_CPF_CNPJ_TOOLTIP,
         tooltipClass: 'lkn_cpf_cnpj_tooltip',
-        margin: '-45px'
+        margin: '-45px',
+        onInputChange: (value) => {
+          const cleanValue = value.replace(/\D/g, '');
+
+          // Limpar erro quando usuário alterar o input
+          if (hasError) {
+            setHasError(false);
+            setErrorMessage('');
+          }
+
+          // Mostrar mensagem apenas se tiver tamanho correto (não validar aqui)
+          setShowMessage(cleanValue.length === 11 || cleanValue.length === 14);
+        }
       })
       return /* #__PURE__ */React.createElement('fieldset', {
         className: 'no-fields'
@@ -244,7 +281,23 @@
           fontSize: '14px',
           marginTop: '30px'
         }
-      }, ' ' + LKN_PIX_CPF_CNPJ_LABEL + ' ' + LKN_PIX_ASTR_SYMB, PrimaryDocumentInput))))
+      }, ' ' + LKN_PIX_CPF_CNPJ_LABEL + ' ' + LKN_PIX_ASTR_SYMB, PrimaryDocumentInput), showMessage && /* #__PURE__ */React.createElement('p', {
+        style: {
+          textAlign: 'center',
+          marginTop: '15px',
+          color: '#415462',
+          fontSize: '14px',
+          fontWeight: 'bold'
+        }
+      }, 'Clique em "Doar Agora" para gerar o QrCode'), hasError && /* #__PURE__ */React.createElement('p', {
+        style: {
+          textAlign: 'center',
+          marginTop: '15px',
+          color: '#d63384',
+          fontSize: '14px',
+          fontWeight: 'bold'
+        }
+      }, errorMessage))))
     }
   }
   window.givewp.gateways.register(LknPixGateway)
