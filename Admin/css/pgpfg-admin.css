@@ -349,6 +349,36 @@ input#lkn-label-pro {
     opacity: 0.8;
 }
 
+/* Feature Message Component */
+.custom-feature-message {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+    border: 1px solid #4caf50;
+    border-left-width: 5px;
+    border-left-color: #4caf50;
+    border-radius: 5px;
+    background-color: #e8f5e9;
+    color: #388e3c;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.custom-feature-message .feature-icon {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.custom-feature-message .feature-text-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-feature-message .feature-text-line {
+    margin-bottom: 5px;
+}
+
 @media (max-width: 1225px) {
     #pgpfgSettingsFlexContainer {
         flex-direction: column !important;
@@ -365,6 +395,10 @@ input#lkn-label-pro {
     .pgpfg-settings-container {
         max-width: 100% !important;
         width: 100%;
+    }
+
+    #pgpfgSideCard {
+        max-width: none !important;
     }
 }
 

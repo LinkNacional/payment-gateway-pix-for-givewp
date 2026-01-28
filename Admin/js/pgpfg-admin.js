@@ -135,5 +135,49 @@ const { __ } = wp.i18n;
         })
       return result
     }
+
+    function createFeatureMessage(iconText, messageLines) {
+      const featureMessage = document.createElement('div');
+      featureMessage.className = 'custom-feature-message';
+
+      // Adiciona o ícone de informação
+      const infoIcon = document.createElement('span');
+      infoIcon.className = 'feature-icon';
+      infoIcon.textContent = iconText;
+
+      // Adiciona o texto da mensagem
+      const textContainer = document.createElement('div');
+      textContainer.className = 'feature-text-container';
+
+      // Adiciona as linhas de texto
+      messageLines.forEach(line => {
+        const messageLine = document.createElement('span');
+        messageLine.className = 'feature-text-line';
+        messageLine.innerHTML = line;
+        textContainer.appendChild(messageLine);
+      });
+
+      // Adiciona o ícone e o texto ao componente de mensagem
+      featureMessage.appendChild(infoIcon);
+      featureMessage.appendChild(textContainer);
+
+      return featureMessage;
+    }
+    const featureMessage1 = createFeatureMessage('✔️', [
+      '<strong>ATUALIZADO:</strong> Fluxo de Pagamento otimizado. Cada etapa foi refinada para uma experiência mais suave e rápida para seus doadores.'
+    ]);
+
+    // Cria o segundo bloco de mensagem
+    const featureMessage2 = createFeatureMessage('✔️', [
+      '<strong>NOVO:</strong> Opção de gerar QR Code na tela de agradecimento, permitindo que os doadores concluam o pagamento mesmo após sair da página de checkout.'
+    ]);
+
+    const featureMessage3 = createFeatureMessage('✔️', [
+      '<strong>NOVO:</strong> Webhook para Gateways: Rede, Cielo e Banco do Brasil. Mais segurança e confiabilidade na confirmação dos pagamentos.'
+    ]);
+    const flexWrapper = document.getElementsByClassName('lkn-card-container')[0];
+    flexWrapper.appendChild(featureMessage1);
+    flexWrapper.appendChild(featureMessage2);
+    flexWrapper.appendChild(featureMessage3);
   })
 })(jQuery)
