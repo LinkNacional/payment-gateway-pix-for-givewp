@@ -100,7 +100,7 @@ final class PGPFGPaghiperPix extends PGPFGGatewayPaghiperAbstractPayment
 
         wp_register_script(
             self::id() . 'pix-script',
-            plugin_dir_url(__FILE__) . '/js/pix-script.js',
+            plugin_dir_url(__FILE__) . '/js/paghiper/pix-script.js',
             array('wp-element', 'wp-i18n'),
             PGPFG_PIX_PLUGIN_VERSION,
             true

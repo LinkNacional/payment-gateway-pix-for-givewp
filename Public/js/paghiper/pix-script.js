@@ -1,41 +1,86 @@
 (() => {
+  console.log('Lkn Pix PagHiper for GiveWP loaded')
   const LKN_PIX_TITLE = pixGlobals.title
   const LKN_PIX_INFO = pixGlobals.info
   const LKN_PIX_CPF_CNPJ_LABEL = pixGlobals.cpf_cnpj_label
   const LKN_PIX_CPF_CNPJ_TOOLTIP = pixGlobals.cpf_cnpj_tooltip
   const LKN_PIX_ASTR_SYMB = pixGlobals.astr_symbol
   const LKN_PIX_FEE = pixGlobals.pix_fee
-  function lknPixMaskCPFCNPJ(inputHTML) {
-    let cpfCnpjInput = inputHTML.target.value.replace(/\D/gmi, '')
-    const cpfCnpjArr = cpfCnpjInput.split('')
-    const resultArr = []
-    const typeInput = cpfCnpjInput.length > 11 ? 'CNPJ' : 'CPF'
-    for (let c = 0; c < cpfCnpjInput.length; c++) {
-      resultArr.push(cpfCnpjArr[c])
-      if (typeInput === 'CPF') {
-        if (c % 9 === 8) {
-          resultArr.push('-')
-        } else if (c % 3 === 2) {
-          resultArr.push('.')
-        }
-      } else {
-        if (c === 1) {
-          resultArr.push('.')
-        } else if (c === 4) {
-          resultArr.push('.')
-        } else if (c === 7) {
-          resultArr.push('/')
-        } else if (c === 11) {
-          resultArr.push('-')
-        }
-      }
-    }
-    cpfCnpjInput = resultArr.join('')
-    inputHTML.target.value = cpfCnpjInput
+  function lknPixEraseFormat(inputText) {
+    inputText.value = inputText.value.replace(/(\.|\/|\-)/g, "");
   }
-  ;
-  function lknPixFormatNumbers(inputHTML) {
-    inputHTML.target.value = inputHTML.target.value.replace(/\D/gmi, '')
+
+  function lknPixFormatInput(textInput) {
+    textInput.value = textInput.value.replace(/\D/g, '');
+    if (textInput.value.length <= 11) {
+      textInput.value = lknPixMaskCpf(textInput.value);
+    } else {
+      textInput.value = lknPixMaskCnpj(textInput.value);
+    }
+  }
+
+  function lknPixMaskCpf(cpfText) {
+    return cpfText.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4");
+  }
+
+  function lknPixMaskCnpj(cnpjText) {
+    return cnpjText.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "$1.$2.$3/$4-$5");
+  }
+
+  function lknPixValidateCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    if (remainder !== parseInt(cpf.charAt(9))) return false;
+
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+      sum += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    return remainder === parseInt(cpf.charAt(10));
+  }
+
+  function lknPixValidateCNPJ(cnpj) {
+    cnpj = cnpj.replace(/\D/g, '');
+    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) return false;
+
+    let sum = 0;
+    let weight = 2;
+    for (let i = 11; i >= 0; i--) {
+      sum += parseInt(cnpj.charAt(i)) * weight;
+      weight = weight === 9 ? 2 : weight + 1;
+    }
+    let remainder = sum % 11;
+    let digit1 = remainder < 2 ? 0 : 11 - remainder;
+    if (parseInt(cnpj.charAt(12)) !== digit1) return false;
+
+    sum = 0;
+    weight = 2;
+    for (let i = 12; i >= 0; i--) {
+      sum += parseInt(cnpj.charAt(i)) * weight;
+      weight = weight === 9 ? 2 : weight + 1;
+    }
+    remainder = sum % 11;
+    let digit2 = remainder < 2 ? 0 : 11 - remainder;
+    return parseInt(cnpj.charAt(13)) === digit2;
+  }
+
+  function lknPixIsValidIdenty(identy) {
+    const cleanIdenty = identy.replace(/\D/g, '');
+    if (cleanIdenty.length === 11) {
+      return lknPixValidateCPF(cleanIdenty);
+    } else if (cleanIdenty.length === 14) {
+      return lknPixValidateCNPJ(cleanIdenty);
+    }
+    return false;
   }
   ;
   const lknPixElementWithTooltip = props => {
@@ -98,12 +143,19 @@
       placeholder: LKN_PIX_CPF_CNPJ_LABEL,
       required: 'true',
       'aria-required': 'true',
-      maxlength: '20',
+      maxlength: '18',
       style: {
         fontSize: '16px'
       },
-      onInput: e => lknPixFormatNumbers(e),
-      onBlur: e => lknPixMaskCPFCNPJ(e)
+      onFocus: e => {
+        lknPixEraseFormat(e.target);
+      },
+      onChange: e => {
+        lknPixFormatInput(e.target);
+      },
+      onInput: e => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+      }
     })))
   }
   const lknPixFeeInfoElement = () => {
@@ -138,6 +190,12 @@
     async beforeCreatePayment(values) {
       const cpfCnpjField = document.querySelectorAll('#lkn_pgpf_give_paghiper_primary_document')[0]
       const cpfCnpj = cpfCnpjField.value
+
+      // Validar CPF/CNPJ antes de enviar
+      if (!lknPixIsValidIdenty(cpfCnpj)) {
+        throw new Error('CPF/CNPJ inválido!')
+      }
+
       values.cpfCnpj = cpfCnpj
 
       // Example of validation.

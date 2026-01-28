@@ -91,7 +91,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
         $configs = PGPFGivePaghiperHelper::get_configs();
 
-        wp_enqueue_script($this->id . '-script-js', plugin_dir_url(__FILE__) . 'js/lkn-pgpf-give-paghiper-public.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
+        wp_enqueue_script($this->id . '-script-js', plugin_dir_url(__FILE__) . 'js/paghiper/lkn-pgpf-give-paghiper-public.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
 
         $pixFee = $configs['pixFee'];
         $bolFee = $configs['bolFee'];

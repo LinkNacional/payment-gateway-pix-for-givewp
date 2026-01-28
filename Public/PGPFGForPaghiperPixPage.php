@@ -1,5 +1,6 @@
 <?php
 //LknGivePaghiperPixPage PGPFGForPaghiperPixPage
+
 /**
  * The file that defines the Pix Payment Page.
  *
@@ -11,7 +12,7 @@
 // Catch URL params.
 try {
     if (! empty($_GET["pix"]) && isset($_GET["pix"])) {
-        wp_enqueue_script('lkn-pix-page-script-js', plugin_dir_url(__FILE__) . 'js/lkn-pgpf-give-paghiper-pix-page.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
+        wp_enqueue_script('lkn-pix-page-script-js', plugin_dir_url(__FILE__) . 'js/paghiper/lkn-pgpf-give-paghiper-pix-page.js', array('jquery'), PGPFG_PIX_PLUGIN_VERSION, false);
 
         wp_enqueue_style("lkn-pix-page-css", PGPFG_PIX_PLUGIN_URL . "Public/css/lkn-pgpf-give-paghiper-public.css", array(), PGPFG_PIX_PLUGIN_VERSION);
         $pixParams = sanitize_text_field(wp_unslash($_GET['pix']));

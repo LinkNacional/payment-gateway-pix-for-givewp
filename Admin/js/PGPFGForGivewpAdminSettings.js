@@ -275,13 +275,13 @@ if (!document.getElementById('lkn-payment-pix-license-setting')) {
                 child.classList.add('lkn-disabled-settings');
             });
             let p = document.createElement('p');
-            p.innerHTML = 'Disponivel apenas com a versão Pro'
+            p.innerHTML = 'Disponível apenas com a versão Pro'
             p.classList.add('lkn-label-pro')
             config.appendChild(p)
         })
     }
 
-    document.querySelector('.give-submit-wrap input').addEventListener('click', () => {
+    document.querySelector('.give-submit-wrap input').addEventListener('click', (event) => {
         event.preventDefault();
         //limpa Campos Pro button-primary give-save-button
         for (let i = 2; i < lkn_PGPFG_settings.length; i++) {
