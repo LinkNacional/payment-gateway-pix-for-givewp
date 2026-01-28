@@ -363,7 +363,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_response', wp_json_encode($arrayMeta));
 
-                $donation->status = DonationStatus::PROCESSING();
+                $donation->status = DonationStatus::PENDING();
                 $donation->save();
 
                 if (isset($gatewayData["is_multi"])) {
@@ -404,7 +404,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_response', wp_json_encode($arrayMeta));
 
                 // Redirect to page with banking slip.
-                $donation->status = DonationStatus::PROCESSING();
+                $donation->status = DonationStatus::PENDING();
                 $donation->save();
                 return new RedirectOffsite($dir);
             }
