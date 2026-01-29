@@ -147,6 +147,10 @@ thElements.forEach(function (th) {
 
     let subtitle = pgpfgTranslations.subtitle[fieldId] ?? null;
     let description = pgpfgTranslations.description[fieldId] ?? null;
+    let inputFieldset = null;
+    if (inputField.type === 'fieldset') {
+        inputFieldset = inputField.querySelector('input');
+    }
 
     // Verifica se o campo de descrição contém um link
     if (descriptionField) {
@@ -161,7 +165,12 @@ thElements.forEach(function (th) {
 
     // Processa atributos customizados
     subtitle = inputField?.getAttribute('block_sub_title') ?? subtitle;
-    description = inputField?.getAttribute('bloco_description') ?? description;
+    description = inputField?.getAttribute('block_description') ?? description;
+
+    if (inputFieldset) {
+        subtitle = inputFieldset?.getAttribute('block_sub_title') ?? subtitle;
+        description = inputFieldset?.getAttribute('block_description') ?? description;
+    }
 
     if (subtitle) {
         let p = document.createElement('p');
@@ -199,8 +208,11 @@ thElements.forEach(function (th) {
         tr.querySelector('td').appendChild(elLabel)
     }
 
-    let blocoTitle = inputField?.getAttribute('bloco_title') ?? null;
-    let labelText = blocoTitle ?? label.innerHTML;
+    let blockTitle = inputField?.getAttribute('block_title') ?? null;
+    if (inputFieldset) {
+        blockTitle = inputFieldset?.getAttribute('block_title') ?? blockTitle;
+    }
+    let labelText = blockTitle ?? label.innerHTML;
 
     let novaLabel = document.createElement('label')
     novaLabel.innerHTML = labelText;
