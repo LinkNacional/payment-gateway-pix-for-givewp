@@ -160,7 +160,14 @@ final class PGPFGForGivewpAdmin
                 $pro_plugin_active = function_exists('is_plugin_active') && is_plugin_active('payment-gateway-pix-for-givewp-pro/payment-gateway-pix-for-givewp-pro.php');
 
                 $all_pages = PGPFGivePaghiperHelper::get_all_pages_for_select();
-                $paghiper_page = get_page_by_title('PagHiper Pix');
+                $paghiper_page_query = new \WP_Query(array(
+                    'post_type' => 'page',
+                    'title' => 'PagHiper Pix',
+                    'posts_per_page' => 1,
+                    'post_status' => 'publish'
+                ));
+                $paghiper_page = $paghiper_page_query->have_posts() ? $paghiper_page_query->posts[0] : null;
+                wp_reset_postdata();
                 $paghiper_page_id = $paghiper_page ? $paghiper_page->ID : '';
 
                 foreach ($settings as $setting) {

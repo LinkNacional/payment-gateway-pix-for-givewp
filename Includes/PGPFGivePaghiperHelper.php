@@ -278,7 +278,15 @@ final class PGPFGivePaghiperHelper
     public static function get_all_pages_for_select(): array
     {
         // Verifica se existe a página "PagHiper Pix"
-        $paghiper_page = get_page_by_title('PagHiper Pix');
+        $paghiper_page_query = new \WP_Query(array(
+            'post_type' => 'page',
+            'title' => 'PagHiper Pix',
+            'posts_per_page' => 1,
+            'post_status' => 'publish'
+        ));
+        $paghiper_page = $paghiper_page_query->have_posts() ? $paghiper_page_query->posts[0] : null;
+        wp_reset_postdata();
+
         if (!$paghiper_page) {
             // Cria a página
             $page_id = wp_insert_post(array(
@@ -306,18 +314,19 @@ final class PGPFGivePaghiperHelper
         return $result;
     }
 
-    public static function find_give_receipt_page($form_id) {
-        
+    public static function find_give_receipt_page($form_id)
+    {
+
         $form_settings = give_get_meta($form_id, 'formBuilderSettings', true);
 
-        if(gettype($form_settings) !== 'array') {
+        if (gettype($form_settings) !== 'array') {
             $form_settings = json_decode($form_settings, true);
         }
 
         if (empty($form_settings['enableReceiptConfirmationPage']) && $form_settings['enableReceiptConfirmationPage'] === false) {
             return false;
         }
-        
+
         $give_success_page = give_get_option('success_page');
         if (empty($give_success_page)) {
             return false;

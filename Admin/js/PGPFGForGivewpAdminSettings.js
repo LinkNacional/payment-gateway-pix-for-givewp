@@ -114,9 +114,11 @@ if (lknPaymentPixLogSettingLabel) {
 }
 
 var thElements = document.querySelectorAll('.form-table.give-setting-tab-body.give-setting-tab-body-gateways th');
-// Para cada elemento th
+// Processamento otimizado: um único loop para th e tr
 thElements.forEach(function (th) {
-    th.parentElement.className = 'PGPFGForGivewpAdminSettingsTr';
+    const tr = th.parentElement;
+    tr.className = 'PGPFGForGivewpAdminSettingsTr';
+
     // Cria o elemento span para o texto da dica de ferramenta
     var tooltipText = document.createElement('span');
     tooltipText.className = 'tooltiptext';
@@ -124,6 +126,7 @@ thElements.forEach(function (th) {
     // Obtém o ID do campo para buscar a nova_desc
     var fieldId = null;
     var inputField = th.nextElementSibling.querySelector('input, select, textarea, fieldset');
+
     if (inputField) {
         // Verifica se é um fieldset
         if (inputField.tagName.toLowerCase() === 'fieldset') {
@@ -138,11 +141,13 @@ thElements.forEach(function (th) {
             fieldId = inputField.getAttribute('id');
         }
     }
+
     // Obtém o texto de descrição do campo correspondente
     var descriptionField = th.nextElementSibling.querySelector('.give-field-description');
 
     let subtitle = pgpfgTranslations.subtitle[fieldId] ?? null;
     let description = pgpfgTranslations.description[fieldId] ?? null;
+
     // Verifica se o campo de descrição contém um link
     if (descriptionField) {
         var linkElement = descriptionField.querySelector('a');
@@ -150,22 +155,24 @@ thElements.forEach(function (th) {
         let p = document.createElement('p');
         p.innerHTML = descriptionField.innerHTML.replace(/\s+<a/g, '<a');;
         th.appendChild(p)
-        //p.innerHTML = p.innerHTML + novaDesc;
         // Remove o campo de descrição
         descriptionField.parentNode.removeChild(descriptionField);
-
     }
+
+    // Processa atributos customizados
     subtitle = inputField?.getAttribute('block_sub_title') ?? subtitle;
     description = inputField?.getAttribute('bloco_description') ?? description;
+
     if (subtitle) {
         let p = document.createElement('p');
-        let div = document.createElement('label');
+        let div = document.createElement('div');
         p.innerHTML = subtitle;
         div.classList.add('lkn-pix-subtitle');
         div.append(p);
         let td = th.parentElement.querySelector('td');
         td.appendChild(div);
     }
+
     if (description) {
         let p = document.createElement('p');
         let div = document.createElement('label');
@@ -174,6 +181,53 @@ thElements.forEach(function (th) {
         div.append(p);
         let td = th.parentElement.querySelector('td');
         td.appendChild(div);
+    }
+
+    // Processamento do TR (anteriormente no segundo forEach)
+    let label = tr.querySelector('label');
+    let textoComplementar = tr.querySelector('a');
+    if (textoComplementar) {
+        let elLabel = document.createElement('label');
+        let p = document.createElement('p');
+        elLabel.appendChild(p);
+        p.appendChild(textoComplementar);
+        tr.querySelector('td').appendChild(elLabel)
+    }
+
+    let blocoTitle = inputField?.getAttribute('bloco_title') ?? null;
+    let labelText = blocoTitle ?? label.innerHTML;
+
+    let novaLabel = document.createElement('label')
+    novaLabel.innerHTML = labelText;
+    let hr = document.createElement('div');
+    hr.classList.add('title-hr');
+    let td = tr.querySelector('td');
+    td.insertBefore(hr, td.firstChild);
+    td.insertBefore(novaLabel, td.firstChild);
+
+    let subtitleElement = td.querySelector('.lkn-pix-subtitle');
+    if (subtitleElement) {
+        td.insertBefore(subtitleElement, hr);
+    }
+
+    // Processamento join-top
+    let joinTop = inputField?.getAttribute('join-top') ?? null;
+    if (joinTop != null) {
+        const inputJoinTop = document.createElement('div');
+        inputJoinTop.append(...td.children);
+        const joined = document.querySelector(`#${joinTop}`);
+        if (joined && joined.parentElement) {
+            const joinedTd = joined.closest('td');
+            if (joinedTd) {
+                joinedTd.insertAdjacentElement('afterbegin', inputJoinTop);
+                tr.style.display = 'none';
+            }
+        }
+    }
+
+    // Adiciona classe se necessário
+    if (inputField && !inputField.classList.contains('give-input-field')) {
+        inputField.classList.add('give-input-field');
     }
 });
 
@@ -206,71 +260,6 @@ function navegarParaAba(idAba) {
 }
 
 let previous;
-const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
-trs.forEach(function (tr) {
-    var fieldId = null;
-    var th = tr.querySelector('th');
-    var inputField = tr.querySelector('td input, td select, td textarea, td fieldset');
-
-    let label = tr.querySelector('label');
-    let textoComplementar = tr.querySelector('a');
-    if (textoComplementar) {
-        let elLabel = document.createElement('label');
-        let p = document.createElement('p');
-        elLabel.appendChild(p);
-        p.appendChild(textoComplementar);
-        tr.querySelector('td').appendChild(elLabel)
-    }
-    let blocoTitle = inputField?.getAttribute('bloco_title') ?? null;
-    let labelText = blocoTitle ?? label.innerHTML;
-
-    let novaLabel = document.createElement('label')
-    novaLabel.innerHTML = labelText;
-    let hr = document.createElement('div');
-    hr.classList.add('title-hr');
-    let td = tr.querySelector('td');
-    td.insertBefore(hr, td.firstChild);
-    td.insertBefore(novaLabel, td.firstChild);
-
-    let subtitle = td.querySelector('.lkn-pix-subtitle');
-    if (subtitle) {
-        td.insertBefore(subtitle, hr);
-    }
-
-    // Obtém o ID do campo para buscar a nova_desc
-
-    if (inputField) {
-        // Verifica se é um fieldset
-        if (inputField.tagName.toLowerCase() === 'fieldset') {
-            // Se for fieldset, busca o primeiro input dentro dele
-            var innerInput = inputField.querySelector('input');
-            if (innerInput) {
-                // Para campos radio, geralmente usamos o 'name' como ID
-                fieldId = innerInput.getAttribute('name') || innerInput.getAttribute('id');
-            }
-        } else {
-            // Se não for fieldset, pega o ID normalmente
-            fieldId = inputField.getAttribute('id');
-        }
-    }
-    let joinTop = inputField?.getAttribute('join-top') ?? null;
-    if (joinTop != null) {
-        const inputJoinTop = document.createElement('div');
-        inputJoinTop.append(...td.children);
-        const joined = document.querySelector(`#${joinTop}`);
-        if (joined && joined.parentElement) {
-            const joinedTd = joined.closest('td');
-            if (joinedTd) {
-                joinedTd.insertAdjacentElement('afterbegin', inputJoinTop);
-                tr.style.display = 'none';
-            }
-        }
-    }
-
-    if (!inputField.classList.contains('give-input-field')) {
-        inputField.classList.add('give-input-field');
-    }
-})
 
 if (!document.getElementById('lkn-payment-pix-license-setting')) {
     for (let i = 2; i < lkn_PGPFG_settings.length; i++) {
