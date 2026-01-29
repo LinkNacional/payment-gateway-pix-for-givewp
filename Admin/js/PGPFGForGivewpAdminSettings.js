@@ -179,6 +179,11 @@ thElements.forEach(function (th) {
         p.classList.add('lkn-pix-description');
         p.innerHTML = description;
         div.append(p);
+        // Associa o label de descrição ao input - trata radio buttons especialmente
+        if (inputField && inputField.id) {
+            div.setAttribute('for', inputField.id);
+        }
+
         let td = th.parentElement.querySelector('td');
         td.appendChild(div);
     }
@@ -199,6 +204,10 @@ thElements.forEach(function (th) {
 
     let novaLabel = document.createElement('label')
     novaLabel.innerHTML = labelText;
+    // Associa o label ao input - usa name para radio buttons, id para outros tipos
+    if (inputField && inputField.id) {
+        novaLabel.setAttribute('for', inputField.id);
+    }
     let hr = document.createElement('div');
     hr.classList.add('title-hr');
     let td = tr.querySelector('td');
