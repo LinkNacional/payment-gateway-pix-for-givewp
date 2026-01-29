@@ -146,10 +146,10 @@ final class PGPFGForGivewpAdmin
                         'lkn-payment-pix-bb-client-secret' => __('BB API secret credential. Use with Client ID for secure authentication.', 'payment-gateway-pix-for-givewp'),
                         'lkn-payment-pix-bb-developer-key' => __('The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API.', 'payment-gateway-pix-for-givewp')
                     ),
-                    'join' => array(
+                    /*'join' => array(
                         'lkn-payment-pix-key' => 'with-previous',
                         'lkn-payment-pix-type-setting' => 'with-next'
-                    )
+                    )*/
                 );
 
                 $translation_array['sidebarCardHTML'] = $this->render_admin_sidebar_card();
@@ -175,7 +175,7 @@ final class PGPFGForGivewpAdmin
                         'type' => 'checkbox',
                         'id' => 'lkn-pix-menu',
                         'name' => '
-                        <div = class="lkn-container-menu">
+                        <div class="lkn-container-menu">
                             <div class="lkn-menu-toggle">☰
                                 <div class="lkn-menu-container-mobile"></div>
                             </div>
@@ -198,6 +198,14 @@ final class PGPFGForGivewpAdmin
                     );
 
                     $settings[] = array(
+                        'name' => __('Pix Key', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-key',
+                        'desc' => __('Enter the Pix key created in your bank that will be used to receive donations.', 'payment-gateway-pix-for-givewp'),
+                        'type' => 'text',
+                        'subtitle' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp'),
+                    );
+
+                    $settings[] = array(
                         'name' => __('Type of Key', 'payment-gateway-pix-for-givewp'),
                         'desc' => __('Choose which type of key you will use to receive the PIX.', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-type-setting',
@@ -210,17 +218,10 @@ final class PGPFGForGivewpAdmin
                             'email' => __('Email', 'payment-gateway-pix-for-givewp')
                         ),
                         'subtitle' => __("Choose the type of key you'll use to receive Pix payments", 'payment-gateway-pix-for-givewp'),
-                        'join' => 'with-next'
+                        'attributes' => array(
+                            'join-top' => 'lkn-payment-pix-key'
+                        )
 
-                    );
-
-                    $settings[] = array(
-                        'name' => __('Pix Key', 'payment-gateway-pix-for-givewp'),
-                        'id' => 'lkn-payment-pix-key',
-                        'desc' => __('Enter the Pix key created in your bank that will be used to receive donations.', 'payment-gateway-pix-for-givewp'),
-                        'type' => 'text',
-                        'subtitle' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp'),
-                        'join' => 'with-previous'
                     );
 
                     $settings[] = array(
@@ -228,7 +229,11 @@ final class PGPFGForGivewpAdmin
                         'id' => 'lkn-payment-pix-name-setting',
                         'desc' => __('Enter the full name of the Pix beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
-                        'subtitle' => __("Recipient Name", 'payment-gateway-pix-for-givewp')
+                        'attributes' => array(
+                            //'bloco_title' => 'teste',
+                            'block_sub_title' => __("Recipient Name", 'payment-gateway-pix-for-givewp'),
+                            //'bloco_description' => 'teste descrção bloco'
+                        )
                     );
 
                     $settings[] = array(

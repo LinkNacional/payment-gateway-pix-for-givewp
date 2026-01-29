@@ -155,6 +155,8 @@ thElements.forEach(function (th) {
         descriptionField.parentNode.removeChild(descriptionField);
 
     }
+    subtitle = inputField?.getAttribute('block_sub_title') ?? subtitle;
+    description = inputField?.getAttribute('bloco_description') ?? description;
     if (subtitle) {
         let p = document.createElement('p');
         let div = document.createElement('label');
@@ -206,6 +208,10 @@ function navegarParaAba(idAba) {
 let previous;
 const trs = document.querySelectorAll('.PGPFGForGivewpAdminSettingsTr');
 trs.forEach(function (tr) {
+    var fieldId = null;
+    var th = tr.querySelector('th');
+    var inputField = tr.querySelector('td input, td select, td textarea, td fieldset');
+
     let label = tr.querySelector('label');
     let textoComplementar = tr.querySelector('a');
     if (textoComplementar) {
@@ -215,7 +221,8 @@ trs.forEach(function (tr) {
         p.appendChild(textoComplementar);
         tr.querySelector('td').appendChild(elLabel)
     }
-    let labelText = label.innerHTML;
+    let blocoTitle = inputField?.getAttribute('bloco_title') ?? null;
+    let labelText = blocoTitle ?? label.innerHTML;
 
     let novaLabel = document.createElement('label')
     novaLabel.innerHTML = labelText;
@@ -231,9 +238,7 @@ trs.forEach(function (tr) {
     }
 
     // Obtém o ID do campo para buscar a nova_desc
-    var fieldId = null;
-    var th = tr.querySelector('th');
-    var inputField = tr.querySelector('td input, td select, td textarea, td fieldset');
+
     if (inputField) {
         // Verifica se é um fieldset
         if (inputField.tagName.toLowerCase() === 'fieldset') {
@@ -248,19 +253,22 @@ trs.forEach(function (tr) {
             fieldId = inputField.getAttribute('id');
         }
     }
-    let join = pgpfgTranslations.join[fieldId] ?? null;
-    if (join == 'with-next') {
-        let td = th.parentElement.querySelector('td');
-        td.classList.add('join-next')
-        previous = th;
+    let joinTop = inputField?.getAttribute('join-top') ?? null;
+    if (joinTop != null) {
+        const inputJoinTop = document.createElement('div');
+        inputJoinTop.append(...td.children);
+        const joined = document.querySelector(`#${joinTop}`);
+        if (joined && joined.parentElement) {
+            const joinedTd = joined.closest('td');
+            if (joinedTd) {
+                joinedTd.insertAdjacentElement('afterbegin', inputJoinTop);
+                tr.style.display = 'none';
+            }
+        }
     }
-    if (join == 'with-previous') {
-        let td = th.parentElement.querySelector('td');
-        td.classList.add('join-previous');
-        previous.querySelector('label').innerHTML = td.querySelector('label').innerHTML;
-        previous.querySelector('p').innerHTML = td.querySelector('p').innerHTML;
-        th.querySelector('label').style.display = 'none';
-        th.querySelector('p').style.display = 'none';
+
+    if (!inputField.classList.contains('give-input-field')) {
+        inputField.classList.add('give-input-field');
     }
 })
 
