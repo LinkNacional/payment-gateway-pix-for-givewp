@@ -274,6 +274,7 @@ final class PGPFGForGivewp
         $this->loader->add_action('init', $this, 'add_pgpf_give_paghiper_shortcodes');
 
         $plugin_admin = new PGPFGForGivewpAdmin($this->get_plugin_name(), $this->get_version());
+        $this->loader->add_filter('plugin_row_meta', 'Pgpfg\PGPFGForGivewp\Includes\PGPFGHelperClass', 'add_changelog_link', 10, 2);
 
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_styles');
         $this->loader->add_action('admin_enqueue_scripts', $plugin_admin, 'enqueue_scripts');

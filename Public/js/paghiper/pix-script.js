@@ -289,7 +289,7 @@
           fontSize: '14px',
           fontWeight: 'bold'
         }
-      }, 'Clique em "Doar Agora" para gerar o QrCode'), hasError && /* #__PURE__ */React.createElement('p', {
+      }, 'Clique em "Doar Agora" para gerar o PIX'), hasError && /* #__PURE__ */React.createElement('p', {
         style: {
           textAlign: 'center',
           marginTop: '15px',

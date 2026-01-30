@@ -210,11 +210,12 @@ final class PGPFGForGivewpAdmin
                     );
 
                     $settings[] = array(
-                        'name' => __('Pix Key', 'payment-gateway-pix-for-givewp'),
+                        'name' => __('Donation Settings', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-key',
-                        'desc' => __('Enter the Pix key created in your bank that will be used to receive donations.', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Enter your Pix key to start receiving funds.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
                         'attributes' => array(
+                            'bloco_title' => __('Pix Key', 'payment-gateway-pix-for-givewp'),
                             'block_sub_title' => __("Enter the Pix key created in your bank that will be used to receive donations", 'payment-gateway-pix-for-givewp')
                         )
                     );
@@ -244,22 +245,22 @@ final class PGPFGForGivewpAdmin
                         'desc' => __('Enter the full name of the Pix beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
                         'attributes' => array(
-                            'block_sub_title' => __("Recipient Name", 'payment-gateway-pix-for-givewp'),
+                            'block_sub_title' => __("Enter the account holder's full name as it appears at the bank.", 'payment-gateway-pix-for-givewp'),
                         )
                     );
 
                     $settings[] = array(
-                        'name' => __("Recipient city ", 'payment-gateway-pix-for-givewp'),
+                        'name' => __("Recipient city", 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn-payment-pix-city-setting',
                         'desc' => __('Enter the name of the city of the Pix key beneficiary.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'text',
                         'attributes' => array(
-                            'block_sub_title' => __("Recipient city", 'payment-gateway-pix-for-givewp')
+                            'block_sub_title' => __("Enter the name of the city of the beneficiary", 'payment-gateway-pix-for-givewp')
                         )
                     );
 
                     $settings[] = array(
-                        'name' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
+                        'name' => __('Diagnostic Mode', 'payment-gateway-pix-for-givewp'),
                         'desc' => __('When this feature is enabled, the plugin will record transaction logs, ideal for error identification.', 'payment-gateway-pix-for-givewp') . ((give_get_option('lkn-payment-pix-log-setting') === 'enabled' && file_exists(give_get_option('pgpfg_for_givewp_last_log')) && filesize(give_get_option('pgpfg_for_givewp_last_log'))) ? (' (<a href="#" id="check-logs">' . __('Check Last Log', 'payment-gateway-pix-for-givewp') . '</a>)') : ''),
                         'id' => 'lkn-payment-pix-log-setting',
                         'type' => 'radio_inline',
@@ -269,7 +270,8 @@ final class PGPFGForGivewpAdmin
                             'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                         ),
                         'attributes' => array(
-                            'block_sub_title' => __('Saves transactions to the logs.', 'payment-gateway-pix-for-givewp')
+                            'block_title' => __('Enable Debug Mode', 'payment-gateway-pix-for-givewp'),
+                            'block_sub_title' => __('Saves transaction history to the logs.', 'payment-gateway-pix-for-givewp')
                         )
                     );
 
@@ -301,24 +303,26 @@ final class PGPFGForGivewpAdmin
                     );
 
                     $settings[] = array(
-                        'name' => __('PagHiper API Key', 'payment-gateway-pix-for-givewp'),
+                        'name' => __('PagHiper Integration Key', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_api_key_setting_field',
-                        'desc' => __('PagHiper service API key', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Credentials required to process PagHiper payments.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'api_key',
                         'attributes' => array(
+                            'block_title' => __('PagHiper API Key', 'payment-gateway-pix-for-givewp'),
                             'block_sub_title' => __('Your API Key', 'payment-gateway-pix-for-givewp'),
-                            'block_description' => __('PagHiper Credentials', 'payment-gateway-pix-for-givewp')
+                            'block_description' => __('Enter the API key found in your PagHiper developer dashboard.', 'payment-gateway-pix-for-givewp')
                         )
                     );
 
                     $settings[] = array(
-                        'name' => __('PagHiper Token', 'payment-gateway-pix-for-givewp'),
+                        'name' => __('PagHiper Integration Token', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_token_setting_field',
-                        'desc' => __('PagHiper service API token', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Additional security key for PagHiper transactions.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'api_key',
                         'attributes' => array(
+                            'block_title' => __('PagHiper Token', 'payment-gateway-pix-for-givewp'),
                             'block_sub_title' => __('Your PagHiper Token', 'payment-gateway-pix-for-givewp'),
-                            'block_description' => __('PagHiper Credentials', 'payment-gateway-pix-for-givewp')
+                            'block_description' => __('Enter the API token found in your PagHiper developer dashboard.', 'payment-gateway-pix-for-givewp')
                         )
                     );
 
@@ -335,38 +339,39 @@ final class PGPFGForGivewpAdmin
                     );
 
                     $settings[] = array(
-                        'name' => __('Default Due Date for Issued Boletos', 'payment-gateway-pix-for-givewp'),
+                        'name' => __('Boleto Expiration', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_due_date_setting_field',
-                        'desc' => __('Calendar days until expiration, maximum value until expiration is 400 days', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Set the time limit for donation payments.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'number',
                         'default' => '1',
                         'attributes' => array(
-                            'block_sub_title' => __('Set the number of days until the bank slip expires.', 'payment-gateway-pix-for-givewp'),
-                            'block_description' => __('The minimum period is 1 day.', 'payment-gateway-pix-for-givewp')
+                            'block_title' => __('Expiration Period', 'payment-gateway-pix-for-givewp'),
+                            'block_sub_title' => __('Calendar days until the bank slip expires.', 'payment-gateway-pix-for-givewp'),
+                            'block_description' => __('Enter a period between 1 and 400 days.', 'payment-gateway-pix-for-givewp')
                         )
                     );
 
                     $settings[] = array(
                         'name' => __('PIX Fixed Fee', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_fee_pix_setting_field',
-                        'desc' => __('Additional fee charged to the customer for using PIX as payment method. Ex.: 2.0 (two reais). Note: Use dot (.) to separate decimal places', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Set extra fees for Pix transactions.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'number',
                         'default' => '0',
                         'attributes' => array(
-                            'block_sub_title' => __('Enter the fixed amount to be passed on to the customer for each PIX issued.', 'payment-gateway-pix-for-givewp'),
-                            'block_description' => __('Set to 0 to not add a fee.', 'payment-gateway-pix-for-givewp')
+                            'block_sub_title' => __('Additional amount charged for each Pix issued.', 'payment-gateway-pix-for-givewp'),
+                            'block_description' => __('Use a dot (.) for decimals. Set to 0 to disable the fee.', 'payment-gateway-pix-for-givewp')
                         )
                     );
 
                     $settings[] = array(
-                        'name' => __('Boleto Fixed Fee', 'payment-gateway-pix-for-givewp'),
+                        'name' => __('Slip Fixed Fee', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_fee_bol_setting_field',
-                        'desc' => __('Additional fee charged to the customer for using boleto as payment method. Ex.: 2.0 (two reais). Note: Use dot (.) to separate decimal places', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Set extra fees for Slip transactions.', 'payment-gateway-pix-for-givewp'),
                         'type' => 'number',
                         'default' => '0',
                         'attributes' => array(
-                            'block_sub_title' => __('Enter the fixed amount to be passed on to the customer for each bank slip issued.', 'payment-gateway-pix-for-givewp'),
-                            'block_description' => __('Set to 0 to not add a fee.', 'payment-gateway-pix-for-givewp')
+                            'block_sub_title' => __('Additional amount charged for each Slip issued.', 'payment-gateway-pix-for-givewp'),
+                            'block_description' => __('Use a dot (.) for decimals. Set to 0 to disable the fee.', 'payment-gateway-pix-for-givewp')
                         )
                     );
                     $settings[] = array(
@@ -375,9 +380,9 @@ final class PGPFGForGivewpAdmin
                         'default' => $paghiper_page_id,
                         'type' => "select",
                         'options' => count($all_pages) > 0 ? $all_pages : array(),
-                        'desc' => __('Please insert the [lkn_pgpf_give_paghiper_pix] shortcode on the page you want to select', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Define the page where PIX will be displayed after checkout.', 'payment-gateway-pix-for-givewp'),
                         'attributes' => array(
-                            'block_sub_title' => __('This page will be responsible for displaying the PagHiper Pix before checkout.', 'payment-gateway-pix-for-givewp'),
+                            'block_sub_title' => __('Select the page containing the display shortcode.', 'payment-gateway-pix-for-givewp'),
                             'block_description' => __('The page must contain the PagHiper shortcode [lkn_pgpf_give_paghiper_pix].', 'payment-gateway-pix-for-givewp')
                         )
                     );
@@ -385,7 +390,7 @@ final class PGPFGForGivewpAdmin
                     $settings[] = array(
                         'name' => __('Debug Mode', 'payment-gateway-pix-for-givewp'),
                         'id' => 'lkn_pgpf_paghiper_debug',
-                        'desc' => __('Enable debug environment. <a id="lkn-give-debug">Transaction log.</a>', 'payment-gateway-pix-for-givewp'),
+                        'desc' => __('Enable detailed logging for support and maintenance. <a id="lkn-give-debug">Transaction log.</a>', 'payment-gateway-pix-for-givewp'),
                         'type' => 'radio',
                         'default' => 'disabled',
                         'options' => array(
@@ -431,15 +436,15 @@ final class PGPFGForGivewpAdmin
                                 'app' => __('Production', 'payment-gateway-pix-for-givewp'),
                                 'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
                             ),
-                            'desc' => __('Select the environment in which the payment gateway will operate.', 'payment-gateway-pix-for-givewp'),
+                            'desc' => __('Set whether the system will process real donations or tests.', 'payment-gateway-pix-for-givewp'),
                             'attributes' => array(
                                 'block_sub_title' => __('Set the environment for all PRO payment gateways.', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Development for testing environment; Production for real donations.', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __('Use "Development" for testing and "Production" for real donations.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
+                            'name' => __('Transaction Logs', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-logs',
                             'desc' => __('When enabled, all payment gateway operations will be recorded in the system logs.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'radio_inline',
@@ -449,13 +454,14 @@ final class PGPFGForGivewpAdmin
                                 'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                             ),
                             'attributes' => array(
-                                'block_sub_title' => __('Enable transaction logs', 'payment-gateway-pix-for-givewp'),
+                                'block_title' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
+                                'block_sub_title' => __('Activates detailed event logging.', 'payment-gateway-pix-for-givewp'),
                                 'block_description' => __('Enable this option to help identify and troubleshoot potential transaction errors.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
+                            'name' => __('Console Debugging', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-debug',
                             'desc' => __('Enabling this will provide detailed information on PIX payment gateway operations in the console. Default: Disabled.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'radio_inline',
@@ -465,6 +471,7 @@ final class PGPFGForGivewpAdmin
                                 'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
                             ),
                             'attributes' => array(
+                                'block_title' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Display gateway operation details in the console.', 'payment-gateway-pix-for-givewp'),
                                 'block_description' => __('Enable detailed console messages with information about payment gateway operations.', 'payment-gateway-pix-for-givewp')
                             )
@@ -482,24 +489,26 @@ final class PGPFGForGivewpAdmin
                         );
 
                         $settings[] = array(
-                            'name' => 'Maxipago Merchant Key',
+                            'name' => __('Maxipago Integration', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-maxipago-key',
-                            'desc' => __('Unique key linked to your MaxiPago store.', 'payment-gateway-pix-for-givewp'),
+                            'desc' => __('Exclusive credentials for Maxipago processing.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
-                                'block_sub_title' => __('Your MaxiPago Merchant Key', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('MaxiPago Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_title' => __('MaxiPago Merchant Key', 'payment-gateway-pix-for-givewp'),
+                                'block_sub_title' => __('Unique authentication key for your store.', 'payment-gateway-pix-for-givewp'),
+                                'block_description' => __('Enter the security key linked to your account at Maxipago.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => 'Maxipago Merchant Id',
+                            'name' => __('Maxipago Identification', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-maxipago-id',
-                            'desc' => __('Unique identifier used to identify your store in MaxiPago.', 'payment-gateway-pix-for-givewp'),
+                            'desc' => __('Unique identifier for your establishment on the platform.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
+                                'block_title' => __('MaxiPago Merchant ID', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your MaxiPago Merchant ID', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('MaxiPago Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __('Enter the identification code used to recognize your store at Maxipago.', 'payment-gateway-pix-for-givewp')
                             )
                         );
                         $settings[] = array(
@@ -514,47 +523,51 @@ final class PGPFGForGivewpAdmin
                         );
 
                         $settings[] = array(
-                            'name' => 'BB Client Id',
+                            'name' => __('Banco do Brasil Integration', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-bb-client-id',
                             'desc' => __('Unique identifier used to identify your Banco do Brasil account.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
-                                'block_sub_title' => __('Your Banco do Brasil Client ID', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Banco do Brasil Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_title' => __('BB Client Id', 'payment-gateway-pix-for-givewp'),
+                                'block_sub_title' => __('Unique identifier for your bank account.', 'payment-gateway-pix-for-givewp'),
+                                'block_description' => __('Enter the client code generated in the Banco do Brasil developers portal.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => 'BB Client Secret',
+                            'name' => __('Banco do Brasil Client Secret', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-bb-client-secret',
-                            'desc' => __('Private key used to authenticate integrations with Banco do Brasil services.', 'payment-gateway-pix-for-givewp'),
+                            'desc' => __('Private key for service authentication.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
+                                'block_title' => __('BB Client Secret', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your Banco do Brasil Client Secret', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Banco do Brasil Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __('Private key used to authenticate integrations with Banco do Brasil services.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => 'BB Developer Key',
+                            'name' => __('Banco do Brasil Developer Key', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-bb-developer-key',
                             'desc' => __('Key used by developers to access Banco do Brasil APIs.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
+                                'block_title' => __('BB Developer Key', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your Banco do Brasil Developer Key', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Banco do Brasil Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __('Key required for communication with the BB Pix APIs.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => 'BB Pix Key',
+                            'name' => __('Banco do Brasil Pix Key', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-bb-pix-key',
                             'type' => 'text',
                             // translators: %1$s: start link, %2$s: end link    
                             'desc' => sprintf(__('Pix key linked to the client and registered at Banco do Brasil. It must be active for the transaction to be processed correctly. %1$sLearn more%2$s', 'payment-gateway-pix-for-givewp'), '<a target="_blank" href="https://apoio.developers.bb.com.br/referency/post/648385d0de39c800131d8579">', '</a>'),
                             'attributes' => array(
+                                'block_title' => __('BB Pix Key', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your Banco do Brasil Pix Key', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('The Pix Key must be registered and active at Banco do Brasil to ensure transactions are processed correctly.', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __('The Pix key must be active at Banco do Brasil for correct processing.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
@@ -569,24 +582,26 @@ final class PGPFGForGivewpAdmin
                         );
 
                         $settings[] = array(
-                            'name' => 'Cielo Merchant ID',
+                            'name' => __('Cielo Integration', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-cielo-merchant-id',
                             'type' => 'password',
                             'desc' => __('Unique identifier for your store at Cielo.', 'payment-gateway-pix-for-givewp-pro'),
                             'attributes' => array(
+                                'block_title' => __('Cielo Merchant ID', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your Cielo Merchant ID', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Cielo Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __("Enter your store's identification code available in the Cielo portal.", 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => 'Cielo Merchant Key',
+                            'name' => __('Cielo Merchant Key', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-cielo-merchant-key',
-                            'desc' => __('Access key for your store at Cielo.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Private key for transaction authentication via Cielo.s', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password',
                             'attributes' => array(
+                                'block_title' => __('Cielo Merchant Key', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your Cielo Merchant Key', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Cielo Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __("Enter your store's access key available in the Cielo dashboard.", 'payment-gateway-pix-for-givewp')
                             )
                         );
                         $settings[] = array(
@@ -601,24 +616,24 @@ final class PGPFGForGivewpAdmin
                         );
 
                         $settings[] = array(
-                            'name' => "E-rede PV",
+                            'name' => __("POS Identification (PV)", 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-pro-erede-pv',
-                            'desc' => __('Unique identifier for your establishment at Rede.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Unique identification code for your establishment at Rede', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password',
                             'attributes' => array(
-                                'block_sub_title' => __('Your Rede PV', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Rede Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_sub_title' => __('POS Number (Rede).', 'payment-gateway-pix-for-givewp'),
+                                'block_description' => __('Enter the POS code provided by Rede.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
                         $settings[] = array(
-                            'name' => "E-rede Token",
+                            'name' => __("Rede Token", 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-pro-erede-token',
-                            'desc' => __('Secret key associated with your PV', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Secret key associated with your POS.', 'payment-gateway-pix-for-givewp-pro'),
                             'type' => 'password',
                             'attributes' => array(
                                 'block_sub_title' => __('Your Rede Token', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Rede Credentials', 'payment-gateway-pix-for-givewp')
+                                'block_description' => __('Enter the secret key generated for your POS in the Rede portal.', 'payment-gateway-pix-for-givewp')
                             )
                         );
 
