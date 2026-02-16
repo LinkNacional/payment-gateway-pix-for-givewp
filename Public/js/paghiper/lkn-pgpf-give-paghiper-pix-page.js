@@ -22,41 +22,65 @@
 
     const value = formatter.format(lkn_pgpf_paghiper_DON_VALUE)
 
-    const apiUrl = pixPageGlobals.page_url + '/wp-json/pgpfpaghiper/v1/status'
+    const apiUrl = pixPageGlobals.page_url + '/wp-admin/admin-ajax.php'
 
     $(document).ready(function ($) {
       const transactionId = $('#transactionId').val()
       const donationId = $('#donationId').val()
+
+      // Get nonce from global variables
+      const nonce = pixPageGlobals.status_check_nonce || ''
 
       function checkPaymentStatus() {
         if (attempt !== 0) {
           attempt -= 1
         }
         $('.schedule_text').text('Proxima verificação em (N. tentativas ' + attempt + '):')
+        
+        // Data is already base64 encoded from PHP, no need to encode again
+        
+        // Use generic action name for AJAX
+        const actionName = 'pgpf_pix_status_check'
+        
+        // Create FormData
+        const formData = new FormData()
+        formData.append('action', actionName)
+        formData.append('transaction_id', transactionId)
+        formData.append('donation_id', donationId)
+        formData.append('nonce', nonce)
+        
         $.ajax({
           url: apiUrl,
           type: 'POST',
-          headers: {
-            Accept: 'application/json'
-          },
-          data: {
-            transaction_id: transactionId,
-            donationId: pixPageGlobals.donationId
-          },
+          data: formData,
+          processData: false,
+          contentType: false,
           success: function (response) {
-            if (response.status === 'success' || response.status === 'completed' || response.status === 'paid') {
+            if (response.success && (response.data.status === 'success' || response.data.status === 'completed' || response.data.status === 'paid')) {
               clearInterval(paymentTimer)
-              // Cria a nova div estilizada
-              let html = '<div id="pix_success_container" style="display:flex;flex-direction:column;align-items:center;justify-content:center;width:auto;height:auto;">';
-              html += '<div class="pix-success-message" style="text-align:center;font-size:1.2em;color:#28a428;padding:20px 0;">' + (response.status === 'success' ? response.message : 'Pagamento Realizado com sucesso!') + '</div>';
-              if (response.redirect_url) {
-                html += '<button id="pix-receipt-btn" style="margin-top:20px;padding:10px 20px;font-size:16px;background-color:rgb(58,58,58);color:#fff;border:none;border-radius:5px;cursor:pointer;">Ver Recibo do Pagamento</button>';
+              
+              // Cria a nova div de sucesso usando classes CSS
+              let html = '<div id="pix_success_container">';
+              html += '<div class="pix-success-message">' + (response.data.message || 'Pagamento Realizado com sucesso!') + '</div>';
+              if (response.data.redirect_url && response.data.redirect_url.trim() !== '') {
+                html += '<button id="pix-receipt-btn">Ver Recibo do Pagamento</button>';
               }
               html += '</div>';
-              // Insere a nova div abaixo das divs existentes
+              
+              // Encontra o container principal e insere o elemento de sucesso dentro dele
+              var $mainContainer = $('.container_pix').last(); // Pega o último container_pix (onde fica o valor da doação)
               var $copyContainer = $('#copy_container');
               var $qrCodeContainer = $('#pix_page_qr_code');
-              if ($qrCodeContainer.length) {
+              
+              if ($mainContainer.length) {
+                // Insere dentro do container principal, após o span de data
+                var $dateSpan = $mainContainer.find('.span_date');
+                if ($dateSpan.length) {
+                  $dateSpan.after(html);
+                } else {
+                  $mainContainer.append(html);
+                }
+              } else if ($qrCodeContainer.length) {
                 $qrCodeContainer.after(html);
               } else if ($copyContainer.length) {
                 $copyContainer.after(html);
@@ -64,18 +88,23 @@
                 // Se não encontrar, adiciona ao body
                 $('body').append(html);
               }
+              
               // Remove as divs antigas
               $copyContainer.remove();
               $qrCodeContainer.remove();
+              
               // Ajusta o botão de verificação, contador e texto
               var $checkPaymentBtn = $('.payment_check_button');
               $checkPaymentBtn.prop('disabled', true).removeAttr('style');
               $('#timer').text('0s');
               $('.schedule_text').text('Proxima verificação em (N. tentativas 0):');
-              // Adiciona evento ao botão
-              $('#pix-receipt-btn').on('click', function () {
-                window.location.href = response.redirect_url;
-              });
+              
+              // Adiciona evento ao botão de recibo se o redirect_url existe
+              if (response.data.redirect_url && response.data.redirect_url.trim() !== '') {
+                $('#pix-receipt-btn').on('click', function () {
+                  window.location.href = response.data.redirect_url;
+                });
+              }
             }
           },
           error: function (xhr, status, error) {
@@ -87,7 +116,7 @@
       const paymentTimer = setInterval(function () {
         if (firstRequest) {
           firstRequest = false
-          time = 60
+          time = 10
           activeButton = true
         }
 

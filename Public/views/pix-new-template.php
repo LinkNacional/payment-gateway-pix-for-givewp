@@ -30,33 +30,33 @@
         <span
             class="span_total_value"
             id="pix_page_currency_text"
-        >{{currencyTxt}}</span>
-        <span class="span_date">{{dueDateMsg}}</span>
+        ><?php echo esc_html($currencyTxt); ?></span>
+        <span class="span_date"><?php echo esc_html($dueDateMsg); ?></span>
         <div id="copy_container">
             <input
                 type="text"
                 class="input_copy_code"
                 readonly
                 style="border: none; background-color: #D9D9D9;"
-                value="{{donKey}}"
+                value="<?php echo esc_attr($donKey); ?>"
             >
             <input
                 type="hidden"
                 id="transactionId"
-                value="{{transactionId}}"
+                value="<?php echo esc_attr($transactionId); ?>"
             >
 
             <input
                 type="hidden"
                 id="donationId"
-                value="{{donationId}}"
+                value="<?php echo esc_attr($donationId); ?>"
             >
             <button class="button_copy_code">COPIAR</button>
         </div>
         <div id="pix_page_qr_code">
             <img
-                src="{{donQrCode}}"
-                alt="{{qrCodeDesc}}"
+                src="<?php echo esc_url($donQrCode); ?>"
+                alt="<?php echo esc_attr($qrCodeDesc); ?>"
                 class="pix_img"
             >
         </div>
@@ -67,19 +67,9 @@
             style="background-color: transparent"
         >
             <img
-                src="{{filePath}}"
+                src="<?php echo esc_url($filePath); ?>"
                 alt="icon"
             >
         </button>
     </div>
 </div>
-
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        var mainElement = document.querySelector("main");
-        var elementToMove = document.getElementById("pix_new_content");
-        if (mainElement && elementToMove) {
-            mainElement.insertAdjacentElement("afterend", elementToMove);
-        }
-    });
-</script>

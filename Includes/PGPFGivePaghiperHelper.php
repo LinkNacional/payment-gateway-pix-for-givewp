@@ -225,52 +225,6 @@ final class PGPFGivePaghiperHelper
         }
     }
 
-    public static function custom_add_donation_meta_field($payment_id): void
-    {
-        // Recupera um metadado personalizado
-        $custom_field_value = give_get_meta($payment_id);
-        if (isset($custom_field_value["lkn_pgpf_give_paghiper_response"])) {
-            $arr = json_decode($custom_field_value["lkn_pgpf_give_paghiper_response"][0], true);
-            $pix_page_url = esc_url($arr["pix_page"]);
-
-?>
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const adminBox = document.getElementById('give-order-details');
-                    let urlQrCode = new URL('<?php echo esc_js($pix_page_url); ?>');
-                    params = new URLSearchParams(urlQrCode.search);
-
-                    if (adminBox) {
-                        let giveAdminBox = adminBox.getElementsByClassName('give-admin-box-inside');
-                        let qrCode = JSON.parse(atob(params.get('pix')));
-
-                        // Crie a nova div
-                        var newDiv = document.createElement('div');
-                        newDiv.className = 'give-admin-box-inside';
-
-                        // Crie o novo parágrafo
-                        var newP = document.createElement('p');
-                        newP.innerHTML = '<strong><?php echo esc_js(__('PIX Key:', 'payment-gateway-pix-for-givewp')); ?></strong><br><button pixKey="' + qrCode.key + '"><?php echo esc_js(__('Copy PIX Key', 'payment-gateway-pix-for-givewp')); ?></button>';
-
-                        let button = newP.querySelector('button');
-                        button.addEventListener('click', function(event) {
-                            event.preventDefault();
-                            navigator.clipboard.writeText(button.getAttribute('pixKey'));
-                            alert('<?php echo esc_js(__('PIX Key Copied', 'payment-gateway-pix-for-givewp')); ?>');
-                        });
-
-                        // Adicione o parágrafo à nova div
-                        newDiv.appendChild(newP);
-
-                        // Insira a nova div após o segundo elemento com a classe .give-admin-box-inside
-                        giveAdminBox[1].after(newDiv);
-                    }
-                });
-            </script>
-<?php
-        }
-    }
-
     /**
      * Lista todas as páginas do WordPress para uso em selects.
      * @return array [id => título]

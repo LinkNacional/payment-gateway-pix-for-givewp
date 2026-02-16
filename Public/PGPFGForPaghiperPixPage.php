@@ -29,7 +29,7 @@ try {
         $donDueDate = $pixParamsDecoded->date;
         $donDescript = $pixParamsDecoded->title;
         $transactionId = base64_encode($pixParamsDecoded->transactionId);
-        $donationID = base64_encode($pixParamsDecoded->donationId);
+        $donationId = base64_encode($pixParamsDecoded->donationId);
 
         $qrCodeDesc = esc_html__('PIX Key', 'payment-gateway-pix-for-givewp');
         $notice = esc_html__('Pix copy and paste, click on the code below to copy:', 'payment-gateway-pix-for-givewp');
@@ -39,99 +39,38 @@ try {
 
         $dueDateMsg .= $donDueDate;
 
+        // Use a generic nonce that works with REST API
+        $nonce_action = 'pgpf_pix_status_check';
+        $created_nonce = wp_create_nonce($nonce_action);
+        error_log('Nonce criado com action: ' . $nonce_action);
+        error_log('Nonce gerado: ' . $created_nonce);
+
         $pixPageGlobals = array(
             'don_value' => $donValue,
-            'donationId' => $donationID,
-            'page_url' => home_url()
+            'donationId' => $donationId,
+            'page_url' => home_url(),
+            'status_check_nonce' => $created_nonce
         );
 
         wp_localize_script('lkn-pix-page-script-js', 'pixPageGlobals', $pixPageGlobals);
 
-        $html = file_get_contents(plugin_dir_path(__FILE__) . 'views/pix-new-template.html');
+        // Now it's a PHP template, so we can include it directly
         $filePath = plugin_dir_url(__FILE__) . 'assets/icons/share.svg';
 
-        // Substituir placeholders com as variáveis PHP
-        $html = str_replace(
-            array(
-                '{{donDescript}}',
-                '{{donQrCode}}',
-                '{{qrCodeDesc}}',
-                '{{notice}}',
-                '{{donKey}}',
-                '{{transactionId}}',
-                '{{copyMsg}}',
-                '{{currencyTxt}}',
-                '{{dueDateMsg}}',
-                '{{filePath}}',
-                '{{donationId}}'
-            ),
-            array(
-                $donDescript,
-                $donQrCode,
-                $qrCodeDesc,
-                $notice,
-                $donKey,
-                $transactionId,
-                $copyMsg,
-                $currencyTxt,
-                $dueDateMsg,
-                $filePath,
-                $donationID
-            ),
-            $html
-        );
+        // Start output buffering to capture the template output
+        ob_start();
+        include plugin_dir_path(__FILE__) . 'views/pix-new-template.php';
+        $html = ob_get_clean();
+        
         //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $html;
     } else {
         throw new Exception("Erro", 1);
     }
 } catch (Exception $err) {
-    $html = "
-    <style>
-        #message-box {
-
-            display:flex;
-            justify-content:center;
-
-
-        }
-        #message-box p {
-
-            width:20dvw;
-               background-color: #ff4c4c; /* Cor de fundo do quadro */
-            color: #fff; /* Cor do texto */
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-       font-size: 18px;
-            font-weight: bold;
-            text-align:center;
-
-
-        }
-    </style>
-    <div id=\"message-box\">
-        <p>Falha na geração do QR Code</p>
-    </div>
-
-
-    <script>
-document.addEventListener(\"DOMContentLoaded\", function() {
-    // Seleciona o elemento main e o elemento a ser movido
-    var mainElement = document.querySelector(\"main\");
-    var elementToMove = document.getElementById(\"message-box\");
-
-    // Move o elemento para logo após o main
-    if (mainElement && elementToMove) {
-        mainElement.insertAdjacentElement(\"afterend\", elementToMove);
-    }
-});
-
-
-    </script>
-
-
-    ";
-    //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-    echo $html;
+    // Enqueue CSS for error message
+    wp_enqueue_style("lkn-pix-page-css", PGPFG_PIX_PLUGIN_URL . "Public/css/lkn-pgpf-give-paghiper-public.css", array(), PGPFG_PIX_PLUGIN_VERSION);
+    
+    // Include error template
+    include plugin_dir_path(__FILE__) . 'views/pix-error-template.php';
 }

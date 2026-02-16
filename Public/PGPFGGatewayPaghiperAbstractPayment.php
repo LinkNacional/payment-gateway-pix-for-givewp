@@ -366,13 +366,6 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 $donation->status = DonationStatus::PENDING();
                 $donation->save();
 
-                if (isset($gatewayData["is_multi"])) {
-                    echo '<script type="text/javascript">';
-                    echo 'window.top.location.href = "' . esc_js($dir) . '";';
-                    echo '</script>';
-                    exit();
-                }
-
                 return new RedirectOffsite($dir);
             }
             if ('lkn-pgpf-give-paghiper-slip' === $donGateway) {
