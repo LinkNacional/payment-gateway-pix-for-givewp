@@ -334,9 +334,7 @@ final class PGPFGForGivewp
 
         // Verify donation exists and is valid
         $donation_post = get_post($donation_id);
-        error_log(print_r($donation_post->post_type, true));
         if (!$donation_post || $donation_post->post_type !== 'give_payment') {
-            error_log('Doação não encontrada para ID: ' . $donation_id);
             wp_send_json_error('Doação não encontrada.', 404);
             return;
         }
@@ -379,8 +377,6 @@ final class PGPFGForGivewp
 
         $response = wp_remote_post($url, $args);
 
-        error_log(json_encode($response));
-
         if (is_wp_error($response)) {
             wp_send_json_error($response->get_error_message(), 500);
             return;
@@ -395,7 +391,6 @@ final class PGPFGForGivewp
         
         if (isset($data['status_request']['status'])) {
             $status_raw = strtolower($data['status_request']['status']);
-            $status_raw = 'paid';
             if ($status_raw === 'completed' || $status_raw === 'paid' || $status_raw === 'success') {
                 $status = 'success';
                 $message = 'Pagamento Realizado com sucesso!';

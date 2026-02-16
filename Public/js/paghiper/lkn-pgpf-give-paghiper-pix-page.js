@@ -116,7 +116,7 @@
       const paymentTimer = setInterval(function () {
         if (firstRequest) {
           firstRequest = false
-          time = 10
+          time = 60
           activeButton = true
         }
 

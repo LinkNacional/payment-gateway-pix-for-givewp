@@ -42,8 +42,6 @@ try {
         // Use a generic nonce that works with REST API
         $nonce_action = 'pgpf_pix_status_check';
         $created_nonce = wp_create_nonce($nonce_action);
-        error_log('Nonce criado com action: ' . $nonce_action);
-        error_log('Nonce gerado: ' . $created_nonce);
 
         $pixPageGlobals = array(
             'don_value' => $donValue,
