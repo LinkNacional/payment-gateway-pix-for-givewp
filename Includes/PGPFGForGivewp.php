@@ -2,6 +2,8 @@
 
 namespace Pgpfg\PGPFGForGivewp\Includes;
 
+ if ( ! defined( 'ABSPATH' ) ) exit;
+
 use Exception;
 use Pgpfg\PGPFGForGivewp\Admin\PGPFGForGivewpAdmin;
 use Pgpfg\PGPFGForGivewp\PublicView\PGPFGForGivewpPublic;
@@ -315,13 +317,18 @@ final class PGPFGForGivewp
      */
     public function get_paghipder_pix_status()
     {
+        // Sanitize and unslash POST data
+        $nonce = isset($_POST['nonce']) ? sanitize_text_field(wp_unslash($_POST['nonce'])) : '';
+        $transaction_id_raw = isset($_POST['transaction_id']) ? sanitize_text_field(wp_unslash($_POST['transaction_id'])) : '';
+        $donation_id_raw = isset($_POST['donation_id']) ? sanitize_text_field(wp_unslash($_POST['donation_id'])) : '';
+
         // Verify nonce
-        if (!wp_verify_nonce($_POST['nonce'], 'pgpf_pix_status_check')) {
+        if (!wp_verify_nonce($nonce, 'pgpf_pix_status_check')) {
             wp_die('Nonce inválido', 'Erro de Segurança', array('response' => 403));
         }
 
-        $transaction_id = base64_decode(sanitize_text_field($_POST['transaction_id']));
-        $donation_id = base64_decode(sanitize_text_field($_POST['donation_id']));
+        $transaction_id = base64_decode($transaction_id_raw);
+        $donation_id = base64_decode($donation_id_raw);
         
         if (empty($transaction_id)) {
             wp_send_json_error('O parâmetro transaction_id é obrigatório.', 400);

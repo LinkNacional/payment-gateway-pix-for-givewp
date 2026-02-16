@@ -9,6 +9,8 @@
 
 namespace Pgpfg\PGPFGForGivewp\PublicView;
 
+if ( ! defined( 'ABSPATH' ) ) exit;
+
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGivePaghiperHelper;
 
 /**

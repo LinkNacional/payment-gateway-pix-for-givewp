@@ -1,5 +1,8 @@
 <?php
-//LknGivePaghiperPixPage PGPFGForPaghiperPixPage
+
+namespace Pgpfg\PGPFGForGivewp\PublicView;
+
+if ( ! defined( 'ABSPATH' ) ) exit;
 
 /**
  * The file that defines the Pix Payment Page.
