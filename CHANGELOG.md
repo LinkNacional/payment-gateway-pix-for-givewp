@@ -1,3 +1,7 @@
+# 2.2.4 16/02/2026
+* Correção de segurança na rota de status do PagHiper.
+* Ajustes para se adequar aos padrões do WordPress.
+
 # 2.2.3 12/12/2025
 * Correção na pagina de recibo com shortecode PagHyper
 

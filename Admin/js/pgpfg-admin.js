@@ -58,7 +58,8 @@ const { __ } = wp.i18n;
       lknCieloNoticeDiv.innerHTML = '<a  href="https://www.linknacional.com.br/wordpress/" target="_blank" style="text-decoration:none; display: block;padding: 10px;">' + __('WordPress Maintenance and Support!', 'payment-gateway-pix-for-givewp') + '</a>'
 
       if (giveForm && lknCieloNoticeDiv) {
-        giveForm.after(noticeDiv)
+        const parent = giveForm.closest('div#pgpfgSettingsFlexContainer')
+        parent.after(noticeDiv)
         noticeDiv.after(lknCieloNoticeDiv)
 
         const linkInNoticeDiv = noticeDiv.getElementsByTagName('a')
@@ -134,5 +135,114 @@ const { __ } = wp.i18n;
         })
       return result
     }
+
+    function createFeatureMessage(iconText, messageLines) {
+      const featureMessage = document.createElement('div');
+      featureMessage.className = 'custom-feature-message';
+
+      // Adiciona o ícone de informação
+      const infoIcon = document.createElement('span');
+      infoIcon.className = 'feature-icon';
+      infoIcon.textContent = iconText;
+
+      // Adiciona o texto da mensagem
+      const textContainer = document.createElement('div');
+      textContainer.className = 'feature-text-container';
+
+      // Adiciona as linhas de texto
+      messageLines.forEach(line => {
+        const messageLine = document.createElement('span');
+        messageLine.className = 'feature-text-line';
+        messageLine.innerHTML = line;
+        textContainer.appendChild(messageLine);
+      });
+
+      // Adiciona o ícone e o texto ao componente de mensagem
+      featureMessage.appendChild(infoIcon);
+      featureMessage.appendChild(textContainer);
+
+      return featureMessage;
+    }
+    const featureMessage1 = createFeatureMessage('✔️', [
+      '<strong>ATUALIZADO:</strong> Fluxo de pagamento otimizado. Cada etapa foi refinada para proporcionar uma experiência mais suave e rápida aos seus doadores.'
+    ]);
+
+    // Cria o segundo bloco de mensagem
+    const featureMessage2 = createFeatureMessage('✔️', [
+      '<strong>NOVO:</strong> Opção de gerar o pix na tela de agradecimento, permitindo que os doadores concluam o pagamento mesmo após sair da página de checkout.'
+    ]);
+
+    const featureMessage3 = createFeatureMessage('✔️', [
+      '<strong>NOVO:</strong> Webhook para Gateways: Rede, Cielo e Banco do Brasil. Mais segurança e confiabilidade na confirmação dos pagamentos.'
+    ]);
+    const flexWrapper = document.getElementsByClassName('lkn-card-container')[0];
+    flexWrapper.appendChild(featureMessage1);
+    flexWrapper.appendChild(featureMessage2);
+    flexWrapper.appendChild(featureMessage3);
+
+    /* Cartão Promocional Link Nacional*/
+    const cardPromo = document.createElement('div');
+    cardPromo.className = 'woo-better-promotional-card';
+
+    const cardPromoBackground = document.createElement('div');
+    cardPromoBackground.className = 'promotional-card-background-decor';
+    cardPromo.appendChild(cardPromoBackground);
+
+    const cardPromoContent = document.createElement('div');
+    cardPromoContent.className = 'promotional-card-content';
+
+    // Título do plugin
+    const cardPromoTitle = document.createElement('h3');
+    cardPromoTitle.className = 'promotional-card-title';
+    cardPromoTitle.textContent = 'Turbine o GiveWP com Plugins';
+
+    // Traço decorativo
+    const titlePromoDivider = document.createElement('hr');
+    titlePromoDivider.className = 'promotional-card-title-divider';
+    titlePromoDivider.style.cssText = 'width: 100%; height: 1px; background: white; border: none; margin: 8px 0 16px 0;';
+
+    // Descrição do plugin
+    const cardPromoDescription = document.createElement('p');
+    cardPromoDescription.className = 'promotional-card-description';
+    cardPromoDescription.textContent = 'Leve suas doações para o próximo nível com soluções completas. Aceite PagSeguro, Mercado Pago, Criptomoedas e PIX. Ofereça suporte a multimoedas e muito mais, tudo integrado diretamente ao seu WordPress!';
+
+    // Container dos botões
+    const buttonsContainer = document.createElement('div');
+    buttonsContainer.className = 'promotional-card-buttons';
+
+    // Botão Saiba mais (sempre presente)
+    const learnMoreButton = document.createElement('button');
+    learnMoreButton.className = 'promotional-card-button learn-more';
+    learnMoreButton.textContent = 'Saiba mais';
+
+    const installButton = document.createElement('button');
+    installButton.className = 'promotional-card-button install';
+    installButton.textContent = 'Suporte';
+
+    installButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open('https://www.linknacional.com.br/wordpress/', '_blank');
+    });
+
+    buttonsContainer.appendChild(installButton);
+
+    learnMoreButton.addEventListener('click', function (e) {
+      e.preventDefault();
+      e.stopPropagation();
+      window.open('https://www.linknacional.com.br/wordpress/givewp/', '_blank');
+    });
+
+    buttonsContainer.appendChild(learnMoreButton);
+
+    // Monta o conteúdo do cartão
+    cardPromoContent.appendChild(cardPromoTitle);
+    cardPromoContent.appendChild(titlePromoDivider);
+    cardPromoContent.appendChild(cardPromoDescription);
+    cardPromoContent.appendChild(buttonsContainer);
+    cardPromo.appendChild(cardPromoContent);
+
+    // Adiciona o cartão promocional ao container
+    flexWrapper.appendChild(cardPromo);
   })
 })(jQuery)

@@ -5,37 +5,81 @@
   const LKN_SLIP_CPF_CNPJ_TOOLTIP = bolGlobals.cpf_cnpj_tooltip
   const LKN_SLIP_ASTR_SYMB = bolGlobals.astr_symbol
   const LKN_SLIP_FEE = bolGlobals.bol_fee
-  function lknSlipMaskCPFCNPJ(inputHTML) {
-    let cpfCnpjInput = inputHTML.target.value.replace(/\D/gmi, '')
-    const cpfCnpjArr = cpfCnpjInput.split('')
-    const resultArr = []
-    const typeInput = cpfCnpjInput.length > 11 ? 'CNPJ' : 'CPF'
-    for (let c = 0; c < cpfCnpjInput.length; c++) {
-      resultArr.push(cpfCnpjArr[c])
-      if (typeInput === 'CPF') {
-        if (c % 9 === 8) {
-          resultArr.push('-')
-        } else if (c % 3 === 2) {
-          resultArr.push('.')
-        }
-      } else {
-        if (c === 1) {
-          resultArr.push('.')
-        } else if (c === 4) {
-          resultArr.push('.')
-        } else if (c === 7) {
-          resultArr.push('/')
-        } else if (c === 11) {
-          resultArr.push('-')
-        }
-      }
-    }
-    cpfCnpjInput = resultArr.join('')
-    inputHTML.target.value = cpfCnpjInput
+  function lknSlipEraseFormat(inputText) {
+    inputText.value = inputText.value.replace(/(\.|\/|\-)/g, "");
   }
-  ;
-  function lknSlipFormatNumbers(inputHTML) {
-    inputHTML.target.value = inputHTML.target.value.replace(/\D/gmi, '')
+
+  function lknSlipFormatInput(textInput) {
+    textInput.value = textInput.value.replace(/\D/g, '');
+    if (textInput.value.length <= 11) {
+      textInput.value = lknSlipMaskCpf(textInput.value);
+    } else {
+      textInput.value = lknSlipMaskCnpj(textInput.value);
+    }
+  }
+
+  function lknSlipMaskCpf(cpfText) {
+    return cpfText.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/g, "$1.$2.$3-$4");
+  }
+
+  function lknSlipMaskCnpj(cnpjText) {
+    return cnpjText.replace(/(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})/g, "$1.$2.$3/$4-$5");
+  }
+
+  function lknSlipValidateCPF(cpf) {
+    cpf = cpf.replace(/\D/g, '');
+    if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) return false;
+
+    let sum = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += parseInt(cpf.charAt(i)) * (10 - i);
+    }
+    let remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    if (remainder !== parseInt(cpf.charAt(9))) return false;
+
+    sum = 0;
+    for (let i = 0; i < 10; i++) {
+      sum += parseInt(cpf.charAt(i)) * (11 - i);
+    }
+    remainder = (sum * 10) % 11;
+    if (remainder === 10 || remainder === 11) remainder = 0;
+    return remainder === parseInt(cpf.charAt(10));
+  }
+
+  function lknSlipValidateCNPJ(cnpj) {
+    cnpj = cnpj.replace(/\D/g, '');
+    if (cnpj.length !== 14 || /^(\d)\1+$/.test(cnpj)) return false;
+
+    let sum = 0;
+    let weight = 2;
+    for (let i = 11; i >= 0; i--) {
+      sum += parseInt(cnpj.charAt(i)) * weight;
+      weight = weight === 9 ? 2 : weight + 1;
+    }
+    let remainder = sum % 11;
+    let digit1 = remainder < 2 ? 0 : 11 - remainder;
+    if (parseInt(cnpj.charAt(12)) !== digit1) return false;
+
+    sum = 0;
+    weight = 2;
+    for (let i = 12; i >= 0; i--) {
+      sum += parseInt(cnpj.charAt(i)) * weight;
+      weight = weight === 9 ? 2 : weight + 1;
+    }
+    remainder = sum % 11;
+    let digit2 = remainder < 2 ? 0 : 11 - remainder;
+    return parseInt(cnpj.charAt(13)) === digit2;
+  }
+
+  function lknSlipIsValidIdenty(identy) {
+    const cleanIdenty = identy.replace(/\D/g, '');
+    if (cleanIdenty.length === 11) {
+      return lknSlipValidateCPF(cleanIdenty);
+    } else if (cleanIdenty.length === 14) {
+      return lknSlipValidateCNPJ(cleanIdenty);
+    }
+    return false;
   }
   ;
   const lknSlipElementWithTooltip = props => {
@@ -98,13 +142,24 @@
       placeholder: LKN_SLIP_CPF_CNPJ_LABEL,
       required: 'true',
       'aria-required': 'true',
-      maxlength: '20',
+      maxlength: '18',
       style: {
         fontSize: '16px'
       },
-      onInput: e => lknSlipFormatNumbers(e),
-      onBlur: e => {
-        lknSlipMaskCPFCNPJ(e)
+      onFocus: e => {
+        lknSlipEraseFormat(e.target);
+      },
+      onChange: e => {
+        lknSlipFormatInput(e.target);
+        if (props.onInputChange) {
+          props.onInputChange(e.target.value);
+        }
+      },
+      onInput: e => {
+        e.target.value = e.target.value.replace(/\D/g, '');
+        if (props.onInputChange) {
+          props.onInputChange(e.target.value);
+        }
       }
     })))
   }
@@ -140,6 +195,16 @@
     async beforeCreatePayment(values) {
       const cpfCnpjField = document.querySelectorAll('#lkn_pgpf_give_paghiper_primary_document')[0]
       const cpfCnpj = cpfCnpjField.value
+
+      // Validar CPF/CNPJ antes de enviar
+      if (!lknSlipIsValidIdenty(cpfCnpj)) {
+        // Definir erro na UI ao invés de lançar exceção
+        if (window.setSlipError) {
+          window.setSlipError('CPF/CNPJ Inválido! Tente novamente.');
+        }
+        throw new Error('CPF/CNPJ inválido!')
+      }
+
       values.cpfCnpj = cpfCnpj
 
       // Example of validation.
@@ -154,11 +219,39 @@
     async afterCreatePayment(response) { },
     // Function that handle the HTML form elements.
     Fields() {
+      const [showMessage, setShowMessage] = React.useState(false)
+      const [hasError, setHasError] = React.useState(false)
+      const [errorMessage, setErrorMessage] = React.useState('')
+
+      // Expor função para definir erro externamente
+      React.useEffect(() => {
+        window.setSlipError = (message) => {
+          setHasError(true);
+          setErrorMessage(message);
+          setShowMessage(false);
+        };
+        return () => {
+          delete window.setSlipError;
+        };
+      }, []);
+
       const BolFeeInfo = React.createElement(FeeInfoElement)
       const PrimaryDocumentInput = React.createElement(lknSlipElementWithTooltip, {
         title: LKN_SLIP_CPF_CNPJ_TOOLTIP,
         tooltipClass: 'lkn_cpf_cnpj_tooltip',
-        margin: '-45px'
+        margin: '-45px',
+        onInputChange: (value) => {
+          const cleanValue = value.replace(/\D/g, '');
+
+          // Limpar erro quando usuário alterar o input
+          if (hasError) {
+            setHasError(false);
+            setErrorMessage('');
+          }
+
+          // Mostrar mensagem apenas se tiver tamanho correto (não validar aqui)
+          setShowMessage(cleanValue.length === 11 || cleanValue.length === 14);
+        }
       })
       return /* #__PURE__ */React.createElement('fieldset', {
         className: 'no-fields'
@@ -188,7 +281,23 @@
           fontSize: '14px',
           marginTop: '30px'
         }
-      }, ' ' + LKN_SLIP_CPF_CNPJ_LABEL + ' ' + LKN_SLIP_ASTR_SYMB, PrimaryDocumentInput))))
+      }, ' ' + LKN_SLIP_CPF_CNPJ_LABEL + ' ' + LKN_SLIP_ASTR_SYMB, PrimaryDocumentInput), showMessage && /* #__PURE__ */React.createElement('p', {
+        style: {
+          textAlign: 'center',
+          marginTop: '15px',
+          color: '#415462',
+          fontSize: '14px',
+          fontWeight: 'bold'
+        }
+      }, 'Clique em "Doar Agora" para gerar o Boleto'), hasError && /* #__PURE__ */React.createElement('p', {
+        style: {
+          textAlign: 'center',
+          marginTop: '15px',
+          color: '#d63384',
+          fontSize: '14px',
+          fontWeight: 'bold'
+        }
+      }, errorMessage))))
     }
   }
   window.givewp.gateways.register(LknBolGateway)

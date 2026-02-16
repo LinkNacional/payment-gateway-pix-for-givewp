@@ -102,7 +102,7 @@ final class PGPFGPaghiperSlip extends PGPFGGatewayPaghiperAbstractPayment
 
         wp_register_script(
             self::id() . 'slip-script',
-            plugin_dir_url(__FILE__) . '/js/slip-script.js',
+            plugin_dir_url(__FILE__) . '/js/paghiper/slip-script.js',
             array('wp-element', 'wp-i18n'),
             PGPFG_PIX_PLUGIN_VERSION,
             true
