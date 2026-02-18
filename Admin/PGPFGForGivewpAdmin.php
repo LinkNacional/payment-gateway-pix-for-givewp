@@ -682,7 +682,15 @@ final class PGPFGForGivewpAdmin
          * between the defined hooks and the functions defined in this
          * class.
          */
-        wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/pgpfg-admin.css', array(), $this->version, 'all');
+
+        $is_plugin_settings_page = (
+            isset($_GET['page']) && $_GET['page'] === 'give-settings' &&
+            isset($_GET['section']) && $_GET['section'] === 'lkn-payment-pix'
+        );
+
+        if($is_plugin_settings_page) {
+            wp_enqueue_style($this->plugin_name, plugin_dir_url(__FILE__) . 'css/pgpfg-admin.css', array(), $this->version, 'all');
+        }
     }
 
     /**
@@ -703,39 +711,48 @@ final class PGPFGForGivewpAdmin
          * between the defined hooks and the functions defined in this
          * class.
          */
-        wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pgpfg-admin.js', array('jquery', 'wp-i18n'), $this->version, false);
-        wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PGPFG_PIX_LANGUAGE_DIR);
-
-        $logPath = give_get_option('pgpfg_for_givewp_last_log_url');
-        $wp_error = false;
-        $remote = null;
-        if (false !== $logPath) {
-            $remote = wp_remote_get($logPath);
-
-            if (gettype($remote) === gettype(new WP_Error())) {
-                PGPFGHelperClass::log(
-                    'info',
-                    array(
-                        'Remote Response' => $remote,
-                        'log url' => $logPath,
-                        'log path' => give_get_option('pgpfg_for_givewp_last_log')
-                    )
-                );
-
-                $wp_error = $remote;
-            }
-        }
-        $logContents = wp_remote_retrieve_body($remote);
-
-        wp_localize_script(
-            $this->plugin_name,
-            'lknAttr',
-            array(
-                'logContents' => ($wp_error ? wp_json_encode(array(
-                    'Error' => 'Error retrieving log'
-                ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) : $logContents)
-            )
+        
+        // Verificar se estamos na página específica do plugin
+        $is_plugin_settings_page = (
+            isset($_GET['page']) && $_GET['page'] === 'give-settings' &&
+            isset($_GET['section']) && $_GET['section'] === 'lkn-payment-pix'
         );
+
+        if ($is_plugin_settings_page) {
+            wp_enqueue_script($this->plugin_name, plugin_dir_url(__FILE__) . 'js/pgpfg-admin.js', array('jquery', 'wp-i18n'), $this->version, false);
+            wp_set_script_translations($this->plugin_name, 'payment-gateway-pix-for-givewp', PGPFG_PIX_LANGUAGE_DIR);
+
+            $logPath = give_get_option('pgpfg_for_givewp_last_log_url');
+            $wp_error = false;
+            $remote = null;
+            if (false !== $logPath) {
+                $remote = wp_remote_get($logPath);
+
+                if (gettype($remote) === gettype(new WP_Error())) {
+                    PGPFGHelperClass::log(
+                        'info',
+                        array(
+                            'Remote Response' => $remote,
+                            'log url' => $logPath,
+                            'log path' => give_get_option('pgpfg_for_givewp_last_log')
+                        )
+                    );
+
+                    $wp_error = $remote;
+                }
+            }
+            $logContents = wp_remote_retrieve_body($remote);
+
+            wp_localize_script(
+                $this->plugin_name,
+                'lknAttr',
+                array(
+                    'logContents' => ($wp_error ? wp_json_encode(array(
+                        'Error' => 'Error retrieving log'
+                    ), JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) : $logContents)
+                )
+            );
+        }
     }
 
     /**
