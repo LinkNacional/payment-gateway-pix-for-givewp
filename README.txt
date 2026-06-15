@@ -22,6 +22,12 @@ Streamline your donation process and expand your reach to Brazilian donors by in
 JS Libraries used:
 [QR Code JS by davidshimjs](https://github.com/davidshimjs/qrcodejs)
 
+**Support & More Plugins**
+
+For support or questions, visit our website at [Link Nacional](https://www.linknacional.com) or contact us at contato@linknacional.com.
+
+Explore our other WordPress plugins for GiveWP at [Link Nacional — GiveWP Solutions](https://www.linknacional.com.br/wordpress/givewp/).
+
 **Features**
  * Boost Donations: Offer your Brazilian donors their preferred payment method, leading to increased contribution amounts and conversion rates.
  * Skip the Fees: Ditch hefty credit card processing fees and embrace the lower costs of PIX transactions.
