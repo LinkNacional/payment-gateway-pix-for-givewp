@@ -1,11 +1,14 @@
-# 2.2.4 16/02/2026
+# 2.2.5 - 15/06/2026
+* Novo: Ícones e Banners.
+
+# 2.2.4 - 16/02/2026
 * Correção de segurança na rota de status do PagHiper.
 * Ajustes para se adequar aos padrões do WordPress.
 
-# 2.2.3 12/12/2025
+# 2.2.3 - 12/12/2025
 * Correção na pagina de recibo com shortecode PagHyper
 
-# 2.2.2 05/09/2025
+# 2.2.2 - 05/09/2025
 * Correção nos textos e na tradução do plugin.
 
 # 2.2.1 - 30/07/2025
