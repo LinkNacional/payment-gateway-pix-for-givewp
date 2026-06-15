@@ -1,5 +1,6 @@
 # 2.2.5 - 15/06/2026
 * Novo: Ícones e Banners.
+* Novo: versão do PHP.
 
 # 2.2.4 - 16/02/2026
 * Correção de segurança na rota de status do PagHiper.
