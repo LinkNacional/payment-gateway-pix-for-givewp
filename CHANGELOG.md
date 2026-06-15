@@ -1,3 +1,6 @@
+# 2.2.6 - 15/06/2026
+* Ajuste: Documentação.
+
 # 2.2.5 - 15/06/2026
 * Novo: Ícones e Banners.
 * Novo: versão do PHP.

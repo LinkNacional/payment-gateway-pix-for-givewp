@@ -4,7 +4,7 @@ Donate link: https://www.linknacional.com.br/
 Tags: gateway, payments, givewp, pix, give
 Requires at least: 6.0
 Tested up to: 6.9
-Stable tag: 2.2.5
+Stable tag: 2.2.6
 Requires PHP: 8.2
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -21,6 +21,12 @@ Streamline your donation process and expand your reach to Brazilian donors by in
 
 JS Libraries used:
 [QR Code JS by davidshimjs](https://github.com/davidshimjs/qrcodejs)
+
+**Support & More Plugins**
+
+For support or questions, visit our website at [Link Nacional](https://www.linknacional.com) or contact us at contato@linknacional.com.
+
+Explore our other WordPress plugins for GiveWP at [Link Nacional — GiveWP Solutions](https://www.linknacional.com.br/wordpress/givewp/).
 
 **Features**
  * Boost Donations: Offer your Brazilian donors their preferred payment method, leading to increased contribution amounts and conversion rates.
@@ -62,10 +68,14 @@ The Payment Gateway Pix for GiveWP is now activated.
 
 == Screenshots ==
 
- 1. Settings page
- 2. Form view (donate to us)
+1. New plugin settings page.
+2. CPF/CNPJ Checkout field.
+3. Pix Template.
 
 == Changelog ==
+= 2.2.6 - 15/06/2026 =
+* Adjust: Documentation.
+
 = 2.2.5 - 15/06/2026 =
 * New: Icons and Banners.
 * New: PHP version.
@@ -124,6 +134,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 * Added debug mode for advanced users.
 
 == Upgrade Notice ==
+= 2.2.6 - 15/06/2026 =
+* Adjust: Documentation.
+
 = 2.2.5 - 15/06/2026 =
 * New: Icons and Banners.
 * New: PHP version.
