@@ -66,6 +66,9 @@ The Payment Gateway Pix for GiveWP is now activated.
  2. Form view (donate to us)
 
 == Changelog ==
+= 2.2.5 - 15/06/2026 =
+* New: Icons and Banners.
+
 = 2.2.4 - 16/02/2026 =
 * Security fix on the PagHiper status route.
 * Adjustments to comply with WordPress standards.
@@ -120,6 +123,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 * Added debug mode for advanced users.
 
 == Upgrade Notice ==
+= 2.2.5 - 15/06/2026 =
+* New: Icons and Banners.
+
 = 2.2.4 - 16/02/2026 =
 * Security fix on the PagHiper status route.
 * Adjustments to comply with WordPress standards.
