@@ -68,8 +68,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 
 == Screenshots ==
 
- 1. Settings page
- 2. Form view (donate to us)
+1. New plugin settings page.
+2. CPF/CNPJ Checkout field.
+3. Pix Template.
 
 == Changelog ==
 = 2.2.6 - 15/06/2026 =
