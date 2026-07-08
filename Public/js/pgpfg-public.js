@@ -39,6 +39,16 @@
     return hex
   }
 
+  function parseLocalizedAmount(raw) {
+    const cleaned = raw.replace(/[^\d,.]/g, '')
+    const match = cleaned.match(/^(.*)[.,](\d{2})$/)
+    if (match) {
+      const integerPart = match[1].replace(/[.,]/g, '')
+      return parseFloat(integerPart + '.' + match[2]).toFixed(2)
+    }
+    return parseFloat(cleaned.replace(/[.,]/g, '') || '0').toFixed(2)
+  }
+
   function lknPixGiveWPPixBuilder(amount = '') {
     amount = amount === 'NaN' ? '' : amount
 
@@ -105,19 +115,20 @@
       }
       btn.style.display = 'block'
 
-      let strAux
+      let raw
       switch (lknPixGiveWPFormType) {
         case 'legacy':
-          strAux = document.querySelector('.give-final-total-amount').textContent.split(',')
+          raw = document.querySelector('.give-final-total-amount').textContent
           break
         case 'classic':
-          strAux = lknPixGiveWPIframe.contents().find('[data-tag="total"]').text().split(',')
+          raw = lknPixGiveWPIframe.contents().find('[data-tag="total"]').text()
           break
         default:
+          raw = ''
           break
       }
 
-      const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+      const amount = parseLocalizedAmount(raw)
 
       lknPixGiveWPResult = lknPixGiveWPPixBuilder(amount)
       lknPixGiveWPIframe.contents().find('p[id="pix"]').html(lknPixGiveWPResult)

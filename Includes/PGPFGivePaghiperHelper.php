@@ -185,8 +185,10 @@ final class PGPFGivePaghiperHelper
         $configs["teste"] = trim(give_get_option("lkn_pgpf_paghiper_select_template_pix"));
 
         $configs['expDate'] = preg_replace('/\D/', '', give_get_option('lkn_pgpf_paghiper_due_date_setting_field'));
-        $configs['bolFee'] = preg_replace('/[^0-9.]/', '', give_get_option('lkn_pgpf_paghiper_fee_bol_setting_field'));
-        $configs['pixFee'] = preg_replace('/[^0-9.]/', '', give_get_option('lkn_pgpf_paghiper_fee_pix_setting_field'));
+        $configs['bolFee'] = preg_replace('/[^0-9.,]/', '', give_get_option('lkn_pgpf_paghiper_fee_bol_setting_field'));
+        $configs['bolFee'] = str_replace(',', '.', $configs['bolFee']);
+        $configs['pixFee'] = preg_replace('/[^0-9.,]/', '', give_get_option('lkn_pgpf_paghiper_fee_pix_setting_field'));
+        $configs['pixFee'] = str_replace(',', '.', $configs['pixFee']);
         $configs['description'] = trim(give_get_option('lkn_pgpf_paghiper_desc_setting_field', 'Doação'));
 
         return $configs;
