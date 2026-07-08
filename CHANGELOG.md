@@ -1,3 +1,6 @@
+# 2.2.7 - 08/07/2026
+* Ajuste: Correção na formatação do valor da doação em navegadores configurados em inglês.
+
 # 2.2.6 - 15/06/2026
 * Ajuste: Documentação.
 

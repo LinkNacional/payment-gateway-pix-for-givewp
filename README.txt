@@ -73,6 +73,9 @@ The Payment Gateway Pix for GiveWP is now activated.
 3. Pix Template.
 
 == Changelog ==
+= 2.2.6 - 08/07/2026 =
+* Fix: Corrected donation amount formatting for browsers set to English.
+
 = 2.2.6 - 15/06/2026 =
 * Adjust: Documentation.
 
