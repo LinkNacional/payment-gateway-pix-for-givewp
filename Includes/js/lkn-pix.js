@@ -22,6 +22,15 @@ function lknPGPFGGiveWPCrcChecksum(string) {
   hex = parseInt(hex, 10).toString(16).toUpperCase().padStart(4, '0')
   return hex
 }
+function parseLocalizedAmount(raw) {
+  const cleaned = raw.replace(/[^\d,.]/g, '')
+  const match = cleaned.match(/^(.*)[.,](\d{2})$/)
+  if (match) {
+    const integerPart = match[1].replace(/[.,]/g, '')
+    return parseFloat(integerPart + '.' + match[2]).toFixed(2)
+  }
+  return parseFloat(cleaned.replace(/[.,]/g, '') || '0').toFixed(2)
+}
 function lknPGPFGGiveWPPixBuilder(amount = '') {
   const pixType = lknAttr.pixType
   const pixKey = lknAttr.pixKey
@@ -134,8 +143,8 @@ const lknGatewayPix = {
       name: 'amount'
     })
     useEffect(() => {
-      const strAux = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML.split(',')
-      const amount = parseFloat(strAux[0].replace(/[\D]+/g, '') + '.' + strAux[1]).toFixed(2)
+      const raw = document.querySelector('.givewp-elements-donationSummary__list__item__value').innerHTML
+      const amount = parseLocalizedAmount(raw)
       setPix(lknPGPFGGiveWPPixBuilder(amount))
       if (document.getElementById('qr') !== undefined) {
         document.getElementById('qr').innerHTML = ''
