@@ -67,7 +67,7 @@ if (defined('PAYMENT_GATEWAY_PIX_FOR_GIVEWP_PRO_VERSION')) {
                     </a>
                 </div>
                 <div class="pgpfgContactLinks">
-                    <a href="https://chat.whatsapp.com/IjzHhDXwmzGLDnBfOibJKO" target="_blank" class="contact-link">
+                    <a href="https://chat.whatsapp.com/C6S3my9Adr818hbeJphPBm" target="_blank" class="contact-link">
                         <img src="<?php echo esc_url($plugin_url . 'Admin/images/whatsapp-icon.svg'); ?>" alt="WhatsApp Icon" class="contact-icon">
                     </a>
                     <a href="https://t.me/wpprobr" target="_blank" class="contact-link">
