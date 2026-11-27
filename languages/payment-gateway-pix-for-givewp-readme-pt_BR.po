@@ -1,0 +1,335 @@
+# Translation of Plugins - Payment Gateway Pix For GiveWP - Stable Readme (latest release) in Portuguese (Brazil)
+# This file is distributed under the same license as the Plugins - Payment Gateway Pix For GiveWP - Stable Readme (latest release) package.
+msgid ""
+msgstr ""
+"PO-Revision-Date: 2025-09-01 18:41:14+0000\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"X-Generator: GlotPress/4.1.0\n"
+"Language: pt_BR\n"
+"Project-Id-Version: Plugins - Payment Gateway Pix For GiveWP - Stable Readme (latest release)\n"
+
+#. Short description.
+#, gp-priority: high
+msgid "Add Pix Payment Gateway for GiveWP"
+msgstr "Adicione o Gateway de Pagamento Pix ao GiveWP"
+
+#. Plugin name.
+#, gp-priority: high
+msgid "Payment Gateway Pix For GiveWP"
+msgstr "Doação Pagamento Pix para Give WP"
+
+#. Found in description paragraph.
+msgid "Explore our other WordPress plugins for GiveWP at <a href=\"https://www.linknacional.com.br/wordpress/givewp/\">Link Nacional — GiveWP Solutions</a>."
+msgstr "Conheça nossos outros plugins para GiveWP em <a href=\"https://www.linknacional.com.br/wordpress/givewp/\">Link Nacional — Soluções GiveWP</a>."
+
+#. Found in description paragraph.
+msgid "For support or questions, visit our website at <a href=\"https://www.linknacional.com\">Link Nacional</a> or contact us at contato@linknacional.com."
+msgstr "Para suporte ou dúvidas, visite nosso site em <a href=\"https://www.linknacional.com\">Link Nacional</a> ou fale conosco em contato@linknacional.com."
+
+#. Found in description paragraph.
+msgid "<strong>Support &amp; More Plugins</strong>"
+msgstr "<strong>Suporte e mais plugins</strong>"
+
+#. Screenshot description.
+msgid "Pix Template."
+msgstr "Template de Pix."
+
+#. Screenshot description.
+msgid "CPF/CNPJ Checkout field."
+msgstr "Campo de CPF/CNPJ no checkout."
+
+#. Screenshot description.
+msgid "New plugin settings page."
+msgstr "Nova página de configurações do plugin."
+
+#. Found in faq list item.
+msgid "Once the payment is confirmed, the donation is processed instantly."
+msgstr "Uma vez confirmado o pagamento, a doação é processada instantaneamente."
+
+#. Found in faq list item.
+msgid "Alternatively, they can enter the payment key manually."
+msgstr "Como alternativa, eles podem inserir a chave de pagamento manualmente."
+
+#. Found in faq list item.
+msgid "A QR code will appear on the screen. Donors can scan it with their mobile banking app."
+msgstr "Um código QR aparecerá na tela. Os doadores podem escaneá-lo com o aplicativo de banco em seus celulares."
+
+#. Found in faq list item.
+msgid ""
+"Fill out your GiveWP donation form as usual.\n"
+"\n"
+"<ol>\n"
+"<li>Choose the PIX payment option."
+msgstr ""
+"Preencha seu formulário de doação do GiveWP como de costume.\n"
+"\n"
+"<ol>\n"
+"<li>Escolha a opção de pagamento PIX."
+
+#. Found in faq list item.
+msgid "More donations: Offering PIX as an option can increase your overall donation volume."
+msgstr "Mais doações: Oferecer o PIX como uma opção pode aumentar o volume total de doações."
+
+#. Found in faq list item.
+msgid "Lower fees: Save money on processing fees compared to traditional payment methods."
+msgstr "Taxas mais baixas: Economize com taxas de processamento em comparação com métodos de pagamento tradicionais."
+
+#. Found in faq list item.
+msgid "Happier donors: Paying with PIX is familiar and convenient for Brazilian donors, leading to better donation experiences."
+msgstr "Doadores mais satisfeitos: Pagar com PIX é familiar e conveniente para os doadores brasileiros, proporcionando uma melhor experiência de doação."
+
+#. Found in faq list item.
+msgid "Faster donations: No more waiting for credit card processing, donations arrive in real-time."
+msgstr "Doações mais rápidas: Sem mais esperas para o processamento do cartão de crédito, as doações chegam em tempo real."
+
+#. Found in faq list item.
+msgid "It's a plugin that lets you add PIX as a payment option for your GiveWP donation forms. Donors scan a QR code or enter a payment key, and funds are transferred directly to your account – instantly and securely."
+msgstr "É um plugin que permite adicionar o PIX como uma opção de pagamento nos seus formulários de doação do GiveWP. Os doadores escaneiam um código QR ou inserem uma chave de pagamento, e os fundos são transferidos diretamente para a sua conta – instantaneamente e com segurança."
+
+#. Found in faq header.
+msgid "How do donors use PIX to donate?"
+msgstr "Como os doadores usam o PIX para doar?"
+
+#. Found in faq header.
+msgid "Why use PIX for GiveWP donations?"
+msgstr "Por que usar o PIX para doações no GiveWP?"
+
+#. Found in faq header.
+msgid "What is the Pix Payment Gateway for GiveWP?"
+msgstr "O que é o Pix Payment Gateway for GiveWP?"
+
+#. Found in installation paragraph.
+msgid "The Payment Gateway Pix for GiveWP is now activated."
+msgstr "O Payment Gateway Pix for GiveWP está ativado."
+
+#. Found in installation paragraph.
+msgid "Click on the 'install now' button and then activate the installed plugin;"
+msgstr "Clique no botão 'instalar agora' e então ative o plugin instalado;"
+
+#. Found in installation paragraph.
+msgid "Click on the 'submit plugin' option in the page title and upload the payment-gateway-pix-for-givewp.zip plugin;"
+msgstr "Clique na opção de 'enviar plugin' no topo da página e faça o envio do plugin payment-gateway-pix-for-givewp.zip;"
+
+#. Found in installation paragraph.
+msgid "In installed plugins look for the 'add new' option in the header;"
+msgstr "Em plugins instalados procure por 'adicionar novo' no topo da página;"
+
+#. Found in installation paragraph.
+msgid "Look in the sidebar for the WordPress plugins area;"
+msgstr "Procure na barra lateral pela área de plugin do WordPress;"
+
+#. Found in description paragraph.
+msgid ""
+"<strong>Features</strong>\n"
+" * Boost Donations: Offer your Brazilian donors their preferred payment method, leading to increased contribution amounts and conversion rates.\n"
+" * Skip the Fees: Ditch hefty credit card processing fees and embrace the lower costs of PIX transactions.\n"
+" * Instant Gratification: Donations land in your account instantly, improving donor satisfaction and encouraging repeat contributions.\n"
+" * Enhanced Security: Leverage the robust PIX infrastructure for safe and secure transactions.\n"
+" * Seamless Integration: Works flawlessly with GiveWP, making setup and donation flows a breeze."
+msgstr ""
+"<strong>Recursos</strong>\n"
+"* Aumente as doações: Ofereça aos seus doadores brasileiros o método de pagamento preferido deles, resultando em maiores contribuições e taxas de conversão.\n"
+"* Evite taxas: Elimine as altas taxas de processamento de cartões de crédito e adote os custos mais baixos das transações PIX.\n"
+"* Satisfação instantânea: As doações são creditadas em sua conta instantaneamente, melhorando a satisfação dos doadores e incentivando contribuições repetidas.\n"
+"* Segurança reforçada: Aproveite a infraestrutura robusta do PIX para transações seguras e protegidas.\n"
+"* Integração sem esforço: Funciona perfeitamente com o GiveWP, tornando a configuração e o fluxo de doações muito mais simples."
+
+#. Found in description paragraph.
+msgid ""
+"JS Libraries used:\n"
+"<a href=\"https://github.com/davidshimjs/qrcodejs\">QR Code JS by davidshimjs</a>"
+msgstr ""
+"Bibliotecas JS utilizadas:\n"
+"<a href=\"https://github.com/davidshimjs/qrcodejs\">QR Code JS by davidshimjs</a>"
+
+#. Found in description paragraph.
+msgid "<a href=\"https://wordpress.org/plugins/give/\">GiveWP</a> is needed for the plugin to work."
+msgstr "O <a href=\"https://wordpress.org/plugins/give/\">GiveWP</a> é necessário para que o plugin funcione."
+
+#. Found in description paragraph.
+msgid "<strong>Dependencies</strong>"
+msgstr "<strong>Dependências</strong>"
+
+#. Found in description paragraph.
+msgid "Streamline your donation process and expand your reach to Brazilian donors by integrating PIX, the instant payment system, into your GiveWP donation forms."
+msgstr "Simplifique seu processo de doação e expanda seu alcance para doadores brasileiros ao integrar o PIX, o sistema de pagamento instantâneo, aos seus formulários de doação do GiveWP."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fix: Corrected donation amount formatting for browsers set to English."
+msgstr "Correção: formatação do valor da doação em navegadores configurados em inglês."
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.6 - 08/07/2026"
+msgstr "2.2.6 - 08/07/2026"
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Adjust: Documentation."
+msgstr "Ajuste: documentação."
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.6 - 15/06/2026"
+msgstr "2.2.6 - 15/06/2026"
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "New: PHP version."
+msgstr "Novo: versão do PHP."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "New: Icons and Banners."
+msgstr "Novo: ícones e banners."
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.0 - 08/29/2025"
+msgstr "2.2.0 - 08/29/2025"
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.1 - 08/30/2025"
+msgstr "2.2.1 - 08/30/2025"
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.2 - 05/09/2025"
+msgstr "2.2.2 - 05/09/2025"
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.3 - 12/12/2025"
+msgstr "2.2.3 - 12/12/2025"
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.4 - 16/02/2026"
+msgstr "2.2.4 - 16/02/2026"
+
+#. Found in changelog header.
+#, gp-priority: low
+msgid "2.2.5 - 15/06/2026"
+msgstr "2.2.5 - 15/06/2026"
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Adjustments to comply with WordPress standards."
+msgstr "Ajustes para conformidade com os padrões do WordPress."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Security fix on the PagHiper status route."
+msgstr "Correção de segurança na rota de status do PagHiper."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Correction on the receipt page with the PagHyper shortcode."
+msgstr "Correção na página de recibo com o shortcode do PagHiper."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fixes to the texts and translation of the plugin."
+msgstr "Correções nos textos e na tradução do plugin."
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "PagHiper Pix and boleto gateway"
+msgstr "PagHiper Pix e boleto bancário"
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "New style for configuration sections"
+msgstr "Novo estilo para seções de configuração"
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "New menu for configuration sections"
+msgstr "Corrigidos IDs de pagamento duplicados"
+
+#. Found in changelog list item.
+#, gp-priority: low
+msgid "Fixed duplicate payment IDs."
+msgstr "IDs de pagamento duplicados corrigidos."
+
+#. Found in changelog paragraph.
+#, gp-priority: low
+msgid ""
+"<strong>26/02/2025</strong>\n"
+"* Fix URL to view logs."
+msgstr ""
+"<strong>26/02/2025</strong>\n"
+"* Corrigir URL para visualizar logs."
+
+#. Found in changelog paragraph.
+#, gp-priority: low
+msgid ""
+"<strong>09/11/2024</strong>\n"
+"* Add svg to show PRO settings;\n"
+"* Add script to change settings styles."
+msgstr ""
+"<strong>09/11/2024</strong>\n"
+"* Adicionar SVG para exibir configurações PRO;\n"
+"* Adicionar script para alterar estilos das configurações."
+
+#. Found in changelog paragraph.
+#, gp-priority: low
+msgid ""
+"<strong>05/01/2024</strong>\n"
+"* Added options to set the recipient's key using provided information.\n"
+"* Added option to add the recipient's key to GiveWP donation forms.\n"
+"* Added option to add billing details to donation forms.\n"
+"* Added debug mode for advanced users."
+msgstr ""
+"<strong>05/01/2024</strong>\n"
+"* Adicionadas opções para definir a chave do destinatário usando as informações fornecidas.\n"
+"* Adicionada opção para incluir a chave do destinatário nos formulários de doação do GiveWP.\n"
+"* Adicionada opção para adicionar detalhes de cobrança aos formulários de doação.\n"
+"* Adicionado modo de depuração para usuários avançados."
+
+#. Found in changelog paragraph.
+#, gp-priority: low
+msgid ""
+"<strong>24/06/2024</strong>\n"
+"* Migration to object-oriented programming;\n"
+"* Implementation of autoloader;\n"
+"* Addition of compatibility with GiveWP template 3.0.0;\n"
+"* Addition of automatic logs cleanup using WP-CRON;\n"
+"* Code optimization and removal of redundancies;\n"
+"* Update with new WordPress guidelines."
+msgstr ""
+"<strong>24/06/2024</strong>\n"
+"* Migração para programação orientada a objetos;\n"
+"* Implementação de autoloader;\n"
+"* Adição de compatibilidade com o template GiveWP 3.0.0;\n"
+"* Adição de limpeza automática de logs usando WP-CRON;\n"
+"* Otimização de código e remoção de redundâncias;\n"
+"* Atualização conforme as novas diretrizes do WordPress."
+
+#. Found in changelog paragraph.
+#, gp-priority: low
+msgid ""
+"<strong>16/07/2024</strong>\n"
+"* Modification in plugin to comply with WordPress standards."
+msgstr ""
+"<strong>16/07/2024</strong>\n"
+"* Modificação do plugin para conformidade com os padrões do WordPress."
+
+#. Found in changelog paragraph.
+#, gp-priority: low
+msgid ""
+"<strong>27/07/2024</strong>\n"
+"* Add autoloader compatibility;\n"
+"* Fixes error on JS attribute declaration;\n"
+"* Fixes CI Build."
+msgstr ""
+"<strong>27/07/2024</strong>\n"
+"* Adicionada compatibilidade com autoloader;\n"
+"* Correção de erro na declaração de atributo JS;\n"
+"* Correção no Build do CI."
+

@@ -3,5 +3,5 @@
 ?>
 
 <div id="pix-error-message">
-    <p><?php echo esc_html__('Falha na geração do QR Code', 'payment-gateway-pix-for-givewp'); ?></p>
+    <p><?php echo esc_html__('Failed to generate the QR Code', 'payment-gateway-pix-for-givewp'); ?></p>
 </div>

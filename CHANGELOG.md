@@ -1,3 +1,9 @@
+# 2.2.8 - 27/11/2026
+* Novo: aba Settings com as opções Environment e Habilitar Logs para todos os gateways.
+* Correção: traduções pt_BR passam a carregar do plugin e sobrescrever o pacote do wp.org.
+* Correção: strings de origem em português ajustadas para inglês.
+* Novo: arquivo readme-pt_BR.po.
+
 # 2.2.7 - 08/07/2026
 * Ajuste: Correção na formatação do valor da doação em navegadores configurados em inglês.
 
