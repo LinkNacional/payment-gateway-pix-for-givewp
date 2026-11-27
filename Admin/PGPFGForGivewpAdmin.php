@@ -585,7 +585,7 @@ final class PGPFGForGivewpAdmin
                             'name' => __('Cielo Integration', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-cielo-merchant-id',
                             'type' => 'password',
-                            'desc' => __('Unique identifier for your store at Cielo.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Unique identifier for your store at Cielo.', 'payment-gateway-pix-for-givewp'),
                             'attributes' => array(
                                 'block_title' => __('Cielo Merchant ID', 'payment-gateway-pix-for-givewp'),
                                 'block_sub_title' => __('Your Cielo Merchant ID', 'payment-gateway-pix-for-givewp'),
@@ -596,7 +596,7 @@ final class PGPFGForGivewpAdmin
                         $settings[] = array(
                             'name' => __('Cielo Merchant Key', 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-cielo-merchant-key',
-                            'desc' => __('Private key for transaction authentication via Cielo.s', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Private key for transaction authentication via Cielo.s', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
                                 'block_title' => __('Cielo Merchant Key', 'payment-gateway-pix-for-givewp'),
@@ -618,7 +618,7 @@ final class PGPFGForGivewpAdmin
                         $settings[] = array(
                             'name' => __("POS Identification (PV)", 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-pro-erede-pv',
-                            'desc' => __('Unique identification code for your establishment at Rede', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Unique identification code for your establishment at Rede', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
                                 'block_sub_title' => __('POS Number (Rede).', 'payment-gateway-pix-for-givewp'),
@@ -629,7 +629,7 @@ final class PGPFGForGivewpAdmin
                         $settings[] = array(
                             'name' => __("Rede Token", 'payment-gateway-pix-for-givewp'),
                             'id' => 'lkn-payment-pix-pro-erede-token',
-                            'desc' => __('Secret key associated with your POS.', 'payment-gateway-pix-for-givewp-pro'),
+                            'desc' => __('Secret key associated with your POS.', 'payment-gateway-pix-for-givewp'),
                             'type' => 'password',
                             'attributes' => array(
                                 'block_sub_title' => __('Your Rede Token', 'payment-gateway-pix-for-givewp'),
@@ -684,8 +684,10 @@ final class PGPFGForGivewpAdmin
          */
 
         $is_plugin_settings_page = (
-            isset($_GET['page']) && $_GET['page'] === 'give-settings' &&
-            isset($_GET['section']) && $_GET['section'] === 'lkn-payment-pix'
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- leitura read-only usada apenas para decidir enqueue de asset.
+            isset($_GET['page']) && 'give-settings' === sanitize_key(wp_unslash($_GET['page'])) &&
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- idem acima.
+            isset($_GET['section']) && 'lkn-payment-pix' === sanitize_key(wp_unslash($_GET['section']))
         );
 
         if($is_plugin_settings_page) {
@@ -714,8 +716,10 @@ final class PGPFGForGivewpAdmin
         
         // Verificar se estamos na página específica do plugin
         $is_plugin_settings_page = (
-            isset($_GET['page']) && $_GET['page'] === 'give-settings' &&
-            isset($_GET['section']) && $_GET['section'] === 'lkn-payment-pix'
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- leitura read-only usada apenas para decidir enqueue de asset.
+            isset($_GET['page']) && 'give-settings' === sanitize_key(wp_unslash($_GET['page'])) &&
+            // phpcs:ignore WordPress.Security.NonceVerification.Recommended -- idem acima.
+            isset($_GET['section']) && 'lkn-payment-pix' === sanitize_key(wp_unslash($_GET['section']))
         );
 
         if ($is_plugin_settings_page) {

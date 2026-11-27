@@ -4,4 +4,5 @@
 .phan/stubs
 node_modules
 vendor
-logs
+logs.phpunit.result.cache
+.phpunit.cache
