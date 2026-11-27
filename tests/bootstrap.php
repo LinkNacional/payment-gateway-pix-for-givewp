@@ -21,3 +21,24 @@ if (! file_exists($autoload)) {
 }
 
 require_once $autoload;
+
+/**
+ * Stub do give_get_option() para os testes de resolvedor, sem subir o WordPress.
+ * Centralizado aqui porque dois arquivos de teste definindo a mesma função
+ * fazem o primeiro carregado vencer e o valor do stub nunca chegar no outro.
+ */
+if (! function_exists('give_get_option')) {
+    function give_get_option($key, $default = '')
+    {
+        return \GiveOptionStub::$values[$key] ?? $default;
+    }
+}
+
+/**
+ * @internal
+ */
+final class GiveOptionStub
+{
+    /** @var array<string, mixed> */
+    public static array $values = [];
+}

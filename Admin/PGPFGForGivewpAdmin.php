@@ -194,8 +194,8 @@ final class PGPFGForGivewpAdmin
                             <ul class="lkn-pix-menu">
                                 <li id="0" class="lkn-pix-menu-ativo">Pix QRCode (free)</li>
                                 <li id="1">PagHiper</li>
-                                <li id="2">Pro Settings</li>
-                                <li id="3">Pix MaxiPago</li>
+                                <li id="2">Settings</li>
+                                <li id="3">Pro Settings</li>
                                 <li id="4">Pix Banco do Brasil(BB)</li>
                                 <li id="5">Pix Cielo</li>
                                 <li id="6">Pix E-rede</li>
@@ -407,6 +407,50 @@ final class PGPFGForGivewpAdmin
                         'type' => 'sectionend',
                     );
 
+                    $settings[] = array(
+                        'type' => 'title',
+                        'id' => 'lkn-payment-pix-settings',
+                        'title' => __('Settings', 'payment-gateway-pix-for-givewp'),
+                    );
+
+                    $settings[] = array(
+                        'name' => __('Environment', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-environment',
+                        'type' => 'select',
+                        'options' => array(
+                            'app' => __('Production', 'payment-gateway-pix-for-givewp'),
+                            'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
+                        ),
+                        'desc' => __('Set whether the system will process real donations or tests.', 'payment-gateway-pix-for-givewp'),
+                        'attributes' => array(
+                            'block_title' => __('Environment', 'payment-gateway-pix-for-givewp'),
+                            'block_sub_title' => __('Set the environment for all payment gateways.', 'payment-gateway-pix-for-givewp'),
+                            'block_description' => __('Use "Development" for testing and "Production" for real donations.', 'payment-gateway-pix-for-givewp')
+                        )
+                    );
+
+                    $settings[] = array(
+                        'name' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
+                        'id' => 'lkn-payment-pix-logs',
+                        'desc' => __('When enabled, all payment gateway operations will be recorded in the logs, ideal for identifying errors. Default: Disabled', 'payment-gateway-pix-for-givewp'),
+                        'type' => 'radio_inline',
+                        'default' => 'disabled',
+                        'options' => array(
+                            'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
+                            'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
+                        ),
+                        'attributes' => array(
+                            'block_title' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
+                            'block_sub_title' => __('Saves transaction history to the logs.', 'payment-gateway-pix-for-givewp'),
+                            'block_description' => __('Enable this option to help identify and troubleshoot potential transaction errors.', 'payment-gateway-pix-for-givewp')
+                        )
+                    );
+
+                    $settings[] = array(
+                        'id' => 'lkn-payment-pix-settings',
+                        'type' => 'sectionend'
+                    );
+
                     //PRO SETTINGS free version
                     if (!$pro_plugin_active) {
 
@@ -428,89 +472,6 @@ final class PGPFGForGivewpAdmin
                             )
                         );
 
-                        $settings[] = array(
-                            'name' => __('Environment', 'payment-gateway-pix-for-givewp'),
-                            'id' => 'lkn-payment-pix-environment',
-                            'type' => 'select',
-                            'options' => array(
-                                'app' => __('Production', 'payment-gateway-pix-for-givewp'),
-                                'sandbox' => __('Development', 'payment-gateway-pix-for-givewp'),
-                            ),
-                            'desc' => __('Set whether the system will process real donations or tests.', 'payment-gateway-pix-for-givewp'),
-                            'attributes' => array(
-                                'block_sub_title' => __('Set the environment for all PRO payment gateways.', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Use "Development" for testing and "Production" for real donations.', 'payment-gateway-pix-for-givewp')
-                            )
-                        );
-
-                        $settings[] = array(
-                            'name' => __('Transaction Logs', 'payment-gateway-pix-for-givewp'),
-                            'id' => 'lkn-payment-pix-logs',
-                            'desc' => __('When enabled, all payment gateway operations will be recorded in the system logs.', 'payment-gateway-pix-for-givewp'),
-                            'type' => 'radio_inline',
-                            'default' => 'disabled',
-                            'options' => array(
-                                'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                                'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                            ),
-                            'attributes' => array(
-                                'block_title' => __('Enable Logs', 'payment-gateway-pix-for-givewp'),
-                                'block_sub_title' => __('Activates detailed event logging.', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Enable this option to help identify and troubleshoot potential transaction errors.', 'payment-gateway-pix-for-givewp')
-                            )
-                        );
-
-                        $settings[] = array(
-                            'name' => __('Console Debugging', 'payment-gateway-pix-for-givewp'),
-                            'id' => 'lkn-payment-pix-debug',
-                            'desc' => __('Enabling this will provide detailed information on PIX payment gateway operations in the console. Default: Disabled.', 'payment-gateway-pix-for-givewp'),
-                            'type' => 'radio_inline',
-                            'default' => 'disabled',
-                            'options' => array(
-                                'enabled' => __('Enable', 'payment-gateway-pix-for-givewp'),
-                                'disabled' => __('Disable', 'payment-gateway-pix-for-givewp')
-                            ),
-                            'attributes' => array(
-                                'block_title' => __('Enable Advanced Debugging (JS Console)', 'payment-gateway-pix-for-givewp'),
-                                'block_sub_title' => __('Display gateway operation details in the console.', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Enable detailed console messages with information about payment gateway operations.', 'payment-gateway-pix-for-givewp')
-                            )
-                        );
-
-                        $settings[] = array(
-                            'id' => 'lkn-payment-pix-sectionend',
-                            'type' => 'sectionend'
-                        );
-
-                        $settings[] = array(
-                            'type' => 'title',
-                            'id' => 'lkn-payment-pix-maxipago',
-                            'title' => 'Maxipago Settings',
-                        );
-
-                        $settings[] = array(
-                            'name' => __('Maxipago Integration', 'payment-gateway-pix-for-givewp'),
-                            'id' => 'lkn-payment-pix-maxipago-key',
-                            'desc' => __('Exclusive credentials for Maxipago processing.', 'payment-gateway-pix-for-givewp'),
-                            'type' => 'password',
-                            'attributes' => array(
-                                'block_title' => __('MaxiPago Merchant Key', 'payment-gateway-pix-for-givewp'),
-                                'block_sub_title' => __('Unique authentication key for your store.', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Enter the security key linked to your account at Maxipago.', 'payment-gateway-pix-for-givewp')
-                            )
-                        );
-
-                        $settings[] = array(
-                            'name' => __('Maxipago Identification', 'payment-gateway-pix-for-givewp'),
-                            'id' => 'lkn-payment-pix-maxipago-id',
-                            'desc' => __('Unique identifier for your establishment on the platform.', 'payment-gateway-pix-for-givewp'),
-                            'type' => 'password',
-                            'attributes' => array(
-                                'block_title' => __('MaxiPago Merchant ID', 'payment-gateway-pix-for-givewp'),
-                                'block_sub_title' => __('Your MaxiPago Merchant ID', 'payment-gateway-pix-for-givewp'),
-                                'block_description' => __('Enter the identification code used to recognize your store at Maxipago.', 'payment-gateway-pix-for-givewp')
-                            )
-                        );
                         $settings[] = array(
                             'id' => 'lkn-payment-pix-sectionend',
                             'type' => 'sectionend'
