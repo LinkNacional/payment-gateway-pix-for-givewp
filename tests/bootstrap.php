@@ -27,6 +27,36 @@ require_once $autoload;
  * Centralizado aqui porque dois arquivos de teste definindo a mesma função
  * fazem o primeiro carregado vencer e o valor do stub nunca chegar no outro.
  */
+if (! function_exists('get_option')) {
+    /**
+     * Stub de get_option() para a marca de escolha explicita.
+     */
+    function get_option($key, $default = false)
+    {
+        return \GiveOptionStub::$options[$key] ?? $default;
+    }
+}
+
+if (! function_exists('update_option')) {
+    function update_option($key, $value, $autoload = null)
+    {
+        \GiveOptionStub::$options[$key] = $value;
+
+        return true;
+    }
+}
+
+if (! function_exists('give_get_settings')) {
+    /**
+     * Stub de give_get_settings() para simular o array de opcoes do Give.
+     * A tela de settings le esse array direto, sem passar por give_get_option().
+     */
+    function give_get_settings()
+    {
+        return \GiveOptionStub::$settings;
+    }
+}
+
 if (! function_exists('give_get_option')) {
     function give_get_option($key, $default = '')
     {
@@ -41,4 +71,10 @@ final class GiveOptionStub
 {
     /** @var array<string, mixed> */
     public static array $values = [];
+
+    /** @var array<string, mixed> */
+    public static array $settings = [];
+
+    /** @var array<string, mixed> */
+    public static array $options = [];
 }
