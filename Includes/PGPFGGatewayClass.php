@@ -50,7 +50,7 @@ final class PGPFGGatewayClass extends PaymentGateway {
      * @inheritDoc
      */
     public function getLegacyFormFieldMarkup(int $formId, array $args): string {
-        load_template(PGPFG_PIX_PLUGIN_DIR . 'public/partials/pgpfg-public-display.php', true, array(
+        load_template(PGPFG_PIX_PLUGIN_DIR . 'Public/partials/payment-gateway-pix-for-givewp-public-display.php', true, array(
             'pixType' => give_get_option('lkn-payment-pix-type-setting'),
             'pixKey' => give_get_option('lkn-payment-pix-key'),
             'pixName' => give_get_option('lkn-payment-pix-name-setting'),
@@ -68,10 +68,10 @@ final class PGPFGGatewayClass extends PaymentGateway {
      * @since 3.0.0
      */
     public function enqueueScript(int $formId): void {
-        wp_enqueue_script('qrcode', PGPFG_PIX_PLUGIN_URL . 'public/js/qrcode.js', array(), PGPFG_PIX_PLUGIN_VERSION, false);
+        wp_enqueue_script('qrcode', PGPFG_PIX_PLUGIN_URL . 'Public/js/qrcode.js', array(), PGPFG_PIX_PLUGIN_VERSION, false);
         wp_enqueue_script(
             self::id(),
-            PGPFG_PIX_PLUGIN_URL . 'includes/js/lkn-pix.js',
+            PGPFG_PIX_PLUGIN_URL . 'Public/js/lkn-pix.js',
             array('wp-element', 'wp-i18n', 'qrcode'),
             PGPFG_PIX_PLUGIN_VERSION,
             true

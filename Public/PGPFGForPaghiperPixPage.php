@@ -23,7 +23,7 @@ try {
         $pixParamsEncoded = sanitize_text_field($pixParams);
         $pixParamsDecoded = json_decode(base64_decode($pixParamsEncoded, true));
         if (! is_array($pixParamsDecoded) && ! is_object($pixParamsDecoded)) {
-            throw new Exception("Error", 1);
+            throw new \Exception("Error", 1);
         }
         $donQrCode = $pixParamsDecoded->qrcode;
 
@@ -66,9 +66,9 @@ try {
         //phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
         echo $html;
     } else {
-        throw new Exception("Erro", 1);
+        throw new \Exception("Erro", 1);
     }
-} catch (Exception $err) {
+} catch (\Exception $err) {
     // Enqueue CSS for error message
     wp_enqueue_style("lkn-pix-page-css", PGPFG_PIX_PLUGIN_URL . "Public/css/lkn-pgpf-give-paghiper-public.css", array(), PGPFG_PIX_PLUGIN_VERSION);
     

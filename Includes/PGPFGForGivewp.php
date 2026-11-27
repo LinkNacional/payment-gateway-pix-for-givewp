@@ -309,6 +309,30 @@ final class PGPFGForGivewp
         // Register AJAX hooks for both logged in and non-logged in users
         $this->loader->add_action('wp_ajax_pgpf_pix_status_check', $this, 'get_paghipder_pix_status');
         $this->loader->add_action('wp_ajax_nopriv_pgpf_pix_status_check', $this, 'get_paghipder_pix_status');
+
+        // PagHiper posts payment notifications to this route.
+        $this->loader->add_action('rest_api_init', $this, 'register_paghiper_listener_route');
+    }
+
+    /**
+     * Registers the REST route PagHiper calls when a transaction changes.
+     *
+     * The endpoint is public by design (PagHiper servers have no WordPress
+     * session); authenticity is enforced inside the listener by comparing the
+     * notification against the transaction stored for that donation and by
+     * querying PagHiper with this site's own credentials.
+     */
+    public function register_paghiper_listener_route(): void
+    {
+        register_rest_route(
+            'lkn-pgpf-give-paghiper-listener/v1',
+            '/notification',
+            array(
+                'methods' => 'POST',
+                'callback' => array('Pgpfg\PGPFGForGivewp\PublicView\PGPFGGatewayPaghiperAbstractPayment', 'listener'),
+                'permission_callback' => '__return_true',
+            )
+        );
     }
 
     /**
@@ -343,6 +367,31 @@ final class PGPFGForGivewp
         $donation_post = get_post($donation_id);
         if (!$donation_post || $donation_post->post_type !== 'give_payment') {
             wp_send_json_error('Doação não encontrada.', 404);
+            return;
+        }
+
+        // Only donations processed by a PagHiper gateway may be confirmed here.
+        $donation_gateway = (string) give_get_payment_meta($donation_id, '_give_payment_gateway');
+        if (!in_array($donation_gateway, array('lkn-pgpf-give-paghiper-pix', 'lkn-pgpf-give-paghiper-slip'), true)) {
+            wp_send_json_error('Doação não pertence a um gateway PagHiper.', 403);
+            return;
+        }
+
+        // The informed transaction must be the one stored for this donation.
+        $stored_transaction = (string) give_get_payment_meta($donation_id, 'lkn_pgpf_give_paghiper_transaction');
+
+        if (empty($stored_transaction)) {
+            // Donations created before the binding existed fall back to the raw response.
+            $legacy_response = (string) give_get_payment_meta($donation_id, 'lkn_pgpf_give_paghiper_response');
+            $decoded_response = json_decode($legacy_response, true);
+
+            if (is_array($decoded_response) && !empty($decoded_response['transactionId'])) {
+                $stored_transaction = (string) $decoded_response['transactionId'];
+            }
+        }
+
+        if (empty($stored_transaction) || !hash_equals($stored_transaction, (string) $transaction_id)) {
+            wp_send_json_error('Transação não corresponde à doação.', 403);
             return;
         }
 
@@ -462,6 +511,11 @@ final class PGPFGForGivewp
         if ($is_give_active) {
             $this->load_dependencies();
             $this->set_locale();
+
+            // Um PRO ainda não atualizado lê as chaves antigas -pro-; sem este
+            // guard ele ignoraria o ambiente escolhido na aba Settings.
+            PGPFGForGivewpSettingsCompat::register();
+
             $this->define_admin_hooks();
             $this->define_public_hooks();
             $this->loader->run();

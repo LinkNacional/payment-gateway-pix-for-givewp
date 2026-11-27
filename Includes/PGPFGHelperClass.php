@@ -34,7 +34,7 @@ final class PGPFGHelperClass
             return $plugin_meta;
         }
 
-        $changelog_link = '<a href="https://br.wordpress.org/plugins/payment-gateway-pix-for-givewp/#developers" target="_blank">' . __('Ver Changelogs', 'payment-gateway-pix-for-givewp') . '</a>';
+        $changelog_link = '<a href="https://br.wordpress.org/plugins/payment-gateway-pix-for-givewp/#developers" target="_blank">' . __('See changelogs', 'payment-gateway-pix-for-givewp') . '</a>';
 
         // Procura pela posição do "Ver detalhes" e insere imediatamente após
         foreach ($plugin_meta as $index => $meta) {

@@ -25,6 +25,7 @@ use Give\PaymentGateways\Gateways\Stripe\Webhooks\Listeners\PaymentIntentPayment
 use Pgpfg\PGPFGForGivewp\Includes\PGPFGivePaghiperHelper;
 use Pgpfg\PGPFGForGivewp\Includes\LknGivePaghiperLicense;
 use WP_REST_Request;
+use WP_REST_Response;
 
 /**
  * @package    GivePaghiper
@@ -363,6 +364,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
                 give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_response', wp_json_encode($arrayMeta));
 
+                // Bind the created transaction to the donation so a notification cannot be forged.
+                give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_transaction', $paghiperTransaction);
+
                 $donation->status = DonationStatus::PENDING();
                 $donation->save();
 
@@ -395,6 +399,9 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 );
 
                 give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_response', wp_json_encode($arrayMeta));
+
+                // Bind the created transaction to the donation so a notification cannot be forged.
+                give_update_payment_meta($donId, 'lkn_pgpf_give_paghiper_transaction', $paghiperTransaction);
 
                 // Redirect to page with banking slip.
                 $donation->status = DonationStatus::PENDING();
@@ -534,34 +541,93 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
 
             $urlParams = $request->get_params();
 
-            $donationId = sanitize_text_field($urlParams['id_for_paghiper_listener']);
+            $donationId = isset($urlParams['id_for_paghiper_listener'])
+                ? absint($urlParams['id_for_paghiper_listener'])
+                : 0;
 
             if (empty($donationId)) {
-                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Falha no listener, ID não retornado.', '');
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Falha no listener, ID nao retornado.', '');
 
-                return false;
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
             }
 
             // Find donation obj by ID.
             $donation = Donation::find($donationId);
 
-            $meta = give_get_payment_meta($donationId, '_give_payment_gateway');
+            if (! $donation) {
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Doacao inexistente #' . $donationId, '');
 
-            // Get the gateway identifier: pix or slip.
-            $donationGateway = $meta;
-            $donationGateway = explode('-', $donationGateway);
-            $donationGateway = end($donationGateway);
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
+            }
 
+            $donationGateway = (string) give_get_payment_meta($donationId, '_give_payment_gateway');
+
+            if (! in_array($donationGateway, array('lkn-pgpf-give-paghiper-pix', 'lkn-pgpf-give-paghiper-slip'), true)) {
+                PGPFGivePaghiperHelper::regLog(
+                    'error',
+                    'listener',
+                    'Notificacao de gateway nao PagHiper para a doacao #' . $donationId,
+                    esc_html($donationGateway)
+                );
+
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
+            }
+
+            // PagHiper envia JSON; get_body_params() volta vazio nesse caso.
             $params = $request->get_body_params();
+
+            if (empty($params)) {
+                $params = $request->get_json_params();
+            }
+
+            if (! is_array($params)) {
+                $params = array();
+            }
+
+            $transactionId = isset($params['transaction_id'])
+                ? sanitize_text_field(wp_unslash($params['transaction_id']))
+                : '';
+            $notificationId = isset($params['notification_id'])
+                ? sanitize_text_field(wp_unslash($params['notification_id']))
+                : '';
+
+            if (empty($transactionId)) {
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Notificacao sem transaction_id para a doacao #' . $donationId, '');
+
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
+            }
 
             // Register log.
             PGPFGivePaghiperHelper::regLog('info', 'listener', 'notification POST received', esc_html($donationGateway) . ' - Response Request: ' . wp_json_encode($params, true));
 
-            // Body Params:
-            $token = $configs['token'];
-            $apiKey = sanitize_text_field($params['apiKey']);
-            $transactionId = sanitize_text_field($params['transaction_id']);
-            $notificationId = sanitize_text_field($params['notification_id']);
+            // The notification must reference the transaction created for this donation.
+            $storedTransaction = (string) give_get_payment_meta($donationId, 'lkn_pgpf_give_paghiper_transaction');
+
+            if (empty($storedTransaction)) {
+                // Doacoes criadas antes da amarracao existir guardam a transacao no meta de resposta.
+                $legacyResponse = (string) give_get_payment_meta($donationId, 'lkn_pgpf_give_paghiper_response');
+                $decodedResponse = json_decode($legacyResponse, true);
+
+                if (is_array($decodedResponse) && ! empty($decodedResponse['transactionId'])) {
+                    $storedTransaction = (string) $decodedResponse['transactionId'];
+                }
+            }
+
+            if (empty($storedTransaction) || ! hash_equals($storedTransaction, $transactionId)) {
+                PGPFGivePaghiperHelper::regLog(
+                    'error',
+                    'listener',
+                    'Transacao nao corresponde a doacao #' . $donationId,
+                    esc_html($transactionId)
+                );
+
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
+            }
+
+            // Never regress a donation that is already settled.
+            if ($donation->status->getValue() === 'complete' || $donation->status->getValue() === 'refunded') {
+                return new WP_REST_Response(array('status' => 'already-settled'), 200);
+            }
 
             // Header.
             $header = array(
@@ -571,18 +637,19 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                 'Content-Type' => 'application/json;charset=UTF-8'
             );
 
-            // Body.
+            // Body: credentials always come from this site configuration.
             $body = array(
-                'token' => $token,
-                'apiKey' => $apiKey,
+                'token' => $configs['token'],
+                'apiKey' => $configs['apiKey'],
                 'transaction_id' => $transactionId,
                 'notification_id' => $notificationId
             );
 
-            // Initialize variable.
-            $response = null;
+            $isPix = ('lkn-pgpf-give-paghiper-pix' === $donationGateway);
 
-            $postUrl = ('pix' === $donationGateway) ? $configs['urlPix'] . 'invoice/notification/' : $configs['urlBol'] . 'transaction/notification/';
+            $postUrl = $isPix
+                ? $configs['urlPix'] . 'invoice/notification/'
+                : $configs['urlBol'] . 'transaction/notification/';
 
             // Make POST request.
             $response = PGPFGivePaghiperHelper::connect_request($header, $body, $postUrl);
@@ -590,15 +657,21 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             // Register log.
             PGPFGivePaghiperHelper::regLog('info', 'listener', 'Listener notification POST - Response Request', wp_json_encode($response, true));
 
+            if (! isset($response->status_request->result)) {
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Resposta invalida da API para a doacao #' . $donationId, wp_json_encode($response, true));
+
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
+            }
+
             $requestResult = $response->status_request->result;
             $requestMsg = $response->status_request->response_message;
 
             if ('success' != $requestResult) {
-                give_insert_payment_note($donationId, 'Notificação recebida, erro na consulta da API verifique as chaves de acesso e os logs da transação.');
+                give_insert_payment_note($donationId, 'Notificacao recebida, erro na consulta da API verifique as chaves de acesso e os logs da transacao.');
 
-                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Falha na atualização de status da doação #' . $donationId, 'Razão: ' . esc_html($requestMsg) . ' | Result: ' . wp_json_encode($requestResult, true));
+                PGPFGivePaghiperHelper::regLog('error', 'listener', 'Falha na atualizacao de status da doacao #' . $donationId, 'Razao: ' . esc_html($requestMsg) . ' | Result: ' . wp_json_encode($requestResult, true));
 
-                return false;
+                return new WP_REST_Response(array('status' => 'ignored'), 200);
             }
 
             // Order informations.
@@ -606,7 +679,7 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
             $orderId = $response->status_request->order_id;             // ID of PagHiper order.
             $orderStatus = $response->status_request->status ?? 'Pendente';           // Status of PagHiper order.
 
-            give_insert_payment_note($donationId, 'Notificação recebida, status do pagamento atualizado para: ' . $orderStatus);
+            give_insert_payment_note($donationId, 'Notificacao recebida, status do pagamento atualizado para: ' . $orderStatus);
 
             // Att Give order according to PagHiper order.
             switch ($orderStatus) {
@@ -631,17 +704,15 @@ abstract class PGPFGGatewayPaghiperAbstractPayment extends PaymentGateway
                     break;
 
                 default:
-                    return false;
-
-                    break;
+                    return new WP_REST_Response(array('status' => 'pending'), 200);
             }
 
-            return true;
+            return new WP_REST_Response(array('status' => 'ok'), 200);
         } catch (Exception $e) {
             // Register log.
             PGPFGivePaghiperHelper::regLog('error', 'listener', 'Listener Error', $e->getMessage());
 
-            return false;
+            return new WP_REST_Response(array('status' => 'error'), 500);
         }
     }
 }

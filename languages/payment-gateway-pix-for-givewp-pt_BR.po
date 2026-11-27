@@ -1,180 +1,844 @@
-# Payment Gateway for Pix on GiveWP tradução pt_BR
-msgid "Payment Gateway for Pix on GiveWP"
-msgstr "Gateway de Pagamento por Pix para GiveWP"
+msgid ""
+msgstr ""
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/payment-gateway-"
+"pix-for-givewp\n"
+"POT-Creation-Date: 2026-11-27T19:55:31+00:00\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Domain: payment-gateway-pix-for-givewp\n"
 
-msgid "Loading..."
-msgstr "Carregando..."
+#. Plugin Name of the plugin
+#: payment-gateway-pix-for-givewp.php
+msgid "Payment Gateway Pix for GiveWP"
+msgstr "Payment Gateway Pix for GiveWP"
 
-msgid "Pix Key:"
-msgstr "Chave Pix:"
+#. Plugin URI of the plugin
+#: payment-gateway-pix-for-givewp.php
+msgid "https://www.linknacional.com.br/wordpress/givewp/"
+msgstr "https://www.linknacional.com.br/wordpress/givewp/"
 
-msgid "Type of Key"
-msgstr "Tipo de Chave"
+#. Description of the plugin
+#: payment-gateway-pix-for-givewp.php
+msgid ""
+"Streamline your donation process and expand your reach to Brazilian donors "
+"by integrating PIX, the instant payment system, into your GiveWP donation "
+"forms."
+msgstr ""
+"Simplifique o processo de doação e amplie seu alcance para doadores "
+"brasileiros integrando o PIX, o sistema de pagamento instantâneo, aos seus "
+"formulários de doação do GiveWP."
 
-msgid "Insert the type of the pix key."
-msgstr "Insira o tipo de chave pix"
+#. Author of the plugin
+#: payment-gateway-pix-for-givewp.php
+msgid "Link Nacional"
+msgstr "Link Nacional"
 
-msgid "Phone"
-msgstr "Telefone"
+#. Author URI of the plugin
+#: payment-gateway-pix-for-givewp.php
+msgid "https://www.linknacional.com.br/"
+msgstr "https://www.linknacional.com.br/"
 
-msgid "CPF"
-msgstr "CPF"
-
-msgid "CNPJ"
-msgstr "CNPJ"
-
-msgid "Email"
-msgstr "Email"
-
-msgid "Other"
-msgstr "Outro"
-
-msgid "Insert the pix key that will be used on the donations."
-msgstr "Insira a chave pix a ser utilizada nas doações."
-
-msgid "Pix Key"
-msgstr "Chave Pix"
-
-msgid "Recipient Name"
-msgstr "Nome do Beneficiário"
-
-msgid "Insert the name of the key's recipient."
-msgstr "Insira o nome do beneficiário da chave."
-
-msgid "Recipient City"
-msgstr "Cidade do Beneficiário"
-
-msgid "Insert the key recipient's city."
-msgstr "Insira a cidade do beneficiário da chave"
-
-msgid "Payment Identificator"
-msgstr "Identificador de Pagamento"
-
-msgid "Insert the payment identificator, not required."
-msgstr "Insira o identificador de pagamento, não obrigatório."
-
-msgid "Enable Debug Mode"
-msgstr "Habilitar Modo de Depuração"
-
-msgid "Select if logs should be created for debug purposes."
-msgstr "Selecione se devem ser criados logs para depuração."
-
-msgid "Enable"
-msgstr "Habilitar"
-
-msgid "Disable"
-msgstr "Desabilitar"
-
-msgid "Collect Billing Details"
-msgstr "Coletar Detalhes de Cobrança"
-
-msgid "Select if billing details should be added do the donation forms (classic and legacy forms)."
-msgstr "Selecione se detalhes de cobrança devem ser adicionados aos formulários de doação (para formulários classic ou legacy)."
-
-msgid "Pix QR Code"
-msgstr "Pix QR Code"
-
-msgid "Check Last Log"
-msgstr "Checar Último Log"
-
-msgid "Settings"
-msgstr "Configurações"
-
-msgid "Choose the type of key you'll use to receive Pix payments"
-msgstr "Escolha qual tipo de chave irá utilizar para receber o PIX."
-
-msgid "Enter the Pix key created in your bank that will be used to receive donations."
-msgstr "Digite a chave Pix criada no seu Banco que será usada no recebimento das doações."
-
-msgid "Enter the full name of the Pix beneficiary."
-msgstr "Informe o nome completo do favorecido pelo Pix."
-
-msgid "Enter the name of the city of the Pix key beneficiary."
-msgstr "Digite o nome da cidade do favorecido pela chave Pix."
-
-msgid "Recipient city"
-msgstr "Cidade do destinatário"
-
-msgid "When this feature is enabled, the plugin will record transaction logs, ideal for error identification."
-msgstr "Ao ativar esse recurso, o plugin irá gravar logs das transações ideal para identificação de erros."
-
-msgid "Select whether billing details should be added to donation forms (classic and legacy forms)."
-msgstr "Selecione se os detalhes de cobrança devem ser adicionados aos formulários de doação (formulários clássicos e legados)."
-
-msgid "PIX Key Settings"
-msgstr "Configurações Chave PIX"
-
+#: Admin/PGPFGForGivewpAdmin.php:118
 msgid "See logs"
 msgstr "Ver logs"
 
+#: Admin/PGPFGForGivewpAdmin.php:209
+msgid "PIX Key Settings"
+msgstr "Configurações Chave PIX"
+
+#: Admin/PGPFGForGivewpAdmin.php:213
+#, fuzzy
+msgid "Donation Settings"
+msgstr "Configurações PagHiper"
+
+#: Admin/PGPFGForGivewpAdmin.php:215
+msgid "Enter your Pix key to start receiving funds."
+msgstr "Insira sua chave Pix para começar a receber doações."
+
+#: Admin/PGPFGForGivewpAdmin.php:218
+msgid "Pix Key"
+msgstr "Chave Pix"
+
+#: Admin/PGPFGForGivewpAdmin.php:219
+msgid ""
+"Enter the Pix key created in your bank that will be used to receive donations"
+msgstr ""
+"Digite a chave Pix criada no seu Banco que será usada no recebimento das "
+"doações"
+
+#: Admin/PGPFGForGivewpAdmin.php:224
+msgid "Type of Key"
+msgstr "Tipo de Chave"
+
+#: Admin/PGPFGForGivewpAdmin.php:225
+msgid "Choose which type of key you will use to receive the PIX."
+msgstr "Escolha qual tipo de chave você usará para receber o PIX."
+
+#: Admin/PGPFGForGivewpAdmin.php:230
+msgid "Phone"
+msgstr "Telefone"
+
+#: Admin/PGPFGForGivewpAdmin.php:231
+msgid "CPF"
+msgstr "CPF"
+
+#: Admin/PGPFGForGivewpAdmin.php:232
+msgid "CNPJ"
+msgstr "CNPJ"
+
+#: Admin/PGPFGForGivewpAdmin.php:233
+msgid "Email"
+msgstr "Email"
+
+#: Admin/PGPFGForGivewpAdmin.php:237
 msgid "Choose the type of key you'll use to receive Pix payments"
-msgstr "Escolha qual tipo de chave irá utilizar para receber o Pix"
+msgstr "Escolha qual tipo de chave irá utilizar para receber o PIX."
 
-msgid "Enter the Pix key created in your bank that will be used to receive donations"
-msgstr "Digite a chave Pix criada no seu Banco que será usada no recebimento das doações"
+#: Admin/PGPFGForGivewpAdmin.php:243
+msgid "Recipient Name"
+msgstr "Nome do Beneficiário"
 
-msgid "Recipient name"
-msgstr "Nome do beneficiário"
+#: Admin/PGPFGForGivewpAdmin.php:245
+msgid "Enter the full name of the Pix beneficiary."
+msgstr "Informe o nome completo do favorecido pelo Pix."
 
+#: Admin/PGPFGForGivewpAdmin.php:248
+msgid "Enter the account holder's full name as it appears at the bank."
+msgstr "Insira o nome completo do titular como aparece no banco."
+
+#: Admin/PGPFGForGivewpAdmin.php:253
 msgid "Recipient city"
-msgstr "Cidade do beneficiário"
+msgstr "Cidade do destinatário"
 
-msgid "Saves transactions to the logs."
+#: Admin/PGPFGForGivewpAdmin.php:255
+msgid "Enter the name of the city of the Pix key beneficiary."
+msgstr "Digite o nome da cidade do favorecido pela chave Pix."
+
+#: Admin/PGPFGForGivewpAdmin.php:258
+#, fuzzy
+msgid "Enter the name of the city of the beneficiary"
+msgstr "Digite o nome da cidade do favorecido pela chave Pix."
+
+#: Admin/PGPFGForGivewpAdmin.php:263
+msgid "Diagnostic Mode"
+msgstr "Modo de Diagnóstico"
+
+#: Admin/PGPFGForGivewpAdmin.php:264
+msgid ""
+"When this feature is enabled, the plugin will record transaction logs, ideal "
+"for error identification."
+msgstr ""
+"Ao ativar esse recurso, o plugin irá gravar logs das transações ideal para "
+"identificação de erros."
+
+#: Admin/PGPFGForGivewpAdmin.php:264
+msgid "Check Last Log"
+msgstr "Checar Último Log"
+
+#: Admin/PGPFGForGivewpAdmin.php:269 Admin/PGPFGForGivewpAdmin.php:285
+#: Admin/PGPFGForGivewpAdmin.php:397 Admin/PGPFGForGivewpAdmin.php:439
+msgid "Enable"
+msgstr "Habilitar"
+
+#: Admin/PGPFGForGivewpAdmin.php:270 Admin/PGPFGForGivewpAdmin.php:286
+#: Admin/PGPFGForGivewpAdmin.php:398 Admin/PGPFGForGivewpAdmin.php:440
+msgid "Disable"
+msgstr "Desabilitar"
+
+#: Admin/PGPFGForGivewpAdmin.php:273
+msgid "Enable Debug Mode"
+msgstr "Habilitar Modo de Depuração"
+
+#: Admin/PGPFGForGivewpAdmin.php:274 Admin/PGPFGForGivewpAdmin.php:444
+#, fuzzy
+msgid "Saves transaction history to the logs."
 msgstr "Grava as transações no logs."
 
-msgid "Enable to show billing details on donation forms"
-msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+#: Admin/PGPFGForGivewpAdmin.php:279
+msgid "Collect Billing Details"
+msgstr "Coletar Detalhes de Cobrança"
 
-msgid "Select the environment in which the payment gateway will operate."
+#: Admin/PGPFGForGivewpAdmin.php:280
+msgid ""
+"Select whether billing details should be added to donation forms (classic "
+"and legacy forms)."
+msgstr ""
+"Selecione se os detalhes de cobrança devem ser adicionados aos formulários "
+"de doação (formulários clássicos e legados)."
+
+#: Admin/PGPFGForGivewpAdmin.php:289 Admin/PGPFGForGivewpAdmin.php:290
+msgid "Enable to show billing details on donation forms."
+msgstr "Habilitar para exibir detalhes de cobrança nos formulários de doação."
+
+#: Admin/PGPFGForGivewpAdmin.php:302
+msgid "PagHiper Settings"
+msgstr "Configurações PagHiper"
+
+#: Admin/PGPFGForGivewpAdmin.php:306
+#, fuzzy
+msgid "PagHiper Integration Key"
+msgstr "Chave da API PagHiper"
+
+#: Admin/PGPFGForGivewpAdmin.php:308
+msgid "Credentials required to process PagHiper payments."
+msgstr "Credenciais necessárias para processar pagamentos PagHiper."
+
+#: Admin/PGPFGForGivewpAdmin.php:311
+msgid "PagHiper API Key"
+msgstr "Chave da API PagHiper"
+
+#: Admin/PGPFGForGivewpAdmin.php:312
+#, fuzzy
+msgid "Your API Key"
+msgstr "Chave da API PagHiper"
+
+#: Admin/PGPFGForGivewpAdmin.php:313
+msgid "Enter the API key found in your PagHiper developer dashboard."
+msgstr "Insira a API key encontrada no painel de desenvolvedor do PagHiper."
+
+#: Admin/PGPFGForGivewpAdmin.php:318
+#, fuzzy
+msgid "PagHiper Integration Token"
+msgstr "PagHiper Token"
+
+#: Admin/PGPFGForGivewpAdmin.php:320
+msgid "Additional security key for PagHiper transactions."
+msgstr "Chave de segurança adicional para transações PagHiper."
+
+#: Admin/PGPFGForGivewpAdmin.php:323
+msgid "PagHiper Token"
+msgstr "PagHiper Token"
+
+#: Admin/PGPFGForGivewpAdmin.php:324
+#, fuzzy
+msgid "Your PagHiper Token"
+msgstr "PagHiper Token"
+
+#: Admin/PGPFGForGivewpAdmin.php:325
+msgid "Enter the API token found in your PagHiper developer dashboard."
+msgstr ""
+"Insira o token da API encontrado no painel de desenvolvedor do PagHiper."
+
+#: Admin/PGPFGForGivewpAdmin.php:330
+msgid "Transaction Description"
+msgstr "Descrição da Transação"
+
+#: Admin/PGPFGForGivewpAdmin.php:332
+msgid "The description that will appear on the customer's boleto/PIX"
+msgstr "A descrição que aparecerá no boleto/PIX do cliente."
+
+#: Admin/PGPFGForGivewpAdmin.php:334
+msgid "Donation"
+msgstr "Doação"
+
+#: Admin/PGPFGForGivewpAdmin.php:336
+msgid "Payment method description that the customer will see at checkout."
+msgstr "Descrição do meio de pagamento que o cliente verá no checkout."
+
+#: Admin/PGPFGForGivewpAdmin.php:337
+msgid "Payment method description seen by the customer at checkout."
+msgstr "Descrição do meio de pagamento vista pelo cliente no checkout."
+
+#: Admin/PGPFGForGivewpAdmin.php:342
+msgid "Boleto Expiration"
+msgstr "Expiração do Boleto"
+
+#: Admin/PGPFGForGivewpAdmin.php:344
+msgid "Set the time limit for donation payments."
+msgstr "Define o prazo limite para o pagamento das doações."
+
+#: Admin/PGPFGForGivewpAdmin.php:348
+msgid "Expiration Period"
+msgstr "Período de Expiração"
+
+#: Admin/PGPFGForGivewpAdmin.php:349
+msgid "Calendar days until the bank slip expires."
+msgstr "Dias corridos até o vencimento do boleto."
+
+#: Admin/PGPFGForGivewpAdmin.php:350
+msgid "Enter a period between 1 and 400 days."
+msgstr "Informe um período entre 1 e 400 dias."
+
+#: Admin/PGPFGForGivewpAdmin.php:355
+msgid "PIX Fixed Fee"
+msgstr "Taxa Fixa do PIX"
+
+#: Admin/PGPFGForGivewpAdmin.php:357
+msgid "Set extra fees for Pix transactions."
+msgstr "Define taxas extras para transações Pix."
+
+#: Admin/PGPFGForGivewpAdmin.php:361
+msgid "Additional amount charged for each Pix issued."
+msgstr "Valor adicional cobrado por cada Pix gerado."
+
+#: Admin/PGPFGForGivewpAdmin.php:362 Admin/PGPFGForGivewpAdmin.php:374
+msgid "Use a dot (.) for decimals. Set to 0 to disable the fee."
+msgstr "Use ponto (.) para decimais. Defina 0 para desativar a taxa."
+
+#: Admin/PGPFGForGivewpAdmin.php:367
+#, fuzzy
+msgid "Slip Fixed Fee"
+msgstr "Taxa Fixa do PIX"
+
+#: Admin/PGPFGForGivewpAdmin.php:369
+msgid "Set extra fees for Slip transactions."
+msgstr "Define taxas extras para transações de boleto."
+
+#: Admin/PGPFGForGivewpAdmin.php:373
+msgid "Additional amount charged for each Slip issued."
+msgstr "Valor adicional cobrado por cada boleto gerado."
+
+#: Admin/PGPFGForGivewpAdmin.php:378
+msgid "PIX Payment Page"
+msgstr "Página de Pagamento com PIX"
+
+#: Admin/PGPFGForGivewpAdmin.php:383
+msgid "Define the page where PIX will be displayed after checkout."
+msgstr "Define a página onde o PIX será exibido após o checkout."
+
+#: Admin/PGPFGForGivewpAdmin.php:385
+msgid "Select the page containing the display shortcode."
+msgstr "Selecione a página que contém o shortcode de exibição."
+
+#: Admin/PGPFGForGivewpAdmin.php:386
+msgid ""
+"The page must contain the PagHiper shortcode [lkn_pgpf_give_paghiper_pix]."
+msgstr ""
+"A página precisa conter o shortcode do PagHiper [lkn_pgpf_give_paghiper_pix]."
+
+#: Admin/PGPFGForGivewpAdmin.php:391
+msgid "Debug Mode"
+msgstr "Modo de Depuração"
+
+#: Admin/PGPFGForGivewpAdmin.php:393
+msgid ""
+"Enable detailed logging for support and maintenance. <a id=\"lkn-give-"
+"debug\">Transaction log.</a>"
+msgstr ""
+"Ative o log detalhado para suporte e manutenção. <a id=\"lkn-give-"
+"debug\">Log de transações.</a>"
+
+#: Admin/PGPFGForGivewpAdmin.php:401
+#, fuzzy
+msgid "When enabled, all PagHiper transactions will be logged."
+msgstr ""
+"Quando ativado, todas as operações dos gateways de pagamento serão "
+"registradas no sistema de logs."
+
+#: Admin/PGPFGForGivewpAdmin.php:413 payment-gateway-pix-for-givewp.php:110
+msgid "Settings"
+msgstr "Configurações"
+
+#: Admin/PGPFGForGivewpAdmin.php:417 Admin/PGPFGForGivewpAdmin.php:426
+msgid "Environment"
+msgstr "Ambiente"
+
+#: Admin/PGPFGForGivewpAdmin.php:421
+msgid "Production"
+msgstr "Produção"
+
+#: Admin/PGPFGForGivewpAdmin.php:422
+msgid "Development"
+msgstr "Desenvolvimento"
+
+#: Admin/PGPFGForGivewpAdmin.php:424
+msgid "Set whether the system will process real donations or tests."
+msgstr "Define se o sistema processará doações reais ou testes."
+
+#: Admin/PGPFGForGivewpAdmin.php:427
+#, fuzzy
+msgid "Set the environment for all payment gateways."
 msgstr "Selecione o ambiente em que o gateway de pagamento operará."
 
-msgid "Enable transaction logging"
-msgstr "Habilitar registro de transações"
+#: Admin/PGPFGForGivewpAdmin.php:428
+#, fuzzy
+msgid "Use \"Development\" for testing and \"Production\" for real donations."
+msgstr ""
+"Desenvolvimento para ambiente de testes, Produção para ambiente de doações "
+"reais."
 
-msgid "Displays details of gateway operations in the console."
-msgstr "Exibe detalhes das operações dos gateways no console."
+#: Admin/PGPFGForGivewpAdmin.php:433 Admin/PGPFGForGivewpAdmin.php:443
+msgid "Enable Logs"
+msgstr "Habilitar Logs"
 
-msgid "Chave de identificação da loja virtual"
-msgstr "Store identification key"
+#: Admin/PGPFGForGivewpAdmin.php:435
+#, fuzzy
+msgid ""
+"When enabled, all payment gateway operations will be recorded in the logs, "
+"ideal for identifying errors. Default: Disabled"
+msgstr ""
+"Quando ativado, todas as operações dos gateways de pagamento serão "
+"registradas no sistema de logs."
 
-msgid "Store identification credential"
-msgstr "Credencial de identificação da loja virtual"
+#: Admin/PGPFGForGivewpAdmin.php:445
+msgid ""
+"Enable this option to help identify and troubleshoot potential transaction "
+"errors."
+msgstr ""
+"Ative esta opção para ajudar a identificar e solucionar possíveis erros de "
+"transação."
 
-msgid "Required to authenticate requests to the BB API."
+#: Admin/PGPFGForGivewpAdmin.php:465
+msgid "License"
+msgstr "Licença"
+
+#. translators: %1$s: start link, %2$s: end link
+#: Admin/PGPFGForGivewpAdmin.php:469
+#, php-format
+msgid "Enter the license acquired at Link Nacional %1$sLearn more%2$s."
+msgstr "Digite a licença adquirida no Link Nacional %1$sSaiba mais%2$s."
+
+#: Admin/PGPFGForGivewpAdmin.php:471
+msgid "Add your Link Nacional license to enable PRO features."
+msgstr "Adicione sua licença Link Nacional para habilitar os recursos PRO."
+
+#: Admin/PGPFGForGivewpAdmin.php:487
+msgid "Banco do Brasil Integration"
+msgstr "Integração Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:489
+msgid "Unique identifier used to identify your Banco do Brasil account."
+msgstr ""
+"Identificador único usado para identificar sua conta no Banco do Brasil."
+
+#: Admin/PGPFGForGivewpAdmin.php:492
+msgid "BB Client Id"
+msgstr "Client ID do BB"
+
+#: Admin/PGPFGForGivewpAdmin.php:493
+msgid "Unique identifier for your bank account."
+msgstr "Identificador único da sua conta bancária."
+
+#: Admin/PGPFGForGivewpAdmin.php:494
+msgid ""
+"Enter the client code generated in the Banco do Brasil developers portal."
+msgstr ""
+"Insira o código de cliente gerado no portal de desenvolvedores do Banco do "
+"Brasil."
+
+#: Admin/PGPFGForGivewpAdmin.php:499
+msgid "Banco do Brasil Client Secret"
+msgstr "Client Secret do Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:501
+msgid "Private key for service authentication."
+msgstr "Chave privada para autenticação do serviço."
+
+#: Admin/PGPFGForGivewpAdmin.php:504
+msgid "BB Client Secret"
+msgstr "Client Secret do BB"
+
+#: Admin/PGPFGForGivewpAdmin.php:505
+msgid "Your Banco do Brasil Client Secret"
+msgstr "Seu Client Secret do Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:506
+msgid ""
+"Private key used to authenticate integrations with Banco do Brasil services."
+msgstr "Chave privada usada para autenciar a API do Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:511
+msgid "Banco do Brasil Developer Key"
+msgstr "Developer Key do Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:513
+msgid "Key used by developers to access Banco do Brasil APIs."
+msgstr ""
+"Chave usada pelos desenvolvedores para acessar as APIs do Banco do Brasil."
+
+#: Admin/PGPFGForGivewpAdmin.php:516
+msgid "BB Developer Key"
+msgstr "Developer Key do BB"
+
+#: Admin/PGPFGForGivewpAdmin.php:517
+msgid "Your Banco do Brasil Developer Key"
+msgstr "Sua Developer Key do Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:518
+#, fuzzy
+msgid "Key required for communication with the BB Pix APIs."
 msgstr "Necessária para autenticar requisições à API do BB."
 
-msgid "The provided Pix key must be registered and active in Banco do Brasil."
+#: Admin/PGPFGForGivewpAdmin.php:523
+msgid "Banco do Brasil Pix Key"
+msgstr "Chave Pix do Banco do Brasil"
+
+#. translators: %1$s: start link, %2$s: end link
+#: Admin/PGPFGForGivewpAdmin.php:527
+#, php-format
+msgid ""
+"Pix key linked to the client and registered at Banco do Brasil. It must be "
+"active for the transaction to be processed correctly. %1$sLearn more%2$s"
+msgstr ""
+"Chave Pix vinculada ao cliente e cadastrada no Banco do Brasil. Ela deve "
+"estar ativa para que a transação seja processada corretamente. %1$sSaiba "
+"mais%2$s"
+
+#: Admin/PGPFGForGivewpAdmin.php:529
+#, fuzzy
+msgid "BB Pix Key"
+msgstr "Chave Pix"
+
+#: Admin/PGPFGForGivewpAdmin.php:530
+msgid "Your Banco do Brasil Pix Key"
+msgstr "Sua chave Pix do Banco do Brasil"
+
+#: Admin/PGPFGForGivewpAdmin.php:531
+#, fuzzy
+msgid "The Pix key must be active at Banco do Brasil for correct processing."
 msgstr "A chave Pix informada deve estar cadastrada e ativa no BB."
 
-msgid "Enable to show billing details on donation forms"
-msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+#: Admin/PGPFGForGivewpAdmin.php:546
+msgid "Cielo Integration"
+msgstr "Integração Cielo"
 
-msgid "Development for test environment, Production for real donations."
-msgstr "Desenvolvimento para ambiente de testes, Produção para ambiente de doações reais."
+#: Admin/PGPFGForGivewpAdmin.php:549
+msgid "Unique identifier for your store at Cielo."
+msgstr "Identificador único da sua loja na Cielo."
 
-msgid "When enabled, all payment gateway operations will be recorded in the logging system."
-msgstr "Quando ativado, todas as operações dos gateways de pagamento serão registradas no sistema de logs."
+#: Admin/PGPFGForGivewpAdmin.php:551
+msgid "Cielo Merchant ID"
+msgstr "Merchant ID da Cielo"
 
-msgid "Enables detailed messages in the console with information about payment gateway operations."
-msgstr "Habilita mensagens detalhadas no console com informações sobre as operações dos gateways de pagamento."
+#: Admin/PGPFGForGivewpAdmin.php:552
+msgid "Your Cielo Merchant ID"
+msgstr "Seu Merchant ID da Cielo"
 
-msgid "The Merchant Key is a secret credential provided by MaxiPago, used to authenticate all requests from your store to the payment API."
-msgstr "O Merchant Key é uma credencial secreta fornecida pela MaxiPago, usada para autenticar todas as requisições da sua loja à API de pagamentos."
+#: Admin/PGPFGForGivewpAdmin.php:553
+msgid "Enter your store's identification code available in the Cielo portal."
+msgstr ""
+"Insira o código de identificação da sua loja disponível no portal da Cielo."
 
-msgid "The Merchant ID is the unique identifier provided by MaxiPago that represents your online store on the payment platform."
-msgstr "O Merchant ID é o identificador único fornecido pela MaxiPago, que representa sua loja virtual na plataforma de pagamentos."
+#: Admin/PGPFGForGivewpAdmin.php:558 Admin/PGPFGForGivewpAdmin.php:563
+msgid "Cielo Merchant Key"
+msgstr "Merchant Key da Cielo"
 
-msgid "This is the code that identifies your store in the Banco do Brasil system."
-msgstr "Este é o código que identifica sua loja no sistema do Banco do Brasil."
+#: Admin/PGPFGForGivewpAdmin.php:560
+msgid "Private key for transaction authentication via Cielo.s"
+msgstr "Chave privada para autenticação de transações via Cielo."
 
-msgid "BB API secret credential. Use with Client ID for secure authentication."
-msgstr "Credencial secreta da API BB. Use com o Client ID para autenticação segura."
+#: Admin/PGPFGForGivewpAdmin.php:564
+msgid "Your Cielo Merchant Key"
+msgstr "Sua Merchant Key da Cielo"
 
-msgid "The Developer Key is a security credential provided by Banco do Brasil to authenticate your application with the Payment API."
-msgstr "A Developer Key é uma credencial de segurança fornecida pelo Banco do Brasil para autenticar sua aplicação na API de Pagamentos."
+#: Admin/PGPFGForGivewpAdmin.php:565
+msgid "Enter your store's access key available in the Cielo dashboard."
+msgstr "Insira a chave de acesso da sua loja disponível no painel da Cielo."
 
-msgid "Enter the license acquired at Link Nacional %sLearn more%s."
-msgstr "Digite sua licença adiquirida na link Nacional %sSaiba mais%s."
+#: Admin/PGPFGForGivewpAdmin.php:580
+#, fuzzy
+msgid "POS Identification (PV)"
+msgstr "Identificador de Pagamento"
 
-msgid "Private key used to authenticate integrations with Banco do Brasil services."
-msgstr "Chave privada usada para autenciar a API do Banco do Brasil"
+#: Admin/PGPFGForGivewpAdmin.php:582
+msgid "Unique identification code for your establishment at Rede"
+msgstr "Código de identificação único do seu estabelecimento na Rede"
+
+#: Admin/PGPFGForGivewpAdmin.php:585
+msgid "POS Number (Rede)."
+msgstr "Número do POS (Rede)."
+
+#: Admin/PGPFGForGivewpAdmin.php:586
+msgid "Enter the POS code provided by Rede."
+msgstr "Insira o código do POS fornecido pela Rede."
+
+#: Admin/PGPFGForGivewpAdmin.php:591
+msgid "Rede Token"
+msgstr "Token da Rede"
+
+#: Admin/PGPFGForGivewpAdmin.php:593
+msgid "Secret key associated with your POS."
+msgstr "Chave secreta associada ao seu POS."
+
+#: Admin/PGPFGForGivewpAdmin.php:596
+msgid "Your Rede Token"
+msgstr "Seu Token da Rede"
+
+#: Admin/PGPFGForGivewpAdmin.php:597
+msgid "Enter the secret key generated for your POS in the Rede portal."
+msgstr "Insira a chave secreta gerada para seu POS no portal da Rede."
+
+#: Admin/PGPFGForGivewpAdmin.php:623 Includes/PGPFGGatewayClass.php:39
+#: Public/PGPFGGatewayClass.php:39
+msgid "Pix QR Code"
+msgstr "Pix QR Code"
+
+#: Includes/PGPFGGatewayClass.php:46 Public/PGPFGGatewayClass.php:46
+msgid "Pix"
+msgstr "Pix"
+
+#: Includes/PGPFGGatewayClass.php:102 Public/PGPFGGatewayClass.php:158
+msgid "Payment ID is required."
+msgstr "ID do pagamento é obrigatório."
+
+#: Includes/PGPFGHelperClass.php:37
+#, fuzzy
+msgid "See changelogs"
+msgstr "Ver logs"
+
+#: Public/partials/payment-gateway-pix-for-givewp-public-display.php:54
+#: Public/PGPFGGatewayClass.php:101 Includes/js/lkn-pix.js:172
+#: Public/js/lkn-pix.js:177
+msgid "Pix Key:"
+msgstr "Chave Pix:"
+
+#: Public/partials/payment-gateway-pix-for-givewp-public-display.php:58
+#: Public/PGPFGGatewayClass.php:103
+msgid "Loading..."
+msgstr "Carregando..."
+
+#: Public/PGPFGForPaghiperPixPage.php:37
+msgid "PIX Key"
+msgstr "Chave PIX"
+
+#: Public/PGPFGForPaghiperPixPage.php:38
+msgid "Pix copy and paste, click on the code below to copy:"
+msgstr "Pix copia e cola, clique no código abaixo para copiar:"
+
+#: Public/PGPFGForPaghiperPixPage.php:39
+msgid "Copied!"
+msgstr "Copiado!"
+
+#: Public/PGPFGForPaghiperPixPage.php:40
+msgid " Due Date: "
+msgstr " Vencimento: "
+
+#: Public/PGPFGForPaghiperPixPage.php:41
+msgid "R$ 0,00"
+msgstr "R$ 0,00"
+
+#: Public/PGPFGGatewayClass.php:107 Public/PGPFGGatewayClass.php:111
+#: Includes/js/lkn-pix.js:184 Includes/js/lkn-pix.js:211
+#: Public/js/lkn-pix.js:192
+msgid "Copy Pix"
+msgstr "Copiar Pix"
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:103
+msgid ""
+"Attention! It will not be possible to make recurring donations via Pix.."
+msgstr "Atenção! Não será possível realizar doações recorrentes via Pix."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:104
+msgid ""
+"Attention! It will not be possible to make recurring donations via Boleto."
+msgstr "Atenção! Não será possível realizar doações recorrentes via Boleto."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:105
+#: Public/PGPFGPaghiperPix.php:112 Public/PGPFGPaghiperSlip.php:112
+msgid "Payment Information"
+msgstr "Informação do Pagamento"
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:106
+msgid "Secure Donation via SSL Encryption."
+msgstr "Doação segura via criptografia SSL."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:122
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:131
+msgid "Error:"
+msgstr "Erro:"
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:123
+msgid "PagHiper credentials not provided or invalid."
+msgstr "Credenciais do PagHiper não informadas ou inválida."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:132
+msgid "Donation disabled due to lack of SSL (HTTPS)."
+msgstr "Doação desativada devido à falta de SSL (HTTPS)."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:209
+msgid "Payment error. Payment creation failed before completing authorization."
+msgstr ""
+"Erro de pagamento. A criação do pagamento falhou antes de concluir a "
+"autorização."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:215
+msgid "Payment with foreign currency not supported."
+msgstr "Pagamento com moeda estrangeira não suportado."
+
+#. translators: %s is the payment gateway name (e.g., "Pix", "Boleto")
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:222
+#, php-format
+msgid "The minimum amount for donations via %s is R$ 3.00."
+msgstr "O valor mínimo para doações via %s é R$ 3,00."
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:259
+msgid "The provided CPF/CNPJ is invalid"
+msgstr "O CPF/CNPJ informado é inválido."
+
+#. translators: %s is the error message from PagHiper API
+#. translators: %s is the error message
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:334
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:383
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:423
+#, php-format
+msgid "Donation failed. Reason: %s"
+msgstr "Falha na doação. Razão: %s"
+
+#: Public/PGPFGGatewayPaghiperAbstractPayment.php:494
+msgid "Donation refunded via PagHiper."
+msgstr "Doação reembolsada via PagHiper."
+
+#: Public/PGPFGPaghiperPix.php:60 Public/PGPFGPaghiperPix.php:100
+msgid "For payments via Pix, a fixed fee is charged: R$ "
+msgstr "Para pagamentos via Pix, é cobrada uma taxa fixa: R$ "
+
+#: Public/PGPFGPaghiperPix.php:63 Public/PGPFGPaghiperPix.php:113
+#: Public/PGPFGPaghiperSlip.php:63 Public/PGPFGPaghiperSlip.php:113
+msgid "CPF / CNPJ"
+msgstr "CPF / CNPJ"
+
+#: Public/PGPFGPaghiperPix.php:64 Public/PGPFGPaghiperPix.php:114
+#: Public/PGPFGPaghiperSlip.php:64 Public/PGPFGPaghiperSlip.php:114
+msgid "Enter a valid CPF or CNPJ number."
+msgstr "Insira um número de CPF ou CNPJ válido"
+
+#: Public/PGPFGPaghiperSlip.php:60 Public/PGPFGPaghiperSlip.php:100
+msgid "For payments via bank slip, a fixed fee is charged: R$ "
+msgstr "Para pagamentos via boleto bancário, é cobrada uma taxa fixa: R$ "
+
+#: Public/views/pix-error-template.php:6
+msgid "Failed to generate the QR Code"
+msgstr "Falha na geração do QR Code"
+
+#: Admin/js/pgpfg-admin.js:43
+msgid "Enjoying the plugin?"
+msgstr "Gostando do plugin?"
+
+#: Admin/js/pgpfg-admin.js:44
+msgid "Try out our other GiveWP plugins"
+msgstr "Conheça nossos outros plugins para GiveWP"
+
+#: Admin/js/pgpfg-admin.js:46
+msgid "Cielo API Credit Card Payment"
+msgstr "Pagamento com Cartão de Crédito via API Cielo"
+
+#: Admin/js/pgpfg-admin.js:47
+msgid "Google Pay Payment"
+msgstr "Pagamento com Google Pay"
+
+#: Admin/js/pgpfg-admin.js:48
+msgid "Bitcoin and Ethereum Payment"
+msgstr "Pagamento com Bitcoin e Ethereum"
+
+#: Admin/js/pgpfg-admin.js:49
+msgid "International Donations using foreign currencies such as Euro or Yen"
+msgstr "Doações internacionais com moedas estrangeiras como Euro ou Iene"
+
+#: Admin/js/pgpfg-admin.js:50
+msgid "And more!"
+msgstr "E mais!"
+
+#: Admin/js/pgpfg-admin.js:52
+msgid "Learn more now"
+msgstr "Saiba mais agora"
+
+#: Admin/js/pgpfg-admin.js:58
+msgid "WordPress Maintenance and Support!"
+msgstr "Manutenção e Suporte WordPress!"
+
+#~ msgid "Payment Gateway for Pix on GiveWP"
+#~ msgstr "Gateway de Pagamento por Pix para GiveWP"
+
+#~ msgid "Insert the type of the pix key."
+#~ msgstr "Insira o tipo de chave pix"
+
+#~ msgid "Other"
+#~ msgstr "Outro"
+
+#~ msgid "Insert the pix key that will be used on the donations."
+#~ msgstr "Insira a chave pix a ser utilizada nas doações."
+
+#~ msgid "Insert the name of the key's recipient."
+#~ msgstr "Insira o nome do beneficiário da chave."
+
+#~ msgid "Recipient City"
+#~ msgstr "Cidade do Beneficiário"
+
+#~ msgid "Insert the key recipient's city."
+#~ msgstr "Insira a cidade do beneficiário da chave"
+
+#~ msgid "Insert the payment identificator, not required."
+#~ msgstr "Insira o identificador de pagamento, não obrigatório."
+
+#~ msgid "Select if logs should be created for debug purposes."
+#~ msgstr "Selecione se devem ser criados logs para depuração."
+
+#~ msgid ""
+#~ "Select if billing details should be added do the donation forms (classic "
+#~ "and legacy forms)."
+#~ msgstr ""
+#~ "Selecione se detalhes de cobrança devem ser adicionados aos formulários "
+#~ "de doação (para formulários classic ou legacy)."
+
+#~ msgid ""
+#~ "Enter the Pix key created in your bank that will be used to receive "
+#~ "donations."
+#~ msgstr ""
+#~ "Digite a chave Pix criada no seu Banco que será usada no recebimento das "
+#~ "doações."
+
+#~ msgid "Recipient name"
+#~ msgstr "Nome do beneficiário"
+
+#~ msgid "Enable to show billing details on donation forms"
+#~ msgstr "Ative para exibir os detalhes de cobrança nos formulários de doação"
+
+#~ msgid "Enable transaction logging"
+#~ msgstr "Habilitar registro de transações"
+
+#~ msgid "Displays details of gateway operations in the console."
+#~ msgstr "Exibe detalhes das operações dos gateways no console."
+
+#~ msgid "Chave de identificação da loja virtual"
+#~ msgstr "Store identification key"
+
+#~ msgid "Store identification credential"
+#~ msgstr "Credencial de identificação da loja virtual"
+
+#~ msgid ""
+#~ "Enables detailed messages in the console with information about payment "
+#~ "gateway operations."
+#~ msgstr ""
+#~ "Habilita mensagens detalhadas no console com informações sobre as "
+#~ "operações dos gateways de pagamento."
+
+#~ msgid ""
+#~ "The Merchant Key is a secret credential provided by MaxiPago, used to "
+#~ "authenticate all requests from your store to the payment API."
+#~ msgstr ""
+#~ "O Merchant Key é uma credencial secreta fornecida pela MaxiPago, usada "
+#~ "para autenticar todas as requisições da sua loja à API de pagamentos."
+
+#~ msgid ""
+#~ "The Merchant ID is the unique identifier provided by MaxiPago that "
+#~ "represents your online store on the payment platform."
+#~ msgstr ""
+#~ "O Merchant ID é o identificador único fornecido pela MaxiPago, que "
+#~ "representa sua loja virtual na plataforma de pagamentos."
+
+#~ msgid ""
+#~ "This is the code that identifies your store in the Banco do Brasil system."
+#~ msgstr ""
+#~ "Este é o código que identifica sua loja no sistema do Banco do Brasil."
+
+#~ msgid ""
+#~ "BB API secret credential. Use with Client ID for secure authentication."
+#~ msgstr ""
+#~ "Credencial secreta da API BB. Use com o Client ID para autenticação "
+#~ "segura."
+
+#~ msgid ""
+#~ "The Developer Key is a security credential provided by Banco do Brasil to "
+#~ "authenticate your application with the Payment API."
+#~ msgstr ""
+#~ "A Developer Key é uma credencial de segurança fornecida pelo Banco do "
+#~ "Brasil para autenticar sua aplicação na API de Pagamentos."
+
+#~ msgid "Enter the license acquired at Link Nacional %sLearn more%s."
+#~ msgstr "Digite sua licença adiquirida na link Nacional %sSaiba mais%s."
+
+#~ msgid "Enable Advanced Debugging (JS Console)"
+#~ msgstr "Ativar Depuração Avançada (Console JS)"

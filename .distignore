@@ -1,0 +1,20 @@
+# Artefatos de desenvolvimento — não vão para o pacote do wp.org
+.clinerules
+.eslintrc
+.vscode
+.devcontainer
+.github
+.reasonix
+.cline*
+.git*
+.phpunit.result.cache
+AGENTS.md
+composer.json
+composer.lock
+package.json
+package-lock.json
+phpunit.xml
+tests
+node_modules
+vendor/bin
+logs
