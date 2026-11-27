@@ -362,7 +362,7 @@ msgstr ""
 
 #: Admin/PGPFGForGivewpAdmin.php:433 Admin/PGPFGForGivewpAdmin.php:443
 msgid "Enable Logs"
-msgstr "Habilitar logs"
+msgstr "Habilitar Logs"
 
 #: Admin/PGPFGForGivewpAdmin.php:435
 #, fuzzy
