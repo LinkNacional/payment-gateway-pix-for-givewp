@@ -511,6 +511,11 @@ final class PGPFGForGivewp
         if ($is_give_active) {
             $this->load_dependencies();
             $this->set_locale();
+
+            // Um PRO ainda não atualizado lê as chaves antigas -pro-; sem este
+            // guard ele ignoraria o ambiente escolhido na aba Settings.
+            PGPFGForGivewpSettingsCompat::register();
+
             $this->define_admin_hooks();
             $this->define_public_hooks();
             $this->loader->run();
